@@ -1442,6 +1442,7 @@ $(document).ready(function() {
         <label>Total Heritage :</label>
 
         <input type="number"
+        name="totalHeritage" 
                id="heritageInput"
                readonly
                value="${requestScope.treeType_heritage}"
@@ -1453,6 +1454,7 @@ $(document).ready(function() {
 
         <input type="number"
                id="nonHeritageInput"
+               name="totalNonHeritage"
                readonly
                value="${requestScope.treeType_Non_heritage}"
                style="width:100px;"/>
@@ -1542,6 +1544,7 @@ $(document).ready(function() {
 
                 <a class="btn btn-success"
                    target="_blank"
+                   style="color:white;"
                    onclick="docDownload('${treeCuting.pachanamaletter}')">
                     Download
                 </a>
@@ -1587,11 +1590,11 @@ $(document).ready(function() {
                 <td style="width: 922px;">
                 
                     
-                <a class="bg-button btn btn-success bd-highlight generateaction" id="genCerBtn" style="color: white" onclick="downloads1('${treeCuting.rti_ref_id}', 'treeCuttingDemandCertificateReport.do');" type="button" target="_blank">
-                    <span class="download" style="display: flex; align-items: center;width: 142px;">Generate Demand</span>
+                <a class="bg-button btn btn-success bd-highlight generateaction" id="genCerBtn" onclick="downloads1('${treeCuting.rti_ref_id}', 'treeCuttingDemandCertificateReport.do');" type="button" target="_blank">
+                    <span class="download" style="display: flex;color: white;align-items: center;width: 142px;">Generate Demand</span>
                 </a>
-                <a class="bg-button btn btn-success bd-highlight action" style="color: white" id="dsc" type="button" target="_blank" onclick="download1(${treeCuting.rti_ref_id});return false;">
-                    <span class="download" style="align-items: center">Apply DSC</span>
+                <a class="bg-button btn btn-success bd-highlight action" id="dsc" type="button" target="_blank" onclick="download1(${treeCuting.rti_ref_id});return false;">
+                    <span class="download" style="align-items: center;color: white;">Apply DSC</span>
                 </a>
                                    &nbsp;  &nbsp;  &nbsp;  &nbsp; <input type="file" name="idProof" id="doc1" class="imagefile" style="width: 168px;">
                 
@@ -1648,7 +1651,14 @@ $(document).ready(function() {
 						<b>Rejected</b>
 					</c:if></span>
 					</td>
-					   <c:if test="${requestScope.rtiApplication.workFlowStatus==2 &&  requestScope.forLogin == 'L2' && empty requestScope.rtiApplication.pdfFilesSavedPath}">
+					  
+            </tr>
+    
+					<tr>
+					
+         <c:if test="${(requestScope.rtiApplication.workFlowStatus==2 || requestScope.rtiApplication.workFlowStatus==1) }">
+                  					              <td style=""><span class="ClsLabel" style="font-size:14px">Certificate Upload: </span> </td>
+                  					              <!--  <c:if test="${requestScope.rtiApplication.workFlowStatus==2 &&  requestScope.forLogin == 'L2' && empty requestScope.rtiApplication.pdfFilesSavedPath}">
             <td colspan="6" align="center">
                 <a class="bg-button btn btn-success bd-highlight generateaction" id="genCerBtn" style="color: white" onclick="downloads('${treeCuting.rti_ref_id}', 'treeCuttingCertificateReport.do');" type="button" target="_blank">
                     <span class="download" style="display: flex; align-items: center;">Generate Certificate</span>
@@ -1658,18 +1668,22 @@ $(document).ready(function() {
                 </a>
             </td>
             
-    </c:if>
-            </tr>
-    
-					<tr>
-					
-         <c:if test="${(requestScope.rtiApplication.workFlowStatus==2 || requestScope.rtiApplication.workFlowStatus==1) }">
-                  					              <td style=""><span class="ClsLabel" style="font-size:14px">Certificate Upload: </span> </td>
-                  					             <td> <c:if test="${ empty requestScope.rtiApplication.pdfFilesSavedPath}">
+    </c:if>-->
+                  					              <c:if test="${ empty requestScope.rtiApplication.pdfFilesSavedPath &&  requestScope.forLogin == 'L2'}">
+                  					               <td><a class="bg-button btn btn-success bd-highlight generateaction" id="genCerBtn" style="color: white" onclick="downloads('${treeCuting.rti_ref_id}', 'treeCuttingCertificateReport.do');" type="button" target="_blank">
+                    <span class="download" style="display: flex; align-items: center;">Generate Certificate</span>
+                </a>
+                <a class="bg-button btn btn-success bd-highlight action" style="color: white" id="dsc" type="button" target="_blank" onclick="download1(${treeCuting.rti_ref_id});return false;">
+                    <span class="download" style="align-items: center">Apply DSC</span>
+                </a>
+                </td>
+                <td>
                <input type="file" class="imagefile" name="idProof"
 				id="idProof" style="width: 220px" />
+							</td>
+				
 				</c:if>
-			
+			<td>
 			<c:if
 					test="${ empty requestScope.rtiApplication.pdfFilesSavedPath && requestScope.forLogin != 'L1'}">
 
@@ -2480,7 +2494,8 @@ $(document).ready(function() {
     function uploadPoliceNoc() {
         console.log("@@upoading@@");
         var url = window.location.href;
-        var basePath = url.split('${contextRoot}')[0] + '${contextRoot}/';
+        var basePath = '${pageContext.getAttribute("UPLOAD_PATH")}';
+        
         var filesPath = "";
         var data = new FormData();
         var idProofFile = $("#doc1").get(0).files[0];
@@ -2557,7 +2572,7 @@ $(document).ready(function() {
     function uploadFireNoc() {
         console.log("@@upoading@@");
         var url = window.location.href;
-        var basePath = url.split('${contextRoot}')[0] + '${contextRoot}/';
+        var basePath = '${pageContext.getAttribute("UPLOAD_PATH")}';
         var filesPath = "";
         var data = new FormData();
         var idProofFile = $("#doc2").get(0).files[0];
@@ -2629,7 +2644,7 @@ $(document).ready(function() {
     function uploadTrafficNoc() {
         console.log("@@upoading@@");
         var url = window.location.href;
-        var basePath = url.split('${contextRoot}')[0] + '${contextRoot}/';
+        var basePath = '${pageContext.getAttribute("UPLOAD_PATH")}';
         var filesPath = "";
         var data = new FormData();
 
@@ -2701,7 +2716,7 @@ $(document).ready(function() {
         function uploadPlantation() {
         console.log("@@upoading@@");
         var url = window.location.href;
-        var basePath = url.split('${contextRoot}')[0] + '${contextRoot}/';
+        var basePath = '${pageContext.getAttribute("UPLOAD_PATH")}';
         var filesPath = "";
         var data = new FormData();
 

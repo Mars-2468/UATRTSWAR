@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2026-08-04T17:28:03 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TreeDetails" pageWidth="1000" pageHeight="1000" columnWidth="960" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8fc662a1-9d48-4c8f-88ca-6563f1d428c3">
+<!-- 2026-08-12T14:39:48 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TreeDetails" pageWidth="1000" pageHeight="600" columnWidth="960" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8fc662a1-9d48-4c8f-88ca-6563f1d428c3">
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
@@ -345,13 +345,25 @@ WHERE tc.tree_cuting_id = $P{rtiapplrefid}]]>
 		</band>
 	</detail>
 	<summary>
-		<band height="328">
+		<band height="559">
 			<textField>
 				<reportElement x="20" y="16" width="910" height="20" uuid="31d66aca-3c21-4c36-b9c3-11ff815c62f3"/>
 				<textElement>
 					<font fontName="Arial Unicode MS" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA["झाडे तोडण्याचे कारण :  "+$F{resone_tree_cuting}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="488" width="961" height="71" uuid="29a1e2de-c183-4b90-83bd-8fc913031158"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["*** SYSTEM GENERATED ***"
++ "\n"
++ "This is a system-generated document and does not require a physical signature or seal."
++ "\n"
++ "Generated On: "
++ new java.text.SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a").format(new java.util.Date())]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

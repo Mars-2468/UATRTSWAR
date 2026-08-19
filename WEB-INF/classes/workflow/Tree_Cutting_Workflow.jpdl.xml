@@ -15,7 +15,7 @@
 </task>
 <!--   Level 3 - Tree Officer   -->
 <task name="L3 Verification" assignee="#{TREE_OFFICER}">
-<transition name="Send-For-Verification" to="L2 Final Process"/>
+<transition name="Verified" to="L2 Final Process"/>
 <transition name="Reject" to="end"/>
 
 </task>

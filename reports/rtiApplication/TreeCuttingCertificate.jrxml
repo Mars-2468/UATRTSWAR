@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2024-03-28T11:07:21 -->
+<!-- 2026-08-12T14:56:36 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TreeCuttingCertificate" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0" whenResourceMissingType="Key" isIgnorePagination="true" uuid="604a6bc3-ae55-4fb3-995f-76c562a21e2b">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Egov_Nmc"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="EGOVNMC_RTS"/>
 	<parameter name="rtiapplrefid" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select  tt.full_name,
@@ -157,7 +157,7 @@ where tt.rti_ref_id  = $P{rtiapplrefid};]]>
 				<textFieldExpression><![CDATA["क्रमांक: "+$F{rti_appl_ref_no}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="369" y="700" width="166" height="21" uuid="6b31ea3e-cb94-4adc-afc6-b016203e5f1c"/>
+				<reportElement x="369" y="678" width="166" height="21" uuid="6b31ea3e-cb94-4adc-afc6-b016203e5f1c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial Unicode MS" size="12" isBold="true"/>
 					<paragraph lineSpacing="Single"/>
@@ -165,7 +165,7 @@ where tt.rti_ref_id  = $P{rtiapplrefid};]]>
 				<text><![CDATA[वृक्षअधिकारी]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="368" y="721" width="167" height="20" uuid="a675fa28-6a6a-4e15-86e6-fbbe523fc47f"/>
+				<reportElement x="368" y="699" width="167" height="20" uuid="a675fa28-6a6a-4e15-86e6-fbbe523fc47f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial Unicode MS" size="12" isBold="true"/>
 					<paragraph lineSpacing="Single"/>
@@ -218,6 +218,16 @@ where tt.rti_ref_id  = $P{rtiapplrefid};]]>
 			<line>
 				<reportElement x="16" y="170" width="524" height="4" uuid="2b33ba28-d1cc-40a1-804b-0b2d51e57cd0"/>
 			</line>
+			<textField>
+				<reportElement x="9" y="731" width="534" height="40" uuid="e492bd60-0674-4367-9701-512c7b426e2a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["*** SYSTEM GENERATED ***"
++ "\n"
++ "This is a system-generated document and does not require a physical signature or seal."
++ "\n"
++ "Generated On: "
++ new java.text.SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 </jasperReport>

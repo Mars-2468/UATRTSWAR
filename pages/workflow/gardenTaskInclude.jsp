@@ -30,7 +30,6 @@
 	pageContext.setAttribute("WORKFLOW_COMMENTS", WorkflowConstants.WORKFLOW_COMMENTS);
 	pageContext.setAttribute("WORKFLOW_DUE_DATE", WorkflowConstants.WORKFLOW_DUE_DATE);
 %>
-
 <style type="text/css">
 	/*
 	  Replace the default icon on the "approve" and "others" workflow
@@ -51,7 +50,6 @@
 		background-size: contain !important;
 	}
 </style>
-
 <script type="text/javascript">
 	
 	function wfSetHidden(fieldName, val) {
@@ -79,37 +77,8 @@
 	function wfWireUp() {
 		try {
 			$('.mainHdr a').attr("href","javascript:void(0)");
-
-			<%--
-			  FIX: this <c:choose> is the one that actually matters - it's
-			  the block that runs via jQuery(wfWireUp)/window.onload, AFTER
-			  the workflow_tras_* buttons exist in the DOM. It was still
-			  using the old fail-OPEN 3-branch pattern: if IS_MY_TASK was
-			  neither explicitly true nor explicitly false (e.g. a role
-			  mismatch case that never got set either way), NONE of the
-			  branches fired and the buttons stayed in their default
-			  clickable state. That's exactly how tree_officer was able to
-			  see and use Close-Application/Reject on a task (L2 Final
-			  Process Close) actually owned by SECTION_OFFICER_CLOSE.
-
-			  Now: only ONE condition grants access - genuinely "my task"
-			  and the process hasn't ended. Everything else (wrong owner,
-			  IS_MY_TASK missing, process ended) disables every transition
-			  button explicitly.
-			--%>
 			<c:choose>
-				<c:when test="${not empty IS_MY_TASK and IS_MY_TASK==true and (empty PROCESS_ENDED or PROCESS_ENDED==false)}">
-					disableControlsByJquery(true);
-					$('#workflowDiv *').removeAttr('disabled');
-
-					// Only merge/enable the L1 routing buttons when this
-					// user genuinely owns the current task - otherwise a
-					// non-owner would get a live "Forward Application"
-					// button even though the two source buttons were just
-					// disabled below.
-					mergeRoutingButtons('L1Approve', 'Send-For-Approval', 'Forward Application');
-				</c:when>
-				<c:otherwise>
+				<c:when test="${not empty IS_MY_TASK and IS_MY_TASK==false}">
 					disableControlsByJquery(true);
 					$('#SetFormHeight a').attr("onclick","javascript:void(0)");
 					$('.mainHdr a').attr("onclick","javascript:void(0)");
@@ -119,8 +88,20 @@
 					</c:forEach>
 					var killBtn = document.getElementById('KillWorkflow');
 					if (killBtn) { killBtn.setAttribute("onclick","javascript:void(0);"); killBtn.removeAttribute("style"); }
-				</c:otherwise>
+				</c:when>
+				<c:when test="${not empty IS_MY_TASK and IS_MY_TASK==true}">
+					disableControlsByJquery(true);
+					$('#workflowDiv *').removeAttr('disabled');
+				</c:when>
+				<c:when test="${not empty PROCESS_ENDED and PROCESS_ENDED == true}">
+					disableControlsByJquery(true);
+					$('#SetFormHeight a').attr("onclick","javascript:void(0)");
+					$('.mainHdr a').attr("onclick","javascript:void(0)");
+				</c:when>
 			</c:choose>
+
+			
+			mergeRoutingButtons('L1Approve', 'Send-For-Approval', 'Forward Application');
 
 		} catch (e) { if (window.console && console.warn) { console.warn('workflow wire-up skipped:', e); } }
 	}
@@ -128,6 +109,66 @@
 	else if (window.addEventListener) { window.addEventListener('load', wfWireUp); }
 	else if (window.attachEvent) { window.attachEvent('onload', wfWireUp); }
 
+
+function mergeRoutingButtons(transitionA, transitionB, label) {
+    var btnA = document.getElementById('workflow_tras_' + transitionA);
+    var btnB = document.getElementById('workflow_tras_' + transitionB);
+
+    if (!btnA || !btnB) {
+        return; // current task doesn't offer this routing choice - nothing to merge
+    }
+    if (document.getElementById('workflow_tras_ForwardApplication')) {
+        return; // already merged (e.g. wfWireUp ran more than once)
+    }
+
+    var wrapperA = btnA.closest('.statusOption');
+    var wrapperB = btnB.closest('.statusOption');
+    if (wrapperA) wrapperA.style.display = 'none';
+    if (wrapperB) wrapperB.style.display = 'none';
+
+    var combined = document.createElement('div');
+    combined.className = 'statusOption';
+    combined.innerHTML =
+        '<div class="status approveOn" title="' + label + '" ' +
+             'id="workflow_tras_ForwardApplication" ' +
+             'onclick="javascript:forwardL1Decision();" ' +
+             'style="cursor:pointer"></div>' + label;
+
+    var anchor = wrapperB || wrapperA || btnB || btnA;
+    anchor.parentNode.insertBefore(combined, anchor.nextSibling);
+}
+
+
+function forwardL1Decision() {
+
+    var heritageEl    = document.getElementById('heritageInput');
+    var nonHeritageEl = document.getElementById('nonHeritageInput');
+
+    var heritage    = heritageEl    ? parseInt(heritageEl.value, 10)    : NaN;
+    var nonHeritage = nonHeritageEl ? parseInt(nonHeritageEl.value, 10) : NaN;
+    heritage    = isNaN(heritage)    ? 0 : heritage;
+    nonHeritage = isNaN(nonHeritage) ? 0 : nonHeritage;
+    var total = heritage + nonHeritage;
+
+    if (total === 0) {
+        alert("Please complete the Tree Inspection Details before forwarding this application.");
+        return false;
+    }
+
+    var required = (heritage > 0 || total >= 24) ? 'Send-For-Approval' : 'L1Approve';
+
+    var message = (required === 'Send-For-Approval')
+        ? "This application has " + heritage + " heritage tree(s) and " + total + " tree(s) in total.\n\n"
+          + "It will be forwarded directly to the Tree Authority (L4) for approval, skipping L2/L3 verification.\n\nContinue?"
+        : "This application has " + total + " non-heritage tree(s) (no heritage trees, under 24 total).\n\n"
+          + "It will follow the standard workflow: L2 Verification -> L3 Verification -> L2 Final Process.\n\nContinue?";
+
+    if (!confirm(message)) {
+        return false;
+    }
+
+    completeTask(required);
+}
 </script>
 <script type="text/javascript">
 disableControlsByJquery(true);
@@ -253,17 +294,23 @@ function reassignWorkflowTask(frm)
 		completeTask(transistionName);
 	}else return false;	
 	}
+	// =============================================================================
+	// PATCH for /pages/workflow/gardenTaskInclude.jsp
+	// Replace the existing completeTask(transistionName) function with this one.
+	// Everything else in the file is unchanged.
+	// =============================================================================
 
 	function completeTask(transistionName) {
 
-	    // --- L1 auto-routing (fallback safety net) --------------------------
-	    // The normal path now is: the two native buttons for these
-	    // transitions are hidden by mergeRoutingButtons() below, and the
-	    // single "Forward Application" button calls forwardL1Decision(),
-	    // which already resolves the correct transition before calling
-	    // completeTask(). This check stays here as a defense-in-depth
-	    // fallback only, in case completeTask() is ever invoked directly
-	    // with one of these two names by some other path.
+	    // --- L3 auto-routing -----------------------------------------------
+	    // The Tree Officer (L3) screen renders two transition buttons:
+	    //   "Send-For-Verification" -> L2 Final Process
+	    //   "Send-For-Approval"     -> L4 Approval
+	    // Rather than let the officer choose freely, we resolve the correct
+	    // one from the heritage / non-heritage tree counts already on the
+	    // page (heritageInput / nonHeritageInput), and silently correct the
+	    // transition name before it's submitted - whichever of the two
+	    // buttons was clicked.
 	    if (transistionName === 'L1Approve' || transistionName === 'Send-For-Approval') {
 	        var resolved = resolveL1Transition(transistionName);
 	        if (resolved === false) {
@@ -306,7 +353,7 @@ function reassignWorkflowTask(frm)
 	    }
 	}
 
-	// Fallback safety net helper - only used by the branch above.
+	// New helper - only used by the L1 branch above.
 	function resolveL1Transition(clicked) {
 
 	    var heritageEl    = document.getElementById('heritageInput');
@@ -341,79 +388,7 @@ function reassignWorkflowTask(frm)
 
 	    return required;
 	}
-
-	// =========================================================================
-	// Single-button routing UI
-	// =========================================================================
-
-	// Generic: if BOTH named transitions render as separate buttons
-	// (meaning the current task genuinely offers a routing choice), hide
-	// both and replace them with one button that auto-decides and submits
-	// the correct one. Written generically (takes the two transition names
-	// + a label) so if the routing decision ever moves to a different task
-	// again, only the call site in wfWireUp() needs to change.
-	function mergeRoutingButtons(transitionA, transitionB, label) {
-	    var btnA = document.getElementById('workflow_tras_' + transitionA);
-	    var btnB = document.getElementById('workflow_tras_' + transitionB);
-
-	    if (!btnA || !btnB) {
-	        return; // current task doesn't offer this routing choice - nothing to merge
-	    }
-	    if (document.getElementById('workflow_tras_ForwardApplication')) {
-	        return; // already merged (e.g. wfWireUp ran more than once)
-	    }
-
-	    var wrapperA = btnA.closest('.statusOption');
-	    var wrapperB = btnB.closest('.statusOption');
-	    if (wrapperA) wrapperA.style.display = 'none';
-	    if (wrapperB) wrapperB.style.display = 'none';
-
-	    var combined = document.createElement('div');
-	    combined.className = 'statusOption';
-	    combined.innerHTML =
-	        '<div class="status approveOn" title="' + label + '" ' +
-	             'id="workflow_tras_ForwardApplication" ' +
-	             'onclick="javascript:forwardL1Decision();" ' +
-	             'style="cursor:pointer"></div>' + label;
-
-	    var anchor = wrapperB || wrapperA || btnB || btnA;
-	    anchor.parentNode.insertBefore(combined, anchor.nextSibling);
-	}
-
-	// The single entry point for the L1 routing decision. Computes the
-	// required transition from the saved tree-inspection totals, confirms
-	// with the user, then submits via the normal completeTask() path.
-	function forwardL1Decision() {
-
-	    var heritageEl    = document.getElementById('heritageInput');
-	    var nonHeritageEl = document.getElementById('nonHeritageInput');
-
-	    var heritage    = heritageEl    ? parseInt(heritageEl.value, 10)    : NaN;
-	    var nonHeritage = nonHeritageEl ? parseInt(nonHeritageEl.value, 10) : NaN;
-	    heritage    = isNaN(heritage)    ? 0 : heritage;
-	    nonHeritage = isNaN(nonHeritage) ? 0 : nonHeritage;
-	    var total = heritage + nonHeritage;
-
-	    if (total === 0) {
-	        alert("Please complete the Tree Inspection Details before forwarding this application.");
-	        return false;
-	    }
-
-	    var required = (heritage > 0 || total >= 24) ? 'Send-For-Approval' : 'L1Approve';
-
-	    var message = (required === 'Send-For-Approval')
-	        ? "This application has " + heritage + " heritage tree(s) and " + total + " tree(s) in total.\n\n"
-	          + "It will be forwarded directly to the Tree Authority (L4) for approval, skipping L2/L3 verification.\n\nContinue?"
-	        : "This application has " + total + " non-heritage tree(s) (no heritage trees, under 24 total).\n\n"
-	          + "It will follow the standard path: L2 Verification -> L3 Verification -> L2 Final Process.\n\nContinue?";
-
-	    if (!confirm(message)) {
-	        return false;
-	    }
-
-	    completeTask(required);
-	}
-
+	
 	function rejectTask(transistionName) {
 		 var deptValue = '${requestScope.rtiApplication.department}';
 		    if (deptValue === 'WATER-DEPARTMENT') {
