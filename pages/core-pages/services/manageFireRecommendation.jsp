@@ -332,7 +332,7 @@
                                 <div class="mainHdr">
                                     <h3 style="font-size: 18px; font-weight: bold;">
 
-                                        <fmt:message key="Provisional fire safety approval Certificate" />
+                                        <fmt:message key="Temporary Fire NOC" />
                                         :
                                         <c:if test="${requestScope.rtiApplication != null}">
                                             <c:out value="${requestScope.rtiApplication.rtiApplnNumber}"></c:out>
@@ -1368,280 +1368,339 @@ value="<c:choose>
    </tr>-->
    </tr>
    </table>
-   <tr>
+  <tr>
     <td>
         <span class="ClsLabel" style="font-size: 14px">
             <fmt:message key="Total Fees Structure" />
         </span>:
     </td>
 </tr>
+
 <tr>
     <td>
 
         <table class="custom-table" border="1" width="100%">
+
             <thead>
                 <tr>
                     <th>Fees Name</th>
                     <th>Amount</th>
-<c:if test="${requestScope.rtiApplication.workFlowStatus == 0 and empty fireRecommendation.updatedScrutinyFees}">                    
-                    
-                    <th>Modify Amount (+/-)</th>
+
+                 <c:if test="${requestScope.rtiApplication.workFlowStatus == 0}">
+                        <th>Modify Amount (+/-)</th>
+
                     </c:if>
+
                     <th>Remarks</th>
                 </tr>
             </thead>
 
             <tbody>
 
-                <!-- Total Fees -->
+                <!-- ================= TOTAL FEES ================= -->
                 <tr>
-                    <td>
-                     <c:choose>
-            <c:when test="${empty fireRecommendation.updatedScrutinyFees}">
-                Total Fees
-            </c:when>
 
-            <c:otherwise>
-                Total Fees (Updated Demand + Scrutiny Fees)
-            </c:otherwise>
-        </c:choose>
-        
-                  
+                    <td>
+
+                        <c:choose>
+
+                            <c:when test="${empty fireRecommendation.updatedTotalFees}">
+                                Total Fees
+                            </c:when>
+
+                            <c:otherwise>
+                                Updated Total Fees
+                            </c:otherwise>
+
+                        </c:choose>
+
                     </td>
-                    
 
                     <td>
-                      <!--   <input type="text"
+
+                        <input type="text"
                                id="totalFees"
-                               value="${fireRecommendation.totalFeess}"
-                               readonly="readonly" />-->
-                               
-                               <input type="text"
-       id="totalFees"
-       value="${not empty fireRecommendation.updatedTotalFees 
-                ? fireRecommendation.updatedTotalFees 
-                : fireRecommendation.totalFeess}"
-       readonly="readonly" />
-       
+                               value="${not empty fireRecommendation.updatedTotalFees
+                                        ? fireRecommendation.updatedTotalFees
+                                        : fireRecommendation.totalFeess}"
+                               readonly="readonly" />
+
                     </td>
 
                     <td>-</td>
                     <td>-</td>
+
                 </tr>
 
-                <!-- Scrutiny Fees -->
+
+                <!-- ================= SCRUTINY FEES ================= -->
                 <tr>
-                    <td>2% Scrutiny Fees on Above Total</td>
 
                     <td>
-                       <!--  <input type="text"
+                        2% Scrutiny Fees on Above Total
+                    </td>
+
+                    <td>
+
+                        <input type="text"
                                id="scrutinyFees"
-                               value="${fireRecommendation.scrutinyFeesOnAboveTotal}"
-                               readonly="readonly" />-->
-                               <input type="text"
-       id="scrutinyFees"
-       value="${not empty fireRecommendation.updatedScrutinyFees 
-                ? fireRecommendation.updatedScrutinyFees 
-                : fireRecommendation.scrutinyFeesOnAboveTotal}"
-       readonly="readonly" />
-                    </td>
-<c:if test="${requestScope.rtiApplication.workFlowStatus == 0 and empty fireRecommendation.updatedScrutinyFees}">                    
-
-                    <td>
-
-                        <select id="feeAction" onchange="updateFees()">
-                            <option value="">Select</option>
-                            <option value="increase">Increase</option>
-                            <option value="decrease">Decrease</option>
-                        </select>
-
-                        <input type="number"
-                               id="modifyAmount"
-                               min="0"
-                               step="0.01"
-                               placeholder="Enter Amount"
-                               onkeyup="updateFees()" />
+                               value="${not empty fireRecommendation.updatedScrutinyFees
+                                        ? fireRecommendation.updatedScrutinyFees
+                                        : fireRecommendation.scrutinyFeesOnAboveTotal}"
+                               readonly="readonly" />
 
                     </td>
-</c:if>
+
+
+                    <!-- MODIFY TOTAL FEES ONLY -->
+                   <c:if test="${requestScope.rtiApplication.workFlowStatus == 0}">
+                        <td>
+
+                            <select id="feeAction"
+                                    onchange="updateFees()">
+
+                                <option value="">Select</option>
+
+                                <option value="increase">
+                                    Increase
+                                </option>
+
+                                <option value="decrease">
+                                    Decrease
+                                </option>
+
+                            </select>
+
+
+                            <input type="number"
+                                   id="modifyAmount"
+                                   min="0"
+                                   step="0.01"
+                                   placeholder="Enter Amount"
+                                   onkeyup="updateFees()" />
+
+                        </td>
+
+                    </c:if>
+
+
+                    <!-- REMARKS -->
                     <td>
 
                         <textarea id="remarks"
                                   rows="2"
                                   cols="25"
-                                  placeholder="Enter remarks" > ${fireRecommendation.remarkforL2}</textarea>
-
-                    </td>
-                </tr>
-<c:if test="${requestScope.rtiApplication.workFlowStatus == 0 and empty fireRecommendation.updatedScrutinyFees}">
-                <!-- Updated Scrutiny -->
-                <tr>
-                    <td>
-                        <b>Updated Scrutiny Fees</b>
-                        <b>Updated Demand + Scrutiny Fees</b>
-                    </td>
-
-                    <td>
-
-                        <input type="text"
-                               id="updatedScrutinyFees"
-                               readonly="readonly" />
+                                  placeholder="Enter remarks">${fireRecommendation.remarkforL2}</textarea>
 
                     </td>
 
-                    <td colspan="2"></td>
                 </tr>
 
-                <!-- Updated Total -->
-                <tr>
-                    <td>
-                        <b>Updated Total Fees</b>
-                    </td>
 
-                    <td>
+                <!-- ================= UPDATED TOTAL ================= -->
+               <c:if test="${requestScope.rtiApplication.workFlowStatus == 0}">
+                    <tr>
 
-                        <input type="text"
-                               id="updatedTotalFees"
-                               readonly="readonly" />
+                        <td>
+                            <b>Updated Total Fees</b>
+                        </td>
 
-                    </td>
+                        <td>
 
-                    <td colspan="2"></td>
-                </tr>
-</c:if>
+                            <input type="text"
+                                   id="updatedTotalFees"
+                                   readonly="readonly" />
+
+                        </td>
+
+                        <td colspan="2"></td>
+
+                    </tr>
+
+                </c:if>
+
             </tbody>
+
         </table>
 
-        <!-- Hidden Values -->
+
+        <!-- ================= HIDDEN VALUES ================= -->
+
         <input type="hidden"
                id="fireId"
                value="${fireRecommendation.fireRecommendationId}" />
-               <input type="hidden" id="rtiApplnId" name="rtiApplnId" value="${fireRecommendation.rti_ref_id}" />
-               
+
+        <input type="hidden"
+               id="rtiApplnId"
+               name="rtiApplnId"
+               value="${fireRecommendation.rti_ref_id}" />
 
     </td>
 </tr>
-<c:if test="${requestScope.rtiApplication.workFlowStatus == 0 and empty fireRecommendation.updatedScrutinyFees}">
-<tr>
-    <td colspan="2" align="center">
 
-        <input type="button"
-               value="Save Updated Fees"
-               class="btn btn-primary"
-               onclick="saveUpdatedFees()" />
 
-    </td>
-</tr>
+<!-- ================= SAVE BUTTON ================= -->
+
+<c:if test="${requestScope.rtiApplication.workFlowStatus == 0}">
+    <tr>
+
+        <td colspan="2" align="center">
+
+            <input type="button"
+                   value="Save Updated Fees"
+                   class="btn btn-primary"
+                   onclick="saveUpdatedFees()" />
+
+        </td>
+
+    </tr>
+
 </c:if>
+
+
 <script type="text/javascript">
+
+
+/* =========================================================
+   INITIALIZE UPDATED TOTAL
+   ========================================================= */
 
 window.onload = function () {
 
-    document.getElementById("updatedScrutinyFees").value =
-        document.getElementById("scrutinyFees").value;
+    var totalFeesElement =
+        document.getElementById("totalFees");
 
-    document.getElementById("updatedTotalFees").value =
-        document.getElementById("totalFees").value;
+    var updatedTotalFeesElement =
+        document.getElementById("updatedTotalFees");
+
+
+    if (totalFeesElement && updatedTotalFeesElement) {
+
+        updatedTotalFeesElement.value =
+            parseFloat(totalFeesElement.value || 0).toFixed(2);
+    }
+
 };
 
 
-/* ================= UPDATE FEES ================= */
+/* =========================================================
+   UPDATE TOTAL FEES ONLY
+   ========================================================= */
 
 function updateFees() {
 
-    var totalFees =
-        parseFloat(document.getElementById("totalFees").value) || 0;
+    var totalFeesElement =
+        document.getElementById("totalFees");
 
-    var scrutinyFees =
-        parseFloat(document.getElementById("scrutinyFees").value) || 0;
+    var modifyAmountElement =
+        document.getElementById("modifyAmount");
+
+    var feeActionElement =
+        document.getElementById("feeAction");
+
+    var updatedTotalFeesElement =
+        document.getElementById("updatedTotalFees");
+
+
+    var totalFees =
+        parseFloat(totalFeesElement.value) || 0;
 
     var modifyAmount =
-        parseFloat(document.getElementById("modifyAmount").value) || 0;
+        parseFloat(modifyAmountElement.value) || 0;
 
     var action =
-        document.getElementById("feeAction").value;
+        feeActionElement.value;
 
-    var updatedScrutiny = scrutinyFees;
 
-    var updatedTotal = totalFees;
+    var updatedTotal =
+        totalFees;
+
+
+    /* =====================================================
+       NO ACTION / NO AMOUNT
+       ===================================================== */
+
+    if (action === "" || modifyAmount <= 0) {
+
+        updatedTotalFeesElement.value =
+            totalFees.toFixed(2);
+
+        return;
+    }
+
+
+    /* =====================================================
+       INCREASE
+       ===================================================== */
 
     if (action === "increase") {
 
-        updatedScrutiny = scrutinyFees + modifyAmount;
-
-        updatedTotal = totalFees + modifyAmount;
+        updatedTotal =
+            totalFees + modifyAmount;
     }
+
+
+    /* =====================================================
+       DECREASE
+       ===================================================== */
 
     else if (action === "decrease") {
 
-        /* Total Fees should not become zero or negative */
+        /*
+         * Total Fees should not become
+         * zero or negative
+         */
 
         if ((totalFees - modifyAmount) <= 0) {
 
             alert("Total Fees cannot be zero or negative");
 
-            document.getElementById("modifyAmount").value = "";
+            modifyAmountElement.value = "";
 
-            document.getElementById("updatedScrutinyFees").value =
-                scrutinyFees.toFixed(2);
-
-            document.getElementById("updatedTotalFees").value =
+            updatedTotalFeesElement.value =
                 totalFees.toFixed(2);
 
             return;
         }
 
-        /* Scrutiny Fees should not become negative */
 
-        if ((scrutinyFees - modifyAmount) < 0) {
-
-            alert("Scrutiny Fees cannot be negative");
-
-            document.getElementById("modifyAmount").value = "";
-
-            document.getElementById("updatedScrutinyFees").value =
-                scrutinyFees.toFixed(2);
-
-            document.getElementById("updatedTotalFees").value =
-                totalFees.toFixed(2);
-
-            return;
-        }
-
-        updatedScrutiny = scrutinyFees - modifyAmount;
-
-        updatedTotal = totalFees - modifyAmount;
+        updatedTotal =
+            totalFees - modifyAmount;
     }
 
-    document.getElementById("updatedScrutinyFees").value =
-        updatedScrutiny.toFixed(2);
 
-    document.getElementById("updatedTotalFees").value =
+    /* =====================================================
+       SET UPDATED TOTAL
+       ===================================================== */
+
+    updatedTotalFeesElement.value =
         updatedTotal.toFixed(2);
+
 }
 
 
-/* ================= SAVE METHOD ================= */
+/* =========================================================
+   SAVE UPDATED FEES
+   ========================================================= */
 
 function saveUpdatedFees() {
 
     var fireId =
         document.getElementById("fireId").value;
+
     var rtiApplnId =
         document.getElementById("rtiApplnId").value;
 
-
     var remarks =
         document.getElementById("remarks").value;
-
-    var updatedScrutinyFees =
-        document.getElementById("updatedScrutinyFees").value;
 
     var updatedTotalFees =
         document.getElementById("updatedTotalFees").value;
 
 
-    /* Validation */
+    /* =====================================================
+       VALIDATION
+       ===================================================== */
 
     if (remarks.trim() === "") {
 
@@ -1652,8 +1711,8 @@ function saveUpdatedFees() {
         return false;
     }
 
-    if (updatedScrutinyFees === "" ||
-        updatedTotalFees === "") {
+
+    if (updatedTotalFees === "") {
 
         alert("Please update fees first");
 
@@ -1661,9 +1720,12 @@ function saveUpdatedFees() {
     }
 
 
-    /* Create Dynamic Form */
+    /* =====================================================
+       CREATE DYNAMIC FORM
+       ===================================================== */
 
-    var form = document.createElement("form");
+    var form =
+        document.createElement("form");
 
     form.method = "POST";
 
@@ -1671,7 +1733,9 @@ function saveUpdatedFees() {
         "${pageContext.request.contextPath}/rtsapplication/saveUpdatedFees.do";
 
 
-    /* fireId */
+    /* =====================================================
+       FIRE ID
+       ===================================================== */
 
     var hiddenFireId =
         document.createElement("input");
@@ -1684,7 +1748,10 @@ function saveUpdatedFees() {
 
     form.appendChild(hiddenFireId);
 
-    /* rtiApplnId */
+
+    /* =====================================================
+       RTI APPLICATION ID
+       ===================================================== */
 
     var hiddenRtiApplnId =
         document.createElement("input");
@@ -1697,7 +1764,10 @@ function saveUpdatedFees() {
 
     form.appendChild(hiddenRtiApplnId);
 
-    /* remarks */
+
+    /* =====================================================
+       REMARKS
+       ===================================================== */
 
     var hiddenRemarks =
         document.createElement("input");
@@ -1711,21 +1781,9 @@ function saveUpdatedFees() {
     form.appendChild(hiddenRemarks);
 
 
-    /* updatedScrutinyFees */
-
-    var hiddenScrutiny =
-        document.createElement("input");
-
-    hiddenScrutiny.type = "hidden";
-
-    hiddenScrutiny.name = "updatedScrutinyFees";
-
-    hiddenScrutiny.value = updatedScrutinyFees;
-
-    form.appendChild(hiddenScrutiny);
-
-
-    /* updatedTotalFees */
+    /* =====================================================
+       UPDATED TOTAL FEES
+       ===================================================== */
 
     var hiddenTotal =
         document.createElement("input");
@@ -1739,9 +1797,14 @@ function saveUpdatedFees() {
     form.appendChild(hiddenTotal);
 
 
+    /* =====================================================
+       SUBMIT
+       ===================================================== */
+
     document.body.appendChild(form);
 
     form.submit();
+
 }
 
 </script>
@@ -1818,6 +1881,15 @@ function saveUpdatedFees() {
     <c:when test="${fireDetail.fireFloorTypes == 39}">Basement 1</c:when>
     <c:when test="${fireDetail.fireFloorTypes == 40}">Basement 2</c:when>
     <c:when test="${fireDetail.fireFloorTypes == 41}">Basement 3</c:when>
+    
+    <c:when test="${fireDetail.fireFloorTypes == 42}">31th Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 43}">32th Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 44}">33th Floor</c:when>
+        <c:when test="${fireDetail.fireFloorTypes == 45}">34th Floor</c:when>
+        <c:when test="${fireDetail.fireFloorTypes == 46}">35th Floor</c:when>
+            <c:when test="${fireDetail.fireFloorTypes == 47}">Terrace</c:when>
+        
+    
 
     <c:otherwise></c:otherwise>
 </c:choose>
@@ -2233,8 +2305,8 @@ ${fireRecommendation.remarkforL2}
                                            
 
                                                     <c:if test="${requestScope.rtiApplication.workFlowStatus==2}">
-                                                        <td><span class="ClsLabel" style="font-size:14px">Certificate
-                                                                Upload: </span> </td>
+                                                        <td><span class="ClsLabel" style="font-size:14px">FIRE NOC:
+                                                                 </span> </td>
 															<%@include file="/pages/common-pages/dms/fileUpload.jsp" %>
                                                                 
                                                     </c:if>
