@@ -123,22 +123,9 @@ h3 {
 	font-weight: 500;
 }
 
-@page {
-	size: legal landscape; /* Landscape orientation for Legal size */
-}
 #tb22
 {
 	display : none;
-}
-@media print {
-	body {
-		transform: scale(0.9); /* Adjust the scale factor as needed */
-		transform-origin: center center;
-	}
-}
-
-@page {
-	size: auto;
 }
 
 .card {
@@ -162,6 +149,629 @@ h3 {
 
    
 </style>
+<style>
+.table-hover thead tr.tr-header th { background-color: #e5effa; }
+.table-hover tbody tr:nth-child(odd) { background-color: #fadbf1; }
+.table-hover tbody tr:nth-child(even) { background-color: #f4d2e7; }
+
+a {
+  display: inline-block;
+  padding: 1px 5px;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #afe6fa;
+}
+a:hover { background-color: #afe6fa; }
+a:active { background-color: rgb(248, 127, 234); }
+
+label { font-weight: 600; }
+h3 { font-weight: 500; }
+#tb22 { display: none; }
+
+.card { background-color: rgb(247, 251, 251); border-color: #f3fbfc; border-radius: 5%; }
+.card-body { color: #495057; }
+.form-control { border-color: #ced4da; }
+.form-control:focus {
+  border-color: #175ba3;
+  box-shadow: 0 0 0 0.2rem rgba(103, 138, 175, 0.25);
+}
+
+/* ---- PRINT FIXES ---- */
+
+</style>
+<!-- -PRINT STYLES-->
+<style>
+/* =========================================================
+   PRINT CSS - FIRE NOC FORM
+   A4 LANDSCAPE
+   ========================================================= */
+
+@page {
+    size: A4 landscape;
+    margin: 8mm;
+}
+
+@media print {
+
+    /* -----------------------------------------------------
+       BASIC PAGE RESET
+       ----------------------------------------------------- */
+
+    html,
+    body {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+        overflow: visible !important;
+    }
+
+    body {
+        font-family: Arial, "Noto Sans Devanagari", sans-serif !important;
+        font-size: 10px !important;
+        line-height: 1.25 !important;
+
+        /* DO NOT use transform or zoom on body */
+        transform: none !important;
+        zoom: 1 !important;
+
+        color: #000000 !important;
+    }
+
+
+    /* -----------------------------------------------------
+       HIDE NON-PRINT ELEMENTS
+       ----------------------------------------------------- */
+
+    .printMe,
+    #submit,
+    button,
+    input[type="submit"],
+    input[type="button"],
+    .btn,
+    .navbar,
+    .nav,
+    .sidebar,
+    .menu,
+    .footer,
+    .header-menu,
+    .dashboard-header,
+    .breadcrumb,
+    .modal,
+    .alert-dismissible,
+    .print-hide,
+    .print-hide-temp {
+        display: none !important;
+    }
+
+
+    /* -----------------------------------------------------
+       MAIN FORM
+       ----------------------------------------------------- */
+
+    form#\Fire\ Recommendation\ Letter,
+    form[name="Fire Recommendation Letter"],
+    #Fire\ Recommendation\ Letter {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        display: block !important;
+    }
+
+
+    /*
+       IMPORTANT:
+       Your original form container has width: 200vh.
+       Override it during print.
+    */
+
+    .print-form-container,
+    form .container-fluid,
+    form > .container-fluid {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+
+    /* -----------------------------------------------------
+       BOOTSTRAP CONTAINER FIX
+       ----------------------------------------------------- */
+
+    .container,
+    .container-fluid {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+    }
+
+
+    /* -----------------------------------------------------
+       BOOTSTRAP ROW FIX
+       ----------------------------------------------------- */
+
+    .row {
+        width: 100% !important;
+        max-width: 100% !important;
+
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+
+        display: flex !important;
+        flex-wrap: wrap !important;
+
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+
+    /* -----------------------------------------------------
+       COLUMN FIX
+       ----------------------------------------------------- */
+
+    .row > [class*="col-"] {
+        box-sizing: border-box !important;
+    }
+
+
+    /* -----------------------------------------------------
+       HEADINGS
+       ----------------------------------------------------- */
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: #000000 !important;
+
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    h2 {
+        font-size: 18px !important;
+        line-height: 1.25 !important;
+
+        text-align: center !important;
+
+        margin-top: 3mm !important;
+        margin-bottom: 4mm !important;
+    }
+
+    h3 {
+        font-size: 14px !important;
+    }
+
+    h6 {
+        font-size: 11px !important;
+
+        padding: 5px !important;
+        margin: 5px 0 !important;
+
+        background: #e5e5e5 !important;
+        border: 1px solid #999999 !important;
+    }
+
+
+    /* -----------------------------------------------------
+       LABELS
+       ----------------------------------------------------- */
+
+    label {
+        color: #000000 !important;
+        font-weight: 600 !important;
+
+        font-size: 9px !important;
+
+        margin-bottom: 2px !important;
+    }
+
+
+    /* -----------------------------------------------------
+       FORM CONTROLS
+       ----------------------------------------------------- */
+
+    .form-control,
+    .form-select,
+    select,
+    input,
+    textarea {
+        box-sizing: border-box !important;
+
+        width: 100% !important;
+        max-width: 100% !important;
+
+        min-height: 25px !important;
+        height: auto !important;
+
+        padding: 3px 5px !important;
+
+        font-size: 9px !important;
+        line-height: 1.2 !important;
+
+        color: #000000 !important;
+        background: #ffffff !important;
+
+        border: 1px solid #777777 !important;
+        border-radius: 2px !important;
+
+        box-shadow: none !important;
+    }
+
+
+    textarea {
+        min-height: 45px !important;
+        resize: none !important;
+    }
+
+
+    /*
+       Make disabled/read-only fields print normally.
+    */
+
+    input:disabled,
+    select:disabled,
+    textarea:disabled,
+    .form-control:disabled {
+        color: #000000 !important;
+        background: #ffffff !important;
+        opacity: 1 !important;
+    }
+
+
+    /* -----------------------------------------------------
+       TABLES
+       ----------------------------------------------------- */
+
+    table {
+        width: 100% !important;
+        max-width: 100% !important;
+
+        table-layout: fixed !important;
+
+        border-collapse: collapse !important;
+        border-spacing: 0 !important;
+
+        margin: 4px 0 !important;
+
+        font-size: 8.5px !important;
+
+        page-break-inside: auto;
+        break-inside: auto;
+    }
+
+
+    table thead {
+        display: table-header-group !important;
+    }
+
+
+    table tfoot {
+        display: table-footer-group !important;
+    }
+
+
+    table tr {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+
+    table th,
+    table td {
+        padding: 3px 4px !important;
+
+        border: 1px solid #555555 !important;
+
+        vertical-align: middle !important;
+
+        color: #000000 !important;
+
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+    }
+
+
+    table th {
+        font-weight: 700 !important;
+        background: #e5e5e5 !important;
+    }
+
+
+    /* -----------------------------------------------------
+       EXISTING TABLE COLORS
+       Convert them to printer-friendly grayscale
+       ----------------------------------------------------- */
+
+    .table-hover thead tr.tr-header th {
+        background-color: #e5e5e5 !important;
+        color: #000000 !important;
+    }
+
+    .table-hover tbody tr:nth-child(odd),
+    .table-hover tbody tr:nth-child(even) {
+        background-color: #ffffff !important;
+    }
+
+
+    /* -----------------------------------------------------
+       CARD
+       ----------------------------------------------------- */
+
+    .card {
+        width: 100% !important;
+        max-width: 100% !important;
+
+        margin: 0 0 5px 0 !important;
+        padding: 0 !important;
+
+        background: #ffffff !important;
+
+        border: 1px solid #777777 !important;
+        border-radius: 0 !important;
+
+        box-shadow: none !important;
+
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+
+    .card-body {
+        padding: 5px !important;
+        color: #000000 !important;
+    }
+
+
+    /* -----------------------------------------------------
+       SECTION HEADERS
+       ----------------------------------------------------- */
+
+    .rounded-2 {
+        border-radius: 0 !important;
+    }
+
+
+    /* -----------------------------------------------------
+       LINKS
+       ----------------------------------------------------- */
+
+    a {
+        color: #000000 !important;
+        background: transparent !important;
+
+        padding: 0 !important;
+
+        text-decoration: none !important;
+    }
+
+
+    /* -----------------------------------------------------
+       IMAGES
+       ----------------------------------------------------- */
+
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+
+    /* -----------------------------------------------------
+       SPACING
+       ----------------------------------------------------- */
+
+    .mt-1 {
+        margin-top: 2px !important;
+    }
+
+    .mt-2 {
+        margin-top: 3px !important;
+    }
+
+    .mt-3 {
+        margin-top: 4px !important;
+    }
+
+    .mt-4 {
+        margin-top: 5px !important;
+    }
+
+    .mb-1 {
+        margin-bottom: 2px !important;
+    }
+
+    .mb-2 {
+        margin-bottom: 3px !important;
+    }
+
+    .mb-3 {
+        margin-bottom: 4px !important;
+    }
+
+    .mb-4 {
+        margin-bottom: 5px !important;
+    }
+
+
+    /* -----------------------------------------------------
+       REMOVE LARGE EMPTY SPACE
+       ----------------------------------------------------- */
+
+    br {
+        display: none !important;
+    }
+
+
+    /* -----------------------------------------------------
+       PAGE BREAK CONTROL
+       ----------------------------------------------------- */
+
+    .print-section,
+    .card,
+    .row,
+    .form-group {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+
+    .page-break-before {
+        page-break-before: always !important;
+        break-before: page !important;
+    }
+
+
+    .page-break-after {
+        page-break-after: always !important;
+        break-after: page !important;
+    }
+
+
+    /* -----------------------------------------------------
+       DON'T BREAK IMPORTANT FORM GROUPS
+       ----------------------------------------------------- */
+
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    table,
+    thead {
+        page-break-after: avoid !important;
+    }
+
+
+    /* -----------------------------------------------------
+       PRINT COLORS
+       ----------------------------------------------------- */
+
+    *,
+    *::before,
+    *::after {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+
+    /* -----------------------------------------------------
+       REMOVE FOCUS / SHADOWS
+       ----------------------------------------------------- */
+
+    *:focus {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
+
+    /* -----------------------------------------------------
+       TEXT ALIGNMENT
+       ----------------------------------------------------- */
+
+    .text-center {
+        text-align: center !important;
+    }
+
+    .text-start {
+        text-align: left !important;
+    }
+
+    .text-end {
+        text-align: right !important;
+    }
+
+
+    /* -----------------------------------------------------
+       CHECKBOX / RADIO
+       ----------------------------------------------------- */
+
+    input[type="checkbox"],
+    input[type="radio"] {
+        width: auto !important;
+        min-height: auto !important;
+
+        margin-right: 3px !important;
+    }
+
+
+    /* -----------------------------------------------------
+       BUTTON AREA
+       ----------------------------------------------------- */
+
+    .text-center:has(.printMe) {
+        display: none !important;
+    }
+
+
+    /* -----------------------------------------------------
+       PREVENT HORIZONTAL OVERFLOW
+       ----------------------------------------------------- */
+
+    .table-responsive {
+        overflow: visible !important;
+        width: 100% !important;
+    }
+
+
+    /* -----------------------------------------------------
+       FORCE CONTENT TO STAY INSIDE PRINT PAGE
+       ----------------------------------------------------- */
+
+    .print-form-container * {
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+
+    /* -----------------------------------------------------
+       FINAL PRINT WIDTH
+       ----------------------------------------------------- */
+
+    #Fire\ Recommendation\ Letter,
+    .print-form-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+    }
+}
+
+@media print {
+
+    /* Hide all images from print */
+    img,
+    picture,
+    svg,
+    canvas {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    /* Specifically hide NMC / G20 header images */
+    .fire-noc-form img,
+    .fire-noc-form picture,
+    .fire-noc-form svg {
+        display: none !important;
+        visibility: hidden !important;
+    }
+}
+</style>
+
 
 </head>
 
@@ -172,13 +782,13 @@ h3 {
 
 	
 
-
-			<form name="Fire Recommendation Letter " action=""
-				id="Fire Recommendation Letter">
-				<div class="container-fluid mt-2" style="width: 200vh">
+<form name="Fire Recommendation Letter"
+      action=""
+      id="FireRecommendationLetter"
+      class="fire-noc-form">
+<div class="container-fluid mt-2 print-form-container"  style="width: 200vh">
 					<h2 style="text-align: center; font-weight: 500;">
-						<b>अग्निशमन ना-हरकत दाखला देणे (तात्पुरते)<br>(Provisional Fire Safety
-							Approval Certificate )</b>
+						<b>अग्निशमन ना-हरकत दाखला देणे (तात्पुरते)<br>(Temporary Fire NOC)</b>
 					</h2>
 
 
@@ -541,7 +1151,7 @@ h3 {
 									style="color: red;">*</span>
 								</label> <select id="typeOfBuilding" class="form-control"
 									style="height: 35px; background-image: none;"
-									onclick="feesCalculate();forSubType();showTypeBUilding()"
+									onchange="feesCalculate();forSubType();showTypeBUilding()"
 									name="typeOfBuilding" required>
 
 									<option value="" selected disabled>--- Select---</option>
@@ -629,7 +1239,7 @@ h3 {
 									style="color: red;">*</span>
 								</label> <select id="typeOfHeight" class="form-control"
 									style="height: 35px; background-image: none;"
-									name="typeOfHeight" onclick="feesCalculate();showHeight()" required>
+									name="typeOfHeight" onchange="feesCalculate();showHeight()" required>
 
 									<option value="" selected disabled>--- Select---</option>
 									<c:forEach var="fireBuildingHeight"
@@ -663,7 +1273,7 @@ h3 {
 									style="color: red;">*</span>
 								</label> <select class="form-control"
 									style="background-image: none;" name="typeOfConstruction" id="typeOfConstruction"
-									onclick="feesCalculate()" required>
+									onchange="feesCalculate()" required>
 									<option value="" selected disabled>--- Select---</option>
 									<c:forEach var="fireTypeOfConstruction"
 										items="${requestScope.fireTypeOfConstruction}">
@@ -1728,7 +2338,7 @@ required>
                                             class="txtCal" id="totalTabl" step="any" placeholder="Sq.mt"
                                             name="totalTabl[]" readonly></td>
                                             
-                                            <td><a href="javascript:void(0);" class="removeLastt" onclick="feesCalculate()">Remove</a></td>
+                                            <td><a href="javascript:void(0);" class="removeLastt" onchange="feesCalculate()">Remove</a></td>
                                 </tr>
                             </tbody>
                             <tfoot>
@@ -1946,6 +2556,8 @@ or the built-up area calculated in any other manner.)</p></div>
 						</div>
 					</div>
 				</div>
+	</div>
+	</div>
 	
 
 
