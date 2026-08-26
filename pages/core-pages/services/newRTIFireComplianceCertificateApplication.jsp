@@ -154,7 +154,6 @@ h3 {
 
 				<script>
 				function getFireRtsData() {
-				    alert("ji");
 				    var fireRtsId = $("#firertsid").val();
 
 				    $.ajax({
@@ -368,10 +367,13 @@ h3 {
 				<!-- 13. Width of approach road to the building premises (Auto-Fetched) -->
 				<div class="col-md-3">
 					<div class="mb-3 mt-3">
-						<label for="widthapproachroad" class="form-label lbleng">Width of approach road</label>
+						<label for="widthapproachroad" class="form-label lbleng">Width of approach road <span
+							class="text-danger" style="color: red;">*</span></label>
 						<input type="text" class="form-control" id="widthapproachroad"
 							style="background-image: none;" placeholder="" name="widthapproachroad"
-							value="" readonly>
+							value="" required>
+													<div class="invalid-feedback">Please Enter Valid Data</div>
+							
 					</div>
 				</div>
 
@@ -388,10 +390,13 @@ h3 {
 				<!-- 15. Number of floors (including basement floor) (Auto-Fetched) -->
 				<div class="col-md-3">
 					<div class="mb-3 mt-3">
-						<label for="numberoffloors" class="form-label lbleng">Number of floors (incl. basement)</label>
+						<label for="numberoffloors" class="form-label lbleng">Number of floors (incl. basement) <span
+							class="text-danger" style="color: red;">*</span></label>
 						<input type="text" class="form-control" id="numberoffloors"
 							style="background-image: none;" placeholder="" name="numberoffloors"
-							value="" readonly>
+							value="" required>
+																				<div class="invalid-feedback">Please Enter Valid Data</div>
+							
 					</div>
 				</div>
 
