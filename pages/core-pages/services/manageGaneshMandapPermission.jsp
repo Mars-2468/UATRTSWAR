@@ -286,7 +286,7 @@ input[type="text"], textarea {
 			<td colspan="2">
 
 					<input type="text" class="form-control" style="width: 180px;"
-						id="applicantTitle"  name="applicantTitle"
+						id="applicantTitle" ="50" name="applicantTitle"
 						value="<c:out value="${mandapPermission.title}"/>" disabled/>
 			</td>
 
@@ -799,6 +799,29 @@ input[type="text"], textarea {
 						<td>${mandapPermission.loudspeaker}</td>
 						
 						</tr>
+						
+						<!-- new -->
+						<tr>
+						<td>
+							<span class="ClsLabel" style="font-size: 12px !important;"><fmt:message key="The entrance shall have a minimum clear height of 4.5 m and width of 6.0 m. The access route shall be kept clear at all times for emergency movement of fire-fighting vehicles, without any obstruction, parking or storage." /> </span>
+							<span class="ClsLabel" style="font-size: 12px !important;">अग्निशमन वाहनासाठी प्रवेशमार्ग /प्रवेशद्वाराची उभी मोकळी उंची किमान 4.5 मी. व रुंदी किमान 6.0 मी. ठेवावी. अग्निशमन वाहनांच्या आपत्कालीन हालचालीसाठी प्रवेशमार्ग सदैव मोकळा ठेवावा व कोणताही अडथळा, पार्किंग किंवा साहित्य ठेवू नये.</span></td>
+						<td>${mandapPermission.parkingStorage}</td>
+						
+						</tr>
+						<tr>
+						<td>
+							<span class="ClsLabel" style="font-size: 12px !important;"><fmt:message key="All fabric/cloth used for the pandal shall be provided with approved Fire-Retardant Treatment/Paints/Solution. The relevant certificate/test report from a competent authority shall be kept available for inspection." /> </span>
+							<span class="ClsLabel" style="font-size: 12px !important;"> मंडपासाठी वापरण्यात येणाऱ्या सर्व कापडी आच्छादनास मान्यताप्राप्त अग्निरोधक (Fire Retardant Treatment) द्रावण/पेंटची फ़वारनी/ प्रक्रिया करण्यात यावी. सदर प्रक्रियेचे सक्षम संस्थेचे प्रमाणपत्र/चाचणी अहवाल तपासणीसाठी उपलब्ध ठेवावा.</span></td>
+						<td>${mandapPermission.pandal}</td>
+						
+						</tr>
+						<tr>
+						<td>
+							<span class="ClsLabel" style="font-size: 12px !important;"><fmt:message key="All electrical wiring and equipment installation shall be carried out by a Licensed Electrical Contractor as per applicable safety standards. An Electrical Safety/Installation Certificate shall be submitted to the Fire Department." /> </span>
+							<span class="ClsLabel" style="font-size: 12px !important;">मंडपातील संपूर्ण विद्युत वायरिंग व उपकरणांची स्थापना परवानाधारक विद्युत कंत्राटदारामार्फत लागू सुरक्षा मानकांनुसार करण्यात यावी. विद्युत सुरक्षिततेबाबतचे प्रमाणपत्र अग्निशमन विभागास सादर करणे बंधनकारक राहील.</span></td>
+						<td>${mandapPermission.electricalWiring}</td>
+						
+						</tr>
 
     </table>
 	
@@ -1034,7 +1057,7 @@ input[type="text"], textarea {
 						<td>
 		 <textarea
 					class="form-control" style="width: 400px" id="ploiceremarks"
-					maxlength="30" name="ploiceremarks" maxlength="80" readonly>${mandapPermission.ploiceremarks}</textarea>
+					maxlength="30" name="ploiceremarks" maxlength="80" >${mandapPermission.ploiceremarks}</textarea>
 			
 			</td></tr></c:if>
 
