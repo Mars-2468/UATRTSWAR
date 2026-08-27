@@ -72,21 +72,62 @@ label {
 
 h3 {
 	font-weight: 500;
-}
-@page {
-  size: legal landscape; /* Landscape orientation for Legal size */
+}@page {
+  size: legal landscape;
+  margin: 10mm;
 }
 @media print {
-  body {
-    transform: scale(0.9); /* Adjust the scale factor as needed */
-    transform-origin: center center;
+  body * {
+    visibility: hidden !important;
+  }
+  #printArea, #printArea * {
+    visibility: visible !important;
+  }
+  #printArea {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 10px !important;
   }
 
+  .btn, button, .modal, #myModal, .printMe, #submit, .no-print {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  #printArea img {
+    max-width: 120px !important;
+    max-height: 120px !important;
+    height: auto !important;
+    width: auto !important;
+  }
+
+  #printArea table, #printArea .table {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  /* Bootstrap's col-md-* classes only apply above a 768px breakpoint, which
+   the print page width does not reliably satisfy - so force the same
+   column widths explicitly here to stop fields stacking to full width. */
+#printArea .row {
+  display: flex !important;
+  flex-wrap: wrap !important;
+}
+#printArea [class*="col-"] {
+  box-sizing: border-box !important;
+}
+#printArea .col-md-3  { flex: 0 0 25%      !important; width: 25%      !important; max-width: 25%      !important; }
+#printArea .col-md-4  { flex: 0 0 33.3333% !important; width: 33.3333% !important; max-width: 33.3333% !important; }
+#printArea .col-md-5  { flex: 0 0 41.6667% !important; width: 41.6667% !important; max-width: 41.6667% !important; }
+#printArea .col-md-6  { flex: 0 0 50%      !important; width: 50%      !important; max-width: 50%      !important; }
+#printArea .col-md-10 { flex: 0 0 83.3333% !important; width: 83.3333% !important; max-width: 83.3333% !important; }
+#printArea .col-md-12 { flex: 0 0 100%     !important; width: 100%     !important; max-width: 100%     !important; }
 }
 
- @page {
-     size: auto ;
-     }
 </style>
 <style>
 
@@ -214,8 +255,7 @@ $(window).on('load', function(){
 
 	<form>
 	
-	
-		<div class="container-fluid mt-2" style="width: 180vh">
+	<div class="container-fluid mt-2" id="printArea" style="width: 180vh">
 			<div class="printable">
 				<h3 class="text-center">	<div class="class"><img src="<%=urls%>img/ganesh.png"></div>
 				
@@ -626,7 +666,7 @@ function validateTextarea() {
 								<div class="mb-3 mt-2">
 									<label for="" class="form-label ">From Date (या
 										तारखेपासून)<span class="text-danger" style="color: red;">*</span>
-									</label> <input type="date" class="form-control" id=""
+									</label> <input type="date" class="form-control" id="pavilionStartDate"
 										style="background-image: none;" placeholder=""
 										name="pavilionStartDate" value="" required>
 									<div class="invalid-feedback">Please Enter Valid From
@@ -637,16 +677,31 @@ function validateTextarea() {
 								<div class="mb-3 mt-2">
 									<label for="" class="form-label ">To Date (या
 										तारीखेपर्यंत)<span class="text-danger" style="color: red;">*</span>
-									</label> <input type="date" class="form-control" id=""
+									</label> <input type="date" class="form-control" id="pavilionEndDate"
 										style="background-image: none;" placeholder=""
 										name="pavilionEndDate" value="" required>
-									<div class="invalid-feedback">Please Enter Valid To Date.
+									<div class="invalid-feedback">To Date cannot be earlier than the From Date.
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+				<script>
+				$(document).ready(function() {
+					function validatePavilionDates() {
+						var startVal = $("#pavilionStartDate").val();
+						var endVal = $("#pavilionEndDate").val();
+						var endEl = document.getElementById("pavilionEndDate");
+						if (startVal && endVal && endVal < startVal) {
+							endEl.setCustomValidity("To Date cannot be earlier than the From Date.");
+						} else {
+							endEl.setCustomValidity("");
+						}
+					}
+					$("#pavilionStartDate, #pavilionEndDate").on("change input", validatePavilionDates);
+				});
+				</script>
 
 				
 									      <script>
@@ -686,11 +741,11 @@ function validateTextarea1() {
 					<div class="mb-3" style="margin-top:73px;">
 						<label for="" class="form-label lbleng">Ganesh idol Height (गणेशमूर्तीची उंची)
 						<span
-							class="text-danger">*</span></label> <input type="number"
-							class="form-control" 
+							class="text-danger">*</span></label> <input type="number" id="idolHeight"
+							class="form-control" min="1" max="50" step="0.01"
 							style="background-image: none;" name="height" value="" placeholder="ft."
 							maxlength="6" required>
-						<div class="invalid-feedback">Please Enter Valid Height.</div>
+						<div class="invalid-feedback">Please Enter a Valid Height (max 50 ft).</div>
 
 					</div>
 				</div>
@@ -708,11 +763,11 @@ function validateTextarea1() {
 								<div class="mb-3 mt-2">
 									<label for="" class="form-label"> Length (लांबी)<span
 										class="text-danger" style="color: red;">*</span>
-									</label> <input type="number" min="0" class="form-control" id="pavilionLength"
+									</label> <input type="number" min="1" max="500" step="0.01" class="form-control" id="pavilionLength"
 										style="background-image: none;" placeholder="ft."
 										name="pavilionLength" rows="4"
 										onchange="multiplyBy(this.form)" required></input>
-									<div class="invalid-feedback">Please Enter Valid Length.
+									<div class="invalid-feedback">Please Enter a Valid Length (max 500 ft).
 									</div>
 								</div>
 							</div>
@@ -721,11 +776,11 @@ function validateTextarea1() {
 								<div class="mb-3 mt-2">
 									<label for="" class="form-label"> Breadth (रुंदी)<span
 										class="text-danger" style="color: red;">*</span>
-									</label> <input type="number"  min="0" class="form-control" id="pavilionBreadth"
+									</label> <input type="number"  min="1" max="500" step="0.01" class="form-control" id="pavilionBreadth"
 										style="background-image: none;" placeholder="ft."
 										name="pavilionBreadth" rows="4"
 										onchange="multiplyBy(this.form)" required></input>
-									<div class="invalid-feedback">Please Enter Valid Breadth.
+									<div class="invalid-feedback">Please Enter a Valid Breadth (max 500 ft).
 									</div>
 								</div>
 							</div>
@@ -770,11 +825,11 @@ function validateTextarea1() {
 								<div class="mb-3 mt-2">
 									<label for="" class="form-label"> Length (लांबी)<span
 										class="text-danger" style="color: red;">*</span>
-									</label> <input type="number" min="0" class="form-control" id="advLength"
+									</label> <input type="number" min="1" max="50" step="0.01" class="form-control" id="advLength"
 										style="background-image: none;" placeholder="ft."
 										name="advLength" rows="4"
 										onchange="multiplyBy(this.form)" required></input>
-									<div class="invalid-feedback">Please Enter Valid Length.
+									<div class="invalid-feedback">Please Enter a Valid Length (max 50 ft).
 									</div>
 								</div>
 							</div>
@@ -783,11 +838,11 @@ function validateTextarea1() {
 								<div class="mb-3 mt-2">
 									<label for="" class="form-label"> Breadth (रुंदी)<span
 										class="text-danger" style="color: red;">*</span>
-									</label> <input type="number"  min="0" class="form-control" id="advBreadth"
+									</label> <input type="number"  min="1" max="50" step="0.01" class="form-control" id="advBreadth"
 										style="background-image: none;" placeholder="ft."
 										name="advBreadth" rows="4"
 										onchange="multiplyBy(this.form)" required></input>
-									<div class="invalid-feedback">Please Enter Valid Breadth.
+									<div class="invalid-feedback">Please Enter a Valid Breadth (max 50 ft).
 									</div>
 								</div>
 							</div>
@@ -822,11 +877,11 @@ function validateTextarea1() {
 								<div class="mb-3 mt-2">
 									<label for="" class="form-label"> Length (लांबी)<span
 										class="text-danger" style="color: red;">*</span>
-									</label> <input type="number" min="0" class="form-control" id="gateLength"
+									</label> <input type="number" min="1" max="50" step="0.01" class="form-control" id="gateLength"
 										style="background-image: none;" placeholder="ft."
 										name="gateLength" rows="4"
 										onchange="multiplyBy(this.form)" required></input>
-									<div class="invalid-feedback">Please Enter Valid Length.
+									<div class="invalid-feedback">Please Enter a Valid Length (max 50 ft).
 									</div>
 								</div>
 							</div>
@@ -835,11 +890,11 @@ function validateTextarea1() {
 								<div class="mb-3 mt-2">
 									<label for="" class="form-label"> Breadth (रुंदी)<span
 										class="text-danger" style="color: red;">*</span>
-									</label> <input type="number"  min="0" class="form-control" id="gateBreadth"
+									</label> <input type="number"  min="1" max="50" step="0.01" class="form-control" id="gateBreadth"
 										style="background-image: none;" placeholder="ft."
 										name="gateBreadth" rows="4"
 										onchange="multiplyBy(this.form)" required></input>
-									<div class="invalid-feedback">Please Enter Valid Breadth.
+									<div class="invalid-feedback">Please Enter a Valid Breadth (max 50 ft).
 									</div>
 								</div>
 							</div>
@@ -980,14 +1035,33 @@ document.getElementById('ganeshVisarjanSelect').addEventListener('change', funct
 					<div class="col-md-3">
 					<div class="mb-3 mt-5">
 						<label for="" class="form-label lbleng">Date of Ganapati immersion(गणपती  विसर्जनाची  तारीख)<span
-							class="text-danger">*</span></label> <input type="date"
+							class="text-danger">*</span></label> <input type="date" id="ganeshimmersion"
 							class="form-control" 
 							style="background-image: none;" name="ganeshimmersion" value=""
 							 required >
-						<div class="invalid-feedback">Please Enter Valid Date of Ganapati Immersion.</div>
+						<div class="invalid-feedback">Date of Ganapati Immersion cannot be a past date or before the Pavilion From Date.</div>
 
 					</div>
 				</div>
+				<script>
+				$(document).ready(function() {
+					var todayStr = new Date().toISOString().split('T')[0];
+					$("#ganeshimmersion").attr("min", todayStr);
+					function validateImmersionDate() {
+						var immersionVal = $("#ganeshimmersion").val();
+						var pavilionStartVal = $("#pavilionStartDate").val();
+						var el = document.getElementById("ganeshimmersion");
+						if (immersionVal && immersionVal < todayStr) {
+							el.setCustomValidity("Date of Ganapati Immersion cannot be a past date.");
+						} else if (immersionVal && pavilionStartVal && immersionVal < pavilionStartVal) {
+							el.setCustomValidity("Date of Ganapati Immersion cannot be before the Pavilion From Date.");
+						} else {
+							el.setCustomValidity("");
+						}
+					}
+					$("#ganeshimmersion, #pavilionStartDate").on("change input", validateImmersionDate);
+				});
+				</script>
 				
 				
 						<div class="col-md-3">
@@ -1015,7 +1089,7 @@ document.getElementById('ganeshVisarjanSelect').addEventListener('change', funct
 						<label for="" class="form-label">From Date (या तारखेपासून)<span class="text-danger"
 							style="color: red;">*</span>
 						</label> <input type="date" class="form-control"
-							style="background-image: none;" id="" placeholder=""
+							style="background-image: none;" id="soundingFromDate" placeholder=""
 							name="fromdate" value="" required>
 						<div class="invalid-feedback">Please enter a valid Sounding Permit Start date.</div>
 					</div>
@@ -1025,14 +1099,29 @@ document.getElementById('ganeshVisarjanSelect').addEventListener('change', funct
 						<label for="" class="form-label">To Date (या तारीखेपर्यंत)<span class="text-danger"
 							style="color: red;">*</span>
 						</label> <input type="date" class="form-control"
-							style="background-image: none;" id="" placeholder=""
+							style="background-image: none;" id="soundingToDate" placeholder=""
 							name="todate" value="" required>
-						<div class="invalid-feedback">Please enter a valid Sounding Permit End date.</div>
+						<div class="invalid-feedback">Sounding Permit End date cannot be earlier than the Start date.</div>
 					</div>
 				</div>
 						</div>
 					</div>
 				</div>
+				<script>
+				$(document).ready(function() {
+					function validateSoundingDates() {
+						var fromVal = $("#soundingFromDate").val();
+						var toVal = $("#soundingToDate").val();
+						var toEl = document.getElementById("soundingToDate");
+						if (fromVal && toVal && toVal < fromVal) {
+							toEl.setCustomValidity("Sounding Permit End date cannot be earlier than the Start date.");
+						} else {
+							toEl.setCustomValidity("");
+						}
+					}
+					$("#soundingFromDate, #soundingToDate").on("change input", validateSoundingDates);
+				});
+				</script>
 				
 				
 						<div class="col-md-3">
@@ -1289,7 +1378,7 @@ $(document).ready(function() {
           <tr>
           <td>
  <span class="me-3">Will the members of committee be trained for First-aid,  fire fighting equipment and safe evacuation of people in emergency situations?</span><br>
-          <span class="me-3">मंडपात इंधन प्रसादाकरिता स्वयंपाक घर तसेस फटाक्यांचा साथ करण्यात येणार आहे काय ?</span>
+          <span class="me-3">समितीच्या सदस्यांना प्रथमोपचार, अग्निशमन उपकरणांचा वापर तसेच आपत्कालीन परिस्थितीत लोकांना सुरक्षितपणे बाहेर काढण्याबाबत प्रशिक्षण देण्यात येणार आहे काय?</span>
           </td>
           <td>
             <div class="form-check form-check-inline">
@@ -1350,7 +1439,7 @@ $(document).ready(function() {
              <tr>
           <td>
           <span class="me-3">Will 2 Units of 5 kg fire extinguisher and 200 liter capacity water drum be kept in the mandap for fire fighting?</span><br>
-          <span class="me-3"> अग्निशमन  करीत २ नग ५ किलो   फायर एक्स्टिंगशूर तसेच २०० लिटर क्षमतेचे पाण्याचे ?</span>
+          <span class="me-3">अग्निशमनासाठी मंडपात ५ किलो क्षमतेचे A B C प्रकारचे २ नग अग्निशामक तसेच २०० लिटर क्षमतेचे पाण्याचे ड्रम ठेवण्यात येणार आहेत काय?</span>
           </td>
           <td>
             <div class="form-check form-check-inline">
@@ -1472,11 +1561,11 @@ $(document).ready(function() {
 				
 					<div class="col-md-5">
 					<div class="mb-3 mt-0">
-						<label for="" class="form-label"> Affidavit as per High Court order<br>(मा. उच्च न्यायालयाच्या नागपुर खडंपीठ आदेशानुसार प्रतिज्ञापत्र)  <a class="fa fa-download"
+						<label for="" class="form-label"> Affidavit as per High Court order<br>(मा. उच्च न्यायालयाच्या नागपुर खडंपीठ आदेशानुसार प्रतिज्ञापत्र) <a class="fa fa-download"
 							onClick="downloadFile2()" style="color: blue;"> </a>
 						</label> <input type="file" class="form-control"
 							style="background-image: none;" id="doc3" placeholder=""
-							name="letterOfGuarantee" accept=".pdf">
+							name="letterOfGuarantee" accept=".pdf" >
 						<div class="invalid-feedback">File selected is either
 							greater than 2Mb or not of type .pdf.</div>
 
