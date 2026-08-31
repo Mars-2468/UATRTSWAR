@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2025-08-11T16:47:41 -->
+<!-- 2026-08-28T16:34:31 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ZoneCertificate" pageWidth="595" pageHeight="1200" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" isIgnorePagination="true" uuid="604a6bc3-ae55-4fb3-995f-76c562a21e2b">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -33,7 +33,7 @@
 		<band/>
 	</background>
 	<title>
-		<band height="880">
+		<band height="1018">
 			<frame>
 				<reportElement x="0" y="249" width="552" height="151" uuid="7e57a7c4-b57e-4da8-b207-59167f168c99"/>
 				<staticText>
@@ -212,7 +212,7 @@ String.format("%02d", (java.util.Calendar.getInstance().get(java.util.Calendar.Y
 				<text><![CDATA[ अर्जात दिलेल्या माहितीप्रमाणे आपले नियोजित तात्पुरते मंडपाचे क्षेत्रफळ लक्षात घेता महाराष्ट्र आग प्रतिबंधक व जिवसंरक्षक उपाययोजना अधिनियम २००६ व सुधारणा अधिनियम २०२३ तथा भारतीय राष्ट्रीय इमारत संहिता २०१६ च्या कलम ३.२.५ च्या तरतुदीनुसार तात्पुरते मंडपाच्या उभारणीकरीता किमान आग प्रतिबंधक व जिवसंरक्षक उपाययोजना करणे बंधनकारक आहे.]]></text>
 			</staticText>
 			<frame>
-				<reportElement x="-3" y="490" width="560" height="250" uuid="efbeb058-2e4a-4202-ba62-f721c057322c"/>
+				<reportElement x="-3" y="490" width="560" height="432" uuid="efbeb058-2e4a-4202-ba62-f721c057322c"/>
 				<staticText>
 					<reportElement x="31" y="8" width="526" height="40" uuid="9b2b252a-ad15-4799-8000-0365bb460c6d"/>
 					<textElement textAlignment="Left">
@@ -291,15 +291,73 @@ String.format("%02d", (java.util.Calendar.getInstance().get(java.util.Calendar.Y
 					<text><![CDATA[सर्व विद्युत उपकरणे हे आय.एस.एय मार्क चे व योग्य क्षमतेचे असावेत तसेच स्वयंचलीत विद्युत खंडित यंत्रणा (ELCB,MCB) उपाययोजना करण्यात यावी.]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="30" y="189" width="529" height="40" uuid="f162b591-2cc4-4d94-bc1f-9b1e1ef04301"/>
+					<reportElement x="30" y="380" width="529" height="52" uuid="f162b591-2cc4-4d94-bc1f-9b1e1ef04301"/>
 					<textElement textAlignment="Justified">
 						<font fontName="Arial Unicode MS" size="12"/>
 					</textElement>
 					<text><![CDATA[वरीलप्रमाणे आग प्रतिबंधक व जिवसंरक्षक उपाययोजना करण्याच्या अटीवर सशर्त आग संरक्षक मान्यता प्रमाणपत्र निर्गमित करण्यात येत आहे.]]></text>
 				</staticText>
+				<staticText>
+					<reportElement x="3" y="185" width="25" height="20" uuid="fab788f5-c4e2-48c1-8aa8-9eb86e4d2864">
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font fontName="Arial Unicode MS" size="12"/>
+					</textElement>
+					<text><![CDATA[६)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="3" y="222" width="25" height="20" uuid="6502551d-6549-4193-90ca-743a6a02fe4d"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial Unicode MS" size="12"/>
+					</textElement>
+					<text><![CDATA[७)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="3" y="274" width="25" height="20" uuid="b28129c3-2b07-441f-b802-aeccf96fc128"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial Unicode MS" size="12"/>
+					</textElement>
+					<text><![CDATA[८)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="30" y="184" width="530" height="36" uuid="095deb3e-7d11-46c9-8393-3919aa818d29"/>
+					<textElement>
+						<font fontName="Arial Unicode MS" size="12"/>
+					</textElement>
+					<text><![CDATA[अग्निशमन वाहनासाठी प्रवेशमार्ग /प्रवेशद्वाराची उभी मोकळी उंची किमान 4.5 मी. व रुंदी किमान 6.0 मी. ठेवण्यात यावी. ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="30" y="221" width="530" height="49" uuid="0a4b862b-89cb-4912-b79f-1803414adcd6"/>
+					<textElement>
+						<font fontName="Arial Unicode MS" size="12"/>
+					</textElement>
+					<text><![CDATA[अग्निशमन वाहनांच्या आपत्कालीन हालचालीसाठी प्रवेशमार्ग सदैव मोकळा ठेवावा व कोणताही अडथळा, पार्किंग किंवा साहित्य ठेवू नये.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="30" y="272" width="530" height="48" uuid="1b12ed4b-ca2e-4cc9-9e45-6d0273560ab5"/>
+					<textElement>
+						<font fontName="Arial Unicode MS" size="12"/>
+					</textElement>
+					<text><![CDATA[मंडपासाठी वापरण्यात येणाऱ्या सर्व कापडी आच्छादनास मान्यताप्राप्त अग्निरोधक (Fire Retardant Treatment) द्रावण/पेंटची फ़वारनी/ प्रक्रिया करण्यात यावी. ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="30" y="323" width="530" height="48" uuid="4e960d37-a9f5-4459-b62c-03050f11a4e6"/>
+					<textElement>
+						<font fontName="Arial Unicode MS" size="12"/>
+					</textElement>
+					<text><![CDATA[मंडपातील संपूर्ण विद्युत वायरिंग व उपकरणांची स्थापना परवानाधारक विद्युत कंत्राटदारामार्फत लागू सुरक्षा मानकांनुसार करण्यात यावी.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="3" y="329" width="25" height="20" uuid="779c316a-eb40-4dbf-9093-26ba717e9237"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial Unicode MS" size="12"/>
+					</textElement>
+					<text><![CDATA[९)]]></text>
+				</staticText>
 			</frame>
 			<staticText>
-				<reportElement x="274" y="820" width="281" height="60" uuid="94bd6ef7-f2dc-48c9-91ab-b23b6b0dfdff"/>
+				<reportElement x="274" y="958" width="281" height="60" uuid="94bd6ef7-f2dc-48c9-91ab-b23b6b0dfdff"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial Unicode MS" size="14"/>
 				</textElement>

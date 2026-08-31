@@ -1518,8 +1518,9 @@ $(document).ready(function() {
         <!-- new -->
          <tr>
           <td>
-            <span class="me-3">The entrance shall have a minimum clear height of 4.5 m and width of 6.0 m. The access route shall be kept clear at all times for emergency movement of fire-fighting vehicles, without any obstruction, parking or storage.</span><br>
-            <span class="me-3">अग्निशमन वाहनासाठी प्रवेशमार्ग /प्रवेशद्वाराची उभी मोकळी उंची किमान 4.5 मी. व रुंदी किमान 6.0 मी. ठेवावी. अग्निशमन वाहनांच्या आपत्कालीन हालचालीसाठी प्रवेशमार्ग सदैव मोकळा ठेवावा व कोणताही अडथळा, पार्किंग किंवा साहित्य ठेवू नये.</span>
+            <span class="me-3">Has all electrical wiring and equipment installation in the pandal been carried out by a Licensed Electrical Contractor as per applicable safety standards?</span><br>
+            <span class="me-3">मंडपातील संपूर्ण विद्युत वायरिंग व उपकरणांची स्थापना परवानाधारक विद्युत कंत्राटदारामार्फत लागू सुरक्षा मानकांनुसार करण्यात आले आहे का?
+            </span>
           </td>
           <td>
             <div class="form-check form-check-inline">
@@ -1537,8 +1538,8 @@ $(document).ready(function() {
         
          <tr>
           <td>
-            <span class="me-3">All fabric/cloth used for the pandal shall be provided with approved Fire-Retardant Treatment/Paints/Solution. The relevant certificate/test report from a competent authority shall be kept available for inspection.</span><br>
-            <span class="me-3">मंडपासाठी वापरण्यात येणाऱ्या सर्व कापडी आच्छादनास मान्यताप्राप्त अग्निरोधक (Fire Retardant Treatment) द्रावण/पेंटची फ़वारनी/ प्रक्रिया करण्यात यावी. सदर प्रक्रियेचे सक्षम संस्थेचे प्रमाणपत्र/चाचणी अहवाल तपासणीसाठी उपलब्ध ठेवावा.</span>
+            <span class="me-3">Has approved Fire-Retardant Treatment been provided to all fabric/cloth used for the pandal?</span><br>
+            <span class="me-3">मंडपासाठी वापरण्यात आलेल्या सर्व कापडी आच्छादनास मान्यताप्राप्त Fire-Retardant Treatment करण्यात आले आहे का?</span>
           </td>
           <td>
             <div class="form-check form-check-inline">
@@ -1556,8 +1557,8 @@ $(document).ready(function() {
         
          <tr>
           <td>
-            <span class="me-3">All electrical wiring and equipment installation shall be carried out by a Licensed Electrical Contractor as per applicable safety standards. An Electrical Safety/Installation Certificate shall be submitted to the Fire Department.</span><br>
-            <span class="me-3">मंडपातील संपूर्ण विद्युत वायरिंग व उपकरणांची स्थापना परवानाधारक विद्युत कंत्राटदारामार्फत लागू सुरक्षा मानकांनुसार करण्यात यावी. विद्युत सुरक्षिततेबाबतचे प्रमाणपत्र अग्निशमन विभागास सादर करणे बंधनकारक राहील.</span>
+            <span class="me-3">Is the entrance for fire-fighting vehicles provided with a minimum clear height of 4.5 m and width of 6.0 m, and is the access route kept clear at all times for emergency movement?</span><br>
+            <span class="me-3">अग्निशमन वाहनासाठी प्रवेशद्वाराची उभी मोकळी उंची किमान 4.5 मी. व रुंदी किमान 6.0 मी. असून, आपत्कालीन हालचालीसाठी प्रवेशमार्ग सदैव मोकळा ठेवण्यात आला आहे का?</span>
           </td>
           <td>
             <div class="form-check form-check-inline">
