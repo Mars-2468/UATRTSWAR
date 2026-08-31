@@ -88,7 +88,10 @@ if(departmentId == 1){
 
 
 %>
-
+<%
+	boolean isEstateDeptUser = (departmentId != null && departmentId == 8);
+	pageContext.setAttribute("isEstateDeptUser", isEstateDeptUser);
+%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -637,8 +640,8 @@ String registrationToDate = request.getParameter("registrationToDate");
                 servicesSelect.append('<option value="">Select Service</option>');
            
                 servicesSelect.append('<option value="93">Temporary Fireworks License NOC</option>');
-                servicesSelect.append('<option value="69">Provisional Fire Safety Approval Certificate</option>');
-                servicesSelect.append('<option value="70">Final Fire Safety Approval Certificate</option>');
+                servicesSelect.append('<option value="69">Temporary Fire NOC</option>');
+                servicesSelect.append('<option value="70">Final Fire NOC</option>');
 
 
             } else if (department === 'ESTATE-DEPARTMENT') {
@@ -711,8 +714,7 @@ String registrationToDate = request.getParameter("registrationToDate");
 
 			
 <c:choose>
-<c:when test="${services ne 23 and not empty services and not empty departments and departments eq 'ESTATE-DEPARTMENT'}">
-    
+<c:when test="${(services ne 23 and not empty services and not empty departments and departments eq 'ESTATE-DEPARTMENT') or isEstateDeptUser}">    
     
 			    						
 <div id="dashData">
@@ -906,7 +908,9 @@ String registrationToDate = request.getParameter("registrationToDate");
 <div class="columnswater-department-style" id="Totalfees" onclick="getListOnCategory(this.id)">
   <ul class="pricewater">
     <li class="headerwater" style="background-color:#4CAF50">Total Fees<br>(In Rs.)</li>
-    <li class="greywater">${Totalfees}</li>
+    <!-- <li class="greywater">${Totalfees}</li>-->
+            <li class="greywater"><c:set var="tfWater" value="${Totalfees}"/><%= fmtIndianAmount(pageContext.getAttribute("tfWater")) %></li>
+    
     
   </ul>
 </div>
@@ -1030,20 +1034,20 @@ String registrationToDate = request.getParameter("registrationToDate");
 					</td>
 					
 						
-					
-					<c:if test="${not empty departments and departments eq 'ESTATE-DEPARTMENT' and services ne 23 and not empty services}">
+					<c:if test="${(services ne 23 and not empty services and not empty departments and departments eq 'ESTATE-DEPARTMENT') or isEstateDeptUser}">
 				
             <td style="width: 20%;" onclick="javascript:resort('inWardNumber');">
                 Police NOC<span id="upper(inWardNumber)"></span>
             </td>
             </c:if>
-					<c:if test="${not empty departments and departments eq 'ESTATE-DEPARTMENT' and services ne 23 and not empty services}">
+            <c:if test="${(services ne 23 and not empty services and not empty departments and departments eq 'ESTATE-DEPARTMENT') or isEstateDeptUser}">
             
             <td style="width: 20%;" onclick="javascript:resort('inWardNumber');">
                 Traffic NOC<span id="upper(inWardNumber)"></span>
             </td>
             </c:if>
-					<c:if test="${not empty departments and departments eq 'ESTATE-DEPARTMENT' and services ne 23 and not empty services}">
+            
+					<c:if test="${(services ne 23 and not empty services and not empty departments and departments eq 'ESTATE-DEPARTMENT') or isEstateDeptUser}">
             
             <td style="width: 20%;" onclick="javascript:resort('inWardNumber');">
                 Fire NOC<span id="upper(inWardNumber)"></span>
@@ -1139,7 +1143,7 @@ String registrationToDate = request.getParameter("registrationToDate");
 </td>
 
 
-					<c:if test="${not empty departments and departments eq 'ESTATE-DEPARTMENT' and services ne 23 and not empty services}">
+	<c:if test="${(services ne 23 and not empty services and not empty departments and departments eq 'ESTATE-DEPARTMENT') or isEstateDeptUser}">
 
 <td>
   <c:choose>
@@ -1152,8 +1156,7 @@ String registrationToDate = request.getParameter("registrationToDate");
   </c:choose>
 </td>
 </c:if>
-					<c:if test="${not empty departments and departments eq 'ESTATE-DEPARTMENT' and services ne 23 and not empty services}">
-
+<c:if test="${(services ne 23 and not empty services and not empty departments and departments eq 'ESTATE-DEPARTMENT') or isEstateDeptUser}">
 <td>
   <c:choose>
     <c:when test="${not empty rtiApplnList.trafficNoc}">
@@ -1165,8 +1168,7 @@ String registrationToDate = request.getParameter("registrationToDate");
   </c:choose>
 </td>
 </c:if>
-					<c:if test="${not empty departments and departments eq 'ESTATE-DEPARTMENT' and services ne 23 and not empty services}">
-
+<c:if test="${(services ne 23 and not empty services and not empty departments and departments eq 'ESTATE-DEPARTMENT') or isEstateDeptUser}">
 <td>
   <c:choose>
     <c:when test="${not empty rtiApplnList.fireNoc}">
