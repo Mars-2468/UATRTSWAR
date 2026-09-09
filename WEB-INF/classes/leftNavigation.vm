@@ -513,6 +513,24 @@ Temporary Fireworks License NOC")</a></li>
 					  </div>	
 					</li>
 					#end
+					
+					#if ($rolesPermissions.containsKey("/workflowtemplate/") || 
+						$rolesPermissions.containsKey("/workflowtemplateusermapping/") )
+					<li class="sidebar-dropdown">
+					   <a href="#">
+						 <i class="icon-settings"></i>
+						 <span class="menu-text">$messageSource.getMessage("Offline Collection")</span>
+					   </a>
+                      <div class="sidebar-submenu"> 
+					    <ul>
+							
+							
+							<li id="user"><a href="$contextRoot/rtsapplication/searchApplicaationId.do">$messageSource.getMessage("Collection")</a></li>	
+								
+						</ul>
+					  </div>	
+					</li>
+					#end
 							
 				#*	<li class="sidebar-dropdown">
 					   <a href="#">
@@ -582,29 +600,15 @@ Temporary Fireworks License NOC")</a></li>
 														<li id="user"><a href="$contextRoot/rtsapplication/durgaUtsavReport.do">$messageSource.getMessage("Durga Utsav Report")</a></li>
 														
 							<li id="report4"><a href="$contextRoot/rtiapplication/listStatueCleaning.do">$messageSource.getMessage("Statue Cleaning Report")</a></li>
+							<li id="user"><a href="$contextRoot/rtsapplication/listAuditReports.do">Other Reports</a></li>
 						
 					  </div>	
-													<li id="user"><a href="$contextRoot/rtsapplication/listAuditReports.do">Reports</a></li>
 
 						</ul>
 					  </div>	
 					</li>
 										#end
-					#*
-					<li class="sidebar-dropdown">
-					   <a href="#">
-						 <i class="icon-settings"></i>
-						 <span class="menu-text">$messageSource.getMessage("Offline Collection")</span>
-					   </a>
-                      <div class="sidebar-submenu">
-					    <ul>
-							
-							<li id="user"><a href="$contextRoot/rtsapplication/searchApplicaationId.do">$messageSource.getMessage("Collection")</a></li>	
-							
-						</ul>
-					  </div>	
-					</li>
-						*#	
+					
 							
 				</ul>
 				
