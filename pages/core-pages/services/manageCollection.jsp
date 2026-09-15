@@ -14,6 +14,65 @@
             display: none;
         }
     </style>
+    <style>
+    body {
+        background: #f4f6f9;
+        font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    .hidden {
+        display: none;
+    }
+    .container {
+        max-width: 600px;
+        background: #ffffff;
+        margin-top: 40px;
+        padding: 30px 35px;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    h1 {
+        font-size: 1.6rem;
+        color: #2c3e50;
+        margin-bottom: 25px;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 12px;
+    }
+    .form-group label {
+        font-weight: 600;
+        color: #34495e;
+        margin-bottom: 6px;
+    }
+    .form-control {
+        border-radius: 6px;
+        border: 1px solid #ccd6e0;
+        padding: 10px 12px;
+        height: auto;
+    }
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0,123,255,.15);
+    }
+    #amount {
+        font-weight: 700;
+        color: #1a7d3a;
+        background-color: #f0fdf4 !important;
+    }
+    .btn-primary {
+        background: #007bff;
+        border: none;
+        padding: 10px 28px;
+        border-radius: 6px;
+        font-weight: 600;
+        margin-top: 10px;
+        transition: background 0.2s ease-in-out;
+    }
+    .btn-primary:hover {
+        background: #0056b3;
+    }
+    .invalid-feedback {
+        font-size: 0.85rem;
+    }
+</style>
     <%
 	HttpSession session1 = request.getSession();
 	SessionUser sessionUser = (SessionUser) session1.getAttribute("SessionUser");
@@ -100,10 +159,17 @@ if(departmentId == 1){
             </div>
             
             <div class="form-group">
+    <label for="amount">Amount</label>
+    <input type="text" class="form-control" id="amount" name="amount" style="background-image: none;" required readonly>
+    <input type="hidden" id="amountRaw" name="amountRaw" value="${amount}">
+    <div class="invalid-feedback">Please provide the amount.</div>
+</div>
+
+           <!--   <div class="form-group">
                 <label for="amount">Amount</label>
                 <input type="number" class="form-control" id="amount" name="amount" value="${amount}" style="background-image: none;" required disabled>
                 <div class="invalid-feedback">Please provide the amount.</div>
-            </div>
+            </div>-->
 		 			<input type="hidden" name="user_id" id="user_id" value="<%= user_id %>">
 		 			<input type="hidden" name="user_name" id="user_name" value="<%= firstname+" "+lastname %>">
 		 			<input type="hidden" name="user_dept" id="user_dept" value="<%= departmentname %>">
@@ -116,6 +182,32 @@ if(departmentId == 1){
     </div>
 
    <script>
+// Format a number the Indian way: 2,45,000.00 (decimals truncated, not rounded)
+   function formatIndianCurrency(value) {
+       if (value === null || value === undefined || value === "" || isNaN(value)) {
+           return "0.00";
+       }
+       // Truncate decimals (6000.68 -> 6000, 6000.25 -> 6000)
+       var intPart = Math.trunc(Number(value)).toString();
+       var isNegative = intPart.startsWith('-');
+       if (isNegative) intPart = intPart.substring(1);
+
+       var lastThree = intPart.substring(intPart.length - 3);
+       var otherNumbers = intPart.substring(0, intPart.length - 3);
+       if (otherNumbers !== '') {
+           lastThree = ',' + lastThree;
+       }
+       var formatted = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
+
+       return (isNegative ? '-' : '') + formatted + '.00';
+   }
+
+   // Apply formatting once the page loads
+   document.addEventListener('DOMContentLoaded', function() {
+       var rawAmount = document.getElementById('amountRaw').value;
+       document.getElementById('amount').value = formatIndianCurrency(rawAmount);
+   });
+   
     document.getElementById('paymentMode').addEventListener('change', function() {
         const paymentMode = this.value;
         const chequeDDRTGSDetails = document.getElementById('chequeDDRTGSDetails');

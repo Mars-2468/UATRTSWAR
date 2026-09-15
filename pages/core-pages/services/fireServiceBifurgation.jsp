@@ -635,9 +635,73 @@ html, body {
         flex-basis: 100%;
     }
 }
+
+#SetFormHeight .fire-global-search {
+    margin-top: 10px;
+}
+
+#SetFormHeight .global-search-input {
+    all: revert;
+    width: 100%;
+    font: inherit !important;
+    font-size: 13px !important;
+    padding: 7px 11px !important;
+    border-radius: 6px !important;
+    border: 1px solid rgba(255,255,255,0.35) !important;
+    background: rgba(255,255,255,0.12) !important;
+    color: #ffffff !important;
+}
+#SetFormHeight .global-search-input::placeholder { color: #cfe0f0; }
+#SetFormHeight .global-search-input:focus {
+    outline: none;
+    border-color: #ffce85 !important;
+    background: rgba(255,255,255,0.18) !important;
+}
+
+#SetFormHeight .global-search-hint {
+    display: block;
+    margin-top: 6px;
+    font-size: 11.5px;
+    color: #ffce85;
+}
 </style>
 
 <script type="text/javascript">
+function globalSearchApplications(query) {
+    var sectionMap = {
+        totalTable: 'totalSection',
+        citizenTable: 'citizenSection',
+        forwardedTable: 'forwardedSection',
+        l1Table: 'l1Section',
+        completedTable: 'completedSection'
+    };
+
+    query = (query || '').trim();
+    var totalMatches = 0;
+    var firstMatchSection = null;
+
+    Object.keys(sectionMap).forEach(function (tableId) {
+        filterTable(tableId, query);
+
+        // keep the per-section box in sync so it doesn't look "stuck"
+        var sectionInput = document.getElementById(tableId.replace('Table', 'SearchInput'));
+        if (sectionInput) sectionInput.value = query;
+
+        var state = tablePaginationState[tableId];
+        var count = state ? state.filteredRows.length : 0;
+        totalMatches += count;
+        if (count > 0 && !firstMatchSection) firstMatchSection = sectionMap[tableId];
+    });
+
+    var hint = document.getElementById('globalSearchHint');
+    if (!query) {
+        if (hint) hint.textContent = '';
+        return;
+    }
+    if (hint) hint.textContent = totalMatches + ' match(es) found';
+
+    if (firstMatchSection) openSection(firstMatchSection);
+}
 function editRTIApplication(refId, id) {
     document.getElementById('rtiApplicationRefId').value = refId;
     document.getElementById('rtiApplicationId').value = id;
@@ -779,12 +843,6 @@ function printTable(tableId, titleText) {
     }, 300);
 }
 
-/* ---------- Client-side pagination + search for the data tables ----------
-   Each dataGrid's FULL row set is rendered by the server (see the
-   controller fix). This script keeps that full row set in memory per
-   table, applies an optional text filter, and only ever displays one
-   "page" of the (possibly filtered) rows at a time so the pagination
-   count and the summary-card count always agree. */
 var tablePaginationState = {};
 
 function initTablePagination(pageSize) {
@@ -932,6 +990,13 @@ window.addEventListener("DOMContentLoaded", function () {
         <div class="fire-total-box">
             <span class="label">Total Records</span>
             <span class="value"><c:out value="${requestScope.totalCount}" /></span>
+
+            <div class="fire-global-search">
+                <input type="text" id="globalSearchInput" class="global-search-input"
+                       placeholder="Search all applications..."
+                       oninput="globalSearchApplications(this.value)" />
+                <span class="global-search-hint" id="globalSearchHint"></span>
+            </div>
         </div>
     </div>
 
@@ -1060,7 +1125,7 @@ window.addEventListener("DOMContentLoaded", function () {
                                 <td>Applicant Name</td>
                                 <td>Scrutiny Fee</td>
                                 <td>Scrutiny Transaction ID</td>
-                                <td>Demand Fee Status</td>
+                                <td>Demand Fee & Status</td>
                                 <td>Demand Transaction ID</td>
                                 <td>Application Status</td>
                                 <td>Current Zone</td>
@@ -1099,10 +1164,14 @@ window.addEventListener("DOMContentLoaded", function () {
                                         <!-- Scrutiny Transaction -->
                                         <td>
                                             <c:set var="txnFound" value="false"/>
+                                            <fmt:formatNumber value="${item.application.firstPaymentFees}" pattern="0" groupingUsed="false" var="targetScrutinyAmt"/>
                                             <c:forEach var="payment" items="${paymentMap[item.application.rtiApplicationId]}">
-                                                <c:if test="${payment.amount == item.application.firstPaymentFees}">
-                                                    <c:out value="${payment.uniqPgid}"/>
-                                                    <c:set var="txnFound" value="true"/>
+                                                <c:if test="${!txnFound}">
+                                                    <fmt:formatNumber value="${payment.amount}" pattern="0" groupingUsed="false" var="paymentRoundedAmt"/>
+                                                    <c:if test="${paymentRoundedAmt eq targetScrutinyAmt and (empty payment.status or payment.status eq '2')}">
+                                                        <c:out value="${payment.uniqPgid}"/>
+                                                        <c:set var="txnFound" value="true"/>
+                                                    </c:if>
                                                 </c:if>
                                             </c:forEach>
                                             <c:if test="${!txnFound}">-</c:if>
@@ -1110,6 +1179,10 @@ window.addEventListener("DOMContentLoaded", function () {
 
                                         <!-- Demand Fee Status -->
                                         <td>
+                                          
+                                            <c:set var="rawAmt" value="${item.application.applicationCost}"/>
+                                            <%= fmtIndianAmount(pageContext.getAttribute("rawAmt")) %>
+                                        
                                             <c:choose>
                                                 <c:when test="${item.application.workFlowStatus==1 || item.application.workFlowStatus==2}">
                                                     <span class="status-badge">Paid</span>
@@ -1123,10 +1196,14 @@ window.addEventListener("DOMContentLoaded", function () {
                                         <!-- Demand Transaction -->
                                         <td>
                                             <c:set var="txnFound" value="false"/>
+                                            <fmt:formatNumber value="${item.application.applicationCost}" pattern="0" groupingUsed="false" var="targetDemandAmt"/>
                                             <c:forEach var="payment" items="${paymentMap[item.application.rtiApplicationId]}">
-                                                <c:if test="${payment.amount==item.application.applicationCost}">
-                                                    <c:out value="${payment.uniqPgid}"/>
-                                                    <c:set var="txnFound" value="true"/>
+                                                <c:if test="${!txnFound}">
+                                                    <fmt:formatNumber value="${payment.amount}" pattern="0" groupingUsed="false" var="paymentRoundedAmt"/>
+                                                    <c:if test="${paymentRoundedAmt eq targetDemandAmt and (empty payment.status or payment.status eq '2')}">
+                                                        <c:out value="${payment.uniqPgid}"/>
+                                                        <c:set var="txnFound" value="true"/>
+                                                    </c:if>
                                                 </c:if>
                                             </c:forEach>
                                             <c:if test="${!txnFound}">-</c:if>
@@ -1218,7 +1295,7 @@ window.addEventListener("DOMContentLoaded", function () {
                                 <td>Applicant Name</td>
                                 <td>Scrutiny Fee</td>
                                 <td>Scrutiny Transaction ID</td>
-                                <td>Demand Fee Status</td>
+                                <td>Demand Fee & Status</td>
                                 <td>Demand Transaction ID</td>
                                 <td>Application Status</td>
                                 <td>Current Zone</td>
@@ -1252,17 +1329,27 @@ window.addEventListener("DOMContentLoaded", function () {
                                             <td><c:out value="${rtiApplnList.registrationDate}" /></td>
                                             <td><c:out value="${rtiApplnList.applicantName}" /></td>
                                             <td><c:set var="rawAmt" value="${rtiApplnList.firstPaymentFees}"/><%= fmtIndianAmount(pageContext.getAttribute("rawAmt")) %></td>
+
+                                            <!-- Scrutiny Transaction -->
                                             <td>
                                                 <c:set var="txnFound" value="false" />
+                                                <fmt:formatNumber value="${rtiApplnList.firstPaymentFees}" pattern="0" groupingUsed="false" var="targetScrutinyAmt"/>
                                                 <c:forEach var="payment" items="${paymentMap[rtiApplnList.rtiApplicationId]}">
-                                                    <c:if test="${payment.amount == rtiApplnList.firstPaymentFees}">
-                                                        <c:out value="${payment.uniqPgid}" />
-                                                        <c:set var="txnFound" value="true" />
+                                                    <c:if test="${!txnFound}">
+                                                        <fmt:formatNumber value="${payment.amount}" pattern="0" groupingUsed="false" var="paymentRoundedAmt"/>
+                                                        <c:if test="${paymentRoundedAmt eq targetScrutinyAmt and (empty payment.status or payment.status eq '2')}">
+                                                            <c:out value="${payment.uniqPgid}" />
+                                                            <c:set var="txnFound" value="true" />
+                                                        </c:if>
                                                     </c:if>
                                                 </c:forEach>
                                                 <c:if test="${!txnFound}">No transaction details found</c:if>
                                             </td>
+
                                             <td>
+                                              <c:set var="rawAmt" value="${rtiApplnList.applicationCost}"/>
+                                            <%= fmtIndianAmount(pageContext.getAttribute("rawAmt")) %>
+                                        
                                                 <c:choose>
                                                     <c:when test="${rtiApplnList.workFlowStatus == 2 || rtiApplnList.workFlowStatus == 1}">
                                                         <span class="status-badge">Paid</span>
@@ -1272,16 +1359,23 @@ window.addEventListener("DOMContentLoaded", function () {
                                                     </c:otherwise>
                                                 </c:choose>
                                             </td>
+
+                                            <!-- Demand Transaction -->
                                             <td>
                                                 <c:set var="txnFound" value="false" />
+                                                <fmt:formatNumber value="${rtiApplnList.applicationCost}" pattern="0" groupingUsed="false" var="targetDemandAmt"/>
                                                 <c:forEach var="payment" items="${paymentMap[rtiApplnList.rtiApplicationId]}">
-                                                    <c:if test="${payment.amount == rtiApplnList.applicationCost}">
-                                                        <c:out value="${payment.uniqPgid}" />
-                                                        <c:set var="txnFound" value="true" />
+                                                    <c:if test="${!txnFound}">
+                                                        <fmt:formatNumber value="${payment.amount}" pattern="0" groupingUsed="false" var="paymentRoundedAmt"/>
+                                                        <c:if test="${paymentRoundedAmt eq targetDemandAmt and (empty payment.status or payment.status eq '2')}">
+                                                            <c:out value="${payment.uniqPgid}" />
+                                                            <c:set var="txnFound" value="true" />
+                                                        </c:if>
                                                     </c:if>
                                                 </c:forEach>
                                                 <c:if test="${!txnFound}">No transaction details found</c:if>
                                             </td>
+
                                             <td>
                                                 <c:choose>
                                                     <c:when test="${rtiApplnList.workFlowStatus == 0}">
@@ -1382,7 +1476,7 @@ window.addEventListener("DOMContentLoaded", function () {
                                 <td>Applicant Name</td>
                                 <td>Scrutiny Fee</td>
                                 <td>Scrutiny Transaction ID</td>
-                                <td>Demand Fee Status</td>
+                                <td>Demand Fee & Status</td>
                                 <td>Demand Transaction ID</td>
                                 <td>Application Status</td>
                                 <td>Current Zone</td>
@@ -1415,17 +1509,27 @@ window.addEventListener("DOMContentLoaded", function () {
                                             <td><c:out value="${rtiApplnList.registrationDate}" /></td>
                                             <td><c:out value="${rtiApplnList.applicantName}" /></td>
                                             <td><c:set var="rawAmt" value="${rtiApplnList.firstPaymentFees}"/><%= fmtIndianAmount(pageContext.getAttribute("rawAmt")) %></td>
+
+                                            <!-- Scrutiny Transaction -->
                                             <td>
                                                 <c:set var="txnFound" value="false" />
+                                                <fmt:formatNumber value="${rtiApplnList.firstPaymentFees}" pattern="0" groupingUsed="false" var="targetScrutinyAmt"/>
                                                 <c:forEach var="payment" items="${paymentMap[rtiApplnList.rtiApplicationId]}">
-                                                    <c:if test="${payment.amount == rtiApplnList.firstPaymentFees}">
-                                                        <c:out value="${payment.uniqPgid}" />
-                                                        <c:set var="txnFound" value="true" />
+                                                    <c:if test="${!txnFound}">
+                                                        <fmt:formatNumber value="${payment.amount}" pattern="0" groupingUsed="false" var="paymentRoundedAmt"/>
+                                                        <c:if test="${paymentRoundedAmt eq targetScrutinyAmt and (empty payment.status or payment.status eq '2')}">
+                                                            <c:out value="${payment.uniqPgid}" />
+                                                            <c:set var="txnFound" value="true" />
+                                                        </c:if>
                                                     </c:if>
                                                 </c:forEach>
                                                 <c:if test="${!txnFound}">No transaction details found</c:if>
                                             </td>
+
                                             <td>
+                                                <c:set var="rawAmt" value="${rtiApplnList.applicationCost}"/>
+                                            <%= fmtIndianAmount(pageContext.getAttribute("rawAmt")) %>
+                                        
                                                 <c:choose>
                                                     <c:when test="${rtiApplnList.workFlowStatus == 2 || rtiApplnList.workFlowStatus == 1}">
                                                         <span class="status-badge">Paid</span>
@@ -1435,16 +1539,23 @@ window.addEventListener("DOMContentLoaded", function () {
                                                     </c:otherwise>
                                                 </c:choose>
                                             </td>
+
+                                            <!-- Demand Transaction -->
                                             <td>
                                                 <c:set var="txnFound" value="false" />
+                                                <fmt:formatNumber value="${rtiApplnList.applicationCost}" pattern="0" groupingUsed="false" var="targetDemandAmt"/>
                                                 <c:forEach var="payment" items="${paymentMap[rtiApplnList.rtiApplicationId]}">
-                                                    <c:if test="${payment.amount == rtiApplnList.applicationCost}">
-                                                        <c:out value="${payment.uniqPgid}" />
-                                                        <c:set var="txnFound" value="true" />
+                                                    <c:if test="${!txnFound}">
+                                                        <fmt:formatNumber value="${payment.amount}" pattern="0" groupingUsed="false" var="paymentRoundedAmt"/>
+                                                        <c:if test="${paymentRoundedAmt eq targetDemandAmt and (empty payment.status or payment.status eq '2')}">
+                                                            <c:out value="${payment.uniqPgid}" />
+                                                            <c:set var="txnFound" value="true" />
+                                                        </c:if>
                                                     </c:if>
                                                 </c:forEach>
                                                 <c:if test="${!txnFound}">No transaction details found</c:if>
                                             </td>
+
                                             <td>
                                                 <c:choose>
                                                     <c:when test="${rtiApplnList.workFlowStatus == 0}">
@@ -1545,7 +1656,7 @@ window.addEventListener("DOMContentLoaded", function () {
                                 <td>Applicant Name</td>
                                 <td>Scrutiny Fee</td>
                                 <td>Scrutiny Transaction ID</td>
-                                <td>Demand Fee Status</td>
+                                <td>Demand Fee & Status</td>
                                 <td>Demand Transaction ID</td>
                                 <td>Application Status</td>
                                 <td>Current Zone</td>
@@ -1577,17 +1688,27 @@ window.addEventListener("DOMContentLoaded", function () {
                                             <td><c:out value="${rtiApplnList.registrationDate}" /></td>
                                             <td><c:out value="${rtiApplnList.applicantName}" /></td>
                                             <td><c:set var="rawAmt" value="${rtiApplnList.firstPaymentFees}"/><%= fmtIndianAmount(pageContext.getAttribute("rawAmt")) %></td>
+
+                                            <!-- Scrutiny Transaction -->
                                             <td>
                                                 <c:set var="txnFound" value="false" />
+                                                <fmt:formatNumber value="${rtiApplnList.firstPaymentFees}" pattern="0" groupingUsed="false" var="targetScrutinyAmt"/>
                                                 <c:forEach var="payment" items="${paymentMap[rtiApplnList.rtiApplicationId]}">
-                                                    <c:if test="${payment.amount == rtiApplnList.firstPaymentFees}">
-                                                        <c:out value="${payment.uniqPgid}" />
-                                                        <c:set var="txnFound" value="true" />
+                                                    <c:if test="${!txnFound}">
+                                                        <fmt:formatNumber value="${payment.amount}" pattern="0" groupingUsed="false" var="paymentRoundedAmt"/>
+                                                        <c:if test="${paymentRoundedAmt eq targetScrutinyAmt and (empty payment.status or payment.status eq '2')}">
+                                                            <c:out value="${payment.uniqPgid}" />
+                                                            <c:set var="txnFound" value="true" />
+                                                        </c:if>
                                                     </c:if>
                                                 </c:forEach>
                                                 <c:if test="${!txnFound}">No transaction details found</c:if>
                                             </td>
+
                                             <td>
+                                                <c:set var="rawAmt" value="${rtiApplnList.applicationCost}"/>
+                                            <%= fmtIndianAmount(pageContext.getAttribute("rawAmt")) %>
+                                        
                                                 <c:choose>
                                                     <c:when test="${rtiApplnList.workFlowStatus == 2 || rtiApplnList.workFlowStatus == 1}">
                                                         <span class="status-badge">Paid</span>
@@ -1597,16 +1718,23 @@ window.addEventListener("DOMContentLoaded", function () {
                                                     </c:otherwise>
                                                 </c:choose>
                                             </td>
+
+                                            <!-- Demand Transaction -->
                                             <td>
                                                 <c:set var="txnFound" value="false" />
+                                                <fmt:formatNumber value="${rtiApplnList.applicationCost}" pattern="0" groupingUsed="false" var="targetDemandAmt"/>
                                                 <c:forEach var="payment" items="${paymentMap[rtiApplnList.rtiApplicationId]}">
-                                                    <c:if test="${payment.amount == rtiApplnList.applicationCost}">
-                                                        <c:out value="${payment.uniqPgid}" />
-                                                        <c:set var="txnFound" value="true" />
+                                                    <c:if test="${!txnFound}">
+                                                        <fmt:formatNumber value="${payment.amount}" pattern="0" groupingUsed="false" var="paymentRoundedAmt"/>
+                                                        <c:if test="${paymentRoundedAmt eq targetDemandAmt and (empty payment.status or payment.status eq '2')}">
+                                                            <c:out value="${payment.uniqPgid}" />
+                                                            <c:set var="txnFound" value="true" />
+                                                        </c:if>
                                                     </c:if>
                                                 </c:forEach>
                                                 <c:if test="${!txnFound}">No transaction details found</c:if>
                                             </td>
+
                                             <td>
                                                 <c:choose>
                                                     <c:when test="${rtiApplnList.workFlowStatus == 0}">
@@ -1707,7 +1835,7 @@ window.addEventListener("DOMContentLoaded", function () {
                                 <td>Applicant Name</td>
                                 <td>Scrutiny Fee</td>
                                 <td>Scrutiny Transaction ID</td>
-                                <td>Demand Fee Status</td>
+                                <td>Demand Fee & Status</td>
                                 <td>Demand Transaction ID</td>
                                 <td>Application Status</td>
                                 <td>Current Zone</td>
@@ -1739,17 +1867,27 @@ window.addEventListener("DOMContentLoaded", function () {
                                             <td><c:out value="${rtiApplnList.registrationDate}" /></td>
                                             <td><c:out value="${rtiApplnList.applicantName}" /></td>
                                             <td><c:set var="rawAmt" value="${rtiApplnList.firstPaymentFees}"/><%= fmtIndianAmount(pageContext.getAttribute("rawAmt")) %></td>
+
+                                            <!-- Scrutiny Transaction -->
                                             <td>
                                                 <c:set var="txnFound" value="false" />
+                                                <fmt:formatNumber value="${rtiApplnList.firstPaymentFees}" pattern="0" groupingUsed="false" var="targetScrutinyAmt"/>
                                                 <c:forEach var="payment" items="${paymentMap[rtiApplnList.rtiApplicationId]}">
-                                                    <c:if test="${payment.amount == rtiApplnList.firstPaymentFees}">
-                                                        <c:out value="${payment.uniqPgid}" />
-                                                        <c:set var="txnFound" value="true" />
+                                                    <c:if test="${!txnFound}">
+                                                        <fmt:formatNumber value="${payment.amount}" pattern="0" groupingUsed="false" var="paymentRoundedAmt"/>
+                                                        <c:if test="${paymentRoundedAmt eq targetScrutinyAmt and (empty payment.status or payment.status eq '2')}">
+                                                            <c:out value="${payment.uniqPgid}" />
+                                                            <c:set var="txnFound" value="true" />
+                                                        </c:if>
                                                     </c:if>
                                                 </c:forEach>
                                                 <c:if test="${!txnFound}">No transaction details found</c:if>
                                             </td>
+
                                             <td>
+                                                <c:set var="rawAmt" value="${rtiApplnList.applicationCost}"/>
+                                            <%= fmtIndianAmount(pageContext.getAttribute("rawAmt")) %>
+                                        
                                                 <c:choose>
                                                     <c:when test="${rtiApplnList.workFlowStatus == 2 || rtiApplnList.workFlowStatus == 1}">
                                                         <span class="status-badge">Paid</span>
@@ -1759,16 +1897,23 @@ window.addEventListener("DOMContentLoaded", function () {
                                                     </c:otherwise>
                                                 </c:choose>
                                             </td>
+
+                                            <!-- Demand Transaction -->
                                             <td>
                                                 <c:set var="txnFound" value="false" />
+                                                <fmt:formatNumber value="${rtiApplnList.applicationCost}" pattern="0" groupingUsed="false" var="targetDemandAmt"/>
                                                 <c:forEach var="payment" items="${paymentMap[rtiApplnList.rtiApplicationId]}">
-                                                    <c:if test="${payment.amount == rtiApplnList.applicationCost}">
-                                                        <c:out value="${payment.uniqPgid}" />
-                                                        <c:set var="txnFound" value="true" />
+                                                    <c:if test="${!txnFound}">
+                                                        <fmt:formatNumber value="${payment.amount}" pattern="0" groupingUsed="false" var="paymentRoundedAmt"/>
+                                                        <c:if test="${paymentRoundedAmt eq targetDemandAmt and (empty payment.status or payment.status eq '2')}">
+                                                            <c:out value="${payment.uniqPgid}" />
+                                                            <c:set var="txnFound" value="true" />
+                                                        </c:if>
                                                     </c:if>
                                                 </c:forEach>
                                                 <c:if test="${!txnFound}">No transaction details found</c:if>
                                             </td>
+
                                             <td>
                                                 <c:choose>
                                                     <c:when test="${rtiApplnList.workFlowStatus == 0 && !rtiApplnList.forwardedToL1 && empty rtiApplnList.remarkforL2}">
