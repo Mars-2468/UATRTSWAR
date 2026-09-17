@@ -181,6 +181,7 @@ h3 {
 				            $('[name="widthapproachroad"]').val(data.widthApproachRoad);
 				            $('[name="widthentrance"]').val(data.widthEntrance);
 				            $('[name="numberoffloors"]').val(data.noOfFloors);
+				            $('[name="fireDepartmentWiseLogin"]').val(data.fireDepartmentWiseLogin);
 
 				            if (data.noofInternalStaircase) {
 				                var noofInternalStaircase = data.noofInternalStaircase.split(',');
@@ -196,6 +197,8 @@ h3 {
 				                    tableBody.append(row);
 				                    srNumber++;
 				                });
+				                /* keep the manual-entry counter in sync with the fetched data */
+				                $('#numInternalStaircaseFinal').val(noofInternalStaircase.length);
 				            }
 
 
@@ -213,6 +216,8 @@ h3 {
 				                    tableBody.append(row);
 				                    srNumber++;
 				                });
+				                /* keep the manual-entry counter in sync with the fetched data */
+				                $('#numExternalStaircaseFinal').val(noofExternalStaircase.length);
 				            }
 
 				            if (data.noofLiftProvided) {
@@ -226,6 +231,8 @@ h3 {
 				                    tableBody.append(row);
 				                    srNumber++;
 				                });
+				                /* keep the manual-entry counter in sync with the fetched data */
+				                $('#numLiftProvidedFinal').val(noofLiftProvided.length);
 				            }
 
 
@@ -293,7 +300,7 @@ h3 {
 						<label for="plotarea" class="form-label">Plot area</label> <input
 							type="text" class="form-control" id="plotarea"
 							style="background-image: none;" placeholder="" name="plotarea"
-							value="" readonly>
+							value="">
 					</div>
 				</div>
 
@@ -303,7 +310,7 @@ h3 {
 						<label for="totalbuiltuparea" class="form-label">Total Built up area</label> <input
 							type="text" class="form-control" id="totalbuiltuparea"
 							style="background-image: none;" placeholder="" name="totalbuiltuparea"
-							value="" readonly>
+							value="">
 					</div>
 				</div>
 
@@ -322,8 +329,7 @@ h3 {
 				<!-- 9. Side marginal space (Auto-Fetched): Front / Rear / Side1 / Side2 -->
 				<div class="col-md-3">
 					<div class="mb-3 mt-3">
-						<label for="frontMargin" class="form-label lbleng">Front Margin<span
-							class="text-danger">*</span>
+						<label for="frontMargin" class="form-label lbleng">Front Margin<span class="text-danger">*</span>
 						</label> <input class="form-control " rows="2" id="frontMargin"
 							style="background-image: none;" name="frontMargin" required>
 						<div class="invalid-feedback">Please Enter Valid Front Margin</div>
@@ -383,7 +389,7 @@ h3 {
 						<label for="widthentrance" class="form-label lbleng">Width of entrance</label>
 						<input type="text" class="form-control" id="widthentrance"
 							style="background-image: none;" placeholder="" name="widthentrance"
-							value="" readonly>
+							value="">
 					</div>
 				</div>
 
@@ -411,16 +417,18 @@ h3 {
 					</div>
 				</div>
 
-				<!-- 10 / 11 / 12: Lift / Internal Staircase / External Staircase (Auto-Fetched tables) -->
+				<!-- 10 / 11 / 12: Lift / Internal Staircase / External Staircase (Auto-Fetched tables, or entered manually) -->
 				<div class="table-responsive" style="display: flex; justify-content: space-between;">
 				    <div style="width: 49%;">
-				    <label>No. of Internal Staircase Provided</label>
+				    <label>No. of Internal Staircase Provided<span class="text-danger">*</span></label>
+				    <input type="number" min="0" class="form-control mb-2" id="numInternalStaircaseFinal"
+				        style="background-image: none; max-width:150px;" placeholder="Enter count if not auto-fetched">
 				        <table id="heightTable" class="table table-striped table-bordered" style="width: 100%;background-color: #dce2e8;">
 				            <thead style="background-color: #dce2e8;">
 				                <tr>
-				                    <th>Sr Number</th>
-				                    <th>No. of Internal Staircase</th>
-				                    <th>Width of Internal Staircase</th>
+				                    <th>Sr. No.<span class="text-danger">*</span></th>
+				                    <th>No. of Internal Staircase<span class="text-danger">*</span></th>
+				                    <th>Width of Internal Staircase<span class="text-danger">*</span></th>
 				                </tr>
 				            </thead>
 				            <tbody>
@@ -428,13 +436,15 @@ h3 {
 				        </table>
 				    </div>
 				    <div style="width: 49%;">
-				        <label>No. of External Staircase Provided</label>
+				        <label>No. of External Staircase Provided<span class="text-danger">*</span></label>
+				        <input type="number" min="0" class="form-control mb-2" id="numExternalStaircaseFinal"
+				            style="background-image: none; max-width:150px;" placeholder="Enter count if not auto-fetched">
 				        <table id="heightTable1" class="table table-striped table-bordered" style="width: 100%;background-color: #dce2e8;">
 				            <thead style="background-color: #dce2e8;">
 				                <tr>
-				                    <th>Sr Number</th>
-				                    <th>No. of External Staircase</th>
-				                    <th>Width of External Staircase</th>
+				                    <th>Sr. No.<span class="text-danger">*</span></th>
+				                    <th>No. of External Staircase<span class="text-danger">*</span></th>
+				                    <th>Width of External Staircase<span class="text-danger">*</span></th>
 				                </tr>
 				            </thead>
 				            <tbody>
@@ -445,12 +455,14 @@ h3 {
 				</div>
 				<div class="table-responsive" style="display: flex; justify-content: space-between;">
 				 <div style="width: 49%;">
-				        <label>No. of Lift Provided</label>
+				        <label>No. of Lift Provided<span class="text-danger">*</span></label>
+				        <input type="number" min="0" class="form-control mb-2" id="numLiftProvidedFinal"
+				            style="background-image: none; max-width:150px;" placeholder="Enter count if not auto-fetched">
 				        <table id="heightTable2" class="table table-striped table-bordered" style="width: 100%;background-color: #dce2e8;">
 				            <thead style="background-color: #dce2e8;">
 				                <tr>
-				                    <th>Sr Number</th>
-				                    <th>No. of Lift Provided</th>
+				                    <th>Sr. No.<span class="text-danger">*</span></th>
+				                    <th>No. of Lift Provided<span class="text-danger">*</span></th>
 				                </tr>
 				            </thead>
 				            <tbody>
@@ -458,6 +470,50 @@ h3 {
 				        </table>
 				    </div>
 				</div>
+
+				<!-- Manual fallback: builds the SAME tables (#heightTable / #heightTable1 / #heightTable2)
+				     the way the Temporary NOC builds its dynamic staircase/lift tables, in case
+				     getFireRtsData() did not return values for these fields. -->
+				<script>
+				$(document).ready(function () {
+
+				    $("#numInternalStaircaseFinal").on("input", function () {
+				        var num = parseInt($(this).val()) || 0;
+				        var tableBody = $('#heightTable tbody');
+				        tableBody.empty();
+				        for (var i = 1; i <= num; i++) {
+				            var row = $('<tr><td>' + i + '</td>' +
+				                    '<td><input type="text" class="form-control" style="background-image: none;" name="noofInternalStaircase" required></td>' +
+				                    '<td><input type="text" class="form-control" style="background-image: none;" name="widthInternalStaircase" required></td></tr>');
+				            tableBody.append(row);
+				        }
+				    });
+
+				    $("#numExternalStaircaseFinal").on("input", function () {
+				        var num = parseInt($(this).val()) || 0;
+				        var tableBody = $('#heightTable1 tbody');
+				        tableBody.empty();
+				        for (var i = 1; i <= num; i++) {
+				            var row = $('<tr><td>' + i + '</td>' +
+				                    '<td><input type="text" class="form-control" style="background-image: none;" name="noofExternalStaircase" required></td>' +
+				                    '<td><input type="text" class="form-control" style="background-image: none;" name="widthInternalStaircase" required></td></tr>');
+				            tableBody.append(row);
+				        }
+				    });
+
+				    $("#numLiftProvidedFinal").on("input", function () {
+				        var num = parseInt($(this).val()) || 0;
+				        var tableBody = $('#heightTable2 tbody');
+				        tableBody.empty();
+				        for (var i = 1; i <= num; i++) {
+				            var row = $('<tr><td>' + i + '</td>' +
+				                    '<td><input type="text" class="form-control" style="background-image: none;" name="noofLiftProvided" required></td></tr>');
+				            tableBody.append(row);
+				        }
+				    });
+
+				});
+				</script>
 
 			</div>
 
@@ -475,20 +531,24 @@ h3 {
 					</thead>
 					<tbody>
 						<tr>
-							<td>NORTH</td>
-							<td><input type="text" class="form-control" style="background-image: none;" name="exposurehazardNorth"></td>
+							<td>NORTH<span class="text-danger">*</span></td>
+							<td><input type="text" class="form-control" style="background-image: none;" name="exposurehazardNorth" required>
+							<div class="invalid-feedback">Please Enter Valid Data</div></td>
 						</tr>
 						<tr>
-							<td>SOUTH</td>
-							<td><input type="text" class="form-control" style="background-image: none;" name="exposurehazardSouth"></td>
+							<td>SOUTH<span class="text-danger">*</span></td>
+							<td><input type="text" class="form-control" style="background-image: none;" name="exposurehazardSouth" required>
+							<div class="invalid-feedback">Please Enter Valid Data</div></td>
 						</tr>
 						<tr>
-							<td>EAST</td>
-							<td><input type="text" class="form-control" style="background-image: none;" name="exposurehazardEast"></td>
+							<td>EAST<span class="text-danger">*</span></td>
+							<td><input type="text" class="form-control" style="background-image: none;" name="exposurehazardEast" required>
+							<div class="invalid-feedback">Please Enter Valid Data</div></td>
 						</tr>
 						<tr>
-							<td>WEST</td>
-							<td><input type="text" class="form-control" style="background-image: none;" name="exposurehazardWest"></td>
+							<td>WEST<span class="text-danger">*</span></td>
+							<td><input type="text" class="form-control" style="background-image: none;" name="exposurehazardWest" required>
+							<div class="invalid-feedback">Please Enter Valid Data</div></td>
 						</tr>
 					</tbody>
 				</table>
@@ -503,10 +563,10 @@ h3 {
 					<thead style="background-color: #dce2e8;">
 						<tr>
 							<th style="width: 4%;">Sr.No.</th>
-							<th style="width: 28%;">Fire and Safety Measures</th>
-							<th style="width: 30%;">Provided / Not Provided / Not Required</th>
-							<th style="width: 14%;">Quantity</th>
-							<th>Location</th>
+							<th style="width: 28%;">Fire and Safety Measures<span class="text-danger">*</span></th>
+							<th style="width: 30%;">Provided / Not Provided / Not Required<span class="text-danger">*</span></th>
+							<th style="width: 14%;">Quantity<span class="text-danger">*</span></th>
+							<th>Location<span class="text-danger">*</span></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -543,22 +603,53 @@ h3 {
 						<tr>
 							<td><%= sr %></td>
 							<td><%= measureLabels[i] %></td>
-							<td>
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="measureStatus_<%= sr %>" id="measureStatus_<%= sr %>_provided" value="Provided">
-									<label class="form-check-label" for="measureStatus_<%= sr %>_provided">Provided</label>
-								</div>
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="measureStatus_<%= sr %>" id="measureStatus_<%= sr %>_notprovided" value="NotProvided">
-									<label class="form-check-label" for="measureStatus_<%= sr %>_notprovided">Not Provided</label>
-								</div>
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="measureStatus_<%= sr %>" id="measureStatus_<%= sr %>_notrequired" value="NotRequired">
-									<label class="form-check-label" for="measureStatus_<%= sr %>_notrequired">Not Required</label>
-								</div>
-							</td>
-							<td><input type="text" class="form-control" style="background-image: none;" name="measureQty_<%= sr %>"></td>
-							<td><input type="text" class="form-control" style="background-image: none;" name="measureLocation_<%= sr %>"></td>
+<td>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input"
+               type="radio"
+               name="measureStatus_<%= sr %>"
+               id="measureStatus_<%= sr %>_provided"
+               value="Provided"
+               required>
+        <label class="form-check-label"
+               for="measureStatus_<%= sr %>_provided">
+            Provided
+        </label>
+    </div>
+
+    <div class="form-check form-check-inline">
+        <input class="form-check-input"
+               type="radio"
+               name="measureStatus_<%= sr %>"
+               id="measureStatus_<%= sr %>_notprovided"
+               value="NotProvided"
+               required>
+        <label class="form-check-label"
+               for="measureStatus_<%= sr %>_notprovided">
+            Not Provided
+        </label>
+    </div>
+
+    <div class="form-check form-check-inline">
+        <input class="form-check-input"
+               type="radio"
+               name="measureStatus_<%= sr %>"
+               id="measureStatus_<%= sr %>_notrequired"
+               value="NotRequired"
+               required>
+        <label class="form-check-label"
+               for="measureStatus_<%= sr %>_notrequired">
+            Not Required
+        </label>
+    </div>
+
+    <div class="invalid-feedback">
+        Please Select Valid Option
+    </div>
+</td>
+
+							<td><input type="text" class="form-control" style="background-image: none;" name="measureQty_<%= sr %>" required><div class="invalid-feedback">Please Enter Valid Data</div></td>
+							<td><input type="text" class="form-control" style="background-image: none;" name="measureLocation_<%= sr %>" required><div class="invalid-feedback">Please Enter Valid Data</div></td>
 						</tr>
 						<% } %>
 					</tbody>
@@ -620,6 +711,23 @@ h3 {
 						<div class="invalid-feedback">Please Enter Valid Address</div>
 					</div>
 				</div>
+				
+				<!-- <div class="col-md-3">
+					<div class="mb-3 mt-3">
+						<label for="addressofownerdeclaration" class="form-label lbleng">Fire Station<span class="text-danger">*</span></label>
+						<input type="text" class="form-control" id="fireDepartmentWiseLogin" style="background-image: none;" name="fireDepartmentWiseLogin" required>
+						
+						<select style="background-image: none;" class="form-control" name="fireDepartmentWiseLogin" id="fireDepartmentWiseLogin" required>
+    <option value="" selected disabled>--- Select ---</option>
+    <c:forEach var="fireDepartmentWiseLogin" items="${requestScope.fireDepartmentWiseLogin}">
+        <option value="${fireDepartmentWiseLogin.fireDepartmentWiseLoginId}">
+            <c:out value="${fireDepartmentWiseLogin.fireDepartmentWiseLoginName}"/>
+        </option>
+    </c:forEach>
+</select>
+						<div class="invalid-feedback">Please Select Valid Fire Station</div>
+					</div>
+				</div>-->
 			</div>
 
 			<div class="row">
@@ -631,7 +739,7 @@ h3 {
 
 				<div class="alert alert-info mb-0 p-2 mb-4">
 					<small><strong>Note: </strong> Upload Below Files only
-						pdf, .jpg, .jpeg, .bmp etc..(Max upto 5MB) </small>
+						pdf, .jpg, .jpeg etc..(Max upto 5MB) </small>
 				</div>
 
 				<input type="hidden" name="filesPath" id="filesPath" />
@@ -653,7 +761,7 @@ h3 {
 
 				<!-- ii. Civil Engineer certificate of Structural stability -->
 				<div class="col-md-3">
-					<div class="mb-3 mt-5">
+					<div class="mb-3 mt-3">
 						<label for="doc2" class="form-label">Civil Engineer
 							certificate of Structural stability<span class="mand_error" style="color: red;">*</span>
 						</label> <input type="file" class="form-control"
@@ -714,6 +822,18 @@ h3 {
 						</label> <input type="file" class="form-control"
 							style="background-image: none;" name="License_copy_of_lift"
 							id="doc6" placeholder="" required>
+						<div class="invalid-feedback">File selected is either
+							greater than 5Mb or not of type pdf</div>
+					</div>
+				</div>
+				
+					<div class="col-md-3">
+					<div class="mb-3 mt-3">
+						<label for="doc5" class="form-label"> Affidavit<span class="mand_error" style="color: red;">*</span>
+						</label> <input type="file" class="form-control"
+							style="background-image: none;"
+							name="affidavit" id="doc7" placeholder=""
+							required>
 						<div class="invalid-feedback">File selected is either
 							greater than 5Mb or not of type pdf</div>
 					</div>
@@ -872,6 +992,8 @@ $('.printMe').on('click', function () {
         data.append('idProof4', $("#doc4").get(0).files[0]);
         data.append('idProof5', $("#doc5").get(0).files[0]);
         data.append('idProof6', $("#doc6").get(0).files[0]);
+        data.append('idProof7', $("#doc7").get(0).files[0]);
+        
         var isFileSelected = false
 
         var array_element = "";

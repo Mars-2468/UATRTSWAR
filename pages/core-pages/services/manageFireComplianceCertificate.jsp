@@ -70,13 +70,11 @@
                                 <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
                                 <script type="text/javascript">
                                     function editRTIApplicationdog() {
-                                        //document.getElementById('rtiApplicationId').value = id;
                                         onPageSubmit('<c:out value="${contextRoot}"/>/rtiapplication/editRTIManagePermission.do');
                                     }
 
-                                    function saveMandapCertificates() {
-
-                                        onPageSubmit('<c:out value="${contextRoot}"/>/rtiapplication/saveMandapCertificates.do');
+                                    function saveFireComplianceCertificates() {
+                                        onPageSubmit('<c:out value="${contextRoot}"/>/rtiapplication/saveFireComplianceCertificates.do');
                                     }
 
                                     function rtiApplicationSearch() {
@@ -88,12 +86,10 @@
                                     }
 
                                     function viewDrafts() {
-                                        //document.getElementById('manageRTIApplicationId').value=id;
                                         onPageSubmit('<c:out value="${contextRoot}"/>/rtiApplicationReport/viewDrafts.do');
                                     }
 
                                     function downloadRTIApplicationList() {
-                                        //document.getElementById('manageRTIApplicationId').value=id;
                                         onPageSubmit('<c:out value="${contextRoot}"/>/rtiApplicationReport/downloadRTIApplicationList.do');
                                     }
 
@@ -102,25 +98,19 @@
                                     }
 
                                     function sendEmail() {
-                                        //document.getElementById('manageRTIApplicationId').value=id;
                                         document.getElementById('actionTaken').value = 'email';
                                         onPageSubmit('<c:out value="${contextRoot}"/>/emailsms/emailSMS.do');
                                     }
 
                                     function sendSMS() {
-                                        //document.getElementById('manageRTIApplicationId').value=id;
                                         document.getElementById('actionTaken').value = 'sms';
                                         onPageSubmit('<c:out value="${contextRoot}"/>/emailsms/emailSMS.do');
                                     }
 
                                     function download(id, url) {
-
                                         document.getElementById('rtiApplicationRefId').value = id;
-
                                         alert("Certificate has been generated successfully.");
-
                                         onPageSubmit('<c:out value="${contextRoot}"/>/rtiApplicationReport/' + url);
-
                                     }
                                 </script>
                                 <style type="text/css">
@@ -145,14 +135,11 @@
 
                                     a {
                                         text-decoration: none !important;
-
                                     }
                                 </style>
                                 <div class="container">
                                     <h3 style="font-size: 18px; font-weight: bold;">
-
-                                        Application form for Fire Compliance Certificate
-                                        :
+                                        Final Fire NOC :
                                         <c:if test="${requestScope.rtiApplication != null}">
                                             <c:out value="${requestScope.rtiApplication.rtiApplnNumber}"></c:out>
                                         </c:if>
@@ -160,577 +147,522 @@
                                 </div>
                                 <div align="top" id="SetFormHeight">
                                     <input type="hidden" name="id" value="${fireComplianceCertificate.firecompliancecertificateid}">
-                                    <h6 style="background-color: #dce2e8; padding: 10px;"
-						class="  rounded-2">
-						<strong> Applicant Details </strong>
-					</h6>
+
+                                    <!-- ================= Applicant Details ================= -->
+                                    <h6 style="background-color: #dce2e8; padding: 10px;" class="rounded-2">
+                                        <strong> Applicant Details </strong>
+                                    </h6>
                                     <table width="100%" border="0" cellpadding="2" cellspacing="2" class="container">
                                         <tr>
+                                            <td><span class="ClsLabel" style="font-size: 14px">First Name :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px;" maxlength="50"
+                                                    name="firstName" value="${fireComplianceCertificate.firstName}" /></td>
+
+                                            <td><span class="ClsLabel" style="font-size: 14px">Middle Name :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px" maxlength="50"
+                                                    name="middleName" value="${fireComplianceCertificate.middleName}" /></td>
+                                        </tr>
+
                                         <tr>
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                   First Name :
-                                                </span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px;"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.firstName}" /></td>
+                                            <td><span class="ClsLabel" style="font-size: 14px">Last Name :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px;" maxlength="50"
+                                                    name="lastName" value="${fireComplianceCertificate.lastName}" /></td>
 
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                    Middle Name :
-                                                </span><span class="ClsRequiredFields"></span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.middleName}" /></td>
+                                            <td><span class="ClsLabel" style="font-size: 14px">Full Name :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px" maxlength="50"
+                                                    name="fullName" value="${fireComplianceCertificate.fullName}" /></td>
                                         </tr>
-                                        
-										<tr>				
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                   Last Name :
-                                                </span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px;"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.lastName}" /></td>
 
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                    Full Name :
-                                                </span><span class="ClsRequiredFields"></span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.fullName}" /></td>
+                                        <tr>
+                                            <td><span class="ClsLabel" style="font-size: 14px">Plot/ Flat No :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px;" maxlength="50"
+                                                    name="plotno" value="${fireComplianceCertificate.plotno}" /></td>
+
+                                            <td><span class="ClsLabel" style="font-size: 14px">City Survey No :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px" maxlength="50"
+                                                    name="citysurveyno" value="${fireComplianceCertificate.citysurveyno}" /></td>
                                         </tr>
-                                        
-                                        <tr>				
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                   Plot/ Flat No :
-                                                </span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px;"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.plotno}" /></td>
 
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                    City Survey No :
-                                                </span><span class="ClsRequiredFields"></span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.citysurveyno}" /></td>
+                                        <tr>
+                                            <td><span class="ClsLabel" style="font-size: 14px">Name of the Street :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px;" maxlength="50"
+                                                    name="strretname" value="${fireComplianceCertificate.strretname}" /></td>
+
+                                            <td><span class="ClsLabel" style="font-size: 14px">House Mouza No :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px" maxlength="50"
+                                                    name="housemouzano" value="${fireComplianceCertificate.housemouzano}" /></td>
                                         </tr>
-                                        
-                                        <tr>				
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                   Name of the Street :
-                                                </span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px;"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.strretname}" /></td>
 
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                    House Mouza No :
-                                                </span><span class="ClsRequiredFields"></span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.housemouzano}" /></td>
+                                        <tr>
+                                            <td><span class="ClsLabel" style="font-size: 14px">Pin Code :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px;" maxlength="50"
+                                                    name="pincode" value="${fireComplianceCertificate.pincode}" /></td>
+
+                                            <td><span class="ClsLabel" style="font-size: 14px">Landmark :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px" maxlength="50"
+                                                    name="landmark" value="${fireComplianceCertificate.landmark}" /></td>
                                         </tr>
-                                        
-                                        <tr>				
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                   Pin Code :
-                                                </span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px;"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.pincode}" /></td>
 
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                    Landmark :
-                                                </span><span class="ClsRequiredFields"></span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.landmark}" /></td>
+                                        <tr>
+                                            <td><span class="ClsLabel" style="font-size: 14px">Email Id :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px;" maxlength="50"
+                                                    name="emailid" value="${fireComplianceCertificate.emailid}" /></td>
+
+                                            <td><span class="ClsLabel" style="font-size: 14px">Mobile No :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px" maxlength="50"
+                                                    name="mobileno" value="${fireComplianceCertificate.mobileno}" /></td>
                                         </tr>
-                                        
-                                        <tr>				
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                   Email Id :
-                                                </span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px;"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.emailid}" /></td>
 
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                    Mobile No :
-                                                </span><span class="ClsRequiredFields"></span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.mobileno}" /></td>
+                                        <tr>
+                                            <td><span class="ClsLabel" style="font-size: 14px">Name of Power of Attorney :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px;" maxlength="50"
+                                                    name="nameofpowerofattorney" value="${fireComplianceCertificate.nameofpowerofattorney}" /></td>
+
+                                            <td><span class="ClsLabel" style="font-size: 14px">No.of standby :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px" maxlength="50"
+                                                    name="noofstandby" value="${fireComplianceCertificate.noofstandby}" /></td>
                                         </tr>
-                                        
-                                        <tr>				
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                   Name of Power of Attorney  :
-                                                </span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px;"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.nameofpowerofattorney}" /></td>
 
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                    No.of standby :
-                                                </span><span class="ClsRequiredFields"></span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.noofstandby}" /></td>
-                                        </tr>
-                                        
-                                        <tr>				
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                   Address of Power of Attorney  :
-                                                </span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px;"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.addressofpowerofattorney}" /></td>
-
+                                        <tr>
+                                            <td><span class="ClsLabel" style="font-size: 14px">Address of Power of Attorney :</span></td>
+                                            <td colspan="3"><input type="text" class="form-control" style="width: 180px;" maxlength="50"
+                                                    name="addressofpowerofattorney" value="${fireComplianceCertificate.addressofpowerofattorney}" /></td>
                                         </tr>
                                     </table>
-                                    <h6 style="background-color: #dce2e8; padding: 10px;"
-						class="  rounded-2">
-						
-						<strong> Application Form Details</strong>
-					</h6>
-					<h6><strong>To,</strong> <br> <strong>Chief Fire Officer</strong>
-					<br> <strong>N.M.C. Nagpur.</strong> <br> Sir,<br>
-					Kindly issue compliance certificate to the building sanction vide
-					building permit No. <strong> <h7 >${fireComplianceCertificate.permitno}</h7>
-					</strong> .date. <strong> <h7>${fireComplianceCertificate.permitnodate}</h7>
-					</strong> & fire recommendation letter No. <strong> <h7>${fireComplianceCertificate.firerecommendationno}</h7>
-					</strong>. date <strong> <h7>${fireComplianceCertificate.firerecommendationnodate}</h7>
-					</strong>. I have paid the necessary fees applicable having receipt No.<strong>
-						<h7>${fireComplianceCertificate.receiptno}</h7>
-					</strong>.dated.<strong> <h7>${fireComplianceCertificate.receiptnodate}</h7>
-					</strong> I have enclosed all the necessary documents & certificates. The
-					other building details are as under.</h6>
-					                                    <table width="100%" border="0" cellpadding="2" cellspacing="2" class="container">
+
+                                    <!-- ================= Application (Provisional / Permit) References ================= -->
+                                    <h6 style="background-color: #dce2e8; padding: 10px;" class="rounded-2">
+                                        <strong> Application Form Details</strong>
+                                    </h6>
+                                    <h6><strong>To,</strong> <br> <strong>Chief Fire Officer</strong>
+                                        <br> <strong>N.M.C. Nagpur.</strong> <br> Sir,<br>
+                                        Kindly issue compliance certificate to the building sanction vide
+                                        building permit No. <strong><h7>${fireComplianceCertificate.permitno}</h7></strong>
+                                        dated <strong><h7>${fireComplianceCertificate.permitnodate}</h7></strong>
+                                        &amp; fire recommendation letter No. <strong><h7>${fireComplianceCertificate.firerecommendationno}</h7></strong>
+                                        dated <strong><h7>${fireComplianceCertificate.firerecommendationnodate}</h7></strong>.
+                                        I have paid the necessary fees applicable having receipt No.
+                                        <strong><h7>${fireComplianceCertificate.receiptno}</h7></strong>
+                                        dated <strong><h7>${fireComplianceCertificate.receiptnodate}</h7></strong>.
+                                        I have enclosed all the necessary documents &amp; certificates. The other building details are as under.
+                                    </h6>
+
+                                    <table width="100%" border="0" cellpadding="2" cellspacing="2" class="container">
                                         <tr>
+                                            <td><span class="ClsLabel" style="font-size: 14px">Fire RTS Id :</span></td>
+                                            <!-- The application form's "firertsid" field is used only as a lookup key to
+                                                 auto-fetch data via getFireRtsData(); it is not a stored column on
+                                                 FireComplianceCertificate in the entity shared. Showing the closest
+                                                 persisted equivalent (rti_ref_id) below -- rename/rebind if a real
+                                                 firertsid column is added to the entity. -->
+                                            <td><input type="text" class="form-control" style="width: 180px;" maxlength="50"
+                                                    name="firertsid" value="${fireComplianceCertificate.rti_ref_id}" /></td>
+                                            <td colspan="2"></td>
+                                        </tr>
                                         <tr>
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                   Name of Building :
-                                                </span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px;"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.buildingname}" /></td>
+                                            <td><span class="ClsLabel" style="font-size: 14px">Provisional Fire Safety Approval :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px;" maxlength="50"
+                                                    name="provisionalFireSafetyApproval" value="${fireComplianceCertificate.provisionalFireSafetyApproval}" /></td>
 
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                    Address of Building :
-                                                </span><span class="ClsRequiredFields"></span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.addressbuilding}" /></td>
+                                            <td><span class="ClsLabel" style="font-size: 14px">Name of Building Owner :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px" maxlength="50"
+                                                    name="nameofBuildingOwner" value="${fireComplianceCertificate.nameofBuildingOwner}" /></td>
                                         </tr>
-                                        
-										<tr>				
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                   Name & Address of Building /promoter :
-                                                </span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px;"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.nameaddresspromoter}" /></td>
 
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                    Name & Address of Building/Promoter/Owner/Occupiers of individual flats :
-                                                </span><span class="ClsRequiredFields"></span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.nameaddressowner}" /></td>
-                                        </tr>
-                                        
-                                        <tr>				
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                   Type of occupancy  :
-                                                </span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px;"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.typeofoccupancy}" /></td>
-
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                    Plot area :
-                                                </span><span class="ClsRequiredFields"></span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.plotarea}" /></td>
-                                        </tr>
-                                        
-                                        <tr>				
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                   Total Built up area :
-                                                </span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px;"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.totalbuiltuparea}" /></td>
-
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                    Height of building :
-                                                </span><span class="ClsRequiredFields"></span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.heightofbuilding}" /></td>
-                                        </tr>
-                                        
-                                        			<th colspan="16" style="font-size: 17px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Side marginal space
-                                        			</th>                             
-                                        <tr>				
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                   Front :
-                                                </span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px;"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.front}" /></td>
-
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                    Rear :
-                                                </span><span class="ClsRequiredFields"></span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.rear}" /></td>
-                                        </tr>
-                                        
-                                        <tr>				
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                   Side 1 :
-                                                </span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px;"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.side1}" /></td>
-
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                    Side 2 :
-                                                </span><span class="ClsRequiredFields"></span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.side2}" /></td>
-                                        </tr>
-                                        <tr><td><td></tr>
-                                        <tr>				
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                   Width of approach road to the building premises :
-                                                </span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px;"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.widthofapproach}" /></td>
-
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                    Width of entrance gate :
-                                                </span><span class="ClsRequiredFields"></span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.widthofentrance}" /></td>
-                                        </tr>
-                                        
-                                        <tr>				
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                   Vertical clearance of entrance gate :
-                                                </span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px;"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.verticalclearance}" /></td>
-                                                      
-												<td><span class="ClsLabel" style="font-size: 14px">
-                                                   		Vertical clearance of entrance gate :
-                                                	</span>
-                                                </td>
-                                            	<td>	<input type="text" class="form-control" style="width: 180px;"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.dateofsanctioning}" /></td>
-                                       </tr>
-                                       
-                                        <tr>				
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                   Vertical clearance of entrance gate :
-                                                </span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px;"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.verticalclearance}" /></td>
-                                                      
-												<td><span class="ClsLabel" style="font-size: 14px">
-                                                   		Whether completion certificate has been obtain for this building from the competent authority ? If yes, please attaché the copy of the same : :
-                                                	</span>
-                                                </td>
-                                            	<td>	<input type="text" class="form-control" style="width: 180px;"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.dateofsanctioning}" /></td>
-                                       </tr>
-                                       
-                                       <tr>				
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                            Whether occupancy certificate has been obtain for this building from the competent authority ? If yes, please attaché the copy of the same:
-                                                </span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px;"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.occupancy}" /></td>
-                                                      
-												<td><span class="ClsLabel" style="font-size: 14px">
-												Number of basements :
-                                                	</span>
-                                                </td>
-                                            	<td>	<input type="text" class="form-control" style="width: 180px;"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.numberofbasements}" /></td>
-                                       </tr>
-                                       
-                                       
-                                       <tr>				
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-												Number of floors(including ground floor):                                                </span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px;"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.numberoffloors}" /></td>
-                                                      
-												<td><span class="ClsLabel" style="font-size: 14px">
-												Area of basement :
-                                                	</span>
-                                                </td>
-                                            	<td>	<input type="text" class="form-control" style="width: 180px;"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.areaofbasement}" /></td>
-                                       </tr>
-                                       
-                                       <tr>				
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-												Covered area of typical floor :                                                </span></td>
-                                            <td><input type="text" class="form-control" style="width: 180px;"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.coveredarea}" /></td>
-                                                      
-												<td><span class="ClsLabel" style="font-size: 14px">
-												Compass direction in relation to the building :
-                                                	</span>
-                                                </td>
-                                            	<td>	<input type="text" class="form-control" style="width: 180px;"
-                                                      maxlength="50" name="ownerName" value="${fireComplianceCertificate.basementextends}" /></td>
-                                       </tr>
-                                       <th colspan="16" style="font-size: 17px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Exposure hazards(Please give Details)
-                                        			</th> 
-                                          <tr>				
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-												Covered area of typical floor :  </span></td>
-                                               <td></td>
-												<td><span class="ClsLabel" style="font-size: 14px">
-												If basement extends beyond the building line, : please indicate the load bearing strength of the roof of basement :
-                                                	</span>
-                                                </td>
-                                          </tr>			  
-                                        			
-                                       
-                                       
-                                       
-                                           
-                                                                                
-                                        
                                         <tr>
-                                            <c:if test="${not empty mandapPermission.exhibitions}">
+                                            <td><span class="ClsLabel" style="font-size: 14px">Name of Building :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px;" maxlength="50"
+                                                    name="buildingname" value="${fireComplianceCertificate.buildingname}" /></td>
 
-                                                <td>
-                                                    <span class="ClsLabel" style="font-size:14px">
-                                                        <fmt:message key="label.mandap.exhibitions" />:
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <input type="radio" id="Commercial<c:out value="
-                                                        ${pageScope.LABEL_RADIO_COMMERICAL}" />" name="exhibitions"
-                                                    value="1" <c:if test="${mandapPermission.exhibitions==1}">
-                                                        checked="checked"</c:if> />
-                                                    <c:out value="Commercial" />
-                                                    <input type="radio" id="Charitable<c:out value="
-                                                        ${pageScope.LABEL_RADIO_CHARITABLE}" />" name="exhibitions"
-                                                    value="2" <c:if test="${mandapPermission.exhibitions==2}">
-                                                        checked="checked"</c:if> />
-                                                    <c:out value="Charitable" />
-                                                    <input type="radio" id="Government<c:out value="
-                                                        ${pageScope.LABEL_RADIO_GOVERNMENT}" />" name="exhibitions"
-                                                    value="3" <c:if test="${mandapPermission.exhibitions==3}">
-                                                        checked="checked"</c:if> />
-                                                    <c:out value="Government" />
-                                                </td>
-
-                                            </c:if>
+                                            <td><span class="ClsLabel" style="font-size: 14px">Address of Building :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px"
+                                                    name="sadressofBuilding" value="${fireComplianceCertificate.sadressofBuilding}" /></td>
                                         </tr>
 
-                                        <%-- <tr>
-                                            <td colspan="5">
-                                                <span class="ClsLabel" style="font-size:14px">
-                                                    <fmt:message key="label.mandap.fees" />:
-                                                </span>
+                                        <tr>
+                                            <td><span class="ClsLabel" style="font-size: 14px">Name &amp; Address of Building/Promoter :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px;" maxlength="50"
+                                                    name="nameaddresspromoter" value="${fireComplianceCertificate.nameaddresspromoter}" /></td>
+
+                                            <td><span class="ClsLabel" style="font-size: 14px">Name &amp; Address of Owner/Occupiers :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px" maxlength="50"
+                                                    name="nameaddressowner" value="${fireComplianceCertificate.nameaddressowner}" /></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><span class="ClsLabel" style="font-size: 14px">Type of Building :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px;" maxlength="50"
+                                                    name="typeofBuilding" value="${fireComplianceCertificate.typeofBuilding}" /></td>
+
+                                            <td><span class="ClsLabel" style="font-size: 14px">Type of occupancy :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px" maxlength="50"
+                                                    name="typeofoccupancy" value="${fireComplianceCertificate.typeofoccupancy}" /></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><span class="ClsLabel" style="font-size: 14px">Plot area :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px;" maxlength="50"
+                                                    name="plotarea" value="${fireComplianceCertificate.plotarea}" /></td>
+
+                                            <td><span class="ClsLabel" style="font-size: 14px">Total Built up area :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px" maxlength="50"
+                                                    name="totalbuiltuparea" value="${fireComplianceCertificate.totalbuiltuparea}" /></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><span class="ClsLabel" style="font-size: 14px">Height of Building :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px;" maxlength="50"
+                                                    name="heightofBuilding" value="${fireComplianceCertificate.heightofBuilding}" /></td>
+
+                                            <td><span class="ClsLabel" style="font-size: 14px">Basement load bearing strength :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px" maxlength="50"
+                                                    name="basementloadbearingstrength" value="${fireComplianceCertificate.basementloadbearingstrength}" /></td>
+                                        </tr>
+
+                                        <th colspan="16" style="font-size: 17px; text-align: left;">Side Marginal Space</th>
+
+                                        <tr>
+                                            <td><span class="ClsLabel" style="font-size: 14px">Front Margin :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px;" maxlength="50"
+                                                    name="frontMargin" value="${fireComplianceCertificate.frontMargin}" /></td>
+
+                                            <td><span class="ClsLabel" style="font-size: 14px">Rear Margin :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px" maxlength="50"
+                                                    name="rearMargin" value="${fireComplianceCertificate.rearMargin}" /></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><span class="ClsLabel" style="font-size: 14px">Side1 Margin :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px;" maxlength="50"
+                                                    name="side1Margin" value="${fireComplianceCertificate.side1Margin}" /></td>
+
+                                            <td><span class="ClsLabel" style="font-size: 14px">Side2 Margin :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px" maxlength="50"
+                                                    name="side2Margin" value="${fireComplianceCertificate.side2Margin}" /></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><span class="ClsLabel" style="font-size: 14px">Width of approach road :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px;" maxlength="50"
+                                                    name="widthapproachroad" value="${fireComplianceCertificate.widthapproachroad}" /></td>
+
+                                            <td><span class="ClsLabel" style="font-size: 14px">Width of entrance :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px" maxlength="50"
+                                                    name="widthentrance" value="${fireComplianceCertificate.widthentrance}" /></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><span class="ClsLabel" style="font-size: 14px">Number of floors (incl. basement) :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px;" maxlength="50"
+                                                    name="numberoffloors" value="${fireComplianceCertificate.numberoffloors}" /></td>
+
+                                            <td><span class="ClsLabel" style="font-size: 14px">Number of basements :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px" maxlength="50"
+                                                    name="numberofbasements" value="${fireComplianceCertificate.numberofbasements}" /></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><span class="ClsLabel" style="font-size: 14px">Area of basement :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px;" maxlength="50"
+                                                    name="areaofbasement" value="${fireComplianceCertificate.areaofbasement}" /></td>
+
+                                            <td><span class="ClsLabel" style="font-size: 14px">Covered area of typical floor :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px" maxlength="50"
+                                                    name="coveredarea" value="${fireComplianceCertificate.coveredarea}" /></td>
+                                        </tr>
+                                    </table>
+
+                                    <!-- ================= Staircase & Lift Details ================= -->
+                                    <!-- NOTE: the FireComplianceCertificate entity shared has no columns for these
+                                         three items. The application form (getFireRtsData / manual entry) builds
+                                         repeating rows for noofInternalStaircase+widthInternalStaircase,
+                                         noofExternalStaircase+widthInternalStaircase and noofLiftProvided.
+                                         To make this section show real submitted data, add comma-separated String
+                                         columns to the entity -- e.g. noofinternalstaircase / widthinternalstaircase,
+                                         noofexternalstaircase / widthexternalstaircase, nooflift -- the same way
+                                         filesPath / pdfUploadFromPortal already store comma-separated lists
+                                         elsewhere in this app, then expose them via getters of the same name used
+                                         below. Until those columns exist these tables will render empty. -->
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <div style="width: 49%;">
+                                            <h6 style="background-color: #dce2e8; padding: 6px;">Internal Staircase Provided</h6>
+                                            <table width="100%" border="1" cellpadding="4" cellspacing="0" class="container">
+                                                <tr style="background-color: #dce2e8;">
+                                                    <th>Sr. No.</th>
+                                                    <th>No. of Internal Staircase</th>
+                                                    <th>Width of Internal Staircase</th>
+                                                </tr>
+                                                <c:set var="intCounts" value="${fn:split(fireComplianceCertificate.noofinternalstaircase, ',')}" />
+                                                <c:set var="intWidths" value="${fn:split(fireComplianceCertificate.widthinternalstaircase, ',')}" />
+                                                <c:forEach var="cnt" items="${intCounts}" varStatus="st">
+                                                    <tr>
+                                                        <td>${st.index + 1}</td>
+                                                        <td><c:out value="${cnt}" /></td>
+                                                        <td><c:out value="${intWidths[st.index]}" /></td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </table>
+                                        </div>
+                                        <div style="width: 49%;">
+                                            <h6 style="background-color: #dce2e8; padding: 6px;">External Staircase Provided</h6>
+                                            <table width="100%" border="1" cellpadding="4" cellspacing="0" class="container">
+                                                <tr style="background-color: #dce2e8;">
+                                                    <th>Sr. No.</th>
+                                                    <th>No. of External Staircase</th>
+                                                    <th>Width of External Staircase</th>
+                                                </tr>
+                                                <c:set var="extCounts" value="${fn:split(fireComplianceCertificate.noofexternalstaircase, ',')}" />
+                                                <c:set var="extWidths" value="${fn:split(fireComplianceCertificate.widthexternalstaircase, ',')}" />
+                                                <c:forEach var="cnt" items="${extCounts}" varStatus="st">
+                                                    <tr>
+                                                        <td>${st.index + 1}</td>
+                                                        <td><c:out value="${cnt}" /></td>
+                                                        <td><c:out value="${extWidths[st.index]}" /></td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div style="width: 49%;">
+                                        <h6 style="background-color: #dce2e8; padding: 6px;">Lift Provided</h6>
+                                        <table width="100%" border="1" cellpadding="4" cellspacing="0" class="container">
+                                            <tr style="background-color: #dce2e8;">
+                                                <th>Sr. No.</th>
+                                                <th>No. of Lift Provided</th>
+                                            </tr>
+                                            <c:set var="liftCounts" value="${fn:split(fireComplianceCertificate.nooflift, ',')}" />
+                                            <c:forEach var="cnt" items="${liftCounts}" varStatus="st">
+                                                <tr>
+                                                    <td>${st.index + 1}</td>
+                                                    <td><c:out value="${cnt}" /></td>
+                                                </tr>
+                                            </c:forEach>
+                                        </table>
+                                    </div>
+
+                                    <!-- ================= Exposure Hazards ================= -->
+                                    <h6 style="background-color: #dce2e8; padding: 10px;" class="rounded-2">
+                                        <strong>Exposure Hazards (Please give details)</strong>
+                                    </h6>
+                                    <table width="100%" border="1" cellpadding="4" cellspacing="0" class="container">
+                                        <tr style="background-color: #dce2e8;">
+                                            <th style="width: 40%;">Compass direction in relation to the building</th>
+                                            <th>Type of property / features</th>
+                                        </tr>
+                                        <tr>
+                                            <td>NORTH</td>
+                                            <td><input type="text" class="form-control" name="exposurehazardNorth"
+                                                    value="${fireComplianceCertificate.exposurehazardNorth}" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>SOUTH</td>
+                                            <td><input type="text" class="form-control" name="exposurehazardSouth"
+                                                    value="${fireComplianceCertificate.exposurehazardSouth}" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>EAST</td>
+                                            <td><input type="text" class="form-control" name="exposurehazardEast"
+                                                    value="${fireComplianceCertificate.exposurehazardEast}" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>WEST</td>
+                                            <td><input type="text" class="form-control" name="exposurehazardWest"
+                                                    value="${fireComplianceCertificate.exposurehazardWest}" /></td>
+                                        </tr>
+                                    </table>
+
+                                    <!-- ================= Fire & Safety Measures ================= -->
+                                    <h6 style="background-color: #dce2e8; padding: 10px;" class="rounded-2">
+                                        <strong>Fire &amp; Safety Measures (as per Provisional Fire Safety Approval Certificate &amp; NBC Norms)</strong>
+                                    </h6>
+                                    <!--
+                                        NOTE: FireComplianceMeasure's own getters were not available when this page
+                                        was corrected, so getMeasureName()/getStatus()/getQuantity()/getLocation()
+                                        below are assumed to mirror the "Fire and Safety Measures", "Provided/Not
+                                        Provided/Not Required", "Quantity" and "Location" columns collected on the
+                                        application form. Rename these EL properties to match the real
+                                        FireComplianceMeasure entity if its getters differ.
+                                    -->
+                                    <table width="100%" border="1" cellpadding="4" cellspacing="0" class="container">
+                                        <tr style="background-color: #dce2e8;">
+                                            <th style="width: 4%;">Sr.No.</th>
+                                            <th style="width: 28%;">Fire and Safety Measures</th>
+                                            <th style="width: 30%;">Provided / Not Provided / Not Required</th>
+                                            <th style="width: 14%;">Quantity</th>
+                                            <th>Location</th>
+                                        </tr>
+                                        <c:forEach var="measure" items="${fireComplianceCertificate.fireComplianceMeasures}" varStatus="loop">
+                                            <tr>
+                                                <td>${loop.index + 1}</td>
+                                                <td><c:out value="${measure.measureName}" /></td>
+                                                <td><c:out value="${measure.status}" /></td>
+                                                <td><c:out value="${measure.quantity}" /></td>
+                                                <td><c:out value="${measure.location}" /></td>
+                                            </tr>
+                                        </c:forEach>
+                                        <c:if test="${empty fireComplianceCertificate.fireComplianceMeasures}">
+                                            <tr>
+                                                <td colspan="5" style="text-align:center;">No fire &amp; safety measures recorded.</td>
+                                            </tr>
+                                        </c:if>
+                                    </table>
+
+                                    <!-- ================= Other Information ================= -->
+                                    <table width="100%" border="0" cellpadding="2" cellspacing="2" class="container">
+                                        <tr>
+                                            <td><span class="ClsLabel" style="font-size: 14px">Other information related to fire fighting &amp; life safety arrangement :</span></td>
+                                            <td colspan="3">
+                                                <textarea class="form-control" rows="2" name="otherinfo">${fireComplianceCertificate.otherinfo}</textarea>
                                             </td>
-                                            </tr> --%>
+                                        </tr>
+                                    </table>
+
+                                    <!-- ================= Certifying Architect / Owner Details ================= -->
+                                    <h6 style="background-color: #dce2e8; padding: 10px;" class="rounded-2">
+                                        <strong>Certifying Architect / Owner Details</strong>
+                                    </h6>
+                                    <table width="100%" border="0" cellpadding="2" cellspacing="2" class="container">
+                                        <tr>
+                                            <td><span class="ClsLabel" style="font-size: 14px">Name of Architect :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px;" maxlength="50"
+                                                    name="nameofarchitect" value="${fireComplianceCertificate.nameofarchitect}" /></td>
+
+                                            <td><span class="ClsLabel" style="font-size: 14px">License No. :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px" maxlength="50"
+                                                    name="architectlicenseno" value="${fireComplianceCertificate.architectlicenseno}" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="ClsLabel" style="font-size: 14px">Address (Architect) :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px;" maxlength="50"
+                                                    name="addressofarchitect" value="${fireComplianceCertificate.addressofarchitect}" /></td>
+
+                                            <td><span class="ClsLabel" style="font-size: 14px">Name of Owner :</span></td>
+                                            <td><input type="text" class="form-control" style="width: 180px" maxlength="50"
+                                                    name="nameofownerdeclaration" value="${fireComplianceCertificate.nameofownerdeclaration}" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="ClsLabel" style="font-size: 14px">Address (Owner) :</span></td>
+                                            <td colspan="3"><input type="text" class="form-control" style="width: 180px;" maxlength="50"
+                                                    name="addressofownerdeclaration" value="${fireComplianceCertificate.addressofownerdeclaration}" /></td>
+                                        </tr>
+                                    </table>
+
+                                    <!-- ================= Declaration ================= -->
+                                    <!-- NOTE: the "declaration" checkbox on the application form has no matching
+                                         column on FireComplianceCertificate either; add a boolean/flag column
+                                         (e.g. declarationAccepted) if you need to show whether it was ticked. -->
+                                    <table width="100%" border="0" cellpadding="2" cellspacing="2" class="container">
+                                        <tr>
+                                            <td><span class="ClsLabel" style="font-size: 14px; font-style: italic;">
+                                                    Declaration: The applicant declared that all information provided in the
+                                                    application is true.
+                                                </span></td>
+                                        </tr>
+                                    </table>
+
+                                    <!-- ================= Current Status ================= -->
+                                    <table width="100%" border="0" cellpadding="2" cellspacing="2" class="container">
+                                        <tr>
+                                            <td><span class="ClsLabel" style="font-size: 14px">Current Status:</span></td>
+                                            <td style="width: 230px; height: 30px"><span class="ClsLabel" style="font-size: 14px">
+                                                    <c:if test="${requestScope.rtiApplication.workFlowStatus==0}">Citizen Form Submitted.</c:if>
+                                                    <c:if test="${requestScope.rtiApplication.workFlowStatus==3}">Citizen Payment Pending.</c:if>
+                                                    <c:if test="${requestScope.rtiApplication.workFlowStatus==2}">Citizen Payment Completed</c:if>
+                                                    <c:if test="${requestScope.rtiApplication.workFlowStatus==1}">Completed and File Uploaded for Citizen</c:if>
+                                                    <c:if test="${requestScope.rtiApplication.workFlowStatus==5}">Rejected</c:if>
+                                                </span></td>
 
                                             <c:if test="${requestScope.rtiApplication.workFlowStatus==2}">
-
-                                                <tr>
-                                                    <td colspan="6" align="center">
-                                                        <a target="_blank" href="" id="genCerBtn">
-
-                                                            <button class="ClsButton clsButtonUpload"
-                                                                onclick="download(${mandapPermission.rti_ref_id},'mandapCertificateReport.do')">GENERATE
-                                                                CERTIFICATE</button>
-
-                                                        </a>
-
-                                                    </td>
-                                                </tr>
-                                            </c:if>
-
-
-
-
-                                    </table>
-					
-					
-                                    <table width="100%" border="0" cellpadding="2" cellspacing="2" class="container">
-
-                                        <tr>
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                    Current Status:</span></td>
-                                            <td style="width: 230px; height: 30px"><span class="ClsLabel"
-                                                    style="font-size: 14px">
-                                                    <c:if test="${requestScope.rtiApplication.workFlowStatus==0}">
-                                                        Citizen Form Submitted.
-                                                    </c:if>
-                                                    <c:if test="${requestScope.rtiApplication.workFlowStatus==3}">
-                                                        Citizen Payment Pending.
-                                                    </c:if>
-                                                    <c:if test="${requestScope.rtiApplication.workFlowStatus==2}">
-                                                        Citizen Payment Completed
-                                                    </c:if>
-                                                    <c:if test="${requestScope.rtiApplication.workFlowStatus==1}">
-                                                        Completed and File Uploaded for Citizen
-                                                    </c:if>
-                                                    <c:if test="${requestScope.rtiApplication.workFlowStatus==5}">
-                                                        Rejected
-                                                    </c:if>
-                                                </span></td>
-
-
-                                            <%-- <td colspan="6" align="center">
-                                                <c:if test="${requestScope.rtiApplication.workFlowStatus==2}">
+                                                <td colspan="4" align="center">
                                                     <a target="_blank" href="" id="genCerBtn">
-
-                                                        <button name="rtiApplicationRefId"
-                                                            class="ClsButton clsButtonUpload"
-                                                            onclick="download(${zoneCertificates.rti_ref_id},'zoneCertificateReport.do')">GENERATE
+                                                        <button type="button" class="ClsButton clsButtonUpload"
+                                                            onclick="download(${fireComplianceCertificate.rti_ref_id},'fireComplianceCertificateReport.do')">GENERATE
                                                             CERTIFICATE</button>
                                                     </a>
-
-                                                    </td> --%>
-
-
-                                                    <c:if test="${requestScope.rtiApplication.workFlowStatus==2}">
-                                                        <td><span class="ClsLabel" style="font-size:14px">Certificate
-                                                                Upload: </span> </td>
-                                                    </c:if>
-                                                    <%@include file="/pages/common-pages/dms/fileUpload.jsp" %>
+                                                </td>
+                                                <td><span class="ClsLabel" style="font-size:14px">Certificate Upload: </span></td>
+                                            </c:if>
+                                            <%@include file="/pages/common-pages/dms/fileUpload.jsp" %>
                                         </tr>
-
-                                        <!--      <tr>
-            <td colspan="6" style="padding-top:5px">
-                <img src="../images/Transpx.gif" height="15px" />
-            </td>
-        </tr> -->
-
-
-                                        <%-- <tr>
-                                            <td colspan="6" align="center"><input type="button" class="ClsButton"
-                                                    id="save" name="save" value="Save"
-                                                    onclick="javascript:savemTPRegistrationCertificate(this.form);"
-                                                    tabindex="31"> <input type="button" class="ClsButton" id="clear"
-                                                    name="clear" value="<fmt:message key=" common.button.clear" />"
-                                                onclick="javascript:clearFields('SearchTable');searchRTIApplication()"
-                                                />
-
-
-
-
-                                                <input type="hidden" class="ClsTextbox" style="width:180px"
-                                                    id="rtiapplrefno" maxlength="12" name="rtiapplrefno"
-                                                    value="<c:out value=" ${zoneCertificates.rtiapplrefno}" />" />
-
-                                                <input type="hidden" class="ClsTextbox_mr" style="width:180px"
-                                                    id="rti_ref_id" maxlength="12" name="rti_ref_id"
-                                                    value="<c:out value=" ${zoneCertificates.rti_ref_id}" />" />
-                                                --%>
-
                                     </table>
+
+                                    <!-- ================= List of Documents ================= -->
                                     <table width="100%" border="0" cellpadding="2" cellspacing="2" class="container">
                                         <tr>
-                                            <td colspan="4"><span class="ClsLabel"
-                                                    style="font-size: 15px; font-weight: bold;">
-                                                    List of Documents (Attachment)For Fire Compliance Certificate :
+                                            <td colspan="4"><span class="ClsLabel" style="font-size: 15px; font-weight: bold;">
+                                                    List of Documents (Attachment) For Fire Compliance Certificate :
                                                 </span></td>
                                         </tr>
+
+                                        <c:set var="doc" value="${fn:split(fireComplianceCertificate.filesPath, ',')}" />
+
                                         <tr>
-                                            <td style="width: 600px; height: 30px"><span class="ClsLabel"
-                                                    style="font-size: 14px;">
+                                            <td style="width: 600px; height: 30px"><span class="ClsLabel" style="font-size: 14px;">
                                                     Fitness certificate from licensing agency :
                                                 </span></td>
-
                                             <td style="text-align: center">
-                                                <c:set var="doc"
-                                                    value="${fn:split(rtiApplication.pdfUploadFromPortal, ',')}" />
-                                                <a class="ClsButton" type="button" target="_blank" href="<c:out value="
-                                                    ${doc[0]}" />"><span style="align-items: center">Download</span></a>
+                                                <a class="ClsButton" type="button" target="_blank" href="<c:out value='${doc[0]}' />">
+                                                    <span style="align-items: center">Download</span></a>
                                             </td>
-
-                                        <tr>
-                                        <tr>
-                                            <td><span class="ClsLabel" style="font-size: 14px">
-                                                    Building Plan,Sections and Elevations :
-                                                </span></td>
-                                            <td style="text-align: center"> <a class="ClsButton" type="button"
-                                                    target="_blank" href="<c:out value=" ${doc[1]}" />"><span
-                                                    style="align-items: center">Download</span></a>
-                                            </td>
-
                                         </tr>
                                         <tr>
                                             <td><span class="ClsLabel" style="font-size: 14px">
                                                     Civil Engineer certificate of Structural stability :
                                                 </span></td>
-                                            <td style="text-align: center"> <a class="ClsButton" type="button"
-                                                    target="_blank" href="<c:out value=" ${doc[2]}" />"><span
-                                                    style="align-items: center">Download</span></a>
+                                            <td style="text-align: center">
+                                                <a class="ClsButton" type="button" target="_blank" href="<c:out value='${doc[1]}' />">
+                                                    <span style="align-items: center">Download</span></a>
                                             </td>
-										</tr>
-										
-										                                        <tr>
-                                            <td style="width: 600px; height: 30px"><span class="ClsLabel"
-                                                    style="font-size: 14px;">
+                                        </tr>
+                                        <tr>
+                                            <td><span class="ClsLabel" style="font-size: 14px">
                                                     Architect certificate for fire water tanks :
                                                 </span></td>
-
                                             <td style="text-align: center">
-                                                <c:set var="doc"
-                                                    value="${fn:split(rtiApplication.pdfUploadFromPortal, ',')}" />
-                                                <a class="ClsButton" type="button" target="_blank" href="<c:out value="
-                                                    ${doc[3]}" />"><span style="align-items: center">Download</span></a>
+                                                <a class="ClsButton" type="button" target="_blank" href="<c:out value='${doc[2]}' />">
+                                                    <span style="align-items: center">Download</span></a>
                                             </td>
-
-                                        <tr>
+                                        </tr>
                                         <tr>
                                             <td><span class="ClsLabel" style="font-size: 14px">
                                                     Electrical inspector certificate :
                                                 </span></td>
-                                            <td style="text-align: center"> <a class="ClsButton" type="button"
-                                                    target="_blank" href="<c:out value=" ${doc[4]}" />"><span
-                                                    style="align-items: center">Download</span></a>
+                                            <td style="text-align: center">
+                                                <a class="ClsButton" type="button" target="_blank" href="<c:out value='${doc[3]}' />">
+                                                    <span style="align-items: center">Download</span></a>
                                             </td>
-
                                         </tr>
                                         <tr>
                                             <td><span class="ClsLabel" style="font-size: 14px">
                                                     Sanctioned building plan :
                                                 </span></td>
-                                            <td style="text-align: center"> <a class="ClsButton" type="button"
-                                                    target="_blank" href="<c:out value=" ${doc[5]}" />"><span
-                                                    style="align-items: center">Download</span></a>
-                                            </td>
-										</tr>
-										                                        <tr>
-                                            <td style="width: 600px; height: 30px"><span class="ClsLabel"
-                                                    style="font-size: 14px;">
-                                                    License copy of lift :
-                                                </span></td>
-
                                             <td style="text-align: center">
-                                                <c:set var="doc"
-                                                    value="${fn:split(rtiApplication.pdfUploadFromPortal, ',')}" />
-                                                <a class="ClsButton" type="button" target="_blank" href="<c:out value="
-                                                    ${doc[6]}" />"><span style="align-items: center">Download</span></a>
+                                                <a class="ClsButton" type="button" target="_blank" href="<c:out value='${doc[4]}' />">
+                                                    <span style="align-items: center">Download</span></a>
                                             </td>
-
-                                        <tr>
+                                        </tr>
                                         <tr>
                                             <td><span class="ClsLabel" style="font-size: 14px">
-                                                    Signature :
+                                                    License copy of lift :
                                                 </span></td>
-                                            <td style="text-align: center"> <a class="ClsButton" type="button"
-                                                    target="_blank" href="<c:out value=" ${doc[7]}" />"><span
-                                                    style="align-items: center">Download</span></a>
+                                            <td style="text-align: center">
+                                                <a class="ClsButton" type="button" target="_blank" href="<c:out value='${doc[5]}' />">
+                                                    <span style="align-items: center">Download</span></a>
                                             </td>
-
+                                        </tr>
+                                        <tr>
+                                            <td><span class="ClsLabel" style="font-size: 14px">
+                                                    Affidavit :
+                                                </span></td>
+                                            <td style="text-align: center">
+                                                <a class="ClsButton" type="button" target="_blank" href="<c:out value='${doc[6]}' />">
+                                                    <span style="align-items: center">Download</span></a>
+                                            </td>
                                         </tr>
                                     </table>
                                     <br>
                                 </div>
 
-                                <input type="hidden" class="ClsTextbox" id="mandapPermissionId" style="width:180px"
-                                    name="mandapPermissionId" value="<c:out value="
-                                    ${mandapPermission.mandapPermissionId}" />" />
                                 <input type="hidden" id="rtiApplicationRefId" name="rtiApplicationRefId" value="" />
                                 <%@include file="/pages/workflow/taskInclude.jsp" %>
 
