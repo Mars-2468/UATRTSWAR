@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2026-09-10T18:32:23 -->
+<!-- 2026-09-21T14:44:34 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PwdContractorDemandGeneration" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0cec01d9-fa87-4a51-be91-33950ff9b04f">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Prod_db"/>
 	<parameter name="collection_id" class="java.lang.String"/>
 	<parameter name="amc_logo" class="java.lang.String"/>
 	<queryString>
@@ -16,6 +17,7 @@
     ra.applicant_name,
     ra.first_payment_fees,
     c.amount,
+     c.receipt_date,
     frm.address_of_power_attorney ,
     frm.mobile_no ,
     frm.rti_application_ref_id
@@ -36,6 +38,7 @@ WHERE
 	<field name="applicant_name" class="java.lang.String"/>
 	<field name="first_payment_fees" class="java.lang.String"/>
 	<field name="amount" class="java.lang.Double"/>
+	<field name="receipt_date" class="java.lang.String"/>
 	<field name="address_of_power_attorney" class="java.lang.String"/>
 	<field name="mobile_no" class="java.lang.String"/>
 	<field name="rti_application_ref_id" class="java.lang.String"/>
@@ -88,7 +91,7 @@ WHERE
 		</band>
 	</title>
 	<detail>
-		<band height="392" splitType="Stretch">
+		<band height="475" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<textField pattern="">
 				<reportElement mode="Opaque" x="0" y="0" width="555" height="26" forecolor="#FFFFFF" backcolor="#1F4E79" uuid="2292cbe4-6ad1-48ad-8795-1ad0bd28cd59">
@@ -105,7 +108,7 @@ WHERE
             : new SimpleDateFormat("yyyy").format(new java.util.Date()) + " to " + (Integer.parseInt(new SimpleDateFormat("yyyy").format(new java.util.Date())) + 1)]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="0" y="32" width="277" height="24" backcolor="#EAF2F8" uuid="7f774dd9-5795-4f88-9f48-31c339b0c56b">
+				<reportElement mode="Opaque" x="0" y="27" width="277" height="24" backcolor="#EAF2F8" uuid="7f774dd9-5795-4f88-9f48-31c339b0c56b">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
@@ -123,7 +126,7 @@ WHERE
 				<textFieldExpression><![CDATA["Receipt No :  "+$F{receipt_number}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement mode="Opaque" x="278" y="32" width="277" height="24" backcolor="#EAF2F8" uuid="60973fe5-4442-45f9-95dd-684cc7d28368">
+				<reportElement mode="Opaque" x="278" y="27" width="277" height="24" backcolor="#EAF2F8" uuid="60973fe5-4442-45f9-95dd-684cc7d28368">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
@@ -138,7 +141,9 @@ WHERE
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Receipt Date :  "+new java.sql.Date(System.currentTimeMillis())]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Receipt Date : " + new java.text.SimpleDateFormat("dd/MM/yyyy").format(
+    new java.text.SimpleDateFormat("yyyy-MM-dd").parse($F{receipt_date})
+)]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement mode="Opaque" x="0" y="56" width="180" height="24" forecolor="#1F4E79" backcolor="#EAF2F8" uuid="8c38d8ec-5a1a-4439-94c0-4e36ba3a8fa1"/>
@@ -167,7 +172,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineStyle="Solid" lineColor="#B7C9DA"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial Unicode MS" size="12"/>
+					<font fontName="Arial Unicode MS" size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{address_of_power_attorney}]]></textFieldExpression>
 			</textField>
@@ -293,7 +298,7 @@ WHERE
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial Unicode MS" size="15" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{amount} == null ? "0.00" : new java.text.DecimalFormat("#,##,##0.00").format(Math.round($F{amount}.doubleValue()))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{amount} == null ? "0.00" : (($F{amount} < 0 ? "-" : "") + Long.toString(Math.abs(Math.round($F{amount}))).replaceAll("(\\d)(?=(\\d\\d)+\\d$)", "$1,") + ".00")]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="188" width="200" height="14" uuid="9d8e7f6a-0002-4b22-9c22-200000000002"/>
@@ -396,7 +401,10 @@ WHERE
 				<textElement textAlignment="Left">
 					<font fontName="Arial Unicode MS" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["  Received Amount : " + ($F{amount} == null ? "0.00" : new java.text.DecimalFormat("#,##,##0.00").format(Math.round($F{amount}.doubleValue())))]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Received Amount : " + ($F{amount} == null ? "0.00" :
+    (($F{amount}.doubleValue() < 0 ? "-" : "") +
+    Long.toString(Math.abs(Math.round($F{amount}.doubleValue())))
+    .replaceAll("(\\d)(?=(\\d\\d)+\\d$)", "$1,") + ".00"))]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="0" y="296" width="555" height="1" uuid="9d8e7f6a-0004-4b22-9c22-400000000004"/>
@@ -405,7 +413,7 @@ WHERE
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement x="3" y="304" width="220" height="20" uuid="aee2b6d6-9929-4604-8a50-63850d9eb1c6">
+				<reportElement x="3" y="389" width="220" height="20" uuid="aee2b6d6-9929-4604-8a50-63850d9eb1c6">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
@@ -420,10 +428,10 @@ WHERE
 				<textElement textAlignment="Left">
 					<font fontName="Arial Unicode MS" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA["  Date : " + new java.text.SimpleDateFormat("dd-MM-yyyy").format(new java.util.Date())]]></textFieldExpression>
+				<textFieldExpression><![CDATA["  Date : " + new java.text.SimpleDateFormat("dd/MM/yyyy").format(new java.util.Date())]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="330" y="304" width="225" height="20" uuid="b708c0a3-1abf-40ad-9945-7291b175ea78">
+				<reportElement x="330" y="389" width="225" height="20" uuid="b708c0a3-1abf-40ad-9945-7291b175ea78">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
@@ -441,7 +449,7 @@ WHERE
 				<textFieldExpression><![CDATA["Full Signature of the official "]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="5" y="336" width="550" height="44" backcolor="#F5F5F5" uuid="76a8a643-341b-43f0-a84f-254161aed9e8">
+				<reportElement mode="Opaque" x="5" y="415" width="550" height="44" backcolor="#F5F5F5" uuid="76a8a643-341b-43f0-a84f-254161aed9e8">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>

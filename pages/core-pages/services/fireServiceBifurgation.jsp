@@ -1140,17 +1140,22 @@ window.addEventListener("DOMContentLoaded", function () {
                                         <td class="sr-no-col"><c:out value="${totalStatus.index + 1}"/></td>
 
                                         <td>
-                                            <c:choose>
-                                                <c:when test="${requestScope.forLogin eq 'L2'}">
-                                                    <c:out value="${item.application.rtiApplnNumber}"/>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <a title="<fmt:message key="list.link.EditOrViewLink"/>"
-                                                       href="javascript:editRTIApplication('${item.application.rtiApplicationRefId}','${item.application.rtiApplicationId}');">
-                                                        <c:out value="${item.application.rtiApplnNumber}" />
-                                                    </a>
-                                                </c:otherwise>
-                                            </c:choose>
+                                        <c:choose>
+                                                    <c:when test="${requestScope.forLogin eq 'L1' or requestScope.isZoneUser}">
+                                                        <c:out value="${rtiApplnList.rtiApplnNumber}" />
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <a title="<fmt:message key='list.link.EditOrViewLink'/>"
+                                                           href="javascript:editRTIApplication(
+                                                               '${item.application.rtiApplicationRefId}',
+                                                               '${item.application.rtiApplicationId}'
+                                                           );">
+                                                            <c:out value="${item.application.rtiApplnNumber}" />
+                                                        </a>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                
+                                          
                                         </td>
 
                                         <td><c:out value="${item.application.registrationDate}"/></td>
