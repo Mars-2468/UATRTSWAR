@@ -440,7 +440,7 @@ String name=(String)session.getAttribute("name");
 </div>
 
 <div class="page-heading-wrapper">
-  <h2 class="page-heading">ONLINE CITIZEN SERVICES (64)</h2>
+  <h2 class="page-heading">ONLINE CITIZEN SERVICES (66)</h2>
 </div>
 
 <div class="cards-outer-wrapper">
@@ -664,7 +664,7 @@ String name=(String)session.getAttribute("name");
 									Shop License (फटाके दुकानाचा परवाना)</a></li>
 							<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTSFireRecommendationLetter.do'>Temporary Fire
 									NOC (तात्पुरती ना-हरकत दाखला देणे)</a></li>
-							<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTIFireComplianceCertificateApplication.do'>Final Fire NOC
+								<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTIFireComplianceCertificateApplication.do'>Final Fire NOC
 									(अंतिम ना-हरकत दाखला देणे)</a></li>
 						</ol>
 					</div>
@@ -719,7 +719,7 @@ String name=(String)session.getAttribute("name");
 					<div
 						class="card-header pointer d-flex justify-content-between align-items-center">
 						<a class="lbleng zoom-text" href="#"> Festival
-									Permissions<span class="service-count">(2)</span>  </a>
+									Permissions<span class="service-count">(4)</span>  </a>
 						<div class="wtt_">
 							<img src="<%=url%>/img/ganesh.png" alt="Garden">
 						</div>
@@ -729,8 +729,16 @@ String name=(String)session.getAttribute("name");
 							
 							<li><a class="lbleng zoom-text" href='<c:out value="${contextRoot}"/>/ws/rtsapplication/newRTSGaneshApplication.do'>Ganesh Mandap
 									Permission (गणेश मंडप परवानी)</a></li>
+							<li><a class="lbleng zoom-text" href='https://charity.maharashtra.gov.in/mr-in/' target='_blank'> Charity Commissioner Ganesh Permission (धर्मदाय आयुक्त गणेश परवानी) </a></li>
+									
 							<li><a class="lbleng zoom-text" href='<c:out value="${contextRoot}"/>/ws/rtsapplication/newRTSDurgaUtsavApplication.do'>Durga
 									Utsav/Garba Mandap Permission (दुर्गा उत्सव/गरबा मंडप परवानी)</a></li>
+							
+							<li><a class="lbleng zoom-text" href='<c:out value="${contextRoot}"/>/ws/rtsapplication/newRTSDikshaBhoomiApplication.do'>
+									Diksha Bhumi Mandap Permission (दीक्षा भूमी मंडप परवानगी)</a></li>
+											
+									 
+             
 						</ol>
 					</div>
 				</div>
@@ -752,28 +760,28 @@ String name=(String)session.getAttribute("name");
 					</div>
 					<div class="card-body">
 						<ol class="watermark-text1" type="1">
-							<li><a class="lbleng zoom-text" href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTINOCOfTradeApplication.do'>NOC for
+							<li><a class="lbleng zoom-text"  href='#'>NOC for
 									Trade/Business/Storage (व्यापार/व्यवसाय/साठा करणेसाठी नाहरकत
 									प्रमाणपत्र)</a></li>
-							<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTITradeLicenceNew.do'>New License
+							<li><a class="lbleng zoom-text"   href='#'>New License
 									Issuance (नवीन परवाना मिळणे)</a></li>
-							<li><a class="lbleng zoom-text" href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTITradeLicenceRenewal.do'>License Renewal
+							<li><a class="lbleng zoom-text"  href='#'>License Renewal
 									(परवान्याचे नुतनीकरण)</a></li>
-							<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTITradeLicenseTransfer.do'>License
+							<li><a class="lbleng zoom-text"   href='#'>License
 									Transfer (परवाना हस्तांतरण)</a></li>
-							<li><a class="lbleng zoom-text" href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTITradeLicenseDuplicateCopyApplication.do'>License
+							<li><a class="lbleng zoom-text"  href='#'>License
 									Duplicate Copy (परवाना दुय्यम प्रत)</a></li>
-							<li><a class="lbleng zoom-text" href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTITradeLicenseNameChangeApplication.do'>Business Name
+							<li><a class="lbleng zoom-text"  href='#'>Business Name
 									Change (व्यवसायाचे नाव बदलणे)</a></li>
-							<li><a class="lbleng zoom-text" href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTITradeLicenseTypeChangeApplication.do'>Business Type
+							<li><a class="lbleng zoom-text"  href='#'>Business Type
 									Change (व्यवसाय बदलणे)</a></li>
-							<li><a class="lbleng zoom-text" href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTITradeLicencePartnerChange.do'>Partner Name
+							<li><a class="lbleng zoom-text"  href='#'>Partner Name
 									Change (भागीदाराचे नाव बदलणे)</a></li>
-							<li><a class="lbleng zoom-text" href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTITradePartnerCountUpdate.do'>Change in
+							<li><a class="lbleng zoom-text"  href='#'>Change in
 									Number of Partners (भागीदाराच्या संख्येत बदल (वाढ/कमी))</a></li>
-							<li><a class="lbleng zoom-text" href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTITradeLicenseCancellationApplication.do'>License
+							<li><a class="lbleng zoom-text"  href='#'>License
 									Cancellation (परवाना रद्द करणे)</a></li>
-							<li><a class="lbleng zoom-text" href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTITradeLicenseOutdatedRenewalApplication.do'>Renewal Notice
+							<li><a class="lbleng zoom-text"  href='#'>Renewal Notice
 									for Expired License (कालबाह्य परवान्यासाठी नुतनीकरण सुचना)</a></li>
 						</ol>
 					</div>
