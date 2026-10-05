@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2024-12-05T15:05:24 -->
+<!-- 2026-03-24T15:26:27 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MarriageApplication" pageWidth="1000" pageHeight="900" columnWidth="960" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="47fea150-c831-4f21-980d-c72cc003dddc">
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -128,8 +128,13 @@ WHERE
 	<field name="property_tax_certificate" class="java.lang.String"/>
 	<field name="tax_other_citizen_document_upload" class="java.lang.String"/>
 	<field name="aaplesarkar_user_mobile_no" class="java.lang.String"/>
-	<field name="year" class="java.lang.String"/>
-	<field name="kiosk_mobile_number" class="java.lang.String"/>
+	<field name="aaple_user_track_id" class="java.lang.String"/>
+	<field name="aaple_user_id" class="java.lang.String"/>
+	<field name="aaple_service_id" class="java.lang.String"/>
+	<field name="aaple_application_id" class="java.lang.String"/>
+	<field name="service_id" class="java.lang.Integer"/>
+	<field name="application_status" class="java.lang.String"/>
+	<field name="isaplesarkarapp" class="java.lang.Integer"/>
 	<field name="first_url" class="java.lang.String"/>
 	<field name="second_url" class="java.lang.String"/>
 	<field name="third_url" class="java.lang.String"/>

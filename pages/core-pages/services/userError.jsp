@@ -3,63 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>error</title>
+    <title>Real-Time Error Message</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f8f9fa;
-        }
+	<style>
 
-        .container {
-            background-color: #ffffff;
-            padding: 50px;
-            border-radius: 12px;
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-            max-width: 600px;
-            width: 100%;
-            text-align: center;
-        }
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
 
-        #errorContainer {
-            background-color: #ffe6e6;
-            color: #cc0000;
-            border: 2px solid #cc0000;
-            padding: 30px;
-            border-radius: 8px;
-        }
+.container {
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-        #errorContainer p {
-            font-size: 1.8em; /* Main message font size */
-            font-weight: bold;
-            margin: 0 0 10px 0;
-        }
+#errorContainer {
+    background-color: #ffdddd;
+    color: #d8000c;
+    border: 2px solid #d8000c;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
 
-        .error-code {
-            font-size: 2.5em; /* Large error code */
-            display: block;
-            margin-bottom: 20px;
-            color: #990000;
-        }
+#errorContainer p {
+    font-size: 2em; /* Larger font size */
+    font-weight: bold;
+    margin: 0;
+}
 
-        .error-message {
-            font-size: 1.2em;
-            color: #666666;
-            margin-top: 10px;
-        }
-    </style>
+.error-code {
+    font-size: 1.5em; /* Slightly smaller than main message */
+    display: block;
+    margin-bottom: 10px;
+    color: #b30000;
+}
+
+	</style>
 </head>
 <body>
     <div class="container">
         <div id="errorContainer">
-            <span class="error-code">405</span>
-            <p>We are sorry, something went wrong.</p>
-            <p class="error-message">Please try again later</p>
+            <p><span class="error-code">405</span> Something went wrong</p>
         </div>
     </div>
 </body>

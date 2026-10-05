@@ -1,0 +1,65 @@
+<process xmlns="http://jbpm.org/4.4/jpdl" name="fire_final_noc">
+<start name="start">
+<transition to="L1 Verification"/>
+</start>
+<!--   ================================================================
+         L1 - Fire Inspector
+
+         Mandatory before L1 can forward: Inspection Report + Digital
+         Photos uploaded (enforced in fireTaskInclude.jsp and re-checked
+         in the controller). Final NOC Charges is NOT required to be
+         non-blank here - either L1 or L2 may fill it in, and a blank/0
+         value is a normal "no charges apply" state, not missing data
+         (whatever value IS on the form gets saved on every submit
+         regardless of transition - see createFireComplianceCertificate()).
+
+         L1Forward does not change RTIApplication.workFlowStatus - it
+         stays whatever it already was (0, "Citizen Form Submitted") all
+         the way through L2 Verification too, which is why the upload
+         fields and the charges field stay editable for both L1 and L2
+         until L2 actually acts.
+         ================================================================   -->
+<task name="L1 Verification" assignee="#{FIRE_INSPECTOR}">
+<transition name="Forward" to="L2 Verification"/>
+<transition name="Reject" to="end"/>
+</task>
+<!--   ================================================================
+         L2 - Section Officer
+
+         Two transitions exist here, but only ONE is ever shown/usable at
+         a time - fireTaskInclude.jsp's fireToggleL2Buttons() decides
+         live from the Final NOC Charges value:
+
+           - charges > 0        -> only "Send-Demand" is shown: demand
+                                    sent to citizen, workFlowStatus -> 3
+                                    (payment pending). Moves on to
+                                    "L2 Finalize NOC".
+           - charges blank/0    -> only "Close-Application" is shown: no
+                                    payment needed, L2 generates + uploads
+                                    the NOC (GENERATE CERTIFICATE / DMS
+                                    upload above) and closes directly from
+                                    here. workFlowStatus -> 1.
+         ================================================================   -->
+<task name="L2 Verification" assignee="#{SECTION_OFFICER}">
+<transition name="Send-Demand" to="L2 Finalize NOC"/>
+<transition name="Close-Application" to="end"/>
+<transition name="Reject" to="end"/>
+</task>
+<!--   ================================================================
+         L2 - Finalize NOC (post-payment)
+
+         Reached only via "Send-Demand". Once the citizen pays (external
+         event, workFlowStatus -> 2), L2 generates + uploads the NOC the
+         same way as the direct no-charge path, then closes with the same
+         "Close-Application" transition name - so both paths share one
+         controller case and one client-side validation. Assigned to
+         SECTION_AUTHORITY (a different role from L2 Verification's
+         SECTION_OFFICER) - this is a plain jBPM assignee choice and
+         needs no supporting code changes elsewhere.
+         ================================================================   -->
+<task name="L2 Finalize NOC" assignee="#{SECTION_AUTHORITY}">
+<transition name="Close-Application" to="end"/>
+<transition name="Reject" to="end"/>
+</task>
+<end name="end"/>
+</process>

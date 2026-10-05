@@ -22,7 +22,7 @@
     
     <context-param>
         <param-name>webAppRootKey</param-name>
-        <param-value>rts888.root</param-value>
+        <param-value>grievancerts.root</param-value>
     </context-param> 
  
 	<filter>
@@ -134,36 +134,6 @@
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
 	
-	<filter>
-	<filter-name>CORSFilter</filter-name>
-	<filter-class>com.mars.rti.security.CORSFilter</filter-class> <!-- Update with package -->
-   </filter>
-	<filter-mapping>
-		<filter-name>CORSFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	
-	<filter>
-	<filter-name>HostHeaderValidationFilter</filter-name>
-	<filter-class>com.mars.rti.security.HostHeaderValidationFilter</filter-class> <!-- Update with package -->
-   </filter>
-	<filter-mapping>
-		<filter-name>HostHeaderValidationFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-
-	<!-- Cookies Configuration -->
-	
-	<filter>
-	<filter-name>SecureCookieFilter</filter-name>
-	<filter-class>com.mars.rti.cookies.SecureCookieFilter</filter-class> <!-- Update with package -->
-   </filter>
-	<filter-mapping>
-		<filter-name>SecureCookieFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	
-	
 	  <servlet>
 		<servlet-name>MarsRestService</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -273,7 +243,7 @@
 	</error-page>
 
 	<session-config>
-		<session-timeout>45</session-timeout>
+		<session-timeout>20</session-timeout>
 	</session-config>
 
 	<welcome-file-list>

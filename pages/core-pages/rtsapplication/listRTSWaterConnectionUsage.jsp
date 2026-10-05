@@ -155,7 +155,7 @@ href="javascript:editRTIApplication('${rtiApplnList.rtiApplicationRefId}');">
 						In Process
 					</c:if>
  <c:if test="${rtiApplnList.workFlowStatus==2}">
-												In Process
+												Citizen Form Approved. 
  
 					</c:if>
 					<c:if test="${rtiApplnList.workFlowStatus==1}">
@@ -197,7 +197,7 @@ href="javascript:editRTIApplication('${rtiApplnList.rtiApplicationRefId}');">
 						In Process
 					</c:if>
  <c:if test="${rtiApplnList.workFlowStatus==2}">
-												In Process
+											Citizen Form Approved. 
  
 					</c:if>
 					<c:if test="${rtiApplnList.workFlowStatus==1}">

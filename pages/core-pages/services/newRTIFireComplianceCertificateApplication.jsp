@@ -181,8 +181,39 @@ h3 {
 				            $('[name="widthapproachroad"]').val(data.widthApproachRoad);
 				            $('[name="widthentrance"]').val(data.widthEntrance);
 				            $('[name="numberoffloors"]').val(data.noOfFloors);
-				            $('[name="fireDepartmentWiseLogin"]').val(data.fireDepartmentWiseLogin);
+				            $('[name="mobileno"]').val(data.mobileno);
+				            $('[name="emailid"]').val(data.emailid);
+				            var fireDate = data.fireRecommendationDate;
+				            var formattedDate = "";
 
+				            if (fireDate) {
+				                var datePart = fireDate.split(" ")[0];
+				                var dateParts = datePart.split("/");
+
+				                if (dateParts.length === 3) {
+				                    var day   = dateParts[0].padStart(2, '0');
+				                    var month = dateParts[1].padStart(2, '0');
+				                    var year  = dateParts[2];
+				                    formattedDate = year + "-" + month + "-" + day;
+				                }
+				            }
+
+				            // Target by name (scoped, matches the rest of your working autofetch fields)
+				            // and dispatch a native event too, in case something is listening for a
+				            // real user 'input' event rather than jQuery's synthetic 'change'.
+				            var $dateField = $('input[name="fireRecommendationDate"]');
+				            $dateField.val(formattedDate);
+				            $dateField[0].dispatchEvent(new Event('input', { bubbles: true }));
+				            $dateField[0].dispatchEvent(new Event('change', { bubbles: true }));
+
+				            console.log("Matched date fields:", $dateField.length);
+				            console.log("Actual Input Value:", $dateField.val());
+				           	            
+				            if (data.fireDepartmentWiseLogin) {
+				                $('#fireStation').val(data.fireDepartmentWiseLogin);
+				            } else {
+				                $('#fireStation').val('');
+				            }
 				            if (data.noofInternalStaircase) {
 				                var noofInternalStaircase = data.noofInternalStaircase.split(',');
 				                var widthInternalStaircaseProvided = data.widthInternalStaircaseProvided.split(',');
@@ -212,7 +243,7 @@ h3 {
 				                    var widthExternalStaircaseProvidedItem = widthExternalStaircaseProvided[index];
 				                    var row = $('<tr><td>' + srNumber + '</td>' +
 				                            '<td><input type="text" class="form-control" style="background-image: none;" name="noofExternalStaircase" value="' + noofExternalStaircaseItem + '"></td>' +
-				                            '<td><input type="text" class="form-control" style="background-image: none;" name="widthInternalStaircase" value="' + widthExternalStaircaseProvidedItem + '"></td></tr>');
+				                            '<td><input type="text" class="form-control" style="background-image: none;" name="widthExternalStaircase" value="' + widthExternalStaircaseProvidedItem + '"></td></tr>');
 				                    tableBody.append(row);
 				                    srNumber++;
 				                });
@@ -237,10 +268,24 @@ h3 {
 
 
 							},
-				        error: function () {
-				            // Handle error if AJAX request fails
-				            // alert("Error occurred while calculating.");
-				        }
+							 error: function (xhr) {
+
+							        var errorMessage = "Something went wrong.";
+
+							        if (xhr.responseJSON && xhr.responseJSON.error) {
+							            errorMessage = xhr.responseJSON.error;
+							        } else if (xhr.responseText) {
+							            try {
+							                var response = JSON.parse(xhr.responseText);
+							                if (response.error) {
+							                    errorMessage = response.error;
+							                }
+							            } catch (e) {
+							            }
+							        }
+
+							        alert(errorMessage);
+							    }
 				    });
 				}
 
@@ -255,6 +300,22 @@ h3 {
 						</label> <input type="text" class="form-control" id="provisionalFireSafetyApproval"
 							style="background-image: none;" placeholder=""  name="provisionalFireSafetyApproval" value="" required>
 						<div class="invalid-feedback">Please Enter Valid Provisional Fire Safety Approval</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="mb-3 mt-3">
+					<label for="fireRecommendationDate" class="form-label lbleng">
+    Provisional Fire Safety Approval Date<span class="text-danger">*</span>
+</label>
+						
+						
+						<input type="date"
+       class="form-control" style="background-image: none;"
+       id="fireRecommendationDate"
+       name="fireRecommendationDate"
+       required>
+      
+						<div class="invalid-feedback">Please Enter Valid Name of fireRecommendationDate .</div>
 					</div>
 				</div>
 
@@ -421,7 +482,7 @@ h3 {
 				<div class="table-responsive" style="display: flex; justify-content: space-between;">
 				    <div style="width: 49%;">
 				    <label>No. of Internal Staircase Provided<span class="text-danger">*</span></label>
-				    <input type="number" min="0" class="form-control mb-2" id="numInternalStaircaseFinal"
+				    <input type="number" min="0" class="form-control mb-2" id="numInternalStaircaseFinal" name="numInternalStaircaseFinal"
 				        style="background-image: none; max-width:150px;" placeholder="Enter count if not auto-fetched">
 				        <table id="heightTable" class="table table-striped table-bordered" style="width: 100%;background-color: #dce2e8;">
 				            <thead style="background-color: #dce2e8;">
@@ -437,7 +498,7 @@ h3 {
 				    </div>
 				    <div style="width: 49%;">
 				        <label>No. of External Staircase Provided<span class="text-danger">*</span></label>
-				        <input type="number" min="0" class="form-control mb-2" id="numExternalStaircaseFinal"
+				        <input type="number" min="0" class="form-control mb-2" id="numExternalStaircaseFinal" name="numExternalStaircaseFinal"
 				            style="background-image: none; max-width:150px;" placeholder="Enter count if not auto-fetched">
 				        <table id="heightTable1" class="table table-striped table-bordered" style="width: 100%;background-color: #dce2e8;">
 				            <thead style="background-color: #dce2e8;">
@@ -456,7 +517,7 @@ h3 {
 				<div class="table-responsive" style="display: flex; justify-content: space-between;">
 				 <div style="width: 49%;">
 				        <label>No. of Lift Provided<span class="text-danger">*</span></label>
-				        <input type="number" min="0" class="form-control mb-2" id="numLiftProvidedFinal"
+				        <input type="number" min="0" class="form-control mb-2" id="numLiftProvidedFinal" name="numLiftProvidedFinal"
 				            style="background-image: none; max-width:150px;" placeholder="Enter count if not auto-fetched">
 				        <table id="heightTable2" class="table table-striped table-bordered" style="width: 100%;background-color: #dce2e8;">
 				            <thead style="background-color: #dce2e8;">
@@ -712,6 +773,50 @@ h3 {
 					</div>
 				</div>
 				
+			<div class="col-md-3">
+					<div class="mb-3 mt-3">
+													<label for="" class="form-label"> Mobile No.<span class="text-danger" style="color: red;">*</span>
+								</label> <input type="text" class="form-control"
+									style="background-image: none;" id="mobileno" placeholder=""
+									name="mobileno" value="" pattern="[6-9]{1}[0-9]{9}"
+									maxlength="10" required>
+								<div class="invalid-feedback">Please Enter Valid Mobile
+									No.</div>
+							</div>
+							</div>
+							
+			<div class="col-md-3">
+					<div class="mb-3 mt-3">								
+					<label for="" class="form-label lbleng">Email Id<span class="text-danger" style="color: red;">*</span>
+								</label> <input type="email" class="form-control"
+									style="background-image: none;" id="emailid" placeholder=""
+									name="emailid" value="" required>
+								<div class="invalid-feedback">Please Enter Valid Email Id.
+								</div>
+</div>
+</div>
+			<div class="col-md-3">
+					<div class="mb-3 mt-3">
+													<label for="" class="form-label"> Fire Stations<span class="text-danger" style="color: red;">*</span>
+								</label> 
+								<select  class="form-control select" id="fireStation" name="fireStation" style="background-image: none;" required>
+    <option value="">-Select Fire Station-</option>
+
+    <option value="1">Civil Lines Fire Station</option>
+    <option value="2">Cotton Market Fire Station</option>
+    <option value="3">Ganjipeth Fire Station</option>
+    <option value="4">Lakadganj Fire Station</option>
+    <option value="5">Sakkardara Fire Station</option>
+    <option value="6">Kalamna Fire Station</option>
+    <option value="7">Sugat Nagar Fire Station</option>
+    <option value="8">Narendra Nagar Fire Station</option>
+    <option value="9">Trimurti Nagar Fire Station</option>
+    <option value="10">Wathoda Fire Station</option>
+</select>
+								<div class="invalid-feedback">Please Select Valid Fire Station.</div>
+							</div>
+							</div>
+				
 				<!-- <div class="col-md-3">
 					<div class="mb-3 mt-3">
 						<label for="addressofownerdeclaration" class="form-label lbleng">Fire Station<span class="text-danger">*</span></label>
@@ -907,25 +1012,7 @@ $('.printMe').on('click', function () {
 
 
 
-    function permitnoo(permitno) {
-        document.getElementById('permitno').innerText = permitno.value;
-    }
-
-    function reciptno(pname2) {
-        document.getElementById('receiptno').innerText = pname2.value;
-    }
-    function letterno(pname3) {
-        document.getElementById('letterno').innerText = pname3.value;
-    }
-    function date1(date11) {
-        document.getElementById('date1').innerText = date11.value;
-    }
-    function date2(date12) {
-        document.getElementById('date2').innerText = date12.value;
-    }
-    function date3(date13) {
-        document.getElementById('date3').innerText = date13.value;
-    }
+    
 </script>
 
 <script type="text/javascript">

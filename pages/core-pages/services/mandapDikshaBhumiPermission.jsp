@@ -554,10 +554,12 @@ input[type="text"], textarea {
 					</c:if> <c:if test="${requestScope.rtiApplication.workFlowStatus==5}">
 						Rejected
 					</c:if></span></td>
-					<c:if test="${requestScope.rtiApplication.workFlowStatus==2 || requestScope.rtiApplication.workFlowStatus==1}">
+					<c:if test="${userId == 3701 || userId == 3700  || userId == 2402  || userId == 2403  || userId == 2404  || userId == 2405  || userId == 2406  || userId == 3702  || userId == 2408  || userId == 2409}">
+			
 			<td colspan="2"><span class="ClsLabel" style="font-size: 14px">Certificate
 					Upload: </span></td>
 			<%@include file="/pages/common-pages/dms/fileUpload.jsp"%>
+
 </c:if>
 			<%--<td>
                             <span class="ClsLabel" style="font-size:14px"><fmt:message key="Birth Place" />:</span>
@@ -600,7 +602,7 @@ input[type="text"], textarea {
 		
 		
 		<!-- Files Uploading -->
-<c:if test="${requestScope.forLogin eq 'L1' || requestScope.forLogin eq 'L2' ||  requestScope.forLogin eq 'L4' && ( requestScope.rtiApplication.workFlowStatus==2 || requestScope.rtiApplication.workFlowStatus==1 || requestScope.rtiApplication.workFlowStatus==5 || requestScope.rtiApplication.workFlowStatus==3 ||requestScope.rtiApplication.workFlowStatus==0)}">
+<c:if test="${userId == 3703 || userId == 3704 || userId == 3705 || userId == 3706 || userId == 3707 || userId == 3708 || userId == 3709 || userId == 3710 || userId == 3711 || userId == 3732 || userId == 3701 || userId == 3700  || userId == 2402  || userId == 2403  || userId == 2404  || userId == 2405  || userId == 2406  || userId == 3702  || userId == 2408  || userId == 2409 || userId == 3800}">
 			<tr>
 				<td colspan="3.5"><span class="ClsLabel"
 					style="font-size: 14px"><fmt:message
@@ -631,7 +633,7 @@ input[type="text"], textarea {
 			</tr>
 			</c:if>
 
-<c:if test="${requestScope.forLogin eq 'L1' || requestScope.forLogin eq 'L2' || requestScope.forLogin eq 'L4' && ( requestScope.rtiApplication.workFlowStatus==2 || requestScope.rtiApplication.workFlowStatus==1 || requestScope.rtiApplication.workFlowStatus==5 || requestScope.rtiApplication.workFlowStatus==3 ||requestScope.rtiApplication.workFlowStatus==0)}">
+<c:if test="${userId == 3703 || userId == 3704 || userId == 3705 || userId == 3706 || userId == 3707 || userId == 3708 || userId == 3709 || userId == 3710 || userId == 3711 || userId == 3732 || userId == 3701 || userId == 3700  || userId == 2402  || userId == 2403  || userId == 2404  || userId == 2405  || userId == 2406  || userId == 3702  || userId == 2408  || userId == 2409 || userId == 3800}">
 		
 			<tr>
 				<td colspan="3.5"><span class="ClsLabel"
@@ -664,7 +666,7 @@ input[type="text"], textarea {
 			</tr>
 			</c:if>
 			
-<c:if test="${requestScope.forLogin eq 'L3' || requestScope.forLogin eq 'L4' && ( requestScope.rtiApplication.workFlowStatus==2 || requestScope.rtiApplication.workFlowStatus==1 || requestScope.rtiApplication.workFlowStatus==5 || requestScope.rtiApplication.workFlowStatus==3 ||requestScope.rtiApplication.workFlowStatus==0)}">
+<c:if test="${userId == 3722 || userId == 3723 || userId == 3724 || userId == 3725 || userId == 3726 || userId == 3727 || userId == 3728 || userId == 3729 || userId == 3730 || userId == 3731 || userId == 3701 || userId == 3700  || userId == 2402  || userId == 2403  || userId == 2404  || userId == 2405  || userId == 2406  || userId == 3702  || userId == 2408  || userId == 2409 || userId == 3801}">
 			
 			<tr>
 				<td colspan="3.5"><span class="ClsLabel"
@@ -699,12 +701,12 @@ input[type="text"], textarea {
 			</c:if>
 			
 	<table width="100%" border="0" cellpadding="1" cellspacing="1">
-<c:if test="${requestScope.forLogin eq 'L1' || requestScope.forLogin eq 'L2' ||  requestScope.forLogin eq 'L4' && ( requestScope.rtiApplication.workFlowStatus==2 || requestScope.rtiApplication.workFlowStatus==1 || requestScope.rtiApplication.workFlowStatus==5 || requestScope.rtiApplication.workFlowStatus==3 ||requestScope.rtiApplication.workFlowStatus==0)}">
+				<c:if test="${userId == 3703 || userId == 3704 || userId == 3705 || userId == 3706 || userId == 3707 || userId == 3708 || userId == 3709 || userId == 3710 || userId == 3711 || userId == 3732 || userId == 3701 || userId == 3700  || userId == 2402  || userId == 2403  || userId == 2404  || userId == 2405  || userId == 2406  || userId == 3702  || userId == 2408  || userId == 2409 || userId == 3800}">
 	
 			<tr>
 			
 			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
-						key="Remarks (टिप्पणी)" />:</span></td>
+						key="Police Remarks (पोलिसांची टिप्पणी)" />:</span></td>
 						<td>
 		 <textarea
 					class="form-control" style="width: 400px" id="ploiceremarks"
@@ -725,7 +727,7 @@ input[type="text"], textarea {
 			
 			</td>
 			</tr></c:if> --%>
-<c:if test="${requestScope.forLogin eq 'L3' ||  requestScope.forLogin eq 'L4' && ( requestScope.rtiApplication.workFlowStatus==2 || requestScope.rtiApplication.workFlowStatus==1 || requestScope.rtiApplication.workFlowStatus==5 || requestScope.rtiApplication.workFlowStatus==3 || requestScope.rtiApplication.workFlowStatus==0)}">
+			<c:if test="${userId == 3722 || userId == 3723 || userId == 3724 || userId == 3725 || userId == 3726 || userId == 3727 || userId == 3728 || userId == 3729 || userId == 3730 || userId == 3731 || userId == 3701 || userId == 3700  || userId == 2402  || userId == 2403  || userId == 2404  || userId == 2405  || userId == 2406  || userId == 3702  || userId == 2408  || userId == 2409 || userId == 3801}">
 			
 						<tr>
 			
@@ -738,8 +740,27 @@ input[type="text"], textarea {
 			
 			</td>
 			</tr></c:if>
-			
-			
+			<script>
+			$(document).ready(function() {
+			    $("#ploiceremarks").attr('readonly', true);
+			    $("#trafficremarks").attr('readonly', true);
+			    $("#fireremarks").attr('readonly', true);
+			});
+
+			</script>
+			<script>
+	$(document).ready(function() {
+	    var userId = <%= request.getAttribute("userId") %>; // Retrieve userId from JSP attribute
+
+	    if (userId == 3800 || userId == 3801) {
+	        // Disable the input box if the condition is met
+	    	 $("#ploiceremarks").attr("disabled", true);
+		        $("#trafficremarks").attr("disabled", true);
+		        $("#fireremarks").attr("disabled", true);
+
+	    }
+	});
+	</script>
 		
 		</table>
 		
@@ -759,13 +780,13 @@ input[type="text"], textarea {
 							
 		<input type="hidden" name="UID" value="${mandapPermission.rti_ref_id}" />
 		
-	  <c:if test="${requestScope.rtiApplication.workFlowStatus!=1 && (requestScope.forLogin eq 'L1' || requestScope.forLogin eq 'L2' || requestScope.forLogin eq 'L3')}">	  	
+	  <c:if test="${requestScope.rtiApplication.workFlowStatus!=1}">	
 <tr>
 
 <td colspan="4" align="center"><input type="button"
 				class="btn btn-primary"
 				style="min-height: 30px; min-width: 80px; color: white; border: none; outline: #28a745;margin-left:50px;"
-				id="saveFeesAmt" name="savefees"
+				id="savefees" name="savefees"
 				value="<fmt:message key="Save"/>"
 				onclick="javascript:saveFees(this.form);">
 </td>
@@ -789,7 +810,7 @@ input[type="text"], textarea {
 			  			  <input type="hidden" id="rtiApplicationRefIds" name="rtiApplicationRefIds" value="${mandapPermission.rti_ref_id}" />
 			  
 	
-<c:if test="${requestScope.forLogin eq 'L4'}">
+			<c:if test="${userId == 3701 || userId == 3700  || userId == 2402  || userId == 2403  || userId == 2404  || userId == 2405  || userId == 2406  || userId == 3702  || userId == 2408  || userId == 2409 }">
 
 	<%@include file="/pages/workflow/taskInclude.jsp"%>
 	</c:if>
@@ -797,103 +818,38 @@ input[type="text"], textarea {
 
 </div>
 </div>
+<script>
+	$(document).ready(function() {
+	    var userId = <%= request.getAttribute("userId") %>; // Retrieve userId from JSP attribute
 
+	    if (userId == 3701 || userId == 3700 || userId == 2402 || userId == 2403 || userId == 2404 || userId == 2405 || userId == 2406 || userId == 3702 || userId == 2408 || userId == 2409 || userId == 3800 || userId == 3801) {
+	        // Disable the input box if the condition is met
+	    	 $("#doc1").prop('disabled', true);
+		        $("#doc2").prop('disabled', true);
+		        $("#doc3").prop('disabled', true);
+		        
+		        $("#upload1").prop('disabled', true);
+		        $("#upload2").prop('disabled', true);
+		        $("#upload3").prop('disabled', true);
+		 
+
+	    }
+	});
+	</script>
 <script type="text/javascript">
 	function saveEntity() {
 		onPageSubmit('<c:out value="${contextRoot}"/>/rtsapplication/createDikshaBhumiMandapPermissionWork.do');
 	}
 	</script>
 	
+	<script type="text/javascript">
+	function saveFees(){
 		
-<script type="text/javascript">
-function cleanPoliceInput(value) {
-    value = value.trim();
-    value = value.replace(/(\r\n|\n|\r){2,}/g, '\n');
-    $('#ploiceremarks').val(value);
-    return value;
-}
-function cleanFireInput(value) {
-    value = value.trim();
-    value = value.replace(/(\r\n|\n|\r){2,}/g, '\n');
-    $('#fireremarks').val(value);
-    return value;
-}
-function saveFees(){
-    var forLogin = "${requestScope.forLogin}";
-    var policeRemarks = $('#ploiceremarks').val();
-    var fireRemarks = $('#fireremarks').val();
-    var flag = false;
+				onPageSubmit('<c:out value="${contextRoot}"/>/rtsapplication/saveDikshaBhumiMandap.do');
 
-	var policeremarks = $('#ploiceremarks').val();
-var fireremarks = $('#fireremarks').val();
-
-if(policeRemarks !== null && policeRemarks !== undefined){
-	var policeRemarks=cleanPoliceInput(policeremarks);
-
-}
-
-if(fireRemarks !== null && fireRemarks !== undefined){
-	var fireRemarks=cleanFireInput(fireremarks);
-
-}
-
-
-
-    function hasFiles(inputSelector) {
-        var input = $(inputSelector).get(0);
-        return input && input.files.length > 0;
-    }
-  
-    
-    var policeUpload = '${mandapPermission.policeNoc}';
-    var trafficUpload='${mandapPermission.trafficNoc}';
-    var fireUpload = '${mandapPermission.fireNoc}';
-    
-    if (forLogin === 'L1' || forLogin === 'L2') {
-        if (policeRemarks !== '') {
-            if (policeUpload==='' || trafficUpload==='') {
-                if (confirm("Are you sure you want to save without uploading Police/Traffic NOC?")) {
-                    flag = true;
-                } else {
-                    return false;
-                }
-            } else {
-                if (confirm("Are you sure you want to save?")) {
-                    flag = true;
-                } else {
-                    return false;
-                }
-            }
-        } else {
-            alert("Please enter Remarks!");
-            return false;
-        }
-    } else if (forLogin === 'L3') {
-        if (fireRemarks !== '') {
-            if (fireUpload==='') {
-                if (confirm("Are you sure you want to save without uploading Fire NOC?")) {
-                    flag = true;
-                } else {
-                    return false;
-                }
-            } else {
-                if (confirm("Are you sure you want to save?")) {
-                    flag = true;
-                } else {
-                    return false;
-                }
-            }
-        } else {
-            alert("Please enter Remarks!");
-            return false;
-        }
-    }
-    
-    if (flag) {
-		onPageSubmit('<c:out value="${contextRoot}"/>/rtsapplication/saveDikshaBhumiMandap.do');
-    }
-}
-</script>
+	}
+	
+	</script>
 	<script type="text/javascript">
 
 	$(document).ready(function() {
@@ -902,173 +858,23 @@ if(fireRemarks !== null && fireRemarks !== undefined){
 	    var fireremarks = '${mandapPermission.fireremarks}';
 
 
-	    if (durgaUtsavMandapPermissionId && ploiceremarks.trim() !== "") {
+	    if (dikshaBhumiMandapPermissionId && ploiceremarks.trim() !== "") {
 	        $("#ploiceremarks").prop('readonly', true);
 	    } else {
 	        $("#ploiceremarks").prop('readonly', false);
 	    }
 	    
-	    if (durgaUtsavMandapPermissionId && trafficremarks.trim() !== "") {
+	    if (dikshaBhumiMandapPermissionId && trafficremarks.trim() !== "") {
 	        $("#trafficremarks").prop('readonly', true);
 	    } else {
 	        $("#trafficremarks").prop('readonly', false);
 	    }
 	    
-	    if (durgaUtsavMandapPermissionId && fireremarks.trim() !== "") {
+	    if (dikshaBhumiMandapPermissionId && fireremarks.trim() !== "") {
 	        $("#fireremarks").prop('readonly', true);
 	    } else {
 	        $("#fireremarks").prop('readonly', false);
 	    }
-	});
-
-</script>
-<script>
-	$(document).ready(function() {
-	    var forLogin = "${requestScope.forLogin}"; 
-	    var ploiceremarks = '${mandapPermission.ploiceremarks}';
-	    var fireremarks = '${mandapPermission.fireremarks}';
-	    if (forLogin==='L4') {
-	    	 $("#doc1").prop('disabled', true);
-		        $("#doc2").prop('disabled', true);
-		        $("#doc3").prop('disabled', true);
-		        $("#upload1").hide();
-		        $("#upload2").hide();
-		        $("#upload3").hide();
-		        $("#ploiceremarks").attr("disabled", true);
-		        $("#trafficremarks").attr("disabled", true);
-		        $("#fireremarks").attr("disabled", true);
-		        $("#ploiceremarks").attr("disabled", true);
-		        $("#policeSampleDoc").attr("disabled", true);
-		        $("#trafficSampleDoc").attr("disabled", true);
-		        $("#fireSampleDoc").attr("disabled", true);
-
-	    }
-	    
-	    if(ploiceremarks!==''){
-	    /* 	$("#doc1").prop('disabled', true);
-	    	$("#doc3").prop('disabled', true);
-	        $("#upload1").hide();
-	        $("#upload3").hide();
-	        $("#ploiceremarks").attr("disabled", true);
-	        $("#policeSampleDoc").attr("disabled", true);
-	        $("#trafficSampleDoc").attr("disabled", true); */
-	        if(forLogin==='L1' || forLogin==='L2'){
-		        $('#saveFeesAmt').hide();
-	        }
-	    }
-	    
-	    if(fireremarks!==''){
-	    	 /* 
-		        $("#doc2").prop('disabled', true);
-
-		        $("#upload2").hide();
-		        $("#fireremarks").attr("disabled", true);
-		        $("#fireSampleDoc").attr("disabled", true); */
-		        if(forLogin==='L3'){
-			        $('#saveFeesAmt').hide();
-		        } 
-		        }
-	    
-	    
-	   
-	    
-	});
-	</script>
-		<script type="text/javascript">
-
-	$(document).ready(function() {
-	    var ploiceremarks = '${mandapPermission.ploiceremarks}';
-	    var trafficremarks = '${mandapPermission.ploiceremarks}';
-	    var fireremarks = '${mandapPermission.fireremarks}';
-	    var forLogin = "${requestScope.forLogin}";  
-	    var workflowStatus="${requestScope.rtiApplication.workFlowStatus}";
-	    var applicationCost="${requestScope.rtiApplication.applicationCost}";
-
-		
-	    if (ploiceremarks.trim() !== "") {
-	        $("#ploiceremarks").prop('readonly', true);
-	    } else {
-	        $("#ploiceremarks").prop('readonly', false);
-	    }
-	    
-	    if (trafficremarks.trim() !== "") {
-	        $("#trafficremarks").prop('readonly', true);
-	    } else {
-	        $("#trafficremarks").prop('readonly', false);
-	    }
-	    
-	    if (fireremarks.trim() !== "") {
-	        $("#fireremarks").prop('readonly', true);
-	    } else {
-	        $("#fireremarks").prop('readonly', false);
-	    }
-	    
-	    if (forLogin==='L1' || forLogin==='L2' || forLogin==='L3') {
-        	
-	    	var elements = document.getElementsByClassName("tab")[0];
-
-	    	if (elements) { 
-	    	    elements.innerHTML = "You don't have permission".fontcolor("red");
-	    	    $('#commentsDisable *').attr('disabled', true);
-	            $('#CreateWorkflow').attr('disabled', true);
-	            $('#RejectCreateWorkflow').attr('disabled', true);
-	            $('#WORKFLOW_COMMENTS').attr('disabled', true);
-	    	}
-		      
-        }else if(forLogin==='L4'){
-        	$('#saveFeesAmt').hide();
-        	if (ploiceremarks.trim() !== "" && trafficremarks.trim() !== "" && fireremarks.trim() !== "") {
-        		if(workflowStatus==='1'){
-       			 var elements = document.getElementsByClassName("tab")[0];
-       	         elements.innerHTML = "Application closed & NOC Uploaded Successfully.".fontcolor("Green");
-       	      $('#commentsDisable *').attr('disabled', true);
-              $('#CreateWorkflow').attr('disabled', true);
-              $('#RejectCreateWorkflow').attr('disabled', true);
-              $('#WORKFLOW_COMMENTS').attr('disabled', true);
-       		}else if(workflowStatus==='5'){
-       			
-       			$('#saveFeesAmt').hide();
-       		 var elements = document.getElementsByClassName("tab")[0];
-       		 elements.innerHTML = "Application is Rejected".fontcolor("red");
-       	  $('#commentsDisable *').attr('disabled', true);
-          $('#CreateWorkflow').attr('disabled', true);
-          $('#RejectCreateWorkflow').attr('disabled', true);
-          $('#WORKFLOW_COMMENTS').attr('disabled', true);
-        		
-        	}else{
-        		$('#certificateActive').show();
-        		 var elements = document.getElementsByClassName("tab")[0];
-                 elements.innerHTML = "Please take necessary actions by clicking on action buttons.".fontcolor("Green");
-                 $('#commentsDisable *').attr('disabled', false);
-                 $('#CreateWorkflow').attr('disabled', false);
-                 $('#RejectCreateWorkflow').attr('disabled', false);
-                 $('#WORKFLOW_COMMENTS').attr('disabled', false);
-       		}
-        	}else{
-            	$('#saveFeesAmt').hide();
-        		 var elements = document.getElementsByClassName("tab")[0];
-        		 elements.innerHTML = "Currently, you don't have permission to work on this task.".fontcolor("red");
-        		  $('#commentsDisable *').attr('disabled', true);
-                  $('#CreateWorkflow').attr('disabled', true);
-                  $('#RejectCreateWorkflow').attr('disabled', true);
-                  $('#WORKFLOW_COMMENTS').attr('disabled', true);
-        	}
-        }else{
-        	$('#saveFeesAmt').hide();
-   		 var elements = document.getElementsByClassName("tab")[0];
-            elements.innerHTML = "You don't have permission.".fontcolor("red");
-            $('#commentsDisable *').attr('disabled', true);
-            $('#CreateWorkflow').attr('disabled', true);
-            $('#RejectCreateWorkflow').attr('disabled', true);
-            $('#WORKFLOW_COMMENTS').attr('disabled', true);
-   	}
-	    
-	    if(workflowStatus==='5'){
-   			
-   			$('#saveFeesAmt').hide();
-	    }
-	    
-	   
 	});
 
 </script>
@@ -1184,7 +990,7 @@ if(fireRemarks !== null && fireRemarks !== undefined){
    		        filesPath += "null" + ",";
    	             isFileSelected = false;
             } else {
-                filesPath = filesPath + basePath + "dikshaBhumiPermission/" + i + value + ","
+                filesPath = filesPath + basePath + "durgaUtsavPermission/" + i + value + ","
                 isFileSelected = true;
             }
         }
@@ -1258,7 +1064,7 @@ if(fireRemarks !== null && fireRemarks !== undefined){
    		        filesPath += "null" + ",";
    	             isFileSelected = false;
             } else {
-                filesPath = filesPath + basePath + "dikshaBhumiPermission/" + i + value + ","
+                filesPath = filesPath + basePath + "durgaUtsavPermission/" + i + value + ","
                 isFileSelected = true;
             }
         }
@@ -1280,9 +1086,7 @@ if(fireRemarks !== null && fireRemarks !== undefined){
           	}else{
                 alert("Traffic NOC Certificate upload failed!!");
 
-          	}       
-        	
-        });
+          	}        });
         var a = filesPath.substring(0, filesPath.lastIndexOf(","));
         filesPath = filesPath.replace(/\s/g, "");
         $("#filesPath").val(filesPath);
@@ -1290,7 +1094,8 @@ if(fireRemarks !== null && fireRemarks !== undefined){
 
     }
     
- 	function docDownload(filesPath) {
+    
+	function docDownload(filesPath) {
  	    var encodedFilePath = encodeURIComponent(filesPath);
 
  	    var encodedFilesPath = btoa(encodedFilePath); 

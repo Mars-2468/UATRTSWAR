@@ -812,7 +812,7 @@ h3 {
                     
                        <div class="col-md-4">
                         <div class="mb-3 mt-3">
-                            <label for="" class="form-label">Fire Extinguisher (अग्निशामक यंत्र)<span class="text-danger"
+                            <label for="" class="form-label">Fire Extinguisher Certificate(अग्निशामक प्रमाणपत्र)<span class="text-danger"
                                     style="color: red;">*</span>
                             </label> <input type="file" class="form-control" id="doc8" style="background-image: none;"
                                 accept=".pdf" name="form4" required>
@@ -1076,7 +1076,7 @@ $('.printMe').on('click', function () {
                                     style="color: red;">*</span> </li>
                                     <li>7.Form 4 (download fill it and upload)(फॉर्म 4 (डाउनलोड करा, भरा आणि अपलोड करा))<span class="text-danger"
                                     style="color: red;">*</span> </li>
-                                     <li>8.Fire Extinguisher (अग्निशामक यंत्र)<span class="text-danger"
+                                     <li>8.Fire Extinguisher Certificate(अग्निशामक प्रमाणपत्र)<span class="text-danger"
                                     style="color: red;">*</span> </li>
 
 

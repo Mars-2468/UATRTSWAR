@@ -21,12 +21,7 @@
 	pageContext.setAttribute("WORKFLOW_PRIORITY_MEDIUM", WorkflowConstants.WORKFLOW_PRIORITY_MEDIUM);
 	pageContext.setAttribute("WORKFLOW_PRIORITY_HIGH", WorkflowConstants.WORKFLOW_PRIORITY_HIGH);
 %>
-<%
-    int currentYear = java.time.Year.now().getValue();
-    int startYear = 2023; // Start from the year 2023
-    String hiddenYear = request.getParameter("year"); // Get the hidden field value
-    int selectedYear = (hiddenYear != null && !hiddenYear.isEmpty()) ? Integer.parseInt(hiddenYear) : currentYear;
-%>
+
 <script type="text/javascript">
 function getPendingTasks()
 {
@@ -55,33 +50,12 @@ function editRTIApplication(refId,id) {
 	onPageSubmit('<c:out value="${contextRoot}"/>/rtiapplication/editAnyRTIApplication.do');
 }
 
-function getpersonaltaskList(){
-	onPageSubmit('<c:out value="${contextRoot}"/>/workflow/listTasks.do');
-}
-
 </script>
 
-
-<div class="mainHdr d-flex justify-content-between align-items-center">
-    <h3 class="mb-0">Personal Task List</h3>
-    <c:if test="${personalTasksList.rtiApplication.rtiserviceid==90}">
-    <div class="d-flex align-items-center ms-2">
-        <h6 id="yearLabel" class="mb-0 me-2" style="font-size: 15px;">Year:</h6>
-         <select id="year" name="year" class="ClsTextbox mb-0" onchange="getpersonaltaskList()" style="width: 130px;">
-            <% 
-                for (int year = currentYear; year >= startYear; year--) {
-                    String selected = (year == selectedYear) ? "selected" : "";
-            %>
-                    <option value="<%= year %>" <%= selected %>><%= year %></option>
-            <% 
-                }
-            %>
-        </select>
-        <input type="hidden" id="yearSelectHidden" name="year" value="<%= selectedYear %>"/>
-    </div>
-    </c:if>
+<div class="mainHdr">
+	<h3>
+		<c:out value="${pageHeading}" /></h3>
 </div>
-
 
 <div valign="top" id="SetFormHeight">
 <div id="tabs">

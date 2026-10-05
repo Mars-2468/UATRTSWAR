@@ -4,7 +4,7 @@
 <%@ include file="/pages/common/include.jsp" %>
 <html>
 	<head>
-		<title>NMC - Rights To Services</title>
+		<title>NMC - Right To Services</title>
 		<meta http-equiv="PRAGMA" content="NO-CACHE" />
 		<meta name="FORMAT" content="text/html" />
 		<meta name="CHARSET" content="ISO-8859-1" />

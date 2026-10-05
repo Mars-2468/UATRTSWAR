@@ -1097,7 +1097,6 @@ $(window).on('load', function(){
             contentType: false,
             success: function(data) {
                 if (data.status) {
-                    alert("File uploaded successfully!");
 
                     // Retrieve the file path from the server response
                     const filePath = data.filePath; // Ensure server returns the path in JSON format
@@ -1260,7 +1259,6 @@ $(window).on('load', function(){
             contentType: false,
             success: function(data) {
                 if (data.status) {
-                    alert("File uploaded successfully!");
 
                     // Retrieve the file path from the server response
                     const filePath = data.filePath; // Ensure server returns the path in JSON format
@@ -1428,7 +1426,6 @@ function uploadtable3File(inputElement, certificateType) {
         contentType: false,
         success: function(data) {
             if (data.status) {
-                alert("File uploaded successfully!");
 
                 // Retrieve the file path from the server response
                 const filePath = data.filePath; // Ensure server returns the path in JSON format
@@ -1573,7 +1570,6 @@ function uploadNurseTableFile(inputElement, certificateType) {
         contentType: false,
         success: function(data) {
             if (data.status) {
-                alert("File uploaded successfully!");
 
                 // Retrieve the file path from the server response
                 const filePath = data.filePath; // Ensure server returns the path in JSON format
@@ -1759,7 +1755,6 @@ function uploadzBloodBTableFile(inputElement, certificateType) {
         contentType: false,
         success: function(data) {
             if (data.status) {
-                alert("File uploaded successfully!");
 
                 // Retrieve the file path from the server response
                 const filePath = data.filePath; // Ensure server returns the path in JSON format

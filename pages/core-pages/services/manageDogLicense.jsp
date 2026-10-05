@@ -755,6 +755,45 @@ a {
 	
 
 								</tr>
+									
+			<c:if test="${requestScope.rtiApplication.workFlowStatus==3}">
+					
+<tr>
+					<td colspan="4" align="center">
+    <a class="btn btn-primary"
+       style="min-height: 30px; min-width: 80px; color: white; border: none;"
+       onclick="resendDemandPayment('${dogLicenseCertificate.name}', '${dogLicenseCertificate.mobileNumber}', '${dogLicenseCertificate.rtiapplrefno}', '${dogLicenseCertificate.emailId}')">
+       Resend demand
+    </a>
+</td>
+
+</tr>
+<script>
+    function resendDemandPayment(name, mobileNo, applnNo, email) {
+        // Use URL-encoded parameters in GET request
+        const contextRoot = '<c:out value="${contextRoot}"/>';
+        const url = contextRoot + '/rtiApplication/resendPayment.do'
+            + '?name=' + encodeURIComponent(name)
+            + '&mobileNo=' + encodeURIComponent(mobileNo)
+            + '&applnNo=' + encodeURIComponent(applnNo)
+            + '&email=' + encodeURIComponent(email);
+
+        fetch(url)
+            .then(response => {
+                if (response.ok) {
+                    alert('Payment link has been resent successfully.');
+                } else {
+                    alert('Failed to resend payment link.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error occurred while resending payment link.');
+            });
+    }
+</script>
+
+			</c:if>
 							</table>
 
 

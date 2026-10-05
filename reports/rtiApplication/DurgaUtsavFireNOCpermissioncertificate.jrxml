@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2025-09-12T17:26:45 -->
+<!-- 2025-09-16T13:16:22 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ZoneCertificate" pageWidth="595" pageHeight="1200" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" isIgnorePagination="true" uuid="604a6bc3-ae55-4fb3-995f-76c562a21e2b">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -43,14 +43,6 @@
 						<font fontName="Arial Unicode MS" size="14"/>
 					</textElement>
 					<text><![CDATA[विषय :-]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="89" y="10" width="340" height="19" uuid="04571639-39b3-4761-b54a-53dcc33fcc86"/>
-					<textElement textAlignment="Center">
-						<font fontName="Arial Unicode MS" size="14"/>
-					</textElement>
-					<text><![CDATA[दुर्गा उत्सव २०२४ संबंधाने ना हरकत प्रमाणपत्र ददले बाबत.
-]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="20" y="30" width="90" height="20" uuid="e44eb9f7-58f7-4bb2-aa0d-82d6fcf41717"/>
@@ -147,15 +139,15 @@
 					<textFieldExpression><![CDATA["ई)   मंडळाचे नाव व पत्ता :-" + $F{address_for_institution}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="436" y="10" width="120" height="19" uuid="18ef6678-dbd7-48e7-af3a-6eef4a625ae7">
+					<reportElement x="119" y="10" width="437" height="19" uuid="18ef6678-dbd7-48e7-af3a-6eef4a625ae7">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 					</reportElement>
-					<textElement textAlignment="Right" verticalAlignment="Middle">
+					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Arial Unicode MS" size="14"/>
 					</textElement>
-					<textFieldExpression><![CDATA[Integer.toString(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR))
+					<textFieldExpression><![CDATA["दुर्गा उत्सव मंडपास नाहरकत प्रमाण पत्र देण्या बाबत "+Integer.toString(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR))
     .replace('0','०').replace('1','१').replace('2','२').replace('3','३')
     .replace('4','४').replace('5','५').replace('6','६').replace('7','७')
     .replace('8','८').replace('9','९')

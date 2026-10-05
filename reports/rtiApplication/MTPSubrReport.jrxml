@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2024-10-15T11:50:49 -->
+<!-- 2025-02-11T13:24:34 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4_3" pageWidth="300" pageHeight="500" columnWidth="300" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5ea422eb-8437-4300-a58e-aaf40df97dce">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -27,14 +27,17 @@ WHERE mtp.rti_ref_id = $P{rtiapplrefid};]]>
 	<field name="medical_practitoner_seq" class="java.lang.String"/>
 	<field name="medical_practitoner_name" class="java.lang.String"/>
 	<field name="medical_practitoner_qualification" class="java.lang.String"/>
-	<field name="girth_of_tree" class="java.lang.String"/>
 	<field name="medical_practitoner_fullparttime" class="java.lang.String"/>
 	<field name="medical_practitoner_experience" class="java.lang.String"/>
 	<field name="mtpid" class="java.lang.Long"/>
-	<field name="rti_ref_id" class="java.sql.Array"/>
-	<field name="COLUMN_10" class="java.lang.Integer"/>
+	<field name="rti_ref_id" class="java.lang.Integer"/>
+	<field name="mbbs" class="java.lang.String"/>
+	<field name="marriagecertificate" class="java.lang.String"/>
+	<field name="mmc" class="java.lang.String"/>
+	<field name="pg" class="java.lang.String"/>
+	<field name="COLUMN_13" class="java.lang.Integer"/>
 	<field name="rti_appl_ref_no" class="java.lang.String"/>
-	<field name="COLUMN_12" class="java.lang.Integer"/>
+	<field name="COLUMN_15" class="java.lang.Integer"/>
 	<field name="full_name" class="java.lang.String"/>
 	<field name="current_address" class="java.lang.String"/>
 	<field name="phone_number" class="java.lang.String"/>
@@ -98,9 +101,9 @@ WHERE mtp.rti_ref_id = $P{rtiapplrefid};]]>
 	<field name="applicant_name" class="java.lang.String"/>
 	<field name="gender" class="java.lang.Integer"/>
 	<field name="state" class="java.lang.String"/>
-	<field name="COLUMN_76" class="java.lang.String"/>
+	<field name="COLUMN_79" class="java.lang.String"/>
 	<field name="mobile_number" class="java.lang.String"/>
-	<field name="COLUMN_78" class="java.lang.String"/>
+	<field name="COLUMN_81" class="java.lang.String"/>
 	<field name="pincode" class="java.lang.Integer"/>
 	<field name="bpl" class="java.lang.Integer"/>
 	<field name="bpl_card_number" class="java.lang.String"/>
@@ -121,7 +124,7 @@ WHERE mtp.rti_ref_id = $P{rtiapplrefid};]]>
 	<field name="application_department_id" class="java.lang.Long"/>
 	<field name="assignee_user_id" class="java.lang.Long"/>
 	<field name="tenancyid" class="java.lang.Long"/>
-	<field name="COLUMN_99" class="java.lang.String"/>
+	<field name="COLUMN_102" class="java.lang.String"/>
 	<field name="pdf_upload_from_portal" class="java.lang.String"/>
 	<field name="remarks" class="java.lang.String"/>
 	<field name="ward_name" class="java.lang.String"/>
@@ -148,7 +151,6 @@ WHERE mtp.rti_ref_id = $P{rtiapplrefid};]]>
 	<field name="tax_other_citizen_document_upload" class="java.lang.String"/>
 	<field name="aaplesarkar_user_mobile_no" class="java.lang.String"/>
 	<field name="year" class="java.lang.String"/>
-	<field name="kiosk_mobile_number" class="java.lang.String"/>
 	<detail>
 		<band height="31" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>

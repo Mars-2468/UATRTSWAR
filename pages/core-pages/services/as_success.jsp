@@ -73,16 +73,10 @@ body{
                 <fmt:message key="Your application number"/>: <strong> 
                 <c:if test="${appNo != null}"> 
                  <c:out value="${appNo}"></c:out></strong> </h3> 
-                 <c:if test="${EncyKey != null}"> 
-                 <c:out value="${EncyKey}"></c:out></strong> </h3> 
-                    </c:if>
-                
-            
                     </c:if>
                 
             
         </div>
-        
                 <h5 class="text-center" style="color: #524f4c;margin-top: 29px; font-size: 20px;">
                     Please use this application number for further reference
                 </h5>

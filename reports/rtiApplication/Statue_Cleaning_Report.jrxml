@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2025-04-02T18:53:35 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Water_noDuesCountReport" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2e980d26-8acd-4bae-844d-f6f6be77f79b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="4"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="FROM_DATE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TO_DATE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="WARD_ID" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT 
+    sc.zone_name,
+    sc.cleaning_date,
+    sc.fire_station_name,
+    sc.statue_list,
+    sc.encoded_files_path,
+    (string_to_array(TRIM(sc.encoded_files_path), ','))[1] AS file_url_1,
+    (string_to_array(TRIM(sc.encoded_files_path), ','))[2] AS file_url_2,
+    (string_to_array(TRIM(sc.encoded_files_path), ','))[3] AS file_url_3
+FROM 
+    egovrti.statue_cleaning sc
+WHERE 
+    TO_DATE(sc.cleaning_date, 'yyyy-mm-dd') BETWEEN TO_DATE($P{FROM_DATE}, 'yyyy-mm-dd') 
+    AND TO_DATE($P{TO_DATE}, 'yyyy-mm-dd')
+ORDER BY 
+    sc.cleaning_date ASC]]>
+	</queryString>
+	<field name="zone_name" class="java.lang.String"/>
+	<field name="cleaning_date" class="java.lang.String"/>
+	<field name="fire_station_name" class="java.lang.String"/>
+	<field name="statue_list" class="java.lang.String"/>
+	<field name="encoded_files_path" class="java.lang.String"/>
+	<field name="file_url_1" class="java.lang.String"/>
+	<field name="file_url_2" class="java.lang.String"/>
+	<field name="file_url_3" class="java.lang.String"/>
+	<variable name="s .no" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[new Integer(1)]]></variableExpression>
+	</variable>
+	<group name="CollectionSummary" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[]]></groupExpression>
+		<groupHeader>
+			<band height="77">
+				<line>
+					<reportElement x="6" y="75" width="790" height="1" uuid="4dc72d4f-847e-4ae8-8341-f4aa27833358"/>
+				</line>
+				<staticText>
+					<reportElement x="366" y="58" width="90" height="19" uuid="8b5f3515-6f9e-4acb-90cb-ef4474e50cda"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial Unicode MS" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Date Of Cleaning]]></text>
+				</staticText>
+				<line>
+					<reportElement x="230" y="52" width="1" height="23" uuid="ba56c1b9-f4f8-4312-8a46-6f3faca5d943"/>
+				</line>
+				<staticText>
+					<reportElement x="17" y="4" width="68" height="20" uuid="876b5488-2764-4570-843d-e1258c2ee50a"/>
+					<textElement>
+						<font fontName="Arial Unicode MS" size="12" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Ward       :  ]]></text>
+				</staticText>
+				<line>
+					<reportElement x="6" y="-114" width="1" height="189" uuid="8a215c4b-e7e8-496b-90fb-eee81408b76a"/>
+				</line>
+				<line>
+					<reportElement x="360" y="52" width="1" height="23" uuid="a5e9cf4d-a9a0-4000-86ec-99c508c114dd"/>
+				</line>
+				<staticText>
+					<reportElement x="10" y="54" width="20" height="18" uuid="b59290fb-68a1-49ab-81b3-e9d13a165d09"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial Unicode MS" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[SrNo]]></text>
+				</staticText>
+				<line>
+					<reportElement x="795" y="-112" width="1" height="187" uuid="7dc750b0-b414-4cbd-bbf0-900bce750655"/>
+				</line>
+				<staticText>
+					<reportElement x="39" y="56" width="53" height="18" uuid="b7379b6c-6af6-47e6-a36b-03b49ef1f8b8"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial Unicode MS" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Zone Name]]></text>
+				</staticText>
+				<line>
+					<reportElement x="7" y="51" width="788" height="1" uuid="1d1dcf37-e0d4-4f5e-8bba-15e8194063c9"/>
+				</line>
+				<line>
+					<reportElement x="460" y="52" width="1" height="23" uuid="e31049a0-da41-4000-b5f6-144e390a2c49"/>
+				</line>
+				<staticText>
+					<reportElement x="102" y="54" width="126" height="18" uuid="ab7c7c30-0cab-4ebe-91ae-e306b2af8532"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial Unicode MS" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fire Station Name]]></text>
+				</staticText>
+				<line>
+					<reportElement x="100" y="52" width="1" height="23" uuid="f6aa2ccd-516a-48b2-9a02-2428f470e18a"/>
+				</line>
+				<staticText>
+					<reportElement x="236" y="55" width="120" height="16" uuid="fe8b3d10-f88d-4787-98d2-863572615925"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial Unicode MS" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Statue Name]]></text>
+				</staticText>
+				<line>
+					<reportElement x="32" y="52" width="1" height="23" uuid="8dd48be7-c980-4e4d-9e5c-020b4e43a6fb"/>
+				</line>
+				<staticText>
+					<reportElement x="680" y="59" width="114" height="16" uuid="6c1c95a9-00af-4e93-a5b9-0cd882569e6f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial Unicode MS" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Photo After Cleaning]]></text>
+				</staticText>
+				<line>
+					<reportElement x="7" y="33" width="788" height="1" uuid="e214c1fa-f489-4078-9e4b-9b6ac2c40b8f"/>
+				</line>
+				<textField>
+					<reportElement x="120" y="4" width="100" height="20" uuid="17183df6-c61a-4e12-a962-c06f9d98ebcc"/>
+					<textFieldExpression><![CDATA[$P{WARD_ID} == null || $P{WARD_ID}.trim().isEmpty() ? "All" : $F{fire_station_name}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="570" y="60" width="90" height="14" uuid="18f4507f-27da-4bde-97ab-21f6a9b24799"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial Unicode MS" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Photo During Cleaning]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="461" y="60" width="96" height="14" uuid="de808145-1b68-44c0-9edf-36efc00d1500"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial Unicode MS" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Photo Before Cleaning]]></text>
+				</staticText>
+				<line>
+					<reportElement x="560" y="52" width="1" height="23" uuid="fa54630c-80a4-4d78-9f35-ba5dbe55d3d3"/>
+				</line>
+				<line>
+					<reportElement x="672" y="51" width="1" height="25" uuid="fa2dc2d5-3a24-4d7b-bf74-ce8b8f1d3ea4"/>
+				</line>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band height="50" splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="117" splitType="Stretch">
+			<staticText>
+				<reportElement x="17" y="97" width="69" height="20" uuid="4c22227b-fd81-4b4f-9812-5f0883390ffd"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="11"/>
+				</textElement>
+				<text><![CDATA[From Date :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="598" y="97" width="89" height="20" uuid="7cb0dd47-1d75-4508-a869-08b3112d212f"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="11"/>
+				</textElement>
+				<text><![CDATA[To Date :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="15" width="588" height="36" uuid="7e416b4b-aa0c-45ef-ba4c-d982d14a0499"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NAGPUR MUNCIPAL CORPORATION]]></text>
+			</staticText>
+			<line>
+				<reportElement x="6" y="5" width="789" height="1" uuid="ba6810ef-cf4e-4b05-9dd3-8e2879d90e12"/>
+			</line>
+			<staticText>
+				<reportElement x="110" y="61" width="588" height="20" uuid="83e04c0f-58e7-4226-84b5-c67cc4c46c8e"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Statue Cleaning Report]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="119" y="97" width="100" height="20" uuid="b6b5f665-5f85-4bf3-8232-1ad65477f386"/>
+				<textFieldExpression><![CDATA[$P{FROM_DATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="687" y="97" width="100" height="20" uuid="8df72e4e-4090-4d53-a7b6-387c3a0314e7"/>
+				<textFieldExpression><![CDATA[$P{TO_DATE}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="110" y="55" width="588" height="1" uuid="cca57423-9a79-437c-a008-5dbc91fb384d"/>
+				<graphicElement>
+					<pen lineWidth="4.0"/>
+				</graphicElement>
+			</line>
+			<image>
+				<reportElement x="40" y="15" width="60" height="66" uuid="414a942c-65ba-4489-8b7b-c1dd53554221"/>
+				<imageExpression><![CDATA["../../images/AMC_Logo.jpeg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement key="" x="710" y="15" width="60" height="66" uuid="c58ed063-ffe4-42e4-9f71-7103d089921e">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<imageExpression><![CDATA["../../images/AMC_Logo.jpeg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="28">
+			<line>
+				<reportElement x="6" y="25" width="789" height="1" uuid="b9adf860-b619-4e05-bd16-a9212df6321e"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToTallestObject" x="6" y="-1" width="1" height="27" uuid="c3050be9-b71a-4146-bb43-cea68e160099"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="32" y="-2" width="1" height="27" uuid="e5ff4ad4-d604-45c0-8b2b-c6fc564447e7"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="100" y="-2" width="1" height="27" uuid="416607a0-ce36-4ff2-9e76-cfa13c433364"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="230" y="-2" width="1" height="27" uuid="36bb042e-dd3b-41e2-9ce8-571e01fd2d20"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="360" y="-1" width="1" height="27" uuid="59ac48e1-b45c-40a4-bc65-c1f53bcbb9b0"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="8" y="0" width="24" height="24" uuid="3468e345-9482-4f81-b7a9-9c01acb0ad19"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{s .no}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="795" y="-2" width="1" height="28" isPrintWhenDetailOverflows="true" uuid="4f96cbc1-7b69-4bd9-aa76-942125ebb523"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="34" y="2" width="62" height="20" uuid="ed14291a-571d-42c9-affd-44c1484b2cac"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{zone_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="103" y="3" width="125" height="18" uuid="80e91830-8f3d-4ae0-b590-53e8e48cce88"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{fire_station_name}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="560" y="-1" width="1" height="26" uuid="6f27ff7c-d24d-45cf-98a1-0494b3b79927"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="460" y="-2" width="1" height="27" uuid="8176c4fd-b6c5-4cae-8584-fc1ffaff9a0d"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="237" y="2" width="116" height="20" isRemoveLineWhenBlank="true" uuid="76b07ccf-e190-4355-b908-c7582e33713f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{statue_list}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="369" y="2" width="84" height="20" uuid="59fdd62a-553a-4551-b98b-b79cbcfaa5db"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cleaning_date}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true" hyperlinkType="Reference">
+				<reportElement positionType="Float" x="673" y="5" width="120" height="16" isRemoveLineWhenBlank="true" forecolor="#0055FF" uuid="70545933-1242-41b5-99e9-7bf7a1467100"/>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{file_url_3}]]></textFieldExpression>
+				<hyperlinkReferenceExpression><![CDATA[$F{file_url_3}]]></hyperlinkReferenceExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="672" y="-1" width="1" height="26" uuid="c1b6fd97-aa15-45d7-819a-eda2d0d47be0"/>
+			</line>
+			<textField isBlankWhenNull="true" hyperlinkType="Reference">
+				<reportElement positionType="Float" x="561" y="3" width="110" height="20" isRemoveLineWhenBlank="true" forecolor="#003CFF" uuid="c8e711e5-feb9-43ef-b078-2bfc177bd60c"/>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{file_url_2}]]></textFieldExpression>
+				<hyperlinkReferenceExpression><![CDATA[$F{file_url_2}]]></hyperlinkReferenceExpression>
+			</textField>
+			<textField isBlankWhenNull="true" hyperlinkType="Reference">
+				<reportElement positionType="Float" x="464" y="2" width="96" height="20" isRemoveLineWhenBlank="true" forecolor="#003CFF" uuid="ef709a44-196d-4414-a35e-f322b8a3f560"/>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{file_url_1}]]></textFieldExpression>
+				<hyperlinkReferenceExpression><![CDATA[$F{file_url_1}]]></hyperlinkReferenceExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

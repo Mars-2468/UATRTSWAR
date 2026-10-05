@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2024-12-05T14:45:15 -->
+<!-- 2026-03-24T15:16:40 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DogSubReport" pageWidth="1030" pageHeight="550" columnWidth="300" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5ea422eb-8437-4300-a58e-aaf40df97dce">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -126,9 +126,14 @@ WHERE
 	<field name="property_tax_certificate" class="java.lang.String"/>
 	<field name="tax_other_citizen_document_upload" class="java.lang.String"/>
 	<field name="aaplesarkar_user_mobile_no" class="java.lang.String"/>
-	<field name="year" class="java.lang.String"/>
-	<field name="kiosk_mobile_number" class="java.lang.String"/>
-	<field name="COLUMN_91" class="java.lang.Long"/>
+	<field name="aaple_user_track_id" class="java.lang.String"/>
+	<field name="aaple_user_id" class="java.lang.String"/>
+	<field name="aaple_service_id" class="java.lang.String"/>
+	<field name="aaple_application_id" class="java.lang.String"/>
+	<field name="service_id" class="java.lang.Integer"/>
+	<field name="application_status" class="java.lang.String"/>
+	<field name="isaplesarkarapp" class="java.lang.Integer"/>
+	<field name="COLUMN_96" class="java.lang.Long"/>
 	<field name="first_name" class="java.lang.String"/>
 	<field name="middle_name" class="java.lang.String"/>
 	<field name="last_name" class="java.lang.String"/>
@@ -138,36 +143,36 @@ WHERE
 	<field name="area_name" class="java.lang.String"/>
 	<field name="pin_code" class="java.lang.String"/>
 	<field name="nearby_landmark" class="java.lang.String"/>
-	<field name="COLUMN_101" class="java.lang.String"/>
-	<field name="COLUMN_102" class="java.lang.String"/>
+	<field name="COLUMN_106" class="java.lang.String"/>
+	<field name="COLUMN_107" class="java.lang.String"/>
 	<field name="colony_name" class="java.lang.String"/>
 	<field name="correspondence_address" class="java.lang.String"/>
 	<field name="no_of_dog" class="java.lang.Long"/>
 	<field name="dog_details" class="java.lang.String"/>
-	<field name="COLUMN_107" class="java.lang.String"/>
-	<field name="COLUMN_108" class="java.lang.String"/>
-	<field name="COLUMN_109" class="java.lang.String"/>
-	<field name="COLUMN_110" class="java.lang.String"/>
-	<field name="COLUMN_111" class="java.lang.Long"/>
 	<field name="COLUMN_112" class="java.lang.String"/>
-	<field name="COLUMN_113" class="java.lang.Long"/>
-	<field name="COLUMN_114" class="java.lang.Long"/>
-	<field name="COLUMN_115" class="java.lang.Long"/>
-	<field name="COLUMN_116" class="java.lang.String"/>
+	<field name="COLUMN_113" class="java.lang.String"/>
+	<field name="COLUMN_114" class="java.lang.String"/>
+	<field name="COLUMN_115" class="java.lang.String"/>
+	<field name="COLUMN_116" class="java.lang.Long"/>
 	<field name="COLUMN_117" class="java.lang.String"/>
-	<field name="COLUMN_118" class="java.lang.String"/>
-	<field name="COLUMN_119" class="java.lang.String"/>
-	<field name="COLUMN_120" class="java.lang.String"/>
+	<field name="COLUMN_118" class="java.lang.Long"/>
+	<field name="COLUMN_119" class="java.lang.Long"/>
+	<field name="COLUMN_120" class="java.lang.Long"/>
 	<field name="COLUMN_121" class="java.lang.String"/>
+	<field name="COLUMN_122" class="java.lang.String"/>
+	<field name="COLUMN_123" class="java.lang.String"/>
+	<field name="COLUMN_124" class="java.lang.String"/>
+	<field name="COLUMN_125" class="java.lang.String"/>
+	<field name="COLUMN_126" class="java.lang.String"/>
 	<field name="vaccination_certificate" class="java.lang.String"/>
 	<field name="title" class="java.lang.String"/>
 	<field name="rti_appl_ref_no" class="java.lang.String"/>
 	<field name="rti_ref_id" class="java.lang.Long"/>
 	<field name="zone_no" class="java.lang.String"/>
 	<field name="ward_no" class="java.lang.String"/>
-	<field name="COLUMN_128" class="java.lang.String"/>
+	<field name="COLUMN_133" class="java.lang.String"/>
 	<field name="name" class="java.lang.String"/>
-	<field name="COLUMN_130" class="java.lang.Long"/>
+	<field name="COLUMN_135" class="java.lang.Long"/>
 	<field name="dog_files" class="java.lang.String"/>
 	<field name="doc_noc" class="java.lang.String"/>
 	<field name="doc_land_availability" class="java.lang.String"/>
@@ -175,7 +180,7 @@ WHERE
 	<field name="vaccination_second" class="java.lang.String"/>
 	<field name="applicant_city" class="java.lang.String"/>
 	<field name="renewaldog" class="java.lang.String"/>
-	<field name="COLUMN_138" class="java.lang.String"/>
+	<field name="COLUMN_143" class="java.lang.String"/>
 	<field name="certificate_issued" class="java.lang.String"/>
 	<field name="renewal_status" class="java.lang.Integer"/>
 	<detail>

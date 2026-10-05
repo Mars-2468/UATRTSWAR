@@ -119,16 +119,7 @@ String name=(String)session.getAttribute("name");
          } 
            
         </script>
-        <script>
-    	window.onload = function() {
-
-    var errors = "${requestScope.errors}";
-
-    if (errors.trim() !== "") {
-        alert("Record Not Found.Please Enter Valid Application Number!");
-    }
-    	}
-</script>
+       
   
 </head>
 <body id="home" class="bg-grey">
@@ -393,7 +384,19 @@ String name=(String)session.getAttribute("name");
                             					   <c:if test="${requestScope.rtiApplication.workFlowStatus==1}">
                     
                     <tr>
-                        <td><span class="ClsLabel" style="font-size:14px"><fmt:message key="PDF file" /></span>
+                        <td>
+                                                <c:choose>
+                        <c:when test="${not empty fireRecommendation.buildingPlanMap 
+             and fireRecommendation.buildingPlanMap ne 'null'
+             and fn:trim(fireRecommendation.buildingPlanMap) ne ''}">
+                        <span class="ClsLabel" style="font-size:14px"><fmt:message key="Fire NOC" />
+                        </c:when>
+                        <c:otherwise>
+                                                <span class="ClsLabel" style="font-size:14px"><fmt:message key="PDF file" />
+                        
+                        </c:otherwise>
+                        </c:choose>
+                                               </span>
                         </td>
                         <td>
                             <c:set var="doc" value="${fn:split(rtiApplication.pdfFilesSavedPath, ',')}" />      
@@ -445,22 +448,62 @@ String name=(String)session.getAttribute("name");
     
     <td>
         
-               <c:if test="${not empty rtiApplication.rtiApplnNumber}">
-           
-           <div>
-    <p>Click below to view and download your application details:</p>
-    <a href="<%= request.getContextPath() %>/rtiapplication/generateApplicationPdf.do?rtiApplicationId=${rtiApplication.rtiApplicationId}&serviceId=${rtiApplication.rtiserviceid}" 
-       target="_blank" onclick="downloadPDF(event, this)">View & Download Application PDF <img src="<%=url%>img/pdf.png" alt="PDF Icon" style="width: 40px; height: 40px;"></a>
-</div>
+<c:if test="${rtiApplication != null}">
+    <form method="post" action="${contextRoot}/rtiapplication/downloadSecurePdf.do">
+        <input type="hidden" name="secureToken" value="${encryptedToken}" />
+        <button type="submit" class="btn btn-success">
+                    <img src="<%=url%>img/pdf.png" alt="PDF Icon" style="width: 40px; height: 40px;">
+            Download Application PDF
+        </button>
+    </form>
 </c:if>
 													
     </td>
 </tr>
-                            					
+                            					   <c:if test="${fireRecommendation.sentToCitizen==1}">
+
+ <tr>
+                    <td>
+                            <span class="ClsLabel" style="font-size:14px"><fmt:message key="Remark" /></span>
+                    </td>                    
+                    <td>
+                        <c:out value="${fireRecommendation.remarkforCitizen}"/>
+
+                    </td>
+                    
+                    </tr>
+                    </c:if>        					
+                    <tr>
+                    
+<c:if test="${not empty fireRecommendation.buildingPlanMap 
+             and fireRecommendation.buildingPlanMap ne 'null'
+             and fn:trim(fireRecommendation.buildingPlanMap) ne ''}">
+ <tr>
+                    <td>
+                            <span class="ClsLabel" style="font-size:14px"><fmt:message key="Building Map :" /></span>
+                    </td>                    
+                    <td>
+                         <a  class="btn btn-success"
+   type="button"
+   target="_blank"
+   onclick="docDownload('${fireRecommendation.buildingPlanMap}');">
+   <span class="download" style="align-items: center;color:white;">Download</span>
+</a>
+                      <!--   <c:out value="${fireRecommendation.buildingPlanMap}"/>-->
+
+                    </td>
+                    
+                    </tr>
+                    </c:if>        					
                     <tr>
                                       
                 </tbody>
                 </table>
+                <c:if test="${not empty requestScope.errors}">
+    <div class="alert alert-danger">
+        ${requestScope.errors}
+    </div>
+</c:if>
             </div>
 
         </div>
@@ -606,20 +649,6 @@ function downloads(id, url) {
 </script>
 
 
-<script>
-function downloadPDF(event, link) {
-    event.preventDefault();
-    const downloadUrl = link.href;
 
-    // Open PDF in a new tab
-    window.open(downloadUrl, '_blank');
-
-    // Trigger download
-    const anchor = document.createElement('a');
-    anchor.href = downloadUrl;
-    anchor.download = 'ApplicationDetails.pdf'; // Specify the desired file name
-    anchor.click();
-}
-</script>
 </body>
 </html>

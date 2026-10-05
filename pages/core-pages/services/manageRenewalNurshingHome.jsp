@@ -232,7 +232,7 @@ font-size:13px;
                     key="Email (ईमेल)" />:</span></td>
         <td><input type="text" class="ClsTextbox" style="width: 180px"
             id="title" maxlength="50" name="title"
-            value="<c:out value="${nursingHomes.renewalNursingHome}"/>" /></td>
+            value="<c:out value="${nursingHomes.nursingHomeRegNumber}"/>" /></td>
 
 			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
 						key="Date (दिनांक)" />:</span></td>

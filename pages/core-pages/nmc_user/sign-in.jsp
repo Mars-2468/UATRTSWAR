@@ -99,7 +99,7 @@ background-position: bottom center;
                           
                         </ul>
                         
-                         <input id="mobile" class="search form-control form-control-lg mb-3" type="text" maxlength="10" placeholder="Enter Mobile Number"  name="mobileNo" pattern="[6-9]{1}[0-9]{9}"  onblur="validateMobile()"
+                         <input id="mobile" class="search form-control form-control-lg mb-3" type="number" maxlength="10" placeholder="Enter Mobile Number"  name="mobileNo"   onblur="validateMobile()"
                         <c:choose>
                         <c:when test="${not empty mobileNo}">
                               readOnly=”true” value="<%= request.getParameter("mobileNo") %>"
@@ -107,48 +107,6 @@ background-position: bottom center;
                         <c:otherwise>
                         </c:otherwise>
                         </c:choose>  >
-                        
-                        
-                        <!-- Hidden input to store the mobile number -->
-  <input type="hidden" name="originalMobileNo" id="originalMobileNo" value="<%= request.getParameter("mobileNo") %>">
-  
-  <script>
-   
-  document.addEventListener('DOMContentLoaded', function() {
-	  const mobileInput = document.getElementById('mobile');
-	  const originalMobileNo = document.getElementById('originalMobileNo').value;
-
-	  console.log(mobileInput, "mobileInput");
-
-	  // Prevent editing of the mobile input field if it's readonly
-	  if (mobileInput.hasAttribute('readonly')) {
-	    mobileInput.addEventListener('keydown', function(e) {
-	      e.preventDefault();
-	    });
-	    mobileInput.addEventListener('cut', function(e) {
-	      e.preventDefault();
-	    });
-	    mobileInput.addEventListener('paste', function(e) {
-	      e.preventDefault();
-	    });
-	    mobileInput.addEventListener('input', function(e) {
-	      e.preventDefault();
-	      mobileInput.value = originalMobileNo;  // Reset the value to original
-	    });
-
-	    setInterval(function() {
-		    if (mobileInput.value !== originalMobileNo) {
-		      mobileInput.value = originalMobileNo;  // Reset the value to original
-		    }
-		  }, 10);
-	  }
-
-	  // Continuously check the value and reset if it changes
-	  // Check every second
-	});
-
-
-  </script>
                         
                         <c:choose>
                         <c:when test="${not empty msg}">
@@ -167,58 +125,14 @@ background-position: bottom center;
                          <c:choose>
                          <c:when test="${not empty otp}">
                                <div>
-<input
-  id="otp"
-  class="search form-control form-control-lg mb-1"
-  type="text"
-  name="otp"
-  placeholder="Enter OTP"
-  pattern="\d{6}" 
-  maxlength="6"
-  oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 6)"
-  onblur="validateOTP()"
->                                 <input type="hidden" name="originalOtp" id="originalOtp" value="">
-                               
+                               <input id="otp" class="search form-control form-control-lg mb-1" type="number" name="otp" placeholder="Enter OTP"   onblur="validateOTP()">
                                </div>
-                               
-                               <script>
-                               document.addEventListener('DOMContentLoaded', function() {
-                            	   const otpInput = document.getElementById('otp');
-                            	   const originalOtpInput = document.getElementById('originalOtp');
-
-                            	   // Function to validate OTP (optional)
-                            	   function validateOTP() {
-                            	     const otpValue = otpInput.value;
-                            	     // Add your OTP validation logic here
-                            	     if (otpValue.length === 6) { // Example: OTP should be 6 digits
-                            	       originalOtpInput.value = otpValue; // Store the original OTP value
-                            	     } else {
-                            	       alert('Invalid OTP');
-                            	     }
-                            	   }
-
-                            	   // Continuously check the value and reset if it changes
-                            	 /*   setInterval(function() {
-                            	     if (otpInput.value !== originalOtpInput.value) {
-                            	       otpInput.value = originalOtpInput.value;  // Reset the value to original
-                            	     }
-                            	   }, 1000);  // Check every second */
-
-                            	   // Add the onblur event listener
-                            	   otpInput.addEventListener('blur', validateOTP);
-                            	 });
-
-
-                               </script>
                               <p id="otpError" style="color:red"></p>
                               
                                <div>
                                 <a   class="bg-button btn btn-primary bd-highlight"  onclick="javascript:login(this.form);" >Login</a>
-                                <a id="resendBtn" class="bg-button btn btn-primary bd-highlight" onclick="javascript:resend(this.form);">Resend OTP</a>   
-                                                                                                                                <span id="timer" style="display:none;color:black;margin-left:80px; margin-top:20px;" ></span>
-                                                             
+                                <a class="active float-right" onclick="javascript:resend(this.form);">Resend OTP</a>                                
                                 </div>
-                                
                           </c:when>
                           <c:otherwise>
                                 <div class="pt-4">
@@ -259,107 +173,17 @@ function login() {
 	}
 }
 
-
-
-<%-- 
- function resend() {
+function resend() {
 	
 	onPageSubmit('<c:out value="${contextRoot}"/>/ws/nmc/user/login.do');
 
-}  --%>
+}
 
 
 function register() {
 	
 	onPageSubmit('<c:out value="${contextRoot}"/>/ws/user/registration.do');
 
-}
-</script>
-
-
-<script>
-let timerInterval; // To hold the interval ID for clearing it later
-let countdownTime = 60; // Countdown timer (in seconds)
-
-// Function to handle OTP resend logic
-function resend() {
-  // Disable the button to prevent multiple clicks
-  const resendBtn = document.getElementById("resendBtn");
-  resendBtn.disabled = true;
-  resendBtn.style.color = 'grey';
-  resendBtn.style.cursor = 'not-allowed'; 
-
-  // Show the timer
-  const timerElement = document.getElementById("timer");
-  timerElement.style.display = 'inline-block';
-  timerElement.textContent ='Please wait ' + countdownTime + ' seconds';
-
-  // Debugging output to check the initial state
-  console.log("Initial timer text:", timerElement.textContent);
-
-  // Start the countdown
-  startCountdown(timerElement, resendBtn);
-
-  // Your resend OTP logic here (e.g., send OTP via API)
-  console.log("Resend OTP request made...");
-   
-
-
-  var formData = new FormData();
-
-  var mobile = document.getElementById("mobile").value;
-  formData.append("mobileNo", mobile);
-
-  for (var pair of formData.entries()) {
-      console.log(pair[0] + ': ' + pair[1]);
-  }
-
-       var mbno=$('#mobile').val();
-       $.ajax({
-    	   url: "/RTSservices/ws/nmc/user/resendOtp.do?mobileNo="+mbno,
-    	   type: "POST",
-           dataType: "json",
-           success: function (response) {
-               var status=response.status;
-               if(status===true || status==='true'){
-
-                   return true;
-               }else{
-            	   alert("Something Went Wrong!!");
-            	   return false;
-                   }
-           },
-           error: function(xhr, status, error) {
-               console.error("An error occurred: " + status + "\n" + error);
-           }
-       });
-}
-
-// Function to handle countdown logic
-function startCountdown(timerElement, resendBtn) {
-  timerInterval = setInterval(function () {
-    countdownTime--; // Decrease the countdown timer
-
-    // Debugging output
-    console.log("Countdown time:", countdownTime);
-
-    // Update the timer text
-   timerElement.textContent = 'Please wait ' + countdownTime + ' seconds';
-
-
-    // Debugging output to confirm the update
-    console.log("Updated timer text:", timerElement.textContent);
-
-    // When the countdown reaches 0, enable the resend button again
-    if (countdownTime <= 0) {
-      clearInterval(timerInterval); // Stop the countdown
-      resendBtn.disabled = false; // Enable the button
-      timerElement.style.display = 'none'; // Hide the timer text
-      resendBtn.style.cursor = 'pointer'; 
-      resendBtn.style.color = 'white'; // Reset color to blue
-       countdownTime = 60; // Reset the countdown time for the next use
-    }
-  }, 1000); // Update every second
 }
 </script>
 </html>

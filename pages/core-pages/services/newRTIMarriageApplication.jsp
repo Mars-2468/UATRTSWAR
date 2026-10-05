@@ -189,10 +189,10 @@ h3 {
 				</div>
 				<div class="col-md-3">
 					<div class="mb-3 mt-3">
-						<label for="" class="form-label"> Aadhaar No. (आधार क्र.)
+						<label for="" class="form-label"> Aadhar No /Passport no (आधार क्र / पासपोर्ट क्र.)
 						</label> <input type="text" class="form-control "
 							style="background-image: none;" id="aadhaarNumber" placeholder=""
-							name="aadhaarNo" value="" pattern="[0-9]{12}" maxlength="12">
+							name="aadhaarNo" value="" >
 							<div class="invalid-feedback">Please Enter Valid Aadhaar
 								No.</div>
 					</div>
@@ -484,12 +484,12 @@ h3 {
 				<div class="row">
 					<div class="col-md-3">
 						<div class="mb-3 mt-4">
-							<label for="" class="form-label"> Aadhaar No. (आधार क्र.)<span
+							<label for="" class="form-label"> Aadhar No /Passport no (आधार क्र / पासपोर्ट क्र.)<span
 							class="text-danger" style="color: red;">*</span>
 							</label> <input type="text" class="form-control "
 								style="background-image: none;" id="aadhaarNumber1"
 								placeholder="" name="husbandAadhaarNo" value=""
-								pattern="[0-9]{12}" maxlength="12" required>
+								 required>
 								<div class="invalid-feedback">Please Enter Valid Aadhaar
 									No.</div>
 						</div>
@@ -844,13 +844,12 @@ document.getElementById("dob1").setAttribute("max", currentDate);
 						<div class="row">
 							<div class="col-md-3">
 								<div class="mb-3 mt-4">
-									<label for="" class="form-label"> Aadhaar No. (आधार
-										क्र.)<span
+									<label for="" class="form-label"> Aadhar No /Passport no (आधार क्र / पासपोर्ट क्र.)<span
 									class="text-danger" style="color: red;">*</span>
 									 </label> <input type="text" class="form-control "
 										style="background-image: none;" id="aadhaarNumber2"
 										placeholder="" name="wifeAadhaarNo" value=""
-										pattern="[0-9]{12}" maxlength="12" required>
+										 required>
 										<div class="invalid-feedback">Please Enter Valid Aadhaar
 											No.</div>
 								</div>
@@ -1124,8 +1123,7 @@ document.getElementById("dob").setAttribute("max", currentDate);
 												Birth (जन्मतारीख)<span class="text-danger"
 												style="color: red;">*</span>
 											</td>
-											<td valign="middle" width="140" class="lbleng">Aadhaar
-												No. (आधार क्र.)<span class="text-danger" style="color: red;">*</span>
+											<td valign="middle" width="140" class="lbleng">Aadhar No /Passport no (आधार क्र / पासपोर्ट क्र.)<span class="text-danger" style="color: red;">*</span>
 											</td>
 
 
@@ -1174,7 +1172,7 @@ document.getElementById("dob").setAttribute("max", currentDate);
 												class="form-control "
 												style="background-image: none; width: 130px;"
 												id="aadhaarNumber" placeholder="" name="firstAadhaarNo"
-												value="" pattern="[0-9]{12}" maxlength="12" required>
+												value="" required>
 													<div class="invalid-feedback">Please Enter Valid
 														Aadhaar No.</div></td>
 
@@ -1265,7 +1263,7 @@ document.getElementById("dob").setAttribute("max", currentDate);
 												class="form-control "
 												style="background-image: none; width: 130px;"
 												id="aadhaarNumber" placeholder="" name="secondAadhaarNo"
-												value="" pattern="[0-9]{12}" maxlength="12" required>
+												value=""  required>
 													<div class="invalid-feedback">Please Enter Valid
 														Aadhaar No.</div></td>
 											<td valign="middle"><select class=""
@@ -1354,7 +1352,7 @@ document.getElementById("dob").setAttribute("max", currentDate);
 												class="form-control "
 												style="background-image: none; width: 130px;"
 												id="aadhaarNumber" placeholder="" name="thirdAadhaarNo"
-												value="" pattern="[0-9]{12}" maxlength="12" required>
+												value="" required>
 													<div class="invalid-feedback">Please Enter Valid
 														Aadhaar No.</div></td>
 											<td valign="middle"><select class=""

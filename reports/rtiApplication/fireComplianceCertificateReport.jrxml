@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2026-09-24T14:40:52 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Final_NOC_Report" pageWidth="595" pageHeight="942" whenNoDataType="AllSectionsNoDetail" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="30" bottomMargin="30" uuid="8f2c1a10-1a2b-4c3d-9e4f-5a6b7c8d9e0f">
+	<property name="net.sf.jasperreports.export.pdf.embedded" value="true"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="EGOVNMC_RTS"/>
+	<parameter name="rtiapplrefid" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+    fcc.*,
+    ra.applicant_name,
+    ra.rti_application_number,
+    ra.created_date,
+    SPLIT_PART(ra.pdf_upload_from_portal,',',1) AS doc1_url,
+    SPLIT_PART(ra.pdf_upload_from_portal,',',2) AS doc2_url,
+    SPLIT_PART(ra.pdf_upload_from_portal,',',3) AS doc3_url,
+    SPLIT_PART(ra.pdf_upload_from_portal,',',4) AS doc4_url,
+    SPLIT_PART(ra.pdf_upload_from_portal,',',5) AS doc5_url,
+    SPLIT_PART(ra.pdf_upload_from_portal,',',6) AS doc6_url,
+    SPLIT_PART(ra.pdf_upload_from_portal,',',7) AS doc7_url
+FROM egovrti.fire_compliance_certificate fcc
+JOIN egovrti.rti_application ra ON fcc.rti_ref_id = ra.rti_application_id
+JOIN egovrti.fire_compliance_measure fcm ON fcc.fire_compliance_certificate_id =fcm.fire_compliance_certificate_id
+
+WHERE fcc.rti_ref_id = $P{rtiapplrefid}
+LIMIT 1]]>
+	</queryString>
+	<field name="fire_compliance_certificate_id" class="java.lang.Long"/>
+	<field name="fire_recommendation_no" class="java.lang.String"/>
+	<field name="provisional_fire_safety_approval" class="java.lang.String"/>
+	<field name="nameof_building_owner" class="java.lang.String"/>
+	<field name="sadress_of_building" class="java.lang.String"/>
+	<field name="typeof_building" class="java.lang.String"/>
+	<field name="plot_area" class="java.lang.String"/>
+	<field name="total_builtup_area" class="java.lang.String"/>
+	<field name="heightof_building" class="java.lang.String"/>
+	<field name="front_margin" class="java.lang.String"/>
+	<field name="rear_margin" class="java.lang.String"/>
+	<field name="side1_margin" class="java.lang.String"/>
+	<field name="side2_margin" class="java.lang.String"/>
+	<field name="widthapproachroad" class="java.lang.String"/>
+	<field name="widthentrance" class="java.lang.String"/>
+	<field name="number_of_floors" class="java.lang.String"/>
+	<field name="basement_load_bearing_strength" class="java.lang.String"/>
+	<field name="numinternalstaircasefinal" class="java.lang.String"/>
+	<field name="noofinternalstaircase" class="java.lang.String"/>
+	<field name="widthinternalstaircase" class="java.lang.String"/>
+	<field name="numexternalstaircasefinal" class="java.lang.String"/>
+	<field name="noofexternalstaircase" class="java.lang.String"/>
+	<field name="numliftprovidedfinal" class="java.lang.String"/>
+	<field name="noofliftprovided" class="java.lang.String"/>
+	<field name="exposurehazard_north" class="java.lang.String"/>
+	<field name="exposurehazard_south" class="java.lang.String"/>
+	<field name="exposurehazard_east" class="java.lang.String"/>
+	<field name="exposurehazard_west" class="java.lang.String"/>
+	<field name="otherinfo" class="java.lang.String"/>
+	<field name="nameofarchitect" class="java.lang.String"/>
+	<field name="architectlicenseno" class="java.lang.String"/>
+	<field name="addressofarchitect" class="java.lang.String"/>
+	<field name="nameofownerdeclaration" class="java.lang.String"/>
+	<field name="addressofownerdeclaration" class="java.lang.String"/>
+	<field name="mobile_no" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="fire_station" class="java.lang.String"/>
+	<field name="noc_photos_upload" class="java.lang.String"/>
+	<field name="inspection_report" class="java.lang.String"/>
+	<field name="other_upload" class="java.lang.String"/>
+	<field name="rti_appl_ref_no" class="java.lang.String"/>
+	<field name="rti_ref_id" class="java.lang.Long"/>
+	<field name="widthexternalstaircase" class="java.lang.String"/>
+	<field name="final_noc_charges" class="java.lang.String"/>
+	<field name="generated_noc_path" class="java.lang.String"/>
+	<field name="fire_recommendation_date" class="java.lang.String"/>
+	<field name="applicant_name" class="java.lang.String"/>
+	<field name="rti_application_number" class="java.lang.String"/>
+	<field name="created_date" class="java.lang.String"/>
+	<field name="doc1_url" class="java.lang.String"/>
+	<field name="doc2_url" class="java.lang.String"/>
+	<field name="doc3_url" class="java.lang.String"/>
+	<field name="doc4_url" class="java.lang.String"/>
+	<field name="doc5_url" class="java.lang.String"/>
+	<field name="doc6_url" class="java.lang.String"/>
+	<field name="doc7_url" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="881" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="515" height="20" uuid="a1b2c3d4-0001-4000-8000-000000000002"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["OFFICE OF THE CORPORATION OF THE CITY, NAGPUR"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="20" width="515" height="16" uuid="a1b2c3d4-0001-4000-8000-000000000003"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["(FIRE & EMERGENCY SERVICES)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="36" width="515" height="14" uuid="a1b2c3d4-0001-4000-8000-000000000004"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Chhatrapati Shivaji Maharaj Prashashkiya Bhawan, Mahanagar Palika, Civil lines, Nagpur – 440 001"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="50" width="515" height="14" uuid="a1b2c3d4-0001-4000-8000-000000000005"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Ph. No.: 0712-2567777, Fax No.: "]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="68" width="515" height="1" uuid="a1b2c3d4-0001-4000-8000-000000000006"/>
+			</line>
+			<textField>
+				<reportElement x="300" y="78" width="215" height="16" uuid="a1b2c3d4-0001-4000-8000-000000000008"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Date:- " + new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="102" width="60" height="14" uuid="a1b2c3d4-0001-4000-8000-000000000009"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[To,]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="20" y="118" width="495" height="14" uuid="a1b2c3d4-0001-4000-8000-00000000000a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nameof_building_owner}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="132" width="495" height="28" uuid="a1b2c3d4-0001-4000-8000-00000000000b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sadress_of_building}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="170" width="515" height="16" uuid="a1b2c3d4-0001-4000-8000-00000000000d"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Sub: - Final Fire Safety Approval Certificate."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="192" width="515" height="14" uuid="a1b2c3d4-0001-4000-8000-00000000000e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Ref :-  1) Provisional Fire Safety Approval Certificate No. "+$F{fire_recommendation_no}+" date "+$F{fire_recommendation_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="30" y="206" width="485" height="14" uuid="a1b2c3d4-0001-4000-8000-00000000000f"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["2) Your Application Dated "+$F{created_date}+"."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="30" y="220" width="485" height="14" uuid="a1b2c3d4-0001-4000-8000-000000000010"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["3)Licensed Agency “A” Certificate on dated "+$F{architectlicenseno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="244" width="515" height="100" uuid="a1b2c3d4-0001-4000-8000-000000000011"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["	As per the Maharashtra Fire Prevention and life safety measures Act 2006, Rules 2009, Amendment Act- 2023 Under Section 3 (1) (b) Sub Section (b) Final Fire Safety Approval Certificate is hereby granted to the Mercantile Building of Ground to 4th Floor, having sanctioned and Existing height 13.95 mtr comprised of Ground to 4th Floor and Total built up area 670.87Sq. Mtr. belonging to Shri. Radheshyam Basarmal Jaswani, On Plot no. 45, CTS no. 1669, Ward no. 56, Dr. Babasaheb Ambedkar Marg, Mouza – Indora, Tah. & Dist. Nagpur and has complied with the fire prevention and safety measures in accordance with the fire prevention and life safety measures act 2006, Rules 2009 & Amendment Act- 2023 (herein after referred as said act.)."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="348" width="515" height="100" uuid="a1b2c3d4-0001-4000-8000-000000000012"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["          The Final Fire Safety Approval Certificate for Mercantile Building, Ground to 4th Floor is issued on the basis of the inspection report of Assist. Divisional Fire Officer, Head Office, Fire & Emergency Services dated 22/03/2024 and certificate “A” (as per the provisions of said act 2006, Rules 2009 & Amendment Act- 2023) dated 09/02/2024 by the Licensed Agency M/s. Pree Engineering, MFS/LA/RF-459, MFS/LA/RD-370, regarding the compliances of the fire prevention and life safety measures on following conditions as prescribed in the said act 2006, Rules 2009 & Amendment Act- 2023."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="448" width="515" height="322" uuid="a1b2c3d4-0001-4000-8000-000000000013"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["1) Under the Sub section (3) of section 3 it is the responsibility of the owner or the occupier as the case may, shall furnish to the Chief Fire Officer a certificate in a prescribed form twice in a year i.e in the month of January and July regarding maintenance of fire prevention and life safety measures in good repair and efficient condition as specified in sub section (1) of the said act & Rules 2009 section 4 (2)."+"\n\n"+"2) Under Sub section (4) of section 3, No person shall tamper with alter remove or cause any injury or damage to any fire prevention and life safety equipment installed in any such building or part thereof or instigate any other person to do so."+"\n\n"+"3) The undersigned reserve the right to add/delete or amend any recommendation deemed fit during future inspection and due to up gradation of fire fighting monitoring system of this department in interest of life safety."+"\n\n"+"4) Any additional construction or change in use of the building or part there of shall render this certificate cancelled and invalid."+"\n\n"+"5) The owner or occupier shall pay annual fee at the rate of 1% of the minimum fees specified in schedule II as per section 11(1) and 14(4)."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="781" width="235" height="44" uuid="a1b2c3d4-0001-4000-8000-000000000019"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["I/C Chief Fire Officer"+"\nFire & Emergency Services,"+"\n Mpl. Corporation, Nagpur"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="830" width="120" height="14" uuid="a1b2c3d4-0001-4000-8000-00000000001c"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Copy to: -]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="20" y="846" width="495" height="33" uuid="a1b2c3d4-0001-4000-8000-00000000001d"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["1) The Building Engg. (ADTP)/N.I.T./ N.M.C./NMRDA, Nagpur."+"\n2) I/C Assist. Divisional Fire Officer, HQ,Fire & Emergency Services, NMC"]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement stretchType="RelativeToBandHeight" x="2" y="8" width="50" height="45" uuid="4e732f5c-3c76-42e1-9c87-81e435164442"/>
+				<imageExpression><![CDATA["../../images/AMC_Logo.jpeg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="465" y="8" width="50" height="46" uuid="2d599715-48a7-4da3-ac37-c4031520858e"/>
+				<imageExpression><![CDATA["../../images/g21.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+</jasperReport>

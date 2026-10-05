@@ -171,7 +171,7 @@ String name=(String)session.getAttribute("name");
             </div> 
                        
                              
-      <div class="col-md-3 ">
+    <!--   <div class="col-md-3 ">
                             <a class="card border" style="width: 258px;height:96px" href='<c:out value="${contextRoot}"/>/ws/rtsapplication/newRTSGaneshApplication.do'>
                     <div class="card-body d-flex align-items-top justify-content-between">                    			 
                                   <span class="title-width platform-title"><p class="h5 m-0"><strong>
@@ -180,7 +180,7 @@ String name=(String)session.getAttribute("name");
                                                                   
                               </div>
                 </a>
-            </div> 
+            </div>
              <div class="col-md-3 ">
                             <a class="card border" style="width: 260px;height:96px" href='<c:out value="${contextRoot}"/>/ws/rtsapplication/newRTSDurgaUtsavApplication.do'>
                     <div class="card-body d-flex align-items-top justify-content-between">                    			 
@@ -192,7 +192,7 @@ String name=(String)session.getAttribute("name");
                 </a>
             </div>
             
-          <%--    <div class="col-md-3 mb-4">
+             <div class="col-md-3 mb-4">
                             <a class="card" style="width: 260px;height:96px"
                                 href='<c:out value="${contextRoot}"/>/ws/rtsapplication/newRTSFireCrackerShopLicense.do'>
                                 <div class="card-body d-flex align-items-top justify-content-between">
@@ -205,7 +205,7 @@ String name=(String)session.getAttribute("name");
                                 </div>
                             </a>
                         </div>
-             --%>
+            
              <div class="col-md-3 mb-4">
                 <a class="card" style="width: 260px;height:96px" href='<c:out value="${contextRoot}"/>/ws/rtsapplication/newRTSDikshaBhoomiApplication.do'>
                     <div class="card-body d-flex align-items-top justify-content-between">
@@ -215,7 +215,7 @@ String name=(String)session.getAttribute("name");
                 </a>
             </div>
                        
-                              </div> 
+                              </div> -->
     
     </div>
 </div>

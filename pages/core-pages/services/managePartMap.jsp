@@ -345,9 +345,9 @@ a {
 						test="${requestScope.rtiApplication.workFlowStatus==0}">
 						<b>Citizen Form Submitted. </b>
 					</c:if> <c:if test="${requestScope.rtiApplication.workFlowStatus==3}">
-					<b>In progress</b>
+					<b>In Progress</b>
 					</c:if> <c:if test="${requestScope.rtiApplication.workFlowStatus==2}">
-						<b>In progress</b>
+						<b>In Progress</b>
 					</c:if> <c:if test="${requestScope.rtiApplication.workFlowStatus==1}">
 						<b>Completed and File Uploaded for Citizen</b>
 					</c:if> <c:if test="${requestScope.rtiApplication.workFlowStatus==5}">

@@ -540,7 +540,6 @@ function reassignWorkflowTask(frm)
 	{
 		document.getElementById('<c:out value="${pageScope.WORKFLOW_ACTION}"/>').value='<c:out value="${pageScope.WORKFLOW_ACTION_COMPLETE_TASK}"/>';
 		document.getElementById('<c:out value="${pageScope.WORKFLOW_TRANSISTION}"/>').value=transistionName;
-		alert("inside reject");
 		disableControlsByJquery(false);
 		saveEntity();
 	}else return false;

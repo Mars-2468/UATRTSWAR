@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2025-04-29T09:27:58 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MarriageModifyImages" pageWidth="673" pageHeight="1020" columnWidth="593" leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="0" uuid="0bf7c677-d0a3-4e0c-8ec8-64eff6345107">
+<!-- 2026-07-27T17:57:41 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MarriageModifyImages" pageWidth="673" pageHeight="1080" columnWidth="593" leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="0" uuid="0bf7c677-d0a3-4e0c-8ec8-64eff6345107">
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
@@ -213,10 +213,10 @@ WHERE
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="979" splitType="Stretch">
+		<band height="1039" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<image scaleImage="FillFrame">
-				<reportElement positionType="FixRelativeToBottom" x="-40" y="-47" width="673" height="1026" uuid="890cf523-4571-4abe-ac4f-07caeaf7f4a3">
+				<reportElement positionType="FixRelativeToBottom" x="-40" y="-47" width="673" height="1086" uuid="890cf523-4571-4abe-ac4f-07caeaf7f4a3">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
@@ -265,28 +265,28 @@ WHERE
 				<text><![CDATA[विवाह नोंदणी प्रमाणपत्र]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="100" y="173" width="400" height="20" uuid="441f0d6d-95b7-461a-9950-59e1982f9efb"/>
+				<reportElement x="100" y="169" width="400" height="20" uuid="441f0d6d-95b7-461a-9950-59e1982f9efb"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial Unicode MS" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Certificate of Registration of Marriage]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="100" y="193" width="400" height="20" uuid="3bd22626-f41e-4b61-95be-bab631ab7237"/>
+				<reportElement x="100" y="189" width="400" height="20" uuid="3bd22626-f41e-4b61-95be-bab631ab7237"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial Unicode MS" size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[(पहा कलम ६ (१) आणि नियम ४)/ See section 6 (1) & Rule 5]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="100" y="213" width="399" height="20" uuid="dba4383d-5963-4b5d-bd1c-d1b9f5d3da40"/>
+				<reportElement x="100" y="209" width="399" height="20" uuid="dba4383d-5963-4b5d-bd1c-d1b9f5d3da40"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial Unicode MS" size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[महाराष्ट्र शासन राजपत्र, मे २०, १९९९ / वैशाख ३०,]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="25" y="257" width="113" height="20" uuid="765babb0-7d5f-4aca-a0b6-11abae558622">
+				<reportElement x="25" y="253" width="113" height="20" uuid="765babb0-7d5f-4aca-a0b6-11abae558622">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement>
@@ -295,7 +295,7 @@ WHERE
 				<text><![CDATA[पतीचे नांव]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="25" y="277" width="113" height="20" uuid="12f59114-f272-4059-a78f-2c4a3d93535d">
+				<reportElement x="25" y="283" width="113" height="20" uuid="12f59114-f272-4059-a78f-2c4a3d93535d">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
@@ -305,7 +305,7 @@ WHERE
 				<text><![CDATA[राहणार]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="25" y="313" width="113" height="20" uuid="4993c36d-42ea-41ab-9e6b-1b1951cdd8b5">
+				<reportElement x="25" y="316" width="113" height="20" uuid="4993c36d-42ea-41ab-9e6b-1b1951cdd8b5">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement>
@@ -314,14 +314,14 @@ WHERE
 				<text><![CDATA[पत्नीचे नांव]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="25" y="333" width="113" height="20" uuid="3d2ce358-1ba3-4050-9ab2-1266d81a48bc"/>
+				<reportElement x="25" y="347" width="113" height="20" uuid="3d2ce358-1ba3-4050-9ab2-1266d81a48bc"/>
 				<textElement>
 					<font fontName="Arial Unicode MS" size="12"/>
 				</textElement>
 				<text><![CDATA[राहणार]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="25" y="369" width="113" height="20" uuid="4a8db560-4b51-4e59-b179-82f136d48fff">
+				<reportElement x="25" y="383" width="113" height="20" uuid="4a8db560-4b51-4e59-b179-82f136d48fff">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement>
@@ -330,7 +330,7 @@ WHERE
 				<text><![CDATA[दिनांक ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="133" y="257" width="10" height="20" uuid="3e847632-f01d-42c6-bf29-9583d11271ea">
+				<reportElement x="133" y="253" width="10" height="20" uuid="3e847632-f01d-42c6-bf29-9583d11271ea">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
@@ -340,7 +340,7 @@ WHERE
 				<text><![CDATA[:-]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="133" y="277" width="10" height="20" uuid="373867c2-f2d3-45c9-b274-e825a741b4bd">
+				<reportElement x="133" y="283" width="10" height="20" uuid="373867c2-f2d3-45c9-b274-e825a741b4bd">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement>
@@ -349,7 +349,7 @@ WHERE
 				<text><![CDATA[:-]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="133" y="313" width="10" height="20" uuid="7856bf0d-5fef-4ec6-8571-daa9b2e91428">
+				<reportElement x="133" y="316" width="10" height="20" uuid="7856bf0d-5fef-4ec6-8571-daa9b2e91428">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement>
@@ -358,7 +358,7 @@ WHERE
 				<text><![CDATA[:-]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="133" y="333" width="10" height="20" uuid="7d2afda7-d0d7-4d8c-9cb7-89b47844a0d5">
+				<reportElement x="133" y="347" width="10" height="20" uuid="7d2afda7-d0d7-4d8c-9cb7-89b47844a0d5">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement>
@@ -367,7 +367,7 @@ WHERE
 				<text><![CDATA[:-]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="133" y="369" width="10" height="20" uuid="7c9aad80-729c-4214-afab-5d21a6533c0a">
+				<reportElement x="133" y="383" width="10" height="20" uuid="7c9aad80-729c-4214-afab-5d21a6533c0a">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement>
@@ -376,7 +376,7 @@ WHERE
 				<text><![CDATA[:-]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="143" y="369" width="426" height="76" uuid="f8871dd7-b92e-480f-a636-f0a62e0c49e4">
+				<reportElement x="143" y="383" width="426" height="76" uuid="f8871dd7-b92e-480f-a636-f0a62e0c49e4">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
@@ -387,7 +387,9 @@ WHERE
 + " रोजी माझ्या कडून नोंदणी करण्यात आली आहे."]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="143" y="257" width="426" height="20" uuid="c939b7ec-1330-4e78-8d8c-2e394484a63b"/>
+				<reportElement x="143" y="253" width="426" height="30" uuid="c939b7ec-1330-4e78-8d8c-2e394484a63b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -401,9 +403,8 @@ WHERE
 				<textFieldExpression><![CDATA[$F{zone_no1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="143" y="277" width="426" height="35" uuid="21dd3643-118b-4d3f-9141-94a37df9dc36">
+				<reportElement x="143" y="283" width="426" height="32" uuid="21dd3643-118b-4d3f-9141-94a37df9dc36">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement>
 					<font size="12"/>
@@ -411,8 +412,9 @@ WHERE
 				<textFieldExpression><![CDATA[$F{husband_full_addr}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="143" y="313" width="426" height="20" uuid="8f05a1d4-d5e8-4830-a0fb-909656c8d22d">
+				<reportElement x="143" y="316" width="426" height="30" uuid="8f05a1d4-d5e8-4830-a0fb-909656c8d22d">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement>
 					<font size="12" isBold="true"/>
@@ -420,7 +422,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{wife_first_name}+ "  "+$F{wife_father_name}+"  "+$F{wife_last_name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="143" y="333" width="426" height="35" uuid="a35d924e-9ada-4ec1-8c9f-ce1fef4c0aa8">
+				<reportElement x="143" y="347" width="426" height="35" uuid="a35d924e-9ada-4ec1-8c9f-ce1fef4c0aa8">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
@@ -430,7 +432,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{wife_full_addr}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="175" y="448" width="250" height="18" uuid="5cb22c13-f4a5-4c49-9576-1bed9326458f">
+				<reportElement x="175" y="461" width="250" height="18" uuid="5cb22c13-f4a5-4c49-9576-1bed9326458f">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
@@ -440,77 +442,79 @@ WHERE
 				<text><![CDATA[Certified that Marriage between]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="25" y="469" width="113" height="20" uuid="46de05d7-8681-4c0d-84ec-521a9ce843d5"/>
+				<reportElement x="25" y="484" width="113" height="20" uuid="46de05d7-8681-4c0d-84ec-521a9ce843d5"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[Husband's Name]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="25" y="489" width="113" height="20" uuid="c943e314-313f-4c50-846c-6bcd2984078e"/>
+				<reportElement x="25" y="515" width="113" height="20" uuid="c943e314-313f-4c50-846c-6bcd2984078e"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[Residing at]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="25" y="544" width="113" height="20" uuid="e7558abd-e8bc-4ac8-8bfa-42ad1db94719"/>
+				<reportElement x="25" y="570" width="113" height="20" uuid="e7558abd-e8bc-4ac8-8bfa-42ad1db94719"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[Wife's name]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="25" y="620" width="108" height="20" uuid="e3871ee3-16ec-41c1-a4be-16f298230785"/>
+				<reportElement x="25" y="656" width="108" height="20" uuid="e3871ee3-16ec-41c1-a4be-16f298230785"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[Solemnized on]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="25" y="565" width="113" height="20" uuid="5d05855a-9265-4d7d-bcfc-350cb9391bc5"/>
+				<reportElement x="25" y="601" width="113" height="20" uuid="5d05855a-9265-4d7d-bcfc-350cb9391bc5"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[Residing at]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="133" y="469" width="10" height="20" uuid="d9b86fda-f3a9-4948-9f3a-21134e5ab0b7"/>
+				<reportElement x="133" y="484" width="10" height="20" uuid="d9b86fda-f3a9-4948-9f3a-21134e5ab0b7"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[:-]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="133" y="489" width="10" height="20" uuid="52324684-1772-4d56-8a8f-63f9438da4f5"/>
+				<reportElement x="133" y="515" width="10" height="20" uuid="52324684-1772-4d56-8a8f-63f9438da4f5"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[:-]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="133" y="544" width="10" height="20" uuid="3dfc3ac4-706c-45e5-a120-34d2a87b4a45"/>
+				<reportElement x="133" y="570" width="10" height="20" uuid="3dfc3ac4-706c-45e5-a120-34d2a87b4a45"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[:-]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="133" y="565" width="10" height="20" uuid="3a4fb062-e67e-4046-9267-7dbca0ee75b6"/>
+				<reportElement x="133" y="601" width="10" height="20" uuid="3a4fb062-e67e-4046-9267-7dbca0ee75b6"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[:-]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="143" y="469" width="426" height="20" uuid="78d7c142-5fbc-40b7-bd85-3c65908fd8a2"/>
+				<reportElement x="143" y="484" width="426" height="30" uuid="78d7c142-5fbc-40b7-bd85-3c65908fd8a2">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{husband_first_name}+" "+$F{husband_father_name}+" "+$F{husband_last_name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="143" y="489" width="426" height="35" uuid="7debed81-4d44-4e8e-8e58-d5e0541b06c3">
+				<reportElement x="143" y="515" width="426" height="35" uuid="7debed81-4d44-4e8e-8e58-d5e0541b06c3">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement>
@@ -519,14 +523,16 @@ WHERE
 				<textFieldExpression><![CDATA[$F{husband_full_addr}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="143" y="544" width="426" height="20" uuid="0b1131b9-6784-4669-b8ff-cdab3c592244"/>
+				<reportElement x="143" y="570" width="426" height="30" uuid="0b1131b9-6784-4669-b8ff-cdab3c592244">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{wife_first_name}+ "  "+$F{wife_father_name}+"  "+$F{wife_last_name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="143" y="565" width="426" height="35" uuid="d1d6154f-ec87-41a2-8d74-253eeea0dde1">
+				<reportElement x="143" y="601" width="426" height="35" uuid="d1d6154f-ec87-41a2-8d74-253eeea0dde1">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement>
@@ -535,7 +541,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{wife_full_addr}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="143" y="619" width="426" height="70" uuid="06614236-4010-478f-af15-af2421676ab5"/>
+				<reportElement x="143" y="655" width="426" height="70" uuid="06614236-4010-478f-af15-af2421676ab5"/>
 				<textElement>
 					<font fontName="SansSerif" size="12"/>
 				</textElement>
@@ -543,7 +549,7 @@ WHERE
 +"  Serial No. "+$F{rti_appl_ref_no}+" " +$F{zone_no1}+" Nagpur, Under the Maharashtra Regulation of Marriage Bureaus and Registration of Marriage Act, 1998."]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="67" y="878" width="130" height="16" uuid="d14f35b6-30de-4810-894b-e723bd7def24">
+				<reportElement x="67" y="912" width="130" height="16" uuid="d14f35b6-30de-4810-894b-e723bd7def24">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -552,14 +558,14 @@ WHERE
 				<text><![CDATA[Place: Nagpur]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="67" y="895" width="130" height="16" uuid="390a6540-2f62-410b-b033-0b25ad7f0a65"/>
+				<reportElement x="67" y="929" width="130" height="16" uuid="390a6540-2f62-410b-b033-0b25ad7f0a65"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Date: " +new java.text.SimpleDateFormat("dd-MM-yyyy").format(new java.util.Date())]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="335" y="881" width="217" height="16" uuid="cabea548-29a1-4091-a333-27a9a4d633d7">
+				<reportElement x="335" y="915" width="217" height="16" uuid="cabea548-29a1-4091-a333-27a9a4d633d7">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -568,91 +574,100 @@ WHERE
 				<text><![CDATA[Registrar of Marriage]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="335" y="897" width="217" height="16" uuid="a2972531-99c4-4b4d-89e7-185de4ccbd8d"/>
+				<reportElement x="335" y="931" width="217" height="16" uuid="a2972531-99c4-4b4d-89e7-185de4ccbd8d"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[ZMO (Zonal Medical Officer)]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="335" y="851" width="217" height="16" uuid="7f75677f-6b0b-4041-ba37-c4c3d4fcf905"/>
+				<reportElement x="335" y="885" width="217" height="16" uuid="7f75677f-6b0b-4041-ba37-c4c3d4fcf905"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{zone_no1}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="335" y="866" width="217" height="16" uuid="b7076870-d6ca-499e-aa5e-2b0205d59e75"/>
+				<reportElement x="335" y="900" width="217" height="16" uuid="b7076870-d6ca-499e-aa5e-2b0205d59e75"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[N.M.C. Nagpur]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="175" y="234" width="250" height="22" uuid="eb461aa5-02df-4d67-8c56-e999e17690f6"/>
+				<reportElement x="175" y="230" width="250" height="22" uuid="eb461aa5-02df-4d67-8c56-e999e17690f6"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial Unicode MS" size="14" isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[प्रमाणित करण्यात येते की]]></text>
 			</staticText>
-			<image>
-				<reportElement x="25" y="697" width="135" height="180" uuid="07c48ac0-69e3-4846-86b4-a1fe8dc2bcec"/>
-				<imageExpression><![CDATA[$F{fourth_url}]]></imageExpression>
+			<!-- Wife photograph. RetainShape keeps the face in proportion (FillFrame would stretch it, which
+			     is not acceptable on a legal certificate); Center/Middle then seats it inside the 135x180
+			     frame instead of pinning it to the top-left corner, so both photographs line up whatever
+			     aspect ratio was uploaded. onErrorType=Blank leaves the frame empty rather than failing the
+			     whole certificate when a path is missing, and the cache is off so one applicant's photo can
+			     never be served for another. -->
+			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle" isUsingCache="false" onErrorType="Blank">
+				<reportElement x="25" y="731" width="135" height="180" uuid="07c48ac0-69e3-4846-86b4-a1fe8dc2bcec"/>
+				<imageExpression><![CDATA[$F{fourth_url} == null || $F{fourth_url}.trim().length() == 0 ? null : $F{fourth_url}.trim()]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="46" y="69" width="92" height="89" uuid="8d8741ff-22d7-431e-b194-b80dcff6c907"/>
 				<imageExpression><![CDATA["../../images/AMC_Logo.jpeg"]]></imageExpression>
 			</image>
-			<image>
-				<reportElement x="180" y="697" width="135" height="180" uuid="436207b0-c461-44ca-afeb-9815054225ba"/>
-				<imageExpression><![CDATA[$F{second_url}]]></imageExpression>
+			<!-- Husband photograph — same treatment as the wife photograph above. -->
+			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle" isUsingCache="false" onErrorType="Blank">
+				<reportElement x="180" y="731" width="135" height="180" uuid="436207b0-c461-44ca-afeb-9815054225ba"/>
+				<imageExpression><![CDATA[$F{second_url} == null || $F{second_url}.trim().length() == 0 ? null : $F{second_url}.trim()]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="25" y="524" width="108" height="19" uuid="aae10182-e3e0-42f3-8ebd-4e7e6a309d47"/>
-				<textElement>
+				<reportElement x="25" y="538" width="108" height="30" uuid="aae10182-e3e0-42f3-8ebd-4e7e6a309d47">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Bottom">
 					<font size="12"/>
 				</textElement>
-				<text><![CDATA[Aadhaar No.]]></text>
+				<text><![CDATA[Aadhar No /Passport no :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="143" y="525" width="426" height="19" uuid="a87a22e1-c074-473f-84a8-8926ef3725cb"/>
+				<reportElement x="143" y="551" width="426" height="19" uuid="a87a22e1-c074-473f-84a8-8926ef3725cb"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{husband_aadhaar_no}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="25" y="603" width="108" height="17" uuid="03b61834-6d3d-47af-ba5b-8db080950799"/>
-				<textElement>
+				<reportElement x="25" y="626" width="108" height="30" uuid="03b61834-6d3d-47af-ba5b-8db080950799"/>
+				<textElement verticalAlignment="Bottom">
 					<font size="12"/>
 				</textElement>
-				<text><![CDATA[Aadhaar No.]]></text>
+				<text><![CDATA[Aadhar No /Passport no :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="133" y="601" width="5" height="18" uuid="33cbedf0-9d20-49ad-af6c-ffdd72ef3a7c"/>
+				<reportElement x="133" y="637" width="5" height="18" uuid="33cbedf0-9d20-49ad-af6c-ffdd72ef3a7c"/>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="138" y="584" width="5" height="17" uuid="69fc2173-5140-47e5-be26-7e80d0165376"/>
+				<reportElement x="138" y="620" width="5" height="17" uuid="69fc2173-5140-47e5-be26-7e80d0165376"/>
 				<text><![CDATA[-]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="143" y="601" width="426" height="18" uuid="a17eff22-9896-429e-ac8e-223161a3252d"/>
+				<reportElement x="143" y="637" width="426" height="18" uuid="a17eff22-9896-429e-ac8e-223161a3252d"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{wife_aadhaar_no}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="133" y="619" width="5" height="20" uuid="6ed7afb0-db20-4865-9f9b-3cf94ee752bc"/>
+				<reportElement x="133" y="655" width="5" height="20" uuid="6ed7afb0-db20-4865-9f9b-3cf94ee752bc"/>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="138" y="601" width="5" height="20" uuid="1b105c4a-2975-44e6-b70d-40fab2c2de71"/>
+				<reportElement x="138" y="637" width="5" height="20" uuid="1b105c4a-2975-44e6-b70d-40fab2c2de71"/>
 				<text><![CDATA[-]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="133" y="524" width="10" height="19" uuid="a7a4e05d-8f67-4958-b04b-8e460cc55c9f"/>
+				<reportElement x="133" y="550" width="10" height="19" uuid="a7a4e05d-8f67-4958-b04b-8e460cc55c9f"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>

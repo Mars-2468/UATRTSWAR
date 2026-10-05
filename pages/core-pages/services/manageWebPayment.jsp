@@ -386,7 +386,18 @@ input[type=text] {
 								</c:otherwise>
 							</c:choose>
 							<br>
-
+<c:if test="${not empty plantationletter && workflowStatus!=1 }">
+    <tr>
+        <td class="value">
+               <a  class="btn btn-success"
+   type="button"
+   target="_blank"
+   onclick="docDownload('${plantationletter}');">
+   <span class="download" style="align-items: center;color:white;">Download Plantation Letter</span>
+</a>
+        </td>
+    </tr>
+</c:if>
 
 							
 							

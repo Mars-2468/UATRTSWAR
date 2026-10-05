@@ -315,7 +315,8 @@ a {
         <c:when test="${empty biologicalWasteDisposal.demandfees}">
         
                            <td style="text-align: center">
-                            <input type="number" class="form-control" id="feesApplicable" maxlength="5"  style="width:350px" name="demandfees" value="<c:out value="${biologicalWasteDisposal.demandfees}"/>" oninput="validateInput(this);"/>
+                           
+                            <input type="number" class="form-control" id="feesApplicable" maxlength="5"  style="width:350px" name="demandfees" value="<c:out value="${biologicalWasteDisposal.demandfees}"/>" onblur="validateInput(this)" placeholder="Enter value" />
                           </td>
      	 </c:when>
         <c:otherwise>
@@ -519,25 +520,47 @@ a {
  	
 </script>
 <script>
-    function validateInput(inputElement) {
-        // Ensure non-negative values
-        if (inputElement.value < 0) {
-            inputElement.value = "";
-            alert("Please enter a non-negative value.");
-        }
+function validateInput(inputElement) {
+    let value = inputElement.value.trim(); // Remove leading/trailing spaces
 
-        // Limit to four digits
-        if (inputElement.value.length > 6) {
-            inputElement.value = inputElement.value.slice(0, 4);
-            alert("Please enter a value with a maximum of 5 digits.");
-        }
-
-        // Ensure non-zero values
-        if (inputElement.value == 0) {
-            inputElement.value = "";
-            alert("Please enter a non-zero value.");
-        }
+    // Check if value is empty or not a number
+    if (value === "" || isNaN(value)) {
+        alert("Please enter a valid numeric value.");
+        inputElement.value = "";
+        return;
     }
+
+    // Convert value to a number
+    let numValue = Number(value);
+
+    // Ensure non-negative values
+    if (numValue < 0) {
+        alert("Negative values are not allowed.");
+        inputElement.value = "";
+        return;
+    }
+
+    // Ensure non-zero values
+    if (numValue === 0) {
+        alert("Zero is not allowed. Please enter a value greater than 10.");
+        inputElement.value = "";
+        return;
+    }
+
+    // Ensure value is greater than 10
+    if (numValue > 0 && numValue <= 10) {
+        alert("Please enter a value greater than 10.");
+        inputElement.value = "";
+        return;
+    }
+
+    // Limit to a maximum of 6 digits
+    if (value.length > 6) {
+        alert("Please enter a value with a maximum of 6 digits.");
+        inputElement.value = value.slice(0, 6);
+    }
+}
+
 </script>
 	
 <script type="text/javascript">

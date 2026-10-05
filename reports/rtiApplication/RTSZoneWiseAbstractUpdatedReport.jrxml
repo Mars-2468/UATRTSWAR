@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2024-07-26T14:54:28 -->
+<!-- 2026-02-20T13:57:13 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RTSZoneWiseAbstract" pageWidth="870" pageHeight="850" whenNoDataType="NoDataSection" columnWidth="830" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="629475cf-fdbd-4ea6-b9fa-4f236c3c64f5">
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
@@ -12,47 +12,64 @@
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="egvNmc"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Egov_Nmc"/>
 	<parameter name="FROM_DATE" class="java.lang.String"/>
 	<parameter name="TO_DATE" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
-    COUNT(case when tc.ws in (0,1,2,3,5) then 1 end) AS total_application,
-    COUNT(CASE WHEN tc.ws = 0 AND tc.ws NOT IN (1, 5, 2, 3) THEN 1 END) AS applicationInProcess,
-    COUNT(CASE WHEN tc.ws = 1 AND tc.ws NOT IN (0, 5, 2, 3) THEN 1 END) AS certificateIssue,
-    COUNT(CASE WHEN tc.ws = 5 AND tc.ws NOT IN (1, 0, 2, 3) THEN 1 END) AS appRejected,
-    COUNT(CASE WHEN tc.ws = 2 AND tc.ws NOT IN (1, 5, 0, 3) THEN 1 END) AS readyToIssue,
-    COUNT(CASE WHEN tc.ws = 3 AND tc.ws NOT IN (1, 5, 2, 0) THEN 1 END) AS appPayentpending,
+    COUNT(*) FILTER (WHERE tc.ws IN (0,1,2,3,5,9,10,11)) AS total_application,
+    COUNT(*) FILTER (WHERE tc.ws IN (9,10,11,0)) AS applicationInProcess,
+    COUNT(*) FILTER (WHERE tc.ws = 1) AS certificateIssue,
+    COUNT(*) FILTER (WHERE tc.ws = 5) AS appRejected,
+    COUNT(*) FILTER (WHERE tc.ws = 2) AS readyToIssue,
+    COUNT(*) FILTER (WHERE tc.ws = 3) AS appPayentpending,
+
     CASE
-        WHEN tc.zone = 1 THEN 'Zone No.1 - Laxmi Nagar (लक्ष्मी नगर)'
-        WHEN tc.zone = 2 THEN 'Zone No.2 - Dharmpeth (धरमपेठ)'
-        WHEN tc.zone = 3 THEN 'Zone No.3 - Hanuman Nagar (हनुमान नगर)'
-        WHEN tc.zone = 4 THEN 'Zone No.4 - Dhantoli (धंतोली)'
-        WHEN tc.zone = 5 THEN 'Zone No.5 - Nehru Nagar (नेहरू नगर)'
-        WHEN tc.zone = 6 THEN 'Zone No.6 - Gandhibag (गांधीबाग)'
-        WHEN tc.zone = 7 THEN 'Zone No.7 - Satranjipura (सतरंजीपुरा)'
-        WHEN tc.zone = 8 THEN 'Zone No.8 - Lakadganj (लकडगंज)'
-        WHEN tc.zone = 9 THEN 'Zone No.9 - Aashi Nagar (आशी नगर)'
-        WHEN tc.zone = 10 THEN 'Zone No.10 - Mangalwari (मंगळवारी)'
+        WHEN tc.zone_no = 1 THEN 'Zone No.1 - Laxmi Nagar (लक्ष्मी नगर)'
+        WHEN tc.zone_no = 2 THEN 'Zone No.2 - Dharmpeth (धरमपेठ)'
+        WHEN tc.zone_no = 3 THEN 'Zone No.3 - Hanuman Nagar (हनुमान नगर)'
+        WHEN tc.zone_no = 4 THEN 'Zone No.4 - Dhantoli (धंतोली)'
+        WHEN tc.zone_no = 5 THEN 'Zone No.5 - Nehru Nagar (नेहरू नगर)'
+        WHEN tc.zone_no = 6 THEN 'Zone No.6 - Gandhibag (गांधीबाग)'
+        WHEN tc.zone_no = 7 THEN 'Zone No.7 - Satranjipura (सतरंजीपुरा)'
+        WHEN tc.zone_no = 8 THEN 'Zone No.8 - Lakadganj (लकडगंज)'
+        WHEN tc.zone_no = 9 THEN 'Zone No.9 - Aashi Nagar (आशी नगर)'
+        WHEN tc.zone_no = 10 THEN 'Zone No.10 - Mangalwari (मंगळवारी)'
+        ELSE 'No Zone Assigned'
     END AS zoneName,
-    cast(tc.zone as integer) AS zone_no
+
+    tc.zone_no
+
 FROM (
     SELECT
         ra.workflow_status AS ws,
-        ra."zone" AS zone,
+
+        CASE
+            WHEN TRIM(ra."zone") ~ '^[0-9]+$'
+            THEN TRIM(ra."zone")::integer
+            ELSE 0
+        END AS zone_no,
+
         ra.rti_application_number
-    FROM
-        egovrti.rti_application ra
+
+    FROM egovrti.rti_application ra
     WHERE
-        ra."zone" IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-        AND ra.rti_application_number IS NOT NULL
-        AND ra.rti_application_number != ''
-        AND CAST(ra.created_date AS date) BETWEEN to_date($P{FROM_DATE}, 'dd/mm/yyyy') AND to_date($P{TO_DATE}, 'dd/mm/yyyy')
-) AS tc
-GROUP BY
-    tc.zone
- ORDER BY
-    zone_no;]]>
+        ra.rti_application_number IS NOT NULL
+        AND ra.rti_application_number <> ''
+
+        -- 🔥 FULL DAY SAFE DATE FILTER
+        AND to_timestamp(ra.created_date, 'DD/MM/YYYY HH24:MI:SS')
+            >= to_timestamp($P{FROM_DATE}, 'DD/MM/YYYY')
+
+        AND to_timestamp(ra.created_date, 'DD/MM/YYYY HH24:MI:SS')
+            < (
+                to_timestamp($P{TO_DATE}, 'DD/MM/YYYY') + INTERVAL '1 day'
+              )
+
+) tc
+
+GROUP BY tc.zone_no
+ORDER BY tc.zone_no;]]>
 	</queryString>
 	<field name="total_application" class="java.lang.Long"/>
 	<field name="applicationinprocess" class="java.lang.Long"/>

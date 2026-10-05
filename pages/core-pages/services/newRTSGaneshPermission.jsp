@@ -64,6 +64,49 @@
 	String urls="/RTSservices/pages/core-pages/nmc_user/";
 
 %>
+ <style>
+  .doc-card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    width: 320px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.doc-title {
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.doc-btn {
+    width: 100%;
+    margin-bottom: 2px;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 10px;
+    transition: 0.3s;
+}
+
+/* Hover Effects */
+.doc-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+}
+
+/* Different feel for blue */
+.btn-primary {
+    background: linear-gradient(135deg, #0d6efd, #084298);
+    border: none;
+}
+
+/* Red buttons */
+.btn-dangr {
+background: lavender;
+    border: none;
+}
+  </style>
 
 <style>
 label {
@@ -933,6 +976,7 @@ function validateTextarea1() {
     <option value="Police line Talav">Police line Talav</option>
     <option value="Koradi">Koradi</option>
     <option value="Kacchivisa Artificial Tank">Kacchivisa Artificial Tank</option>
+    
     <option value="Other">Other</option>
 </select>
 
@@ -1136,6 +1180,8 @@ document.getElementById('ganeshVisarjanSelect').addEventListener('change', funct
     <option value="Ambazari Police Station">Ambazari Police Station</option>
     <option value="Bajaj Nagar Police Station">Bajaj Nagar Police Station</option>
     <option value="Beltorodi Police Station">Beltorodi Police Station</option>
+        <option value="Bhadewadi Police Station">Bhadewadi Police Station</option>
+    
     <option value="Dhantoli Police Station">Dhantoli Police Station</option>
     <option value="Ganeshpeth Police Station">Ganeshpeth Police Station</option>
     <option value="Gittikhadan Police Station">Gittikhadan Police Station</option>
@@ -1630,6 +1676,15 @@ $(document).ready(function() {
 
 					</div>
 				</div>
+					<div class="col-md-5">
+        <div class="mb-3 mt-5">
+            <a href="<c:out value='${contextRoot}'/>/pages/citizendocument/Notification regarding Sound System.pdf"
+               target="_blank" class="btn btn-dangr doc-btn">
+                📑 Notification regarding Sound System
+                <i class="fa fa-download" style="color: blue;"></i>
+            </a>
+        </div>
+    </div>
 					
 					<div class="col-md-12">
 						<div class="mb-5 mt-4 ">

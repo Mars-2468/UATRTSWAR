@@ -168,7 +168,6 @@ input[type=text] {
 			<th class="ClsLabel">Date Of Application</th>
 			
 			<th class="ClsLabel">Status</th>
-						<th class="ClsLabel"></th>
 			
 		</tr>
 		
@@ -195,13 +194,7 @@ input[type=text] {
 						Rejected
 					</c:if></span></td>
 									
-					<td>
-    <a href="<%= request.getContextPath() %>/rtiapplication/generateApplicationPdf.do?rtiApplicationId=${rtiApplication.rtiApplicationId}&serviceId=${rtiApplication.rtiserviceid}" 
-       target="_blank" onclick="downloadPDF(event, this)">
-        <img src="<%=url%>img/pdf.png" alt="PDF Icon" style="width: 40px; height: 40px;">
-    </a>
-</td>
-
+					
 					
 
 			</tr>

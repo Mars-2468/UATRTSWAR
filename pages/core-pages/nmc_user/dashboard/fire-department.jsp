@@ -170,7 +170,7 @@ String name=(String)session.getAttribute("name");
 <div class="container-fluid my-3">
 	<div class="container">
     	<div class="row mb-4">
-            <div class="col-md-3 ">
+          <%--   <div class="col-md-3 ">
                  <a class="card" style="width: 258px;height:96px" href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTSFireRecommendationLetter.do'>
                     <div class="card-body d-flex align-items-top justify-content-between">                    			 
                                   <span class="title-width platform-title"> <p class="h5 m-0"><strong>अग्निशमन ना-हरकत दाखला देणे (तात्पुरते)</strong></p></span>
@@ -200,8 +200,9 @@ String name=(String)session.getAttribute("name");
                                                                   
                               </div>
                 </a>
-            </div>
-            <div class="col-md-3 mb-4">
+            </div> --%>
+            
+             <div class="col-md-3 mb-4">
                             <a class="card" style="width: 260px;height:96px"
                                 href='<c:out value="${contextRoot}"/>/ws/rtsapplication/newRTSFireCrackerShopLicense.do'>
                                 <div class="card-body d-flex align-items-top justify-content-between">
@@ -214,6 +215,7 @@ String name=(String)session.getAttribute("name");
                                 </div>
                             </a>
                         </div>
+            
             
         </div>
  

@@ -173,21 +173,46 @@ label {
 	}
 
 	function downloadPdf(rtiapplrefid) {
-		var xhr = new XMLHttpRequest();
-		xhr.open("POST", "<%= request.getContextPath() %>/fireapplication/generateApplicationPdf.do", true);
-		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhr.responseType = "blob";
 
-		xhr.onload = function () {
-			if (this.status === 200) {
-				var blob = new Blob([this.response], { type: "application/pdf" });
-				var link = document.createElement('a');
-				link.href = window.URL.createObjectURL(blob);
-				link.download = "FireNoc.pdf";
-				link.click();
-			}
-		};
+	    var xhr = new XMLHttpRequest();
 
-		xhr.send("rtiapplrefid=" + encodeURIComponent(rtiapplrefid));
+	    xhr.open(
+	        "POST",
+	        "<%= request.getContextPath() %>/fireapplication/generateApplicationPdf.do",
+	        true
+	    );
+
+	    xhr.setRequestHeader(
+	        "Content-Type",
+	        "application/x-www-form-urlencoded"
+	    );
+
+	    xhr.responseType = "blob";
+
+	    xhr.onload = function () {
+
+	        if (this.status === 200) {
+
+	            var blob = new Blob(
+	                [this.response],
+	                { type: "application/pdf" }
+	            );
+
+	            var link = document.createElement("a");
+
+	            link.href = window.URL.createObjectURL(blob);
+	            link.download = "FireApplication.pdf";
+
+	            document.body.appendChild(link);
+	            link.click();
+	            document.body.removeChild(link);
+
+	            window.URL.revokeObjectURL(link.href);
+	        }
+	    };
+
+	    xhr.send(
+	        "rtiapplrefid=" + encodeURIComponent(rtiapplrefid)
+	    );
 	}
 </script>

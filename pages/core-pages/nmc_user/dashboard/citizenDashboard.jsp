@@ -760,28 +760,28 @@ String name=(String)session.getAttribute("name");
 					</div>
 					<div class="card-body">
 						<ol class="watermark-text1" type="1">
-							<li><a class="lbleng zoom-text"  href='#'>NOC for
+							<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTINOCOfTradeApplication.do'>NOC for
 									Trade/Business/Storage (व्यापार/व्यवसाय/साठा करणेसाठी नाहरकत
 									प्रमाणपत्र)</a></li>
-							<li><a class="lbleng zoom-text"   href='#'>New License
+							<li><a class="lbleng zoom-text"   href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTITradeLicenceNew.do'>New License
 									Issuance (नवीन परवाना मिळणे)</a></li>
-							<li><a class="lbleng zoom-text"  href='#'>License Renewal
+							<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTITradeLicenceRenewal.do'>License Renewal
 									(परवान्याचे नुतनीकरण)</a></li>
-							<li><a class="lbleng zoom-text"   href='#'>License
+							<li><a class="lbleng zoom-text"   href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTITradeLicenseTransfer.do'>License
 									Transfer (परवाना हस्तांतरण)</a></li>
-							<li><a class="lbleng zoom-text"  href='#'>License
+							<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTITradeLicenseDuplicateCopyApplication.do'>License
 									Duplicate Copy (परवाना दुय्यम प्रत)</a></li>
-							<li><a class="lbleng zoom-text"  href='#'>Business Name
+							<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTITradeLicenseNameChangeApplication.do'>Business Name
 									Change (व्यवसायाचे नाव बदलणे)</a></li>
-							<li><a class="lbleng zoom-text"  href='#'>Business Type
+							<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTITradeLicenseTypeChangeApplication.do'>Business Type
 									Change (व्यवसाय बदलणे)</a></li>
-							<li><a class="lbleng zoom-text"  href='#'>Partner Name
+							<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTITradeLicencePartnerChange.do'>Partner Name
 									Change (भागीदाराचे नाव बदलणे)</a></li>
-							<li><a class="lbleng zoom-text"  href='#'>Change in
+							<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTITradePartnerCountUpdate.do'>Change in
 									Number of Partners (भागीदाराच्या संख्येत बदल (वाढ/कमी))</a></li>
-							<li><a class="lbleng zoom-text"  href='#'>License
+							<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTITradeLicenseCancellationApplication.do'>License
 									Cancellation (परवाना रद्द करणे)</a></li>
-							<li><a class="lbleng zoom-text"  href='#'>Renewal Notice
+							<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTITradeLicenseOutdatedRenewalApplication.do'>Renewal Notice
 									for Expired License (कालबाह्य परवान्यासाठी नुतनीकरण सुचना)</a></li>
 						</ol>
 					</div>

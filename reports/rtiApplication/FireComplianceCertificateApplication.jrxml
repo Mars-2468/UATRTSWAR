@@ -1,0 +1,1020 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2026-09-24T14:49:06 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FireComplianceCertificate" pageWidth="842" pageHeight="1500" orientation="Landscape" columnWidth="782" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="1ad74882-3329-46d5-9262-43c24b9326df">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="EGOVNMC_RTS"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="DefaultStyle" isDefault="true" forecolor="#26323D" fontName="DejaVu Sans" fontSize="8"/>
+	<style name="CardTitle" forecolor="#FFFFFF" fontName="DejaVu Sans" fontSize="9" isBold="true"/>
+	<style name="FieldLabel" forecolor="#6B7785" fontName="DejaVu Sans" fontSize="6.5" isBold="false"/>
+	<style name="FieldValue" forecolor="#1B2733" fontName="DejaVu Sans" fontSize="8.5" isBold="false"/>
+	<style name="TableHeaderTxt" forecolor="#FFFFFF" fontName="DejaVu Sans" fontSize="7" isBold="true"/>
+	<style name="TableCellTxt" forecolor="#1B2733" fontName="DejaVu Sans" fontSize="7.5"/>
+	<style name="NoteStyle" forecolor="#8A6D00" fontName="DejaVu Sans" fontSize="6.5" isItalic="true"/>
+	<subDataset name="MeasuresDataset" uuid="41f8a386-0121-457e-a482-d9ea15bff868">
+		<parameter name="rtiapplrefid" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT fcm.sr_no AS measure_sr, fcm.measure_name AS measure_label, fcm.status AS measure_status, fcm.quantity AS measure_qty, fcm.location AS measure_location FROM egovrti.fire_compliance_measure fcm WHERE fcm.fire_compliance_certificate_id = (SELECT fcc2.fire_compliance_certificate_id FROM egovrti.fire_compliance_certificate fcc2 WHERE fcc2.rti_ref_id = $P{rtiapplrefid} LIMIT 1) ORDER BY fcm.sr_no]]>
+		</queryString>
+		<field name="measure_sr" class="java.lang.Integer"/>
+		<field name="measure_label" class="java.lang.String"/>
+		<field name="measure_status" class="java.lang.String"/>
+		<field name="measure_qty" class="java.lang.String"/>
+		<field name="measure_location" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="IntStairDataset" uuid="5a5eab44-b930-4420-9cc5-99b968ecad41">
+		<parameter name="rtiapplrefid" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT row_number() OVER () AS sr_no, t.staircase_no, t.staircase_width FROM (SELECT unnest(string_to_array(fcc2.noofinternalstaircase, ',')) AS staircase_no, unnest(string_to_array(fcc2.widthinternalstaircase, ',')) AS staircase_width FROM egovrti.fire_compliance_certificate fcc2 WHERE fcc2.rti_ref_id = $P{rtiapplrefid} LIMIT 1) t]]>
+		</queryString>
+		<field name="sr_no" class="java.lang.Long"/>
+		<field name="staircase_no" class="java.lang.String"/>
+		<field name="staircase_width" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="ExtStairDataset" uuid="0d0a49af-96e2-4c49-9d82-55c3a2989ec0">
+		<parameter name="rtiapplrefid" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT row_number() OVER () AS sr_no, t.staircase_no, t.staircase_width FROM (SELECT unnest(string_to_array(fcc2.noofexternalstaircase, ',')) AS staircase_no, unnest(string_to_array(fcc2.widthexternalstaircase, ',')) AS staircase_width FROM egovrti.fire_compliance_certificate fcc2 WHERE fcc2.rti_ref_id = $P{rtiapplrefid} LIMIT 1) t]]>
+		</queryString>
+		<field name="sr_no" class="java.lang.Long"/>
+		<field name="staircase_no" class="java.lang.String"/>
+		<field name="staircase_width" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="LiftDataset" uuid="c2f68b2b-9fdb-44a6-bde6-31c756be2c66">
+		<parameter name="rtiapplrefid" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT row_number() OVER () AS sr_no, t.lift_type FROM (SELECT unnest(string_to_array(fcc2.noofliftprovided, ',')) AS lift_type FROM egovrti.fire_compliance_certificate fcc2 WHERE fcc2.rti_ref_id = $P{rtiapplrefid} LIMIT 1) t]]>
+		</queryString>
+		<field name="sr_no" class="java.lang.Long"/>
+		<field name="lift_type" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="rtiapplrefid" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{rtiapplrefid}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ctx" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{ctx}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="serverHost" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{serverHost}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+    fcc.*,
+    ra.rti_application_number,
+    ra.created_date,
+    SPLIT_PART(ra.pdf_upload_from_portal,',',1) AS doc1_url,
+    SPLIT_PART(ra.pdf_upload_from_portal,',',2) AS doc2_url,
+    SPLIT_PART(ra.pdf_upload_from_portal,',',3) AS doc3_url,
+    SPLIT_PART(ra.pdf_upload_from_portal,',',4) AS doc4_url,
+    SPLIT_PART(ra.pdf_upload_from_portal,',',5) AS doc5_url,
+    SPLIT_PART(ra.pdf_upload_from_portal,',',6) AS doc6_url,
+    SPLIT_PART(ra.pdf_upload_from_portal,',',7) AS doc7_url
+FROM egovrti.fire_compliance_certificate fcc
+JOIN egovrti.rti_application ra ON fcc.rti_ref_id = ra.rti_application_id
+WHERE fcc.rti_ref_id = $P{rtiapplrefid}
+LIMIT 1]]>
+	</queryString>
+	<field name="fire_compliance_certificate_id" class="java.lang.Long"/>
+	<field name="fire_recommendation_no" class="java.lang.String"/>
+	<field name="provisional_fire_safety_approval" class="java.lang.String"/>
+	<field name="nameof_building_owner" class="java.lang.String"/>
+	<field name="sadress_of_building" class="java.lang.String"/>
+	<field name="typeof_building" class="java.lang.String"/>
+	<field name="plot_area" class="java.lang.String"/>
+	<field name="total_builtup_area" class="java.lang.String"/>
+	<field name="heightof_building" class="java.lang.String"/>
+	<field name="front_margin" class="java.lang.String"/>
+	<field name="rear_margin" class="java.lang.String"/>
+	<field name="side1_margin" class="java.lang.String"/>
+	<field name="side2_margin" class="java.lang.String"/>
+	<field name="widthapproachroad" class="java.lang.String"/>
+	<field name="widthentrance" class="java.lang.String"/>
+	<field name="number_of_floors" class="java.lang.String"/>
+	<field name="basement_load_bearing_strength" class="java.lang.String"/>
+	<field name="numinternalstaircasefinal" class="java.lang.String"/>
+	<field name="noofinternalstaircase" class="java.lang.String"/>
+	<field name="widthinternalstaircase" class="java.lang.String"/>
+	<field name="numexternalstaircasefinal" class="java.lang.String"/>
+	<field name="noofexternalstaircase" class="java.lang.String"/>
+	<field name="numliftprovidedfinal" class="java.lang.String"/>
+	<field name="noofliftprovided" class="java.lang.String"/>
+	<field name="exposurehazard_north" class="java.lang.String"/>
+	<field name="exposurehazard_south" class="java.lang.String"/>
+	<field name="exposurehazard_east" class="java.lang.String"/>
+	<field name="exposurehazard_west" class="java.lang.String"/>
+	<field name="otherinfo" class="java.lang.String"/>
+	<field name="nameofarchitect" class="java.lang.String"/>
+	<field name="architectlicenseno" class="java.lang.String"/>
+	<field name="addressofarchitect" class="java.lang.String"/>
+	<field name="nameofownerdeclaration" class="java.lang.String"/>
+	<field name="addressofownerdeclaration" class="java.lang.String"/>
+	<field name="mobile_no" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="fire_station" class="java.lang.String"/>
+	<field name="noc_photos_upload" class="java.lang.String"/>
+	<field name="inspection_report" class="java.lang.String"/>
+	<field name="other_upload" class="java.lang.String"/>
+	<field name="rti_appl_ref_no" class="java.lang.String"/>
+	<field name="rti_ref_id" class="java.lang.Long"/>
+	<field name="widthexternalstaircase" class="java.lang.String"/>
+	<field name="final_noc_charges" class="java.lang.String"/>
+	<field name="generated_noc_path" class="java.lang.String"/>
+	<field name="fire_recommendation_date" class="java.lang.String"/>
+	<field name="rti_application_number" class="java.lang.String"/>
+	<field name="created_date" class="java.lang.String"/>
+	<field name="doc1_url" class="java.lang.String"/>
+	<field name="doc2_url" class="java.lang.String"/>
+	<field name="doc3_url" class="java.lang.String"/>
+	<field name="doc4_url" class="java.lang.String"/>
+	<field name="doc5_url" class="java.lang.String"/>
+	<field name="doc6_url" class="java.lang.String"/>
+	<field name="doc7_url" class="java.lang.String"/>
+	<title>
+		<band height="64" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="0" width="782" height="64" backcolor="#0B3D66" uuid="e0a14e43-1d62-4d6e-8420-8bcc4fd02654"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="60" width="782" height="4" backcolor="#B45309" uuid="02da7d68-382b-4b6e-b937-633d00d3a473"/>
+			</rectangle>
+			<image>
+				<reportElement stretchType="RelativeToBandHeight" x="13" y="8" width="50" height="45" uuid="8fa4bd81-7181-4bda-b0c1-3de815997fd4"/>
+				<imageExpression><![CDATA["../../images/AMC_Logo.jpeg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="718" y="8" width="50" height="46" uuid="aea79f35-9b80-48ca-a03f-791c8f606cfe"/>
+				<imageExpression><![CDATA["../../images/g21.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="70" y="13" width="590" height="18" forecolor="#FFFFFF" uuid="92aba6a3-5f92-4242-ad94-d3a1ed7e6bf6"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nagpur Municipal Corporation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="33" width="590" height="16" forecolor="#D7E7F5" uuid="9f85a8f9-1711-435d-a7c9-531c1cab28f4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="10" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Final Fire Safety Approval Certificate]]></text>
+			</staticText>
+			<rectangle radius="4">
+				<reportElement mode="Opaque" x="584" y="10" width="112" height="44" backcolor="#0E4E80" uuid="3263267b-6335-45c9-a1b1-8a97bda4c5f2"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="590" y="12" width="100" height="9" forecolor="#9FC6E8" uuid="0746a061-52d3-4417-a291-42d140fe49d8"/>
+				<textElement>
+					<font size="5.5" isBold="true"/>
+				</textElement>
+				<text><![CDATA[APPLICATION NO]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="590" y="21" width="100" height="11" forecolor="#FFFFFF" uuid="c7070f7d-907a-4e37-80b1-f6ba995051c3"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rti_application_number}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="590" y="33" width="100" height="9" forecolor="#9FC6E8" uuid="b67e37c1-3aa2-4036-95a7-9d89df22936b"/>
+				<textElement>
+					<font size="5.5" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATE]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="590" y="42" width="100" height="11" forecolor="#FFFFFF" uuid="36a0a59f-e2c8-46a6-9b5c-a695842d5d8f"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{created_date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="11" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="560" height="10" forecolor="#9AA6B2" uuid="034cd539-472f-474a-b87a-e9d325f8d92d"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="6" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Nagpur Municipal Corporation – Final Fire Safety Approval Certificate]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="680" y="0" width="102" height="10" forecolor="#9AA6B2" uuid="4544ea9b-ff92-4daf-a36c-dc32f13fb357"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of " + $V{PAGE_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="1140" splitType="Stretch">
+			<rectangle radius="6">
+				<reportElement mode="Opaque" x="0" y="0" width="782" height="180" backcolor="#FFFFFF" uuid="1a82cf70-0758-4ad7-90cc-dd77da6843d6"/>
+				<graphicElement>
+					<pen lineWidth="0.75" lineColor="#D6DEE6"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="0" width="6" height="180" backcolor="#0B5FA5" uuid="94daa4dc-2e00-4a0a-9290-191f54d635f5"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="6" y="0" width="776" height="18" backcolor="#0B5FA5" uuid="f1335dc2-b1c1-45b9-8aab-493ff263fea4"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="CardTitle" x="16" y="0" width="762" height="18" uuid="71f12fb9-45e3-4d4f-b2cc-b3565cf2badf"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[1.  APPLICANT & BUILDING DETAILS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FieldLabel" x="16" y="22" width="220" height="8" uuid="b76fdcc6-4520-4ea5-b67e-82dfe8227af4"/>
+				<text><![CDATA[PROVISIONAL FIRE SAFETY APPROVAL NO.]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="16" y="31" width="220" height="11" uuid="2a983cef-6c11-42e3-869b-a21a3a565e2f"/>
+				<textFieldExpression><![CDATA[$F{provisional_fire_safety_approval}==null?"-":$F{provisional_fire_safety_approval}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="242" y="22" width="196" height="8" uuid="06a65870-b334-4ebc-a0dd-bf80c3cc920b"/>
+				<text><![CDATA[NAME OF BUILDING OWNER]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="242" y="31" width="196" height="11" uuid="5bb3a11c-177b-4779-8b19-da3b23f4542a"/>
+				<textFieldExpression><![CDATA[$F{nameof_building_owner}==null?"-":$F{nameof_building_owner}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="444" y="22" width="160" height="8" uuid="5a0ab95d-6766-4e97-b215-51439f7515ea"/>
+				<text><![CDATA[TYPE OF BUILDING]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="444" y="31" width="160" height="11" uuid="bf384f57-f9da-4e96-b0e1-03c32bf21288"/>
+				<textFieldExpression><![CDATA[$F{typeof_building}==null?"-":$F{typeof_building}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="610" y="22" width="156" height="8" uuid="10024b7b-e88a-4249-b944-d88e5b41bb9d"/>
+				<text><![CDATA[APPLICATION REF. NO.]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="610" y="31" width="156" height="11" uuid="9ca9bf41-48d1-44f7-88cf-70b68966dd51"/>
+				<textFieldExpression><![CDATA[$F{rti_appl_ref_no}==null?"-":$F{rti_appl_ref_no}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="16" y="44" width="750" height="1" forecolor="#EAEEF2" uuid="fdcaf766-480f-495c-b386-659d7fe6e9e3"/>
+			</line>
+			<staticText>
+				<reportElement style="FieldLabel" x="16" y="48" width="350" height="8" uuid="92a5b825-98b5-4815-8530-ec888accf050"/>
+				<text><![CDATA[ADDRESS OF BUILDING]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="16" y="57" width="350" height="11" uuid="ddfb2cd2-4906-42eb-ba32-f142ef6d74d3"/>
+				<textFieldExpression><![CDATA[$F{sadress_of_building}==null?"-":$F{sadress_of_building}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="372" y="48" width="120" height="8" uuid="3f0661df-de2c-40e0-a5b6-8c277b6c5f18"/>
+				<text><![CDATA[PLOT AREA (sqm)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="372" y="57" width="120" height="11" uuid="fababf29-c32e-430a-b381-66ffd049ab40"/>
+				<textFieldExpression><![CDATA[$F{plot_area}==null?"-":$F{plot_area}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="498" y="48" width="130" height="8" uuid="262c9efc-f7e9-4673-a3fd-bfe5ec4fa343"/>
+				<text><![CDATA[TOTAL BUILT-UP AREA (sqm)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="498" y="57" width="130" height="11" uuid="7ba51346-b56a-4ff7-a86a-78066d9707ee"/>
+				<textFieldExpression><![CDATA[$F{total_builtup_area}==null?"-":$F{total_builtup_area}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="634" y="48" width="132" height="8" uuid="8010a041-e34f-44d7-aac0-3fa3bb6b8c3d"/>
+				<text><![CDATA[HEIGHT OF BUILDING (mtr)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="634" y="57" width="132" height="11" uuid="b8d6fdc0-8371-43aa-9a1f-7785268959a2"/>
+				<textFieldExpression><![CDATA[$F{heightof_building}==null?"-":$F{heightof_building}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="16" y="70" width="750" height="1" forecolor="#EAEEF2" uuid="44062642-f50e-4227-b389-d9bf274f59f2"/>
+			</line>
+			<staticText>
+				<reportElement style="FieldLabel" x="16" y="74" width="110" height="8" uuid="259d598e-a680-4712-ba2c-8fddaca21b88"/>
+				<text><![CDATA[FRONT MARGIN (mtr)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="16" y="83" width="110" height="11" uuid="c7702b08-ab06-4ee4-8dd0-1783f29f6596"/>
+				<textFieldExpression><![CDATA[$F{front_margin}==null?"-":$F{front_margin}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="132" y="74" width="110" height="8" uuid="0732c232-5b0a-44b9-b5b9-2a8aabada359"/>
+				<text><![CDATA[REAR MARGIN (mtr)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="132" y="83" width="110" height="11" uuid="9fbec333-bfd8-4178-bdfb-e4704d3897d3"/>
+				<textFieldExpression><![CDATA[$F{rear_margin}==null?"-":$F{rear_margin}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="248" y="74" width="110" height="8" uuid="f46ffb42-b963-4f68-b9b6-f1f6668a2214"/>
+				<text><![CDATA[SIDE 1 MARGIN (mtr)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="248" y="83" width="110" height="11" uuid="2c2f52a7-3e80-4fdb-91b6-9043a1d05063"/>
+				<textFieldExpression><![CDATA[$F{side1_margin}==null?"-":$F{side1_margin}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="364" y="74" width="110" height="8" uuid="44cbea85-7b50-4f15-a421-2c2cbd32f45f"/>
+				<text><![CDATA[SIDE 2 MARGIN (mtr)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="364" y="83" width="110" height="11" uuid="a67cbb8e-19fe-42a2-9e4e-e58fd379feda"/>
+				<textFieldExpression><![CDATA[$F{side2_margin}==null?"-":$F{side2_margin}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="480" y="74" width="148" height="8" uuid="05af65ff-4d5a-49be-9453-d5d02d8fd1f5"/>
+				<text><![CDATA[WIDTH OF APPROACH ROAD (mtr)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="480" y="83" width="148" height="11" uuid="e0ef0224-f2cd-4aff-9706-307855afbd8b"/>
+				<textFieldExpression><![CDATA[$F{widthapproachroad}==null?"-":$F{widthapproachroad}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="634" y="74" width="132" height="8" uuid="38668a09-2414-4720-8190-caa86c3513e6"/>
+				<text><![CDATA[WIDTH OF ENTRANCE (mtr)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="634" y="83" width="132" height="11" uuid="4e25aae0-fba4-4dd6-b131-dff0121eed49"/>
+				<textFieldExpression><![CDATA[$F{widthentrance}==null?"-":$F{widthentrance}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="16" y="96" width="750" height="1" forecolor="#EAEEF2" uuid="50e3d1a1-4067-46fc-9e50-227b23a2e520"/>
+			</line>
+			<staticText>
+				<reportElement style="FieldLabel" x="16" y="100" width="200" height="8" uuid="81b39cd5-7f6f-4007-8876-59b58ae7b503"/>
+				<text><![CDATA[NUMBER OF FLOORS (incl. basement)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="16" y="109" width="200" height="11" uuid="498e05bb-e635-46fa-8f6d-63b20681a31d"/>
+				<textFieldExpression><![CDATA[$F{number_of_floors}==null?"-":$F{number_of_floors}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="222" y="100" width="280" height="8" uuid="7cbd73ed-c30a-415e-a3f1-4046c1eda81f"/>
+				<text><![CDATA[BASEMENT LOAD BEARING STRENGTH]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="222" y="109" width="280" height="11" uuid="cc9ae465-e4ea-40c0-a206-066f1fe91754"/>
+				<textFieldExpression><![CDATA[$F{basement_load_bearing_strength}==null?"-":$F{basement_load_bearing_strength}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="508" y="100" width="130" height="8" uuid="2153e1da-31b1-40f2-b3c9-890e2c31d098"/>
+				<text><![CDATA[MOBILE NO.]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="508" y="109" width="130" height="11" uuid="83101b8b-bf1d-4a2b-af97-bc9918b1c576"/>
+				<textFieldExpression><![CDATA[$F{mobile_no}==null?"-":$F{mobile_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="644" y="100" width="122" height="8" uuid="38ad2973-994e-4d10-ba0a-2a4ca858b601"/>
+				<text><![CDATA[EMAIL ID]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="644" y="109" width="122" height="11" uuid="46ca0d4e-cf21-43fa-abb9-d19cfd8723df"/>
+				<textFieldExpression><![CDATA[$F{email}==null?"-":$F{email}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="16" y="122" width="750" height="1" forecolor="#EAEEF2" uuid="a7958c35-1f95-4025-afb1-71bb5067d8a7"/>
+			</line>
+			<staticText>
+				<reportElement style="FieldLabel" x="16" y="126" width="200" height="8" uuid="6c06ea21-f170-4a8a-8779-2c625af42c30"/>
+				<text><![CDATA[FIRE STATION]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="16" y="135" width="200" height="11" uuid="7db77d75-657a-43b0-8ae0-dff0a8f9f8f6"/>
+				<textFieldExpression><![CDATA[$F{fire_station}==null?"-":$F{fire_station}]]></textFieldExpression>
+			</textField>
+			<rectangle radius="6">
+				<reportElement mode="Opaque" x="0" y="190" width="782" height="62" backcolor="#FFFFFF" uuid="6d3591cd-36a8-42a7-8b41-7ead174b9add"/>
+				<graphicElement>
+					<pen lineWidth="0.75" lineColor="#D6DEE6"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="190" width="6" height="62" backcolor="#B45309" uuid="476e03ea-eee2-4dda-a72e-80542c4fbe98"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="6" y="190" width="776" height="18" backcolor="#B45309" uuid="a65f3aa9-2aed-4e30-a545-6cd04352dccc"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="CardTitle" x="16" y="190" width="762" height="18" uuid="1c0edee6-2032-4a03-9ec9-0c393cd9c8f5"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[2.  EXPOSURE HAZARDS  (Compass Direction in Relation to Building)]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="212" width="782" height="14" backcolor="#FEF3C7" uuid="fa888ad3-6170-4e33-90f1-3b62a72ebfb8"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="TableHeaderTxt" x="4" y="213" width="155" height="12" forecolor="#92400E" uuid="bbf58ba5-a825-4e90-a9c8-10c1c2412ab7"/>
+				<text><![CDATA[Direction]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableHeaderTxt" x="159" y="213" width="155" height="12" forecolor="#92400E" uuid="fd8f134f-65a1-4269-a6cf-1f0e3f2f8e2c"/>
+				<text><![CDATA[NORTH]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableHeaderTxt" x="314" y="213" width="155" height="12" forecolor="#92400E" uuid="82c2cc56-6b44-45b7-9221-f488f16bbee9"/>
+				<text><![CDATA[SOUTH]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableHeaderTxt" x="469" y="213" width="155" height="12" forecolor="#92400E" uuid="9ea1d7af-75fa-4006-ab93-2a8aa0c6bbef"/>
+				<text><![CDATA[EAST]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableHeaderTxt" x="624" y="213" width="154" height="12" forecolor="#92400E" uuid="b768010e-a25c-4b7f-8fb7-34f2dc5b3e6b"/>
+				<text><![CDATA[WEST]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="212" width="782" height="40" forecolor="#D6DEE6" uuid="4d8070e6-e1c3-421f-b15f-9128ecf8fbbd"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<line>
+				<reportElement x="0" y="226" width="782" height="1" forecolor="#F0D580" uuid="0d3c518c-70fc-4df8-8ee9-9223ffaa642e"/>
+			</line>
+			<staticText>
+				<reportElement style="TableCellTxt" x="4" y="228" width="155" height="11" uuid="3f1c8560-f267-47f3-87f3-7482bcd1d8a9"/>
+				<text><![CDATA[Type of property / feature]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="TableCellTxt" x="159" y="228" width="155" height="11" uuid="3e8ee0e9-9ac8-4b87-a235-bd9caac551df"/>
+				<textFieldExpression><![CDATA[$F{exposurehazard_north}==null?"-":$F{exposurehazard_north}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="TableCellTxt" x="314" y="228" width="155" height="11" uuid="206a1648-bf86-4904-bb57-85e0d8f7cdf0"/>
+				<textFieldExpression><![CDATA[$F{exposurehazard_south}==null?"-":$F{exposurehazard_south}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="TableCellTxt" x="469" y="228" width="155" height="11" uuid="0db6a19f-c0a2-41e8-9961-0bae356cc53f"/>
+				<textFieldExpression><![CDATA[$F{exposurehazard_east}==null?"-":$F{exposurehazard_east}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="TableCellTxt" x="624" y="228" width="154" height="11" uuid="8ff08ea8-990a-4b03-bc95-d878865e6cf5"/>
+				<textFieldExpression><![CDATA[$F{exposurehazard_west}==null?"-":$F{exposurehazard_west}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="158" y="212" width="1" height="40" forecolor="#F0D580" uuid="35d4b0e0-c238-4fea-b84a-b8dc7a8ec594"/>
+			</line>
+			<line>
+				<reportElement x="313" y="212" width="1" height="40" forecolor="#F0D580" uuid="a116b1fb-ffa1-424e-9afb-e5b1246561e8"/>
+			</line>
+			<line>
+				<reportElement x="468" y="212" width="1" height="40" forecolor="#F0D580" uuid="e964350b-eda6-439e-817e-386254a0c38d"/>
+			</line>
+			<line>
+				<reportElement x="623" y="212" width="1" height="40" forecolor="#F0D580" uuid="b468d6ea-33d1-43d7-b753-125f55cd3c0f"/>
+			</line>
+			<rectangle radius="6">
+				<reportElement mode="Opaque" x="0" y="262" width="782" height="122" backcolor="#FFFFFF" uuid="a030372c-ce7b-4657-a044-42ce16e63fa5"/>
+				<graphicElement>
+					<pen lineWidth="0.75" lineColor="#D6DEE6"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="262" width="6" height="122" backcolor="#0F766E" uuid="708f96e8-0a76-4bbc-85e4-de17a0ab538b"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="6" y="262" width="776" height="18" backcolor="#0F766E" uuid="92d88f44-8d49-4fcf-b7f6-a93099bd4349"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="CardTitle" x="16" y="262" width="762" height="18" uuid="3b9b4502-1616-4780-9ea3-9859f91378fa"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[3.  STAIRCASES & LIFTS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FieldLabel" x="16" y="284" width="154" height="8" uuid="e26ad587-1153-4151-becf-4579f8b03af0"/>
+				<text><![CDATA[INTERNAL STAIRCASES (Count:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldLabel" x="170" y="284" width="60" height="8" uuid="300c79c1-96c9-4bf5-9336-44bae18dddf2"/>
+				<textFieldExpression><![CDATA[$F{numinternalstaircasefinal}==null?"-":$F{numinternalstaircasefinal}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Opaque" x="16" y="294" width="240" height="13" backcolor="#CCFBF1" uuid="d51c5a4c-351f-4865-8e48-58ec5dcf710b"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="TableHeaderTxt" x="20" y="295" width="30" height="11" forecolor="#0F766E" uuid="a88630ff-b3d9-4ce8-9873-345ce792713f"/>
+				<text><![CDATA[Sr.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableHeaderTxt" x="50" y="295" width="106" height="11" forecolor="#0F766E" uuid="5c6fd027-852a-406f-9748-08e81f228cb0"/>
+				<text><![CDATA[Staircase No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableHeaderTxt" x="156" y="295" width="96" height="11" forecolor="#0F766E" uuid="5f3097e1-2cc3-48fd-a23b-5d982cdfee92"/>
+				<text><![CDATA[Width (mtr)]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement positionType="Float" x="16" y="307" width="240" height="80" uuid="68dbd8a2-4a6e-49de-8f60-3a7678009615">
+					<printWhenExpression><![CDATA[Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="IntStairDataset" uuid="7599ca34-f3cb-4674-a74e-01b20b411b55">
+						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+					</datasetRun>
+					<jr:listContents height="13" width="240">
+						<rectangle>
+							<reportElement mode="Opaque" x="0" y="0" width="240" height="13" backcolor="#F0FDF9" uuid="a8fbf0de-0da9-4cb9-a925-86e3bf7917d3">
+								<printWhenExpression><![CDATA[$V{REPORT_COUNT}%2==0]]></printWhenExpression>
+							</reportElement>
+						</rectangle>
+						<textField isBlankWhenNull="true">
+							<reportElement style="TableCellTxt" x="4" y="1" width="26" height="11" uuid="551d2ab0-0176-4536-bc71-532c427661e7"/>
+							<textFieldExpression><![CDATA[$F{sr_no}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="TableCellTxt" x="30" y="1" width="116" height="11" uuid="b6525321-ed66-4f35-b54a-93eb5e6d6ccd"/>
+							<textFieldExpression><![CDATA[$F{staircase_no}==null?"-":$F{staircase_no}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="TableCellTxt" x="146" y="1" width="90" height="11" uuid="df9c6161-2b05-431a-8f86-0a699c770150"/>
+							<textFieldExpression><![CDATA[$F{staircase_width}==null?"-":$F{staircase_width}]]></textFieldExpression>
+						</textField>
+						<line>
+							<reportElement x="0" y="12" width="240" height="1" forecolor="#EAEEF2" uuid="9c93d622-0c51-424b-8b07-fa4d25826223"/>
+						</line>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement style="FieldLabel" x="270" y="284" width="154" height="8" uuid="b64b72a9-e7ec-47b8-84f3-c6a588dd5901"/>
+				<text><![CDATA[EXTERNAL STAIRCASES (Count:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldLabel" x="424" y="284" width="60" height="8" uuid="c48e3bc4-82bb-421a-a819-49a103a442ee"/>
+				<textFieldExpression><![CDATA[$F{numexternalstaircasefinal}==null?"-":$F{numexternalstaircasefinal}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Opaque" x="270" y="294" width="240" height="13" backcolor="#CCFBF1" uuid="b333a5ac-bfe2-40c5-8de2-7bdc8a020782"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="TableHeaderTxt" x="274" y="295" width="26" height="11" forecolor="#0F766E" uuid="c32df895-6a14-4081-85b6-d62d605d3782"/>
+				<text><![CDATA[Sr.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableHeaderTxt" x="300" y="295" width="106" height="11" forecolor="#0F766E" uuid="da194f39-2312-4eb0-a96e-8d9ea207e868"/>
+				<text><![CDATA[Staircase No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableHeaderTxt" x="406" y="295" width="100" height="11" forecolor="#0F766E" uuid="ba9c3684-0b4b-4966-92b1-9628ce17a220"/>
+				<text><![CDATA[Width (mtr)]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement positionType="Float" x="270" y="307" width="240" height="80" uuid="7bc26af4-496b-4078-9dd3-1988bf4e7bac">
+					<printWhenExpression><![CDATA[Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="ExtStairDataset" uuid="bc914fd3-7cf9-4ca2-8659-31c6956c3e68">
+						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+					</datasetRun>
+					<jr:listContents height="13" width="240">
+						<rectangle>
+							<reportElement mode="Opaque" x="0" y="0" width="240" height="13" backcolor="#F0FDF9" uuid="48f3d812-46a5-420a-aa2a-70d14e2db5a9">
+								<printWhenExpression><![CDATA[$V{REPORT_COUNT}%2==0]]></printWhenExpression>
+							</reportElement>
+						</rectangle>
+						<textField isBlankWhenNull="true">
+							<reportElement style="TableCellTxt" x="4" y="1" width="26" height="11" uuid="f7c66bf1-3e19-499a-bd5b-a3234ebceb76"/>
+							<textFieldExpression><![CDATA[$F{sr_no}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="TableCellTxt" x="30" y="1" width="106" height="11" uuid="f3b23724-6d51-45cb-879d-f0cb285cb3bf"/>
+							<textFieldExpression><![CDATA[$F{staircase_no}==null?"-":$F{staircase_no}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="TableCellTxt" x="136" y="1" width="100" height="11" uuid="a187d467-1203-42a3-96af-b6a7568617bb"/>
+							<textFieldExpression><![CDATA[$F{staircase_width}==null?"-":$F{staircase_width}]]></textFieldExpression>
+						</textField>
+						<line>
+							<reportElement x="0" y="12" width="240" height="1" forecolor="#EAEEF2" uuid="68014703-1332-4178-a200-7cd668796db4"/>
+						</line>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement style="FieldLabel" x="524" y="284" width="154" height="8" uuid="d094c195-11b9-47ff-bf86-edf4704d04ee"/>
+				<text><![CDATA[LIFTS PROVIDED (Count:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldLabel" x="652" y="284" width="60" height="8" uuid="2130b918-e15b-4071-9e38-f61f37d3f7dc"/>
+				<textFieldExpression><![CDATA[$F{numliftprovidedfinal}==null?"-":$F{numliftprovidedfinal}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Opaque" x="524" y="294" width="242" height="13" backcolor="#CCFBF1" uuid="42b1c9f8-f0f3-4f39-90a8-a779e4792313"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="TableHeaderTxt" x="528" y="295" width="36" height="11" forecolor="#0F766E" uuid="11386e1d-ff2f-4492-844f-458822309201"/>
+				<text><![CDATA[Sr.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableHeaderTxt" x="564" y="295" width="198" height="11" forecolor="#0F766E" uuid="934204a8-1c7f-49e4-9bef-1e96e4468c80"/>
+				<text><![CDATA[Type of Lift]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement positionType="Float" x="524" y="307" width="242" height="80" uuid="db974e27-f032-4b67-9d21-f305cfbad4dc">
+					<printWhenExpression><![CDATA[Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="LiftDataset" uuid="50a97758-c50d-4343-bc4d-77280f94f49a">
+						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+					</datasetRun>
+					<jr:listContents height="13" width="242">
+						<rectangle>
+							<reportElement mode="Opaque" x="0" y="0" width="242" height="13" backcolor="#F0FDF9" uuid="509551a0-a91c-40ac-b788-b8c57b98c2fd">
+								<printWhenExpression><![CDATA[$V{REPORT_COUNT}%2==0]]></printWhenExpression>
+							</reportElement>
+						</rectangle>
+						<textField isBlankWhenNull="true">
+							<reportElement style="TableCellTxt" x="4" y="1" width="36" height="11" uuid="4951f243-2e12-45f3-9819-6e4e576a80b6"/>
+							<textFieldExpression><![CDATA[$F{sr_no}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="TableCellTxt" x="40" y="1" width="198" height="11" uuid="87d5c0d9-53cb-4edf-8680-889a1ca400f4"/>
+							<textFieldExpression><![CDATA[$F{lift_type}==null?"-":$F{lift_type}]]></textFieldExpression>
+						</textField>
+						<line>
+							<reportElement x="0" y="12" width="242" height="1" forecolor="#EAEEF2" uuid="7c6d47a8-2dc5-40c9-9e34-d0cb4b65385d"/>
+						</line>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<rectangle radius="6">
+				<reportElement mode="Opaque" x="0" y="394" width="782" height="468" backcolor="#FFFFFF" uuid="e1c87754-0a0c-47c5-ab22-3e15d727b1ed"/>
+				<graphicElement>
+					<pen lineWidth="0.75" lineColor="#D6DEE6"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="394" width="6" height="468" backcolor="#7C3AED" uuid="55de0256-9f10-4ab8-8870-801c4ac2eda0"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="6" y="394" width="776" height="18" backcolor="#7C3AED" uuid="60eb9da6-a1da-4eee-abee-7f4b0204e088"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="CardTitle" x="16" y="394" width="762" height="18" uuid="84d44fb8-5249-4676-959f-c942c9863c08"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[4.  FIRE & SAFETY MEASURES  (as per Provisional Fire Safety Approval Certificate & NBC Norms)]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="416" width="782" height="14" backcolor="#EDE9FE" uuid="fac6a7fb-0ecb-4de9-a2a0-386a9c24b0d4"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="TableHeaderTxt" x="4" y="417" width="28" height="12" forecolor="#3B1E78" uuid="64dab570-3273-403c-b5be-9b12befd7ce8"/>
+				<text><![CDATA[Sr.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableHeaderTxt" x="32" y="417" width="260" height="12" forecolor="#3B1E78" uuid="8f909933-9778-4a89-b16a-a338b12bbb97"/>
+				<text><![CDATA[Fire and Safety Measure]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableHeaderTxt" x="292" y="417" width="155" height="12" forecolor="#3B1E78" uuid="e8035aac-060f-4ec9-bc72-54c65ca19313"/>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableHeaderTxt" x="447" y="417" width="86" height="12" forecolor="#3B1E78" uuid="4a9aa99d-cf9b-44ed-ad4b-357ecc7a1de2"/>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableHeaderTxt" x="533" y="417" width="245" height="12" forecolor="#3B1E78" uuid="b5e409ec-2a4a-4213-86e8-32abb9081c35"/>
+				<text><![CDATA[Location]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement positionType="Float" x="0" y="430" width="782" height="448" uuid="5266e387-a55d-40cb-99c9-0974c040fa06">
+					<printWhenExpression><![CDATA[Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="MeasuresDataset" uuid="bd02937c-d233-4c81-babc-a4700a7be534">
+						<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+					</datasetRun>
+					<jr:listContents height="18" width="782">
+						<rectangle>
+							<reportElement mode="Opaque" x="0" y="0" width="782" height="18" backcolor="#F7F5FD" uuid="79f745c0-8469-4886-841d-382674d5fe3b">
+								<printWhenExpression><![CDATA[$F{measure_sr}%2==0]]></printWhenExpression>
+							</reportElement>
+						</rectangle>
+						<textField isBlankWhenNull="true">
+							<reportElement style="TableCellTxt" x="4" y="2" width="28" height="14" uuid="c5857720-e889-451d-bc6f-3dfa26d121af"/>
+							<textFieldExpression><![CDATA[$F{measure_sr}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="TableCellTxt" x="32" y="2" width="260" height="14" uuid="5cce6ee2-7be0-4367-9225-b9482cb8053a"/>
+							<textFieldExpression><![CDATA[$F{measure_label}==null?"-":$F{measure_label}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="292" y="2" width="155" height="14" forecolor="#059669" uuid="b4190aa2-7e09-47e4-9dcd-cfc64c00d687"/>
+							<textElement>
+								<font fontName="DejaVu Sans" size="7.5" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{measure_status}==null?"-":$F{measure_status}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="TableCellTxt" x="447" y="2" width="86" height="14" uuid="41b6001b-d3e2-4f01-9654-dddcb48a03a2"/>
+							<textFieldExpression><![CDATA[$F{measure_qty}==null?"-":$F{measure_qty}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="TableCellTxt" x="533" y="2" width="245" height="14" uuid="7bacd646-7d18-45b6-907b-debe7085fc30"/>
+							<textFieldExpression><![CDATA[$F{measure_location}==null?"-":$F{measure_location}]]></textFieldExpression>
+						</textField>
+						<line>
+							<reportElement x="0" y="17" width="782" height="1" forecolor="#EAEEF2" uuid="02585a08-82af-449a-b71a-8f2ea111cf5f"/>
+						</line>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<rectangle radius="6">
+				<reportElement mode="Opaque" x="0" y="872" width="782" height="40" backcolor="#FFFFFF" uuid="f360a8d0-69b5-4f9d-a9f5-179aa2b2c8ea"/>
+				<graphicElement>
+					<pen lineWidth="0.75" lineColor="#D6DEE6"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="872" width="6" height="40" backcolor="#0B5FA5" uuid="ada192d0-3aee-44a1-aaf6-68f3ab01660b"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="6" y="872" width="776" height="18" backcolor="#0B5FA5" uuid="c13b0ce9-2961-4ff6-b3d6-3f29c80c4716"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="CardTitle" x="16" y="872" width="762" height="18" uuid="2da5903b-5c27-4dd4-b843-ff52c692d205"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[5.  OTHER INFORMATION]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="16" y="894" width="750" height="14" uuid="65e774ea-e1cd-4728-9d6b-20326be0352a"/>
+				<textFieldExpression><![CDATA[$F{otherinfo}==null?"-":$F{otherinfo}]]></textFieldExpression>
+			</textField>
+			<rectangle radius="6">
+				<reportElement mode="Opaque" x="0" y="922" width="782" height="62" backcolor="#FFFFFF" uuid="0dd292e4-675d-48cd-9d0c-bd3e750cdf08"/>
+				<graphicElement>
+					<pen lineWidth="0.75" lineColor="#D6DEE6"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="922" width="6" height="62" backcolor="#1F8A5C" uuid="6fc53659-db21-4efe-8f36-5fe96874f61a"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="6" y="922" width="776" height="18" backcolor="#1F8A5C" uuid="a255d5f2-8556-4167-a451-c99f85f8d5a8"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="CardTitle" x="16" y="922" width="762" height="18" uuid="386c9d29-fae0-4e94-9a5e-ad3b184d8ead"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[6.  CERTIFYING ARCHITECT & OWNER DETAILS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FieldLabel" x="16" y="944" width="170" height="8" uuid="15a32b38-468c-4424-ba1b-7c97cb9d6500"/>
+				<text><![CDATA[NAME OF ARCHITECT]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="16" y="953" width="170" height="11" uuid="ac80d89c-6135-4949-996d-e7ad60c5ba38"/>
+				<textFieldExpression><![CDATA[$F{nameofarchitect}==null?"-":$F{nameofarchitect}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="192" y="944" width="160" height="8" uuid="1da338c6-10f3-440c-ad27-c5454c1068e0"/>
+				<text><![CDATA[ARCHITECT LICENCE NO.]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="192" y="953" width="160" height="11" uuid="59d2d338-833a-4be2-9f91-600234dfa4f2"/>
+				<textFieldExpression><![CDATA[$F{architectlicenseno}==null?"-":$F{architectlicenseno}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="358" y="944" width="200" height="8" uuid="863f3a17-b695-4eb9-8c8c-7daec07f4587"/>
+				<text><![CDATA[ADDRESS (ARCHITECT)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="358" y="953" width="200" height="11" uuid="55ce1474-a198-49cb-a4a5-aa8eef066274"/>
+				<textFieldExpression><![CDATA[$F{addressofarchitect}==null?"-":$F{addressofarchitect}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="564" y="944" width="200" height="8" uuid="957d2b24-7656-4dec-af93-d671c0104cca"/>
+				<text><![CDATA[NAME OF OWNER]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="564" y="953" width="200" height="11" uuid="cfccfc94-4a70-4486-b45c-91c1ac413e23"/>
+				<textFieldExpression><![CDATA[$F{nameofownerdeclaration}==null?"-":$F{nameofownerdeclaration}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="16" y="968" width="540" height="8" uuid="5b0f4bde-eee9-4ed8-bb59-3645f7c73e95"/>
+				<text><![CDATA[ADDRESS (OWNER)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="16" y="977" width="540" height="11" uuid="f380d917-0e97-44b4-ab19-55e1bce122af"/>
+				<textFieldExpression><![CDATA[$F{addressofownerdeclaration}==null?"-":$F{addressofownerdeclaration}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="994" width="782" height="14" uuid="46baebb8-69db-40f0-8c08-cfcf80c8b7af"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="7" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Declaration: I hereby declare that all the information provided by me in the above application is true. If found wrong or not related, I permit the authority to reject the application.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="16" y="1018" width="190" height="1" forecolor="#555555" uuid="c3a2ac47-0eb8-4d05-8316-20b429b163ae"/>
+			</line>
+			<staticText>
+				<reportElement x="16" y="1020" width="190" height="10" uuid="9a736fec-08ef-4b50-ab9f-d71906678e9c"/>
+				<textElement textAlignment="Center">
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[Signature of Applicant]]></text>
+			</staticText>
+			<line>
+				<reportElement x="296" y="1018" width="190" height="1" forecolor="#555555" uuid="ffd7850a-2347-4405-8ff5-d2ffd5a6166e"/>
+			</line>
+			<staticText>
+				<reportElement x="296" y="1020" width="190" height="10" uuid="d8c9fa31-4f3f-4451-9b05-172cafdb733d"/>
+				<textElement textAlignment="Center">
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[Signature of Architect]]></text>
+			</staticText>
+			<line>
+				<reportElement x="576" y="1018" width="190" height="1" forecolor="#555555" uuid="0d314294-ffdd-48c5-95fb-6963d73ba24f"/>
+			</line>
+			<staticText>
+				<reportElement x="576" y="1020" width="190" height="10" uuid="53b8feca-53ae-4425-950e-7a3dfd8f4931"/>
+				<textElement textAlignment="Center">
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[Authorised Officer – Stamp & Sign]]></text>
+			</staticText>
+			<rectangle radius="6">
+				<reportElement mode="Opaque" x="0" y="1040" width="782" height="80" backcolor="#FFFFFF" uuid="3acb0b00-0c35-4d39-8a9c-7f4d71307955"/>
+				<graphicElement>
+					<pen lineWidth="0.75" lineColor="#D6DEE6"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="1040" width="6" height="80" backcolor="#0F766E" uuid="8e946eb7-bf1d-4114-95c5-010d574cf469"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="6" y="1040" width="776" height="18" backcolor="#0F766E" uuid="a81d0728-44f8-42b7-8f7f-43317a30d33c"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="CardTitle" x="16" y="1040" width="762" height="18" uuid="48b9e49d-c2b4-45f4-b8d0-ab79ea0cfc66"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[7.  LIST OF DOCUMENTS (ATTACHMENTS)  |  PDF / JPG / JPEG, max 5 MB each]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableCellTxt" x="16" y="1062" width="20" height="10" uuid="afdb44cb-ad6b-4a07-8896-13368ae54ca2"/>
+				<text><![CDATA[1.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableCellTxt" x="36" y="1062" width="230" height="10" uuid="15337733-201d-404f-b282-46f7c5a0a8af"/>
+				<text><![CDATA[Fitness certificate from licensing agency]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="270" y="1062" width="110" height="10" forecolor="#0B5FA5" uuid="949b6b18-3e96-48a2-af13-7929f7d97b73"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{doc1_url}==null?"No file":"Download PDF"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="TableCellTxt" x="400" y="1062" width="20" height="10" uuid="a97b20de-6886-4b7d-9828-cd20db404296"/>
+				<text><![CDATA[2.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableCellTxt" x="420" y="1062" width="230" height="10" uuid="5293a4f5-9cc3-4515-82a8-d228da8ca449"/>
+				<text><![CDATA[Civil Engineer certificate of Structural stability]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="654" y="1062" width="110" height="10" forecolor="#0B5FA5" uuid="bfc6933f-0fc0-42f1-ad18-a32ef956074f"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{doc2_url}==null?"No file":"Download PDF"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="TableCellTxt" x="16" y="1080" width="20" height="10" uuid="bf3c99e1-b561-49bd-a288-f931357b3779"/>
+				<text><![CDATA[3.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableCellTxt" x="36" y="1080" width="230" height="10" uuid="d77093be-9b47-4a9b-b575-f5c9904aa534"/>
+				<text><![CDATA[Architect certificate for fire water tanks]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="270" y="1080" width="110" height="10" forecolor="#0B5FA5" uuid="ca015bc7-276a-4755-a85e-496c6456176f"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{doc3_url}==null?"No file":"Download PDF"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="TableCellTxt" x="400" y="1080" width="20" height="10" uuid="28ba2d6e-a3ab-4ba7-91f8-ff245929cd7d"/>
+				<text><![CDATA[4.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableCellTxt" x="420" y="1080" width="230" height="10" uuid="eec1efb5-f924-4da4-9682-b2282036094e"/>
+				<text><![CDATA[Electrical inspector certificate]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="654" y="1080" width="110" height="10" forecolor="#0B5FA5" uuid="a344eb55-6015-45c3-ba8e-2754aa1a9615"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{doc4_url}==null?"No file":"Download PDF"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="TableCellTxt" x="16" y="1098" width="20" height="10" uuid="10606db0-c8b8-442c-b794-a2dfae268947"/>
+				<text><![CDATA[5.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableCellTxt" x="36" y="1098" width="230" height="10" uuid="002b9358-ea97-4c8c-8b67-6fb3a8bc76a1"/>
+				<text><![CDATA[Sanctioned building plan]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="270" y="1098" width="110" height="10" forecolor="#0B5FA5" uuid="3fea4b83-f88b-4c44-a6af-8e304edfd300"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{doc5_url}==null?"No file":"Download PDF"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="TableCellTxt" x="400" y="1098" width="20" height="10" uuid="c94d6f5a-d0af-4388-a585-0afde0f3fd56"/>
+				<text><![CDATA[6.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableCellTxt" x="420" y="1098" width="230" height="10" uuid="319a78bf-7d62-4e85-b529-850dd3eb2c28"/>
+				<text><![CDATA[License copy of lift]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="654" y="1098" width="110" height="10" forecolor="#0B5FA5" uuid="631839cb-5072-4b08-9fdd-0ee0f5ea0021"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{doc6_url}==null?"No file":"Download PDF"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="TableCellTxt" x="16" y="1116" width="20" height="10" uuid="8d581ad6-f618-4bcf-8ec2-e2875ac07fab"/>
+				<text><![CDATA[7.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableCellTxt" x="36" y="1116" width="230" height="10" uuid="b10643c0-4bff-45ee-a549-4110e524ea5a"/>
+				<text><![CDATA[Affidavit]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="270" y="1116" width="110" height="10" forecolor="#0B5FA5" uuid="88eca325-179c-4919-98bb-291c14acca4c"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{doc7_url}==null?"No file":"Download PDF"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="1126" width="782" height="1" forecolor="#0B3D66" uuid="789bd12d-51e4-47dd-9c07-f610001c8c07"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="1128" width="782" height="10" forecolor="#9AA6B2" uuid="2049787c-4386-4655-b6a5-443a26dc5148"/>
+				<textElement textAlignment="Center">
+					<font fontName="DejaVu Sans" size="6" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Nagpur Municipal Corporation  |  Final Fire Safety Approval Certificate  |  Computer generated document]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FieldLabel" x="216" y="126" width="200" height="8" uuid="818af040-8b71-46c4-ae66-14a8972215b2"/>
+				<text><![CDATA[Fire RTS Id ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="216" y="135" width="200" height="11" uuid="2aa74b7d-b31a-4916-a74d-5b1ec5035401"/>
+				<textFieldExpression><![CDATA[$F{fire_recommendation_no}==null?"-":$F{fire_recommendation_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="414" y="126" width="200" height="8" uuid="6dd30d98-b632-4bb8-923d-0e3834116cc4"/>
+				<text><![CDATA[Provisional Fire Safety Approval Date]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="414" y="135" width="200" height="11" uuid="d41dad20-f6d8-475e-99a2-1b0e6b251a6b"/>
+				<textFieldExpression><![CDATA[$F{fire_recommendation_date}==null?"-":$F{fire_recommendation_date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="14" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="782" height="1" forecolor="#D6DEE6" uuid="56288d76-d689-498e-9fc0-484b459805d1"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="2" width="400" height="10" forecolor="#9AA6B2" uuid="853fde6b-b616-4a8a-b776-227adbebfa9d"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="5.5"/>
+				</textElement>
+				<text><![CDATA[NMC Fire Department – Online Services  |  nagpurmunicipal.gov.in]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="650" y="2" width="132" height="10" forecolor="#9AA6B2" uuid="841986cf-b550-4548-94c7-f7db726b8df3"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans" size="5.5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of " + $V{PAGE_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

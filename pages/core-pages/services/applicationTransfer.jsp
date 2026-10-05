@@ -98,18 +98,46 @@ style="cursor: pointer" wrap><fmt:message
 key="Full Name" /> <span
 id="upper(createdDate)"></span>
 </td>
+<c:choose>
+	<c:when test="${requestScope.data.rtiserviceid==69 or requestScope.data.rtiserviceid==70}">	
+ <td onclick="javascript:resort('workflowStatus');"
+style="cursor: pointer" wrap><fmt:message
+key="Category" /> <span
+id=""></span>
+</td>
 
+ <td onclick="javascript:resort('workflowStatus');"
+style="cursor: pointer" wrap><fmt:message
+key="From Fire Station" /> <span
+id="status"></span>
+</td>
+</c:when>
+<c:otherwise>
  <td onclick="javascript:resort('workflowStatus');"
 style="cursor: pointer" wrap><fmt:message
 key="From ZoneNo." /> <span
 id="status"></span>
 </td>
+</c:otherwise>
+</c:choose>
+
+<c:choose>
+	<c:when test="${requestScope.data.rtiserviceid==69 or requestScope.data.rtiserviceid==70}">	
 
   <td onclick="javascript:resort('workflowStatus');"
+style="cursor: pointer" wrap><fmt:message
+key="To Fire Station" /> <span
+id="status"></span>
+</td>
+</c:when>
+<c:otherwise>
+<td onclick="javascript:resort('workflowStatus');"
 style="cursor: pointer" wrap><fmt:message
 key="To ZoneNo." /> <span
 id="status"></span>
 </td>
+</c:otherwise>
+</c:choose>
 
 
 </tr>
@@ -128,6 +156,99 @@ id="status"></span>
 		
 				 <input id="applicantName" name="applicantName" value="<c:out value="${rTIApplication.applicantName}"/>" disabled/>
 	</td>
+	
+<c:choose>
+	<c:when test="${requestScope.data.rtiserviceid==69 or requestScope.data.rtiserviceid==70}">	
+
+	 
+    <!-- Height of building      -->
+
+		<td>
+<select class="select" id="category" name="category" required  onchange="getForwardedUser()">
+
+<option value="">-Select Category-</option>
+
+<option value="1"
+${requestScope.tempcategory=='1'?'selected':''}>
+Below 24m in height and built up area less than 500sqm
+</option>
+
+<option value="2"
+${requestScope.tempcategory=='2'?'selected':''}>
+Below 24m in height and built up area above 500sqm
+</option>
+
+<option value="3"
+${requestScope.tempcategory=='3'?'selected':''}>
+All Special Buildings above 24m in height
+</option>
+
+</select>
+</td>
+
+  
+	
+   
+    
+	<td> 
+		<c:choose>
+		<c:when test="${empty requestScope.tempzone}">
+		<select class="select" style="background-image: none;"
+							id="tempzone" name="tempzone" required disabled>
+					<option value="">-Select Fire Station-</option>
+						
+			 <c:forEach var="zoneValue" begin="1" end="10">
+        <c:set var="selected" value="${rTIApplication.zone == zoneValue ? 'selected' : ''}" />
+        <option value="${zoneValue}" ${selected}>${zoneValue} - 
+            <c:choose>
+                <c:when test="${zoneValue == 1}">Civil Lines Fire Station</c:when>
+                <c:when test="${zoneValue == 2}">Cotton Market Fire Station </c:when>
+                <c:when test="${zoneValue == 3}">Ganjipeth Fire Station</c:when>
+                <c:when test="${zoneValue == 4}">Lakadganj Fire Station </c:when>
+                <c:when test="${zoneValue == 5}">Sakkardara Fire Station</c:when>
+                <c:when test="${zoneValue == 6}">Kalamna Fire Station </c:when>
+                <c:when test="${zoneValue == 7}">Sugat Nagar Fire Station </c:when>
+                <c:when test="${zoneValue == 8}">Narendra Nagar Fire Station </c:when>
+                <c:when test="${zoneValue == 9}">Trimurti Nagar Fire Station </c:when>
+                <c:when test="${zoneValue == 10}">Wathoda Fire Station </c:when>
+            </c:choose>
+        </option>
+    </c:forEach>	
+    </select>
+		</c:when>
+	<c:when test="${not empty requestScope.tempzone}">
+ <select class="select" style="background-image: none;"
+							id="tempzone" name="tempzone" required disabled>
+					<option value="">-Select Fire Station-</option>
+						
+			 <c:forEach var="zoneValue" begin="1" end="10">
+        <c:set var="selected" value="${requestScope.tempzone == zoneValue ? 'selected' : ''}" />
+        <option value="${zoneValue}" ${selected}>${zoneValue} - 
+            <c:choose>
+                <c:when test="${zoneValue == 1}">Civil Lines Fire Station</c:when>
+                <c:when test="${zoneValue == 2}">Cotton Market Fire Station </c:when>
+                <c:when test="${zoneValue == 3}">Ganjipeth Fire Station</c:when>
+                <c:when test="${zoneValue == 4}">Lakadganj Fire Station </c:when>
+                <c:when test="${zoneValue == 5}">Sakkardara Fire Station</c:when>
+                <c:when test="${zoneValue == 6}">Kalamna Fire Station </c:when>
+                <c:when test="${zoneValue == 7}">Sugat Nagar Fire Station </c:when>
+                <c:when test="${zoneValue == 8}">Narendra Nagar Fire Station </c:when>
+                <c:when test="${zoneValue == 9}">Trimurti Nagar Fire Station </c:when>
+                <c:when test="${zoneValue == 10}">Wathoda Fire Station </c:when>
+            </c:choose>
+        </option>
+    </c:forEach>	
+    </select>
+    </c:when>
+    <c:otherwise></c:otherwise>
+    </c:choose>
+    </td>
+   
+	
+	</c:when>
+<c:otherwise>
+
+	
 	<td> 
 		<c:choose>
 		<c:when test="${empty requestScope.tempzone}">
@@ -181,7 +302,58 @@ id="status"></span>
     <c:otherwise></c:otherwise>
     </c:choose>
     </td>
+</c:otherwise>
+</c:choose>
+
+<c:choose>
+	<c:when test="${requestScope.data.rtiserviceid==69 or requestScope.data.rtiserviceid==70}">	
+
 	
+	<td>
+	
+			 
+			 	 <select class="select" style="background-image: none;"
+							id="main-dropdowns" name="zone" required >
+					<option value="">-Select Zone-</option>
+						
+			 <c:forEach var="zoneValue" begin="1" end="10">
+        <c:set var="selected" value="${requestScope.updatedzone == zoneValue ? 'selected' : ''}" />
+        <option value="${zoneValue}" ${selected}>${zoneValue} - 
+            <c:choose>
+                            <c:when test="${zoneValue == 1}">Civil Lines Fire Station</c:when>
+                <c:when test="${zoneValue == 2}">Cotton Market Fire Station </c:when>
+                <c:when test="${zoneValue == 3}">Ganjipeth Fire Station</c:when>
+                <c:when test="${zoneValue == 4}">Lakadganj Fire Station </c:when>
+                <c:when test="${zoneValue == 5}">Sakkardara Fire Station</c:when>
+                <c:when test="${zoneValue == 6}">Kalamna Fire Station </c:when>
+                <c:when test="${zoneValue == 7}">Sugat Nagar Fire Station </c:when>
+                <c:when test="${zoneValue == 8}">Narendra Nagar Fire Station </c:when>
+                <c:when test="${zoneValue == 9}">Trimurti Nagar Fire Station </c:when>
+                <c:when test="${zoneValue == 10}">Wathoda Fire Station </c:when>
+              
+            </c:choose>
+        </option>
+    </c:forEach>
+</select>
+
+<label>
+Forward To User
+</label>
+
+<input type="text"
+       id="forwardUser"
+       class=""
+       readonly
+       style="width:250px;"
+       value="${requestScope.forwardedUser}"/>
+
+			 
+			 
+	 </td>
+	 
+	 </c:when>
+	 <c:otherwise>
+	 
 	<td>
 	
 			 
@@ -211,6 +383,8 @@ id="status"></span>
 			 
 			 
 	 </td>
+	 </c:otherwise>
+	 </c:choose>
 	
 	</tr>
 	
@@ -260,7 +434,7 @@ insert_image('${contextRoot}');
 </div>
 </form>	
 <script>
-
+<!--
 function synchEntries() {
     var zone=document.getElementById('main-dropdown').value;
        
@@ -279,8 +453,139 @@ function synchEntries() {
         
     
 }
+-->
+function synchEntries(){
+
+    var serviceId=$("#rtiServiceId").val();
+
+    var zone="";
+
+    if(serviceId=="69" || serviceId=="70"){
+
+        zone=$("#main-dropdowns").val();
+
+        var category=$("#category").val();
+
+        if(category==""){
+            alert("Please select Category");
+            return false;
+        }
+
+    }else{
+
+        zone=$("#main-dropdown").val();
+
+    }
+
+    if(zone==""){
+        alert("Please select Zone/Fire Station");
+        return false;
+    }
+
+    var userResponse=
+    confirm("Are you sure you want to save!!");
+
+    if(userResponse){
+
+        $("#tempzone").prop("disabled",false);
+
+        onPageSubmit(
+        '<c:out value="${contextRoot}"/>/rtsapplication/saveApplicationTransfer.do');
+    }
+}
+
+function getForwardedUser(){
+
+    var serviceId=$("#rtiServiceId").val();
+
+    if(serviceId!="69" && serviceId!="70"){
+        return;
+    }
+
+    var category=$("#category").val();
+
+    var zone=$("#main-dropdowns").val();
+
+    /*
+      if user didn't change station yet,
+      use existing station
+    */
+    if(zone==null || zone==""){
+        zone=$("#tempzone").val();
+    }
+
+    console.log("Category="+category);
+    console.log("Zone="+zone);
+
+    if(category=="" || zone==""){
+        $("#forwardUser").val("");
+        return;
+    }
+
+    $.ajax({
+
+        url:"${contextRoot}/rtsapplication/getForwardUser.do",
+
+        type:"GET",
+
+        cache:false,
+
+        data:{
+            category:category,
+            zone:zone
+        },
+
+        success:function(data){
+
+            console.log(data);
+
+            $("#forwardUser").val($.trim(data));
+        },
+
+        error:function(){
+
+            $("#forwardUser").val("");
+        }
+
+    });
+
+}
 
 
+/*
+ page load
+*/
+$(document).ready(function(){
+
+    getForwardedUser();
+
+});
+
+
+/*
+ category changed
+*/
+$(document).on(
+    "change",
+    "#category",
+    function(){
+
+        getForwardedUser();
+
+});
+
+
+/*
+ station changed
+*/
+$(document).on(
+    "change",
+    "#main-dropdowns",
+    function(){
+
+        getForwardedUser();
+
+});
 </script>
 
 	

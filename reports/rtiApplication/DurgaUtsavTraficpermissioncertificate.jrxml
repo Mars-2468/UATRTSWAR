@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2025-09-12T17:26:13 -->
+<!-- 2025-09-16T13:19:17 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ZoneCertificate" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" isIgnorePagination="true" uuid="604a6bc3-ae55-4fb3-995f-76c562a21e2b">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -147,7 +147,7 @@
 					<textElement textAlignment="Center">
 						<font fontName="Arial Unicode MS" size="14"/>
 					</textElement>
-					<text><![CDATA[दुर्गा उत्सव संबंधाने अस्थाई मंडप उभारणे कररता वाहतुकीचे दुष्टीने हरकत/ना-हरकत बाबत.
+					<text><![CDATA[दुर्गा उत्सव संबंधाने अस्थाई मंडप उभारणे करिता वाहतुकीचे दुष्टीने हरकत/ना-हरकत बाबत.
 ]]></text>
 				</staticText>
 				<staticText>
@@ -240,14 +240,6 @@
 				<line>
 					<reportElement x="30" y="210" width="513" height="1" uuid="476c9ae2-f0c1-4d8b-ab16-b73069bcb1bf"/>
 				</line>
-				<staticText>
-					<reportElement x="30" y="20" width="413" height="27" uuid="017c835c-9ee8-469b-b0f1-a4c1bbbed1cd"/>
-					<textElement textAlignment="Center">
-						<font fontName="Arial Unicode MS" size="14"/>
-					</textElement>
-					<text><![CDATA[संदभज :- दुर्गा स्थापना / हरकत / ना हरकत / प्रमाणपत्र बाबत .
-]]></text>
-				</staticText>
 				<textField>
 					<reportElement x="20" y="174" width="523" height="23" uuid="2d675375-4171-4cab-95b7-068f58ccabe2"/>
 					<textElement>
@@ -256,14 +248,14 @@
 					<textFieldExpression><![CDATA["ई) मंडळाचे नाव व पत्ता :-" + $F{address_for_institution}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="431" y="20" width="113" height="27" uuid="089284bc-93e8-4ad0-9892-d66b22435c54">
+					<reportElement x="20" y="20" width="524" height="27" uuid="089284bc-93e8-4ad0-9892-d66b22435c54">
 						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
-					<textElement textAlignment="Right" verticalAlignment="Middle">
+					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Arial Unicode MS" size="14"/>
 					</textElement>
-					<textFieldExpression><![CDATA[Integer.toString(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR))
+					<textFieldExpression><![CDATA["संदर्भ  :- दुर्गा स्थापना / हरकत / ना हरकत / प्रमाणपत्र बाबत "+Integer.toString(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR))
     .replace('0','०').replace('1','१').replace('2','२').replace('3','३')
     .replace('4','४').replace('5','५').replace('6','६').replace('7','७')
     .replace('8','८').replace('9','९')

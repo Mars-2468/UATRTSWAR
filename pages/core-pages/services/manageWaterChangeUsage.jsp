@@ -577,7 +577,7 @@ a {
 						<b>In Process</b>
 					</c:if>
 					<c:if test="${requestScope.rtiApplication.workFlowStatus==2}">
-						<b>In Process</b>
+						<b>Citizen Form Approved. </b>
 					</c:if>
 											
 					<c:if test="${requestScope.rtiApplication.workFlowStatus==1}">
@@ -604,7 +604,7 @@ a {
 <tr>
 			<td colspan="5"><span class="ClsLabel"
 				style="font-size: 15px; font-weight: bold;"><fmt:message
-						key="List of Documents (with attachment) For Water Connection Usage" />:</span></td>
+						key="List of Documents (with attachment) For Change Of Category" />:</span></td>
   <c:if test="${doc[0] != 'null'}">
 		<tr>
 			<td style="width: 600px; height: 30px"><span class="ClsLabel"

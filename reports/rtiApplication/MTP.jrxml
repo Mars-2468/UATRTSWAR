@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2024-10-15T14:55:02 -->
+<!-- 2025-02-11T13:23:39 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MTP" pageWidth="935" pageHeight="1000" columnWidth="845" leftMargin="45" rightMargin="45" topMargin="45" bottomMargin="0" uuid="b6b795d4-a222-402b-835e-49680999b8ba">
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="egov_nmc"/>
 	<parameter name="rtiapplrefid" class="java.lang.String">
 		<defaultValueExpression><![CDATA[$P{rtiapplrefid}]]></defaultValueExpression>
 	</parameter>
@@ -127,7 +128,6 @@ where mp.rti_ref_id = ra.rti_application_id and mp.rti_ref_id=$P{rtiapplrefid};]
 	<field name="tax_other_citizen_document_upload" class="java.lang.String"/>
 	<field name="aaplesarkar_user_mobile_no" class="java.lang.String"/>
 	<field name="year" class="java.lang.String"/>
-	<field name="kiosk_mobile_number" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -179,7 +179,7 @@ where mp.rti_ref_id = ra.rti_application_id and mp.rti_ref_id=$P{rtiapplrefid};]
 				<reportElement x="-34" y="172" width="910" height="1" uuid="08cec10d-c01d-4df6-95ff-af13b77b8b99"/>
 			</line>
 			<image>
-				<reportElement x="43" y="55" width="110" height="97" uuid="06d3b0ad-9a04-4e2a-938a-7dc38b5914d2"/>
+				<reportElement x="46" y="47" width="104" height="103" uuid="05df2572-7e0a-4cf3-9cd9-d818eb56c6d3"/>
 				<imageExpression><![CDATA["../../images/AMC_Logo.jpeg"]]></imageExpression>
 			</image>
 		</band>

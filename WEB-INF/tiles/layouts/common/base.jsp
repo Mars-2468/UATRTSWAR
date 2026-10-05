@@ -110,6 +110,8 @@ if(departmentId == 1){
 		departmentname = "Garden Department";
 	}else if (departmentId == 11) {
 		departmentname = "HOD Department";
+	}else if (departmentId == 12) {
+		departmentname = "Fire Department";
 	}
 %>
 		

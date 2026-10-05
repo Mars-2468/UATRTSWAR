@@ -75,8 +75,6 @@
 				<value>com.mars.rti.ws.model.NewWaterConnectionRestDTO</value>
 				<value>com.mars.rti.ws.model.CitizenHospitalRestDTO</value>
 				<value>com.mars.rti.ws.model.DeathCertificateRestDTO</value>
-								<value>com.mars.rti.ws.model.DeathCertificateRestTempDTO</value>
-				
 				<value>com.mars.rti.ws.model.MarriageCertificateRestDTO</value>
 				<value>com.mars.rti.ws.model.GetApplicationRestDTO</value>
 				<value>com.mars.rti.ws.model.TradeLicenseCancellationRestDTO</value>

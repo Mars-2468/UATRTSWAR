@@ -14,12 +14,6 @@
 	pageContext.setAttribute("STATUS_YES", Constants.STATUS_YES);
 	///pageContext.setAttribute("statusList", CommonUtils.getStatus());
 %>
-<%
-    int currentYear = java.time.Year.now().getValue();
-    int startYear = 2023; // Start from the year 2023
-    String hiddenYear = request.getParameter("year"); // Get the hidden field value
-    int selectedYear = (hiddenYear != null && !hiddenYear.isEmpty()) ? Integer.parseInt(hiddenYear) : currentYear;
-%>
 
 <script type="text/javascript">
 	function editRTIApplication(id) {
@@ -128,23 +122,36 @@ name="searchrtiApplnNumber"
 value="<c:out value="${SearchOptions.rtiApplicationNumber}"/>" /> &nbsp;
 </td>
 
-<td><fmt:message key="Year" />
-</td>
-<td>
-
-        <select id="year" name="year" class="ClsTextbox mb-0">
-            <% 
-                for (int year = currentYear; year >= startYear; year--) {
-                    String selected = (year == selectedYear) ? "selected" : "";
-            %>
-                    <option value="<%= year %>" <%= selected %>><%= year %></option>
-            <% 
-                }
-            %>
-        </select>
-        </td>
-        <input type="hidden" id="yearSelectHidden" name="year" value="<%= selectedYear %>"/>
-
+<%-- <td><span class="ClsLabel"><fmt:message
+key="rtiApplication.manage.label.department" /></span><span
+class="ClsRequiredFields"></span></td>
+<td><select name="searchDepartmentId" id="searchDepartmentId">
+<option value=""><--- Select ---></option>
+<c:forEach var="department" items="${requestScope.departmentList}">
+<c:choose>
+<c:when
+test="${SearchOptions.searchdepartment==department.departmentId}">
+<option value="${department.departmentId}" selected="selected">
+<c:out value="${department.name}" />
+</option>
+</c:when>
+<c:otherwise>
+<option value="${department.departmentId}">
+<c:out value="${department.name}" />
+</option>
+</c:otherwise>
+</c:choose>
+</c:forEach>
+</select></td> --%>
+<td><span class="ClsLabel"><fmt:message
+key="rtiApplication.manage.label.appdate" /> <fmt:message
+key="search.label.between" /></span></td>
+<td><input type="text" class="ClsTextboxDate" id="fromDate"
+maxlength="10" name="fromDate"
+value="<c:out value="${SearchOptions.creationFromDate}"/>" /> <span
+class="ClsLabel">-</span> <input type="text" class="ClsTextboxDate"
+id="toDate" maxlength="10" name="toDate"
+value="<c:out value="${SearchOptions.rtiApplicationNumber}"/>" /></td>
 </tr>
 
 
