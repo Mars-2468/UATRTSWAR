@@ -573,6 +573,88 @@ input[type="text"], textarea {
                          --%>
 		</tr>
 		</table>
+		<table width="100%" border="0" >
+       
+						
+						<tr>
+						<td>
+							<span class="ClsLabel" style="font-size: 12px !important;"><fmt:message key="Will the cloth, mat, wood, bamboo, wooden poles used in the tent be made fireproof?" /> </span>
+						<span class="ClsLabel"  style="font-size: 12px !important;"><fmt:message key="मंडपाची वापरण्यात आलेला कापड, चटई ,लाकूड, बांबू ,लाकडी खांब हे ज्वलनशील साहित्याला अग्निरोधक प्रकिया करण्यात येणार आहे काय ?" /> </span>
+							 <td>${mandapPermission.fireproof}</td>
+						
+						</tr>
+						
+						<tr>
+						<td>
+							<span class="ClsLabel" style="font-size: 12px !important;"><fmt:message key="Is there a minimum 9 meter wide path for fire fighting vehicles to reach the pavilion?" /> </span>
+							<span class="ClsLabel" style="font-size: 12px !important;">मंडपात पोहचण्यास अग्निशमन वाहनाकरिता किमान ९ मीटर रुंदीचा मार्ग उपलब्ध आहे काय ?</span>
+						 <td>${mandapPermission.vehicle}</td>
+						</tr>
+						
+						<tr>
+						<td>
+							<span class="ClsLabel" style="font-size: 12px !important;"><fmt:message key="Will there be at least 4.50 meters free space around the mandap so that the fire does not spread in the surrounding buildings?" /> </span>
+							<span class="ClsLabel" style="font-size: 12px !important;">आसपासच्या इमारती मध्ये आग पसरणार नाही याकरिता मंडपाच्या भोवताल किमान ४.५० मीटर मोकळी जागा येणार आहे काय ?</span></td>
+						<td>${mandapPermission.building}</td>
+						</tr>
+						
+						<tr>
+						<td>
+							<span class="ClsLabel" style="font-size: 12px !important;"><fmt:message key="Is there 3 meter wide gates/ways/doors available in opposite directions for safe evacuation of citizens in case of emergency?" /> </span>
+						<span class="ClsLabel" style="font-size: 12px !important;"><fmt:message key="आपत्कालीन परिस्थितीत नागरिकांना सुरक्षित बाहेर पाडण्याकरिता परस्पर विरुद्ध दिशेला ३ मीटर रुंदीचे गेट/मार्ग/दरवाजे उपलब्ध आहेत काय ?" /> </span></td>
+						<td>${mandapPermission.evacuation}</td>
+						
+						</tr>
+						
+					<tr>
+						<td>
+							<span class="ClsLabel" style="font-size: 12px !important;"><fmt:message key="Will the members of committee be trained for First-aid,  fire fighting equipment and safe evacuation of people in emergency situations?" /> </span>
+							<span class="ClsLabel" style="font-size: 12px !important;">मंडपात इंधन प्रसादाकरिता स्वयंपाक घर तसेस फटाक्यांचा साथ करण्यात येणार आहे काय ?</span></td>
+						<td>${mandapPermission.firecrackers}</td>
+						
+						</tr>		
+						
+					
+						
+					
+						
+						<tr>
+						<td>
+							<span class="ClsLabel" style="font-size: 12px !important;"><fmt:message key="Will 2 Units of 5 kg fire extinguisher and 200 liter capacity water drum be kept in the mandap for fire fighting?" /> </span>
+							<span class="ClsLabel" style="font-size: 12px !important;">अग्निशमन  करीत २ नग ५ किलो   फायर एक्स्टिंगशूर तसेच २०० लिटर क्षमतेचे पाण्याचे ?</span></td>
+						<td>${mandapPermission.extinguisher}</td>
+						
+						</tr>
+						
+						<tr>
+						<td>
+							<span class="ClsLabel" style="font-size: 12px !important;"><fmt:message key="Will the workers in the board be trained in first aid use of fire fighting equipment and safe evacuation of people in emergency situations?" /> </span>
+							<span class="ClsLabel" style="font-size: 12px !important;">मंडळातील कार्यकर्त्यांना प्रथमाचार अग्निशमन साहित्य वापरण्यात तसेच आपत्कालीन परिस्थिती लोकांना सुखरूप बाहेर काढण्याकरिता प्रशिक्षण देण्यात येणार आहे काय ?</span></td>
+						<td>${mandapPermission.trained}</td>
+						
+						</tr>
+						
+						<tr>
+						<td>
+							<span class="ClsLabel" style="font-size: 12px !important;"><fmt:message key="2 Units of 5 kg capacity A B C type fire extinguishers and 200 liter capacity water drum will be kept in the pavilion for fire fighting?" /> </span>
+							<span class="ClsLabel" style="font-size: 12px !important;">अग्निशमन  करीत २ नग ५ किलो  क्षमतेचे  A B C type  फायर एक्स्टिंगशूर तसेच २०० लिटर क्षमतेचे पाण्याचे ड्रम मंडपात ठेवण्यात येणार आहे काय ?</span></td>
+						<td>${mandapPermission.pavilionfighting}</td>
+						
+						</tr>
+						
+					
+						<tr>
+						<td>
+							<span class="ClsLabel" style="font-size: 12px !important;"><fmt:message key="Is the entrance for fire-fighting vehicles provided with a minimum clear height of 4.5 m and width of 6.0 m, and is the access route kept clear at all times for emergency movement?"/></span>
+							<span class="ClsLabel" style="font-size: 12px !important;">अग्निशमन वाहनासाठी प्रवेशद्वाराची उभी मोकळी उंची किमान 4.5 मी. व रुंदी किमान 6.0 मी. असून, आपत्कालीन हालचालीसाठी प्रवेशमार्ग सदैव मोकळा ठेवण्यात आला आहे का?</span></td>
+						<td>${mandapPermission.electricalWiring}</td>
+						
+						</tr>
+
+    </table>
+	
+	
+
 	<table width="100%" border="0" cellpadding="2" cellspacing="2">
 
 		<tr>
@@ -585,11 +667,10 @@ input[type="text"], textarea {
 
 		<c:if test="${doc[0] != 'null'}">
 			<tr>
-				<td colspan="3.5"><span class="ClsLabel"
-					style="font-size: 14px"><fmt:message
-							key="Food and Drugs Registration in case of food donation(
-अन्नदानाच्या बाबतीत अन्न आणि औषधांची नोंदणी)" />:</span> 
-					
+			<td colspan="3.5"><span class="ClsLabel"
+    style="font-size: 14px"><fmt:message
+        key="Site Viewer Map with Detailed Information ( तपशीलवार माहितीसह साइट दर्शक नकाशा)" />:</span></td>
+
 				<td style="text-align: center" colspan="3.5"><a class="bg-button btn btn-primary bd-highlight action"
    type="button"
    target="_blank"

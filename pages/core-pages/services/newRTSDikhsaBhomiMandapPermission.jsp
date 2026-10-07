@@ -552,6 +552,23 @@ $(document).ready(function() {
 					</div>
 				</div>
 
+<div class="col-md-3">
+					<div class="mb-3 mt-0">
+						<label for="" class="form-label lbleng">The total number of devotees who can be present in the mandap at a time(
+एकावेळी मंडपात उपस्थित राहू शकणार्‍या एकूण भाविकांची संख्या)<span class="text-danger" style="color: red;">*</span></label> <input type="number"
+							class="form-control" 
+							style="background-image: none;" name="noOfDevotes" value=""
+							maxlength="6" required>
+							<div class="invalid-feedback">Please Enter Valid Data.
+						</div>
+
+					</div>
+				</div>
+				
+
+
+	
+				
 				<div class="col-md-12">
 					<div class="mb-3 mt-3">
 						<label for="" class="form-label">Reason for Pavilion
@@ -770,6 +787,201 @@ $(document).ready(function() {
 
 
 
+		
+		 <table class="table table-grid" id="fireSafetyTable">
+      <tbody>
+       
+        
+        <!-- Repeat the following code for each question -->
+        
+        <tr>
+          <td>
+            <span class="me-3">1) Will the cloth, mat, wood, bamboo, wooden poles used in the tent be made fireproof?</span><br>
+            <span class="me-3">मंडपासाठी वापरण्यात येणारे साहित्य कापड, चटई ,लाकूड, बांबू ,लाकडी खांब हे आग प्रतिरोधक आहेत  काय ?</span>
+          </td>
+          <td>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="fireproof" id="tentMaterialYes" value="yes" required>
+              <label class="form-check-label" for="tentMaterialYes">Yes</label>
+            </div>
+          </td>
+          <td>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="fireproof" id="tentMaterialNo" value="no">
+              <label class="form-check-label" for="tentMaterialNo">No</label>
+            </div>
+          </td>
+        </tr>
+        
+        
+        <!-- Repeat the above code for other questions -->
+        
+                <tr>
+          <td>
+ <span class="me-3">2) Is there a minimum 9 meter wide path for fire fighting vehicles to reach the pavilion?</span><br>
+          <span class="me-3">मंडपात पोहचण्यास अग्निशमन वाहनाकरिता किमान ९ मीटर रुंदीचा मार्ग उपलब्ध आहे काय ?</span>
+          </td>
+          <td>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="vehicle" id="idolHeightYes" value="yes" required>
+              <label class="form-check-label" for="idolHeightYes">Yes</label>
+            </div>
+          </td>
+          <td>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="vehicle" id="idolHeightNo" value="no">
+              <label class="form-check-label" for="idolHeightNo">No</label>
+            </div>
+          </td>
+        </tr>
+        
+        <!-- Repeat the following code for each question -->
+        
+        <tr>
+          <td>
+   <span class="me-3">3) Will there be at least 4.50 meters free space around the mandap so that the fire does not spread in the surrounding buildings?</span><br>
+          <span class="me-3">आसपासच्या इमारती मध्ये आग पसरणार नाही याकरिता मंडपाच्या भोवताल किमान ४.५० मीटर मोकळी जागा आहे काय ?</span>
+          </td>
+          <td>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="building" id="tentMaterialYes" value="yes" required>
+              <label class="form-check-label" for="tentMaterialYes">Yes</label>
+            </div>
+          </td>
+          <td>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="building" id="tentMaterialNo" value="no">
+              <label class="form-check-label" for="tentMaterialNo">No</label>
+            </div>
+          </td>
+        </tr>
+<!----------------------------->
+
+      <tr>
+          <td>
+   <span class="me-3">4) Is there 3 meter wide gates/ways/doors available in opposite directions for safe evacuation of citizens in case of emergency?</span><br>
+          <span class="me-3">आपत्कालीन परिस्थितीत नागरिकांना सुरक्षित बाहेर काढण्याकरिता परस्पर विरुद्ध दिशेला ३ मीटर रुंदीचे गेट/मार्ग/दरवाजे उपलब्ध आहेत काय ? </span>
+          </td>
+          <td>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="evacuation" id="tentMaterialYes" value="yes" required>
+              <label class="form-check-label" for="tentMaterialYes">Yes</label>
+            </div>
+          </td>
+          <td>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="evacuation" id="tentMaterialNo" value="no">
+              <label class="form-check-label" for="tentMaterialNo">No</label>
+            </div>
+          </td>
+        </tr>
+        
+        
+          <tr>
+          <td>
+ <span class="me-3">5) Will the members of committee be trained for First-aid,  fire fighting equipment and safe evacuation of people in emergency situations?</span><br>
+          <span class="me-3">समितीच्या सदस्यांना प्रथमोपचार, अग्निशमन उपकरणांचा वापर तसेच आपत्कालीन परिस्थितीत लोकांना सुरक्षितपणे बाहेर काढण्याबाबत प्रशिक्षण देण्यात येणार आहे काय?</span>
+          </td>
+          <td>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="firecrackers" id="tentMaterialYes" value="yes" required>
+              <label class="form-check-label" for="tentMaterialYes">Yes</label>
+            </div>
+          </td>
+          <td>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="firecrackers" id="tentMaterialNo" value="no">
+              <label class="form-check-label" for="tentMaterialNo">No</label>
+            </div>
+          </td>
+        </tr>
+        
+        
+        
+                 
+        
+             <tr>
+          <td>
+          <span class="me-3">6) Will 2 Units of 5 kg fire extinguisher and 200 liter capacity water drum be kept in the mandap for fire fighting?</span><br>
+          <span class="me-3">अग्निशमनासाठी मंडपात ५ किलो क्षमतेचे A B C प्रकारचे २ नग अग्निशामक तसेच २०० लिटर क्षमतेचे पाण्याचे ड्रम ठेवण्यात येणार आहेत काय?</span>
+          </td>
+          <td>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="extinguisher" id="tentMaterialYes" value="yes" required>
+              <label class="form-check-label" for="tentMaterialYes">Yes</label>
+            </div>
+          </td>
+          <td>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="extinguisher" id="tentMaterialNo" value="no">
+              <label class="form-check-label" for="tentMaterialNo">No</label>
+            </div>
+          </td>
+        </tr>
+        
+        
+               <tr>
+          <td>
+          <span class="me-3">7) Will the workers in the board be trained in first aid use of fire fighting equipment and safe evacuation of people in emergency situations?</span><br>
+          <span class="me-3">मंडळातील कार्यकर्त्यांना प्रथमाचार अग्निशमन साहित्य वापरण्यात तसेच आपत्कालीन परिस्थिती लोकांना सुखरूप बाहेर काढण्याकरिता प्रशिक्षण देण्यात येणार आहे काय ?</span>
+          </td>
+          <td>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="trained" id="tentMaterialYes" value="yes" required>
+              <label class="form-check-label" for="tentMaterialYes">Yes</label>
+            </div>
+          </td>
+          <td>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="trained" id="tentMaterialNo" value="no">
+              <label class="form-check-label" for="tentMaterialNo">No</label>
+            </div>
+          </td>
+        </tr>
+        
+        
+                   <tr>
+          <td>
+          <span class="me-3">8) 2 Units of 5 kg capacity A B C type fire extinguishers and 200 liter capacity water drum will be kept in the pavilion for fire fighting?</span>
+          <span class="me-3">अग्निशमन  करीत २ नग ५ किलो  क्षमतेचे  A B C type  फायर एक्स्टिंगशूर तसेच २०० लिटर क्षमतेचे पाण्याचे ड्रम मंडपात ठेवण्यात येणार आहे काय ?</span>
+          </td>
+          <td>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="pavilionfighting" id="tentMaterialYes" value="yes" required>
+              <label class="form-check-label" for="tentMaterialYes">Yes</label>
+            </div>
+          </td>
+          <td>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="pavilionfighting" id="tentMaterialNo" value="no">
+              <label class="form-check-label" for="tentMaterialNo">No</label>
+            </div>
+          </td>
+        </tr>
+        
+        
+       
+        
+         <tr>
+          <td>
+            <span class="me-3">9) Is the entrance for fire-fighting vehicles provided with a minimum clear height of 4.5 m and width of 6.0 m, and is the access route kept clear at all times for emergency movement?</span><br>
+            <span class="me-3">अग्निशमन वाहनासाठी प्रवेशद्वाराची उभी मोकळी उंची किमान 4.5 मी. व रुंदी किमान 6.0 मी. असून, आपत्कालीन हालचालीसाठी प्रवेशमार्ग सदैव मोकळा ठेवण्यात आला आहे का?</span>
+          </td>
+          <td>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="electricalWiring" id="electricalWiringYes" value="yes" required>
+              <label class="form-check-label" for="electricalWiringYes">Yes</label>
+            </div>
+          </td>
+          <td>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="electricalWiring" id="electricalWiringNo" value="no">
+              <label class="form-check-label" for="electricalWiringNo">No</label>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
 				<div class="row">
 
@@ -786,8 +998,7 @@ $(document).ready(function() {
 					<input type="hidden" name="filesPath" id="filesPath" />
 					<div class="col-md-3">
 						<div class="mb-3 mt-3" style="margin-top: 38px;">
-							<label for="" class="form-label">Food and Drugs Registration in case of food donation(
-अन्नदानाच्या बाबतीत अन्न आणि औषधांची नोंदणी)<span class="text-danger"
+							<label for="" class="form-label">	Site Viewer Map with Detailed Information ( तपशीलवार माहितीसह साइट दर्शक नकाशा) <span class="text-danger"
 								style="color: red;">*</span>
 							</label> <input type="file" class="form-control" id="doc1"
 								style="background-image: none;" accept=".pdf" name="policeDepartment" required>
@@ -796,6 +1007,8 @@ $(document).ready(function() {
 
 						</div>
 					</div>
+					
+									
 				
 					<div class="col-md-12">
 						<div class="mb-5 mt-4 ">
@@ -813,6 +1026,9 @@ $(document).ready(function() {
 									declaration.</div>
 							</div>
 						</div>
+						
+																	
+						
 						
 						
 						
@@ -997,7 +1213,8 @@ $(window).on('load', function(){
 
                     <div class="modal-header">
 
-                        <h6><strong>Note(नोंद): </strong> Upload below files in .pdf...Max upto 2 MB(खालील फाइल .pdf मध्ये अपलोड करा..कमाल २ MB पर्यंत)</h6>
+                        <h6 style="color:red"><strong>
+महापालिकेकडून परवानगी मिळण्यासंबंधीची पध्दती /अटी व शर्ती  :- </strong></h6>
 
                     </div>
 
@@ -1007,20 +1224,13 @@ $(window).on('load', function(){
 
 
 
-                      <p style="color:red">
+                       
 
-                        <strong>List of document to be attached :
-                        </strong>    
-                        </p>
+                       <ul style="color:rgb(3, 125, 76)">
 
-                        <ul style="color:rgb(3, 125, 76)">
-
-
-
-
-                            <li>1.Food and Drugs Registration in case of food donation(
-अन्नदानाच्या बाबतीत अन्न आणि औषधांची नोंदणी)<span class="text-danger"  style="color: red;">*</span> </li>
-                            
+							अन्न वाटपातून विषबाधा किंवा अनुचित प्रकार घडू नये म्हणून अन्नदान करणाऱ्या संस्थांची नोंदणी अन्न व औषध प्रशासनाचे समन्वयातून करुन आवश्यक व्यवस्थापन करणे आवश्यक आहे. त्याची सर्वस्वी जबाबदारी आयोजकाची राहील.<br>
+To prevent food poisoning or untoward incidents during food distribution, it is essential to register organizations involved in food donation in coordination with the Food and Drug Administration and to ensure necessary management arrangements are in place. The organizers shall responsible for this.
+							
 
                         </ul>
 
@@ -1028,12 +1238,14 @@ $(window).on('load', function(){
 
                     <!-- dialog buttons -->
 
-                    <div class="modal-footer"><button type="button" class="btn btn-primary">OK</button></div>
+                    <div class="modal-footer" id="ok"><button type="button"  class="btn btn-primary">Agree</button>                                 
+                     <a   class="bg-button btn btn-primary bd-highlight"  href="<c:out value="${contextRoot}"/>/ws/nmc/user/dashboard.do" >Cancel</a>
+                    </div>
+                    
 
                 </div>
 
             </div>
 
         </div>
-
-   
+        
