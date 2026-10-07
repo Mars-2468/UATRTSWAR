@@ -554,11 +554,13 @@ input[type="text"], textarea {
 					</c:if> <c:if test="${requestScope.rtiApplication.workFlowStatus==5}">
 						Rejected
 					</c:if></span></td>
-					<c:if test="${userId == 3701 || userId == 3700  || userId == 2402  || userId == 2403  || userId == 2404  || userId == 2405  || userId == 2406  || userId == 3702  || userId == 2408  || userId == 2409}">
+					<c:if test="${requestScope.forLogin eq 'L4'}">
+								<c:if test="${requestScope.rtiApplication.workFlowStatus==2 || requestScope.rtiApplication.workFlowStatus==1}">
 			
 			<td colspan="2"><span class="ClsLabel" style="font-size: 14px">Certificate
 					Upload: </span></td>
 			<%@include file="/pages/common-pages/dms/fileUpload.jsp"%>
+</c:if>
 
 </c:if>
 			<%--<td>
@@ -682,72 +684,8 @@ input[type="text"], textarea {
 		
 		
 		
-		<!-- Files Uploading -->
-<c:if test="${userId == 3703 || userId == 3704 || userId == 3705 || userId == 3706 || userId == 3707 || userId == 3708 || userId == 3709 || userId == 3710 || userId == 3711 || userId == 3732 || userId == 3701 || userId == 3700  || userId == 2402  || userId == 2403  || userId == 2404  || userId == 2405  || userId == 2406  || userId == 3702  || userId == 2408  || userId == 2409 || userId == 3800}">
-			<tr>
-				<td colspan="3.5"><span class="ClsLabel"
-					style="font-size: 14px"><fmt:message
-							key="NOC From Police Department (पोलिस विभागाकडून एनओसी)" />:</span> 
-				    <c:choose>
-        <c:when test="${empty mandapPermission.policeNoc}">
-				<td style="text-align: center" colspan="3.5">
-			<input type="file" name="idProof" id="doc1" class="imagefile" style="width: 168px" /><br>
-			<hr>
-<button style="margin-right: 15px; margin-top: 2px;"  onclick="policedownload(${mandapPermission.rti_ref_id},'dikshaBhumipoliceNocCertificateReport.do')">Download Sample NOC</button>
-			</td>
-                 <td>
-             
-  <a class="bg-button btn btn-primary bd-highlight" style="color:white" id="upload1"  type="button" target="_blank" onclick="javascript:uploadPoliceNoc(this);"><span
-							class="download" style="align-items: center">Upload</span></a>        </c:when>
-        <c:when test="${not empty mandapPermission.policeNoc}">
-          <td> 							
-<a class="bg-button btn btn-success bd-highlight action"
-   type="button"
-   target="_blank"
-   onclick="docDownload('${mandapPermission.policeNoc}');">
-   <span class="download" style="align-items: center;color:white;">Download</span>
-</a></td>
-        </c:when>
-    </c:choose>
-</td>
-
-			</tr>
-			</c:if>
-
-<c:if test="${userId == 3703 || userId == 3704 || userId == 3705 || userId == 3706 || userId == 3707 || userId == 3708 || userId == 3709 || userId == 3710 || userId == 3711 || userId == 3732 || userId == 3701 || userId == 3700  || userId == 2402  || userId == 2403  || userId == 2404  || userId == 2405  || userId == 2406  || userId == 3702  || userId == 2408  || userId == 2409 || userId == 3800}">
 		
-			<tr>
-				<td colspan="3.5"><span class="ClsLabel"
-					style="font-size: 14px"><fmt:message
-							key="NOC From Traffic Department (वाहतूक विभागाकडून एनओसी)" />:</span> 
-				
-				 <c:choose>
-        <c:when test="${empty mandapPermission.trafficNoc}">
-        <td style="text-align: center" colspan="3.5">
-				<input type="file" name="idProof" id="doc3" class="imagefile" style="width: 168px" />
-				<hr>
-<button style="margin-right: 15px; margin-top: 2px;" onclick="trafficdownload(${mandapPermission.rti_ref_id},'dikshaBhumitrafficNocCertificateReport.do')">Download Traffic NOC</button>
-			</td>
-            <td>
-   
- <a class="bg-button btn btn-primary bd-highlight" style="color:white" id="upload3"  type="button" target="_blank" onclick="javascript:uploadTrafficNoc(this);"><span
-							class="download" style="align-items: center">Upload</span></a>        </c:when>
-        <c:when test="${not empty mandapPermission.trafficNoc}">
-        <td>
-            <a class="bg-button btn btn-success bd-highlight action"
-   type="button"
-   target="_blank"
-   onclick="docDownload('${mandapPermission.trafficNoc}');">
-   <span class="download" style="align-items: center;color:white;">Download</span>
-</a></td>
-        </c:when>
-    </c:choose>
-</td>
-
-			</tr>
-			</c:if>
-			
-<c:if test="${userId == 3722 || userId == 3723 || userId == 3724 || userId == 3725 || userId == 3726 || userId == 3727 || userId == 3728 || userId == 3729 || userId == 3730 || userId == 3731 || userId == 3701 || userId == 3700  || userId == 2402  || userId == 2403  || userId == 2404  || userId == 2405  || userId == 2406  || userId == 3702  || userId == 2408  || userId == 2409 || userId == 3801}">
+<c:if test="${requestScope.forLogin eq 'L3' ||  requestScope.forLogin eq 'L2' || requestScope.rtiApplication.workFlowStatus==2 || requestScope.rtiApplication.workFlowStatus==1 || requestScope.rtiApplication.workFlowStatus==5}">
 			
 			<tr>
 				<td colspan="3.5"><span class="ClsLabel"
@@ -782,33 +720,8 @@ input[type="text"], textarea {
 			</c:if>
 			
 	<table width="100%" border="0" cellpadding="1" cellspacing="1">
-				<c:if test="${userId == 3703 || userId == 3704 || userId == 3705 || userId == 3706 || userId == 3707 || userId == 3708 || userId == 3709 || userId == 3710 || userId == 3711 || userId == 3732 || userId == 3701 || userId == 3700  || userId == 2402  || userId == 2403  || userId == 2404  || userId == 2405  || userId == 2406  || userId == 3702  || userId == 2408  || userId == 2409 || userId == 3800}">
-	
-			<tr>
-			
-			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
-						key="Police Remarks (पोलिसांची टिप्पणी)" />:</span></td>
-						<td>
-		 <textarea
-					class="form-control" style="width: 400px" id="ploiceremarks"
-					maxlength="30" name="ploiceremarks" maxlength="80" readonly>${mandapPermission.ploiceremarks}</textarea>
-			
-			</td></tr></c:if>
-			
-			<%-- <c:if test="${userId == 3712 || userId == 3713 || userId == 3714 || userId == 3715 || userId == 3716 || userId == 3717 || userId == 3718 || userId == 3719 || userId == 3720 || userId == 3721 || userId == 3701 || userId == 3700  || userId == 2402  || userId == 2403  || userId == 2404  || userId == 2405  || userId == 2406  || userId == 3702  || userId == 2408  || userId == 2409 || userId == 3800}">
-			
-						<tr>
-			
-			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
-						key="Traffic Remarks (रहदारी टिपा)" />:</span></td>
-						<td>
-		 <textarea
-					class="form-control" style="width: 400px" id="trafficremarks"
-					maxlength="30" name="trafficremarks" maxlength="80" readonly>${mandapPermission.trafficremarks}</textarea>
-			
-			</td>
-			</tr></c:if> --%>
-			<c:if test="${userId == 3722 || userId == 3723 || userId == 3724 || userId == 3725 || userId == 3726 || userId == 3727 || userId == 3728 || userId == 3729 || userId == 3730 || userId == 3731 || userId == 3701 || userId == 3700  || userId == 2402  || userId == 2403  || userId == 2404  || userId == 2405  || userId == 2406  || userId == 3702  || userId == 2408  || userId == 2409 || userId == 3801}">
+		
+<c:if test="${requestScope.forLogin eq 'L3' ||  requestScope.forLogin eq 'L2' || requestScope.rtiApplication.workFlowStatus==2 || requestScope.rtiApplication.workFlowStatus==1 || requestScope.rtiApplication.workFlowStatus==5}">
 			
 						<tr>
 			
@@ -823,8 +736,7 @@ input[type="text"], textarea {
 			</tr></c:if>
 			<script>
 			$(document).ready(function() {
-			    $("#ploiceremarks").attr('readonly', true);
-			    $("#trafficremarks").attr('readonly', true);
+			 
 			    $("#fireremarks").attr('readonly', true);
 			});
 
@@ -835,8 +747,7 @@ input[type="text"], textarea {
 
 	    if (userId == 3800 || userId == 3801) {
 	        // Disable the input box if the condition is met
-	    	 $("#ploiceremarks").attr("disabled", true);
-		        $("#trafficremarks").attr("disabled", true);
+	    
 		        $("#fireremarks").attr("disabled", true);
 
 	    }
@@ -891,7 +802,7 @@ input[type="text"], textarea {
 			  			  <input type="hidden" id="rtiApplicationRefIds" name="rtiApplicationRefIds" value="${mandapPermission.rti_ref_id}" />
 			  
 	
-			<c:if test="${userId == 3701 || userId == 3700  || userId == 2402  || userId == 2403  || userId == 2404  || userId == 2405  || userId == 2406  || userId == 3702  || userId == 2408  || userId == 2409 }">
+<c:if test="${requestScope.forLogin eq 'L4' || requestScope.rtiApplication.workFlowStatus==2 || requestScope.rtiApplication.workFlowStatus==1 || requestScope.rtiApplication.workFlowStatus==5}">
 
 	<%@include file="/pages/workflow/taskInclude.jsp"%>
 	</c:if>
@@ -899,24 +810,7 @@ input[type="text"], textarea {
 
 </div>
 </div>
-<script>
-	$(document).ready(function() {
-	    var userId = <%= request.getAttribute("userId") %>; // Retrieve userId from JSP attribute
 
-	    if (userId == 3701 || userId == 3700 || userId == 2402 || userId == 2403 || userId == 2404 || userId == 2405 || userId == 2406 || userId == 3702 || userId == 2408 || userId == 2409 || userId == 3800 || userId == 3801) {
-	        // Disable the input box if the condition is met
-	    	 $("#doc1").prop('disabled', true);
-		        $("#doc2").prop('disabled', true);
-		        $("#doc3").prop('disabled', true);
-		        
-		        $("#upload1").prop('disabled', true);
-		        $("#upload2").prop('disabled', true);
-		        $("#upload3").prop('disabled', true);
-		 
-
-	    }
-	});
-	</script>
 <script type="text/javascript">
 	function saveEntity() {
 		onPageSubmit('<c:out value="${contextRoot}"/>/rtsapplication/createDikshaBhumiMandapPermissionWork.do');
@@ -934,23 +828,11 @@ input[type="text"], textarea {
 	<script type="text/javascript">
 
 	$(document).ready(function() {
-	    var ploiceremarks = '${mandapPermission.ploiceremarks}';
-	    var trafficremarks = '${mandapPermission.trafficremarks}';
+	
 	    var fireremarks = '${mandapPermission.fireremarks}';
 
 
-	    if (dikshaBhumiMandapPermissionId && ploiceremarks.trim() !== "") {
-	        $("#ploiceremarks").prop('readonly', true);
-	    } else {
-	        $("#ploiceremarks").prop('readonly', false);
-	    }
-	    
-	    if (dikshaBhumiMandapPermissionId && trafficremarks.trim() !== "") {
-	        $("#trafficremarks").prop('readonly', true);
-	    } else {
-	        $("#trafficremarks").prop('readonly', false);
-	    }
-	    
+	
 	    if (dikshaBhumiMandapPermissionId && fireremarks.trim() !== "") {
 	        $("#fireremarks").prop('readonly', true);
 	    } else {

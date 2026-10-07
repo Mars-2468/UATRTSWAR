@@ -1007,7 +1007,22 @@ $(document).ready(function() {
 
 						</div>
 					</div>
-					
+					<div class="col-md-12">
+						<div class="mb-5 mt-4 ">
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" id="check11"
+									name="declaration" value="something" required> <label
+									class="form-check-label ms-3 " style="margin-top: -1px;">
+									<strong>Terms & condition <span class="text-danger"
+										style="color: red;">*</span>:-
+								</strong>अन्न वाटपातून विषबाधा किंवा अनुचित प्रकार घडू नये म्हणून अन्नदान करणाऱ्या संस्थांची नोंदणी अन्न व औषध प्रशासनाचे समन्वयातून करुन आवश्यक व्यवस्थापन करणे आवश्यक आहे. त्याची सर्वस्वी जबाबदारी आयोजकाची राहील.<br>
+To prevent food poisoning or untoward incidents during food distribution, it is essential to register organizations involved in food donation in coordination with the Food and Drug Administration and to ensure necessary management arrangements are in place. The organizers shall responsible for this.
+
+								</label>
+								<div class="invalid-feedback">Please check the
+									terms & condition: .</div>
+							</div>
+						</div>
 									
 				
 					<div class="col-md-12">
