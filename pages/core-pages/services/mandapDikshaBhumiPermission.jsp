@@ -490,7 +490,7 @@ input[type="text"], textarea {
 	
 	
 				
-		<tr>
+		<!--<tr>
 		
 			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
 						key="Fees Applicable(शुल्क
@@ -515,7 +515,7 @@ input[type="text"], textarea {
 				maxlength="10" name=""
 				value="<c:out value="${mandapPermission.totalfees}"/>" disabled/></td>
 				
-		</tr>
+		</tr>-->
 		
 			
 		
@@ -548,7 +548,7 @@ input[type="text"], textarea {
 					</c:if> <c:if test="${requestScope.rtiApplication.workFlowStatus==3}">
 						Citizen Payment Pending. 
 					</c:if> <c:if test="${requestScope.rtiApplication.workFlowStatus==2}">
-						Citizen Payment Completed
+						Verification Completed
 					</c:if> <c:if test="${requestScope.rtiApplication.workFlowStatus==1}">
 						Completed and File Uploaded for Citizen
 					</c:if> <c:if test="${requestScope.rtiApplication.workFlowStatus==5}">
@@ -802,11 +802,45 @@ input[type="text"], textarea {
 			  			  <input type="hidden" id="rtiApplicationRefIds" name="rtiApplicationRefIds" value="${mandapPermission.rti_ref_id}" />
 			  
 	
-<c:if test="${requestScope.forLogin eq 'L4' || requestScope.rtiApplication.workFlowStatus==2 || requestScope.rtiApplication.workFlowStatus==1 || requestScope.rtiApplication.workFlowStatus==5}">
 
-	<%@include file="/pages/workflow/taskInclude.jsp"%>
-	</c:if>
-
+<c:if test="${requestScope.forLogin eq 'L4'}">
+<table border="0" width="100%" class="dataGrid"
+						style="table-layout: fixed">
+						<tr>
+						<td>
+<div style="padding: 10px;background-color: #f7f7f7;">
+					<h3 class="tab" style="color: Green">Please take necessary actions by clicking on action buttons.</h3>
+					<hr>
+					<table class="formTable" border="0" width="40%">
+						<tr>
+                <td style="font-size: 14px; font-weight: bold; vertical-align: top; padding: 8px; border-right: 1px solid #ddd;">Remarks</td>
+                <td style="padding: 8px;">
+                    <textarea id="remarks" maxlength="250" name="remarks" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;background-color: white;font-size: 15px;font-weight: 300;">${requestScope.rtiApplication.workflowComments}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="button" name="CreateWorkflow" id="completeApplication" value="Complete"
+                           onclick="javascript:complete(this.form);" 
+                           style="border: none; padding: 10px 20px; cursor: pointer; font-size: 14px; border-radius: 4px; background-color: #007bff; color: #fff; transition: background-color 0.3s ease; margin-right: 10px;"
+                           onmouseover="this.style.backgroundColor = '#0056b3';"
+                           onmouseout="this.style.backgroundColor = '#007bff';" />
+                    <input type="button" name="RejectCreateWorkflow" id="rejectApplication" value="Reject Application"
+                           onclick="javascript:reject(this.form);" 
+                           style="border: none; padding: 10px 20px; cursor: pointer; font-size: 14px; border-radius: 4px; background-color: #dc3545; color: #fff; transition: background-color 0.3s ease;"
+                           onmouseover="this.style.backgroundColor = '#c82333';"
+                           onmouseout="this.style.backgroundColor = '#dc3545';" />
+                </td>
+            </tr>
+					</table>
+				</div>
+				
+	</div>
+	</td>
+	</tr>
+	</table>
+				</c:if>
 
 </div>
 </div>
@@ -817,30 +851,175 @@ input[type="text"], textarea {
 	}
 	</script>
 	
-	<script type="text/javascript">
-	function saveFees(){
-		
-				onPageSubmit('<c:out value="${contextRoot}"/>/rtsapplication/saveDikshaBhumiMandap.do');
-
-	}
 	
-	</script>
-	<script type="text/javascript">
+		
+<script type="text/javascript">
+function cleanPoliceInput(value) {
+    value = value.trim();
+    value = value.replace(/(\r\n|\n|\r){2,}/g, '\n');
+    $('#ploiceremarks').val(value);
+    return value;
+}
+function cleanFireInput(value) {
+    value = value.trim();
+    value = value.replace(/(\r\n|\n|\r){2,}/g, '\n');
+    $('#fireremarks').val(value);
+    return value;
+}
+function saveFees(){
+    var forLogin = "${requestScope.forLogin}";
+    var fireRemarks = $('#fireremarks').val();
+    var flag = false;
+
+var fireremarks = $('#fireremarks').val();
+
+
+if(fireRemarks !== null && fireRemarks !== undefined){
+	var fireRemarks=cleanFireInput(fireremarks);
+
+}
+
+
+
+    function hasFiles(inputSelector) {
+        var input = $(inputSelector).get(0);
+        return input && input.files.length > 0;
+    }
+  
+    
+ 
+    var fireUpload = '${mandapPermission.fireNoc}';
+    
+    if (forLogin === 'L3') {
+        if (fireRemarks !== '') {
+            if (fireUpload==='') {
+                if (confirm("Are you sure you want to save without uploading Fire NOC?")) {
+                    flag = true;
+                } else {
+                    return false;
+                }
+            } else {
+                if (confirm("Are you sure you want to save?")) {
+                    flag = true;
+                } else {
+                    return false;
+                }
+            }
+        } else {
+            alert("Please enter Remarks!");
+            return false;
+        }
+    }
+    
+    if (flag) {
+        onPageSubmit('<c:out value="${contextRoot}"/>/rtsapplication/saveDikshaBhumiMandap.do');
+    }
+}
+</script>
+	
+		<script type="text/javascript">
 
 	$(document).ready(function() {
-	
+	  
 	    var fireremarks = '${mandapPermission.fireremarks}';
-
+	    var forLogin = "${requestScope.forLogin}";  
+	    var workflowStatus="${requestScope.rtiApplication.workFlowStatus}";
+	    var applicationCost="${requestScope.rtiApplication.applicationCost}";
 
 	
-	    if (dikshaBhumiMandapPermissionId && fireremarks.trim() !== "") {
+	    
+	    if (fireremarks.trim() !== "") {
 	        $("#fireremarks").prop('readonly', true);
 	    } else {
 	        $("#fireremarks").prop('readonly', false);
 	    }
+	    
+	    if (forLogin==='L1' || forLogin==='L2' || forLogin==='L3') {
+        	
+	    	var elements = document.getElementsByClassName("tab")[0];
+
+	    	if (elements) { 
+	    	    elements.innerHTML = "You don't have permission".fontcolor("red");
+	    	    $('#remarks').attr('disabled', true);
+	    	    $('#completeApplication').attr('disabled', true);
+	    	    $('#rejectApplication').attr('disabled', true);
+	    	}
+		      
+        }else if(forLogin==='L4'){
+        	$('#saveFeesAmt').hide();
+        	if (fireremarks.trim() !== "") {
+        		if(workflowStatus==='1'){
+       			 var elements = document.getElementsByClassName("tab")[0];
+       	         elements.innerHTML = "Application closed & NOC Uploaded Successfully.".fontcolor("Green");
+       	         $('#remarks').attr('disabled', true);
+       		       $('#completeApplication').attr('disabled', true);
+       		       $('#rejectApplication').attr('disabled', true);
+       		}else if(workflowStatus==='5'){
+       			
+       			$('#saveFeesAmt').hide();
+       		 var elements = document.getElementsByClassName("tab")[0];
+       		 elements.innerHTML = "Application is Rejected".fontcolor("red");
+                $('#remarks').attr('disabled', true);
+ 		       $('#completeApplication').attr('disabled', true);
+ 		       $('#rejectApplication').attr('disabled', true);
+        		
+        	}else{
+        		$('#certificateActive').show();
+        		 var elements = document.getElementsByClassName("tab")[0];
+                 elements.innerHTML = "Please take necessary actions by clicking on action buttons.".fontcolor("Green");
+                 $('#remarks').attr('disabled', false);
+  		       $('#completeApplication').attr('disabled', false);
+  		       $('#rejectApplication').attr('disabled', false);
+       		}
+        	}else{
+            	$('#saveFeesAmt').hide();
+        		 var elements = document.getElementsByClassName("tab")[0];
+        		 elements.innerHTML = "Currently, you don't have permission to work on this task.".fontcolor("red");
+                 $('#remarks').attr('disabled', true);
+  		       $('#completeApplication').attr('disabled', true);
+  		       $('#rejectApplication').attr('disabled', true);
+        	}
+        }else{
+        	$('#saveFeesAmt').hide();
+   		 var elements = document.getElementsByClassName("tab")[0];
+            elements.innerHTML = "You don't have permission.".fontcolor("red");
+            $('#remarks').attr('disabled', true);
+		       $('#completeApplication').attr('disabled', true);
+		       $('#rejectApplication').attr('disabled', true);
+   	}
+	    
+	    if(workflowStatus==='5'){
+   			
+   			$('#saveFeesAmt').hide();
+	    }
+	    
+	    if (applicationCost !== '0.0' && applicationCost !== '0') {
+	    	$('#saveFeesAmt').hide();
+	   		
+	            $('#remarks').attr('disabled', true);
+			       $('#completeApplication').attr('disabled', true);
+			       $('#rejectApplication').attr('disabled', true);
+			       if(forLogin==='L3'){
+
+				        $("#doc2").prop('disabled', true);
+
+				        $("#upload2").hide();
+				        $("#fireremarks").attr("disabled", true);
+				        $("#fireSampleDoc").attr("disabled", true);
+			       }else{
+				    	$("#doc3").prop('disabled', true);
+				       $("#fireSampleDoc").attr("disabled", true);
+				        $("#doc2").prop('disabled', true);
+				        $("#upload2").hide();
+				        $("#fireremarks").attr("disabled", true);
+			       }
+			        $("#upload2").hide();
+
+	    }
 	});
 
 </script>
+
 		<script type="text/javascript">
 	
     function uploadPoliceNoc() {
@@ -914,8 +1093,7 @@ input[type="text"], textarea {
 
     }
     </script>
-    
-    	<script type="text/javascript">
+      	<script type="text/javascript">
     
     
     function uploadFireNoc() {
@@ -953,14 +1131,15 @@ input[type="text"], textarea {
    		        filesPath += "null" + ",";
    	             isFileSelected = false;
             } else {
-                filesPath = filesPath + basePath + "durgaUtsavPermission/" + i + value + ","
+                filesPath = filesPath + basePath + "dikshaBhumiPermission/" + i + value + ","
                 isFileSelected = true;
             }
         }
         var appType = 2;
         var uid1 = document.getElementById('dikshaBhumiMandapPermissionId').value;
         $.ajax({
-            url: "<c:out value='${contextRoot}'/>/rtsapplication/uploadDikshaBhumiMandapNoc.do?appType="+appType+"&UID="+uid1,
+                    url: "<c:out value='${contextRoot}'/>/rtsapplication/uploadDikshaBhumiMandapNoc.do?appType="+appType+"&UID="+uid1,
+        
             type: 'POST',
             data: data,
             cache: false,
@@ -969,7 +1148,7 @@ input[type="text"], textarea {
             contentType: false 
         }).done(function (data) {
         	if(data.status==true || data.status=='true'){
-            	  
+          	  
                 alert("Fire NOC Certificate uploaded Successfully");
                 window.location.reload(); 
           	}else{
@@ -1067,3 +1246,40 @@ input[type="text"], textarea {
  	}
 
 </script>
+
+<script type="text/javascript">
+    function complete() {
+        var remarks = $('#remarks').val().trim();
+   	 var value = '${requestScope.rtiApplication.pdfFilesSavedPath}';
+        if (remarks !== "") {
+            if (confirm("Do you really want to close the application?")) {
+     		    if (value === '') {
+     		        alert("Please Upload the Certificate!!");
+     		        return false;
+     		    }
+                onPageSubmit('<c:out value="${contextRoot}"/>/rtsapplication/createDikshaBhumiMandapPermissionWork.do?cid=1');
+            } else {
+                return false;
+            }
+        } else {
+            alert("Please enter remarks"); 
+            return false;
+        }
+    }
+
+    function reject() {
+        var remarks = $('#remarks').val().trim();
+        if (remarks !== "") {
+            if (confirm("Do you really want to reject the application?")) {
+                onPageSubmit('<c:out value="${contextRoot}"/>/rtsapplication/createDikshaBhumiMandapPermissionWork.do?cid=5');
+            } else {
+                return false;
+            }
+        } else {
+            alert("Please enter remarks");
+            return false;
+        }
+    }
+</script>
+
+	

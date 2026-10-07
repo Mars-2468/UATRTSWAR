@@ -221,7 +221,7 @@ Citizen Form Submitted
 Citizen Payment Pending.
 </c:if>
 <c:if test="${rtiApplnList.workFlowStatus==2}">
-Citizen Payment Completed
+Verification Completed
 </c:if>
 <c:if test="${rtiApplnList.workFlowStatus==1}">
 Completed
@@ -258,7 +258,7 @@ Citizen Form Submitted
 Citizen Payment Pending.
 </c:if>
 <c:if test="${rtiApplnList.workFlowStatus==2}">
-Citizen Payment Completed
+Verification Completed
 </c:if>
 <c:if test="${rtiApplnList.workFlowStatus==1}">
 Completed
@@ -297,7 +297,7 @@ In Progress
 Citizen Payment Pending.
 </c:if>
 <c:if test="${rtiApplnList.workFlowStatus==2}">
-Citizen Payment Completed
+Verification Completed
 </c:if>
 <c:if test="${rtiApplnList.workFlowStatus==1}">
 Completed

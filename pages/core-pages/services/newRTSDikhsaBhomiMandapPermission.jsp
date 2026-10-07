@@ -718,7 +718,7 @@ $(document).ready(function() {
 									</div>
 								</div>
 							</div>
-						<div class="col-md-3" style="margin-right: 25px;">
+					<!--	<div class="col-md-3" style="margin-right: 25px;">
 								<div class="mb-3 mt-2">
 									<label for="" class="form-label">Total Size (एकूण आकार)<span
 										class="text-danger" style="color: red;">*</span>
@@ -740,7 +740,7 @@ $(document).ready(function() {
 										required readonly></input>
 									<div class="invalid-feedback">Please Enter Valid Gate Fees.</div>
 								</div>
-							</div>
+							</div>-->
 						</div>
 					</div>
 				</div>
