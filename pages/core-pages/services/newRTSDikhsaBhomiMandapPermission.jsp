@@ -940,7 +940,7 @@ $(document).ready(function() {
         </tr>
         
         
-                   <tr>
+                   <!--<tr>
           <td>
           <span class="me-3">8) 2 Units of 5 kg capacity A B C type fire extinguishers and 200 liter capacity water drum will be kept in the pavilion for fire fighting?</span>
           <span class="me-3">अग्निशमन  करीत २ नग ५ किलो  क्षमतेचे  A B C type  फायर एक्स्टिंगशूर तसेच २०० लिटर क्षमतेचे पाण्याचे ड्रम मंडपात ठेवण्यात येणार आहे काय ?</span>
@@ -957,14 +957,14 @@ $(document).ready(function() {
               <label class="form-check-label" for="tentMaterialNo">No</label>
             </div>
           </td>
-        </tr>
+        </tr>-->
         
         
        
         
          <tr>
           <td>
-            <span class="me-3">9) Is the entrance for fire-fighting vehicles provided with a minimum clear height of 4.5 m and width of 6.0 m, and is the access route kept clear at all times for emergency movement?</span><br>
+            <span class="me-3">8) Is the entrance for fire-fighting vehicles provided with a minimum clear height of 4.5 m and width of 6.0 m, and is the access route kept clear at all times for emergency movement?</span><br>
             <span class="me-3">अग्निशमन वाहनासाठी प्रवेशद्वाराची उभी मोकळी उंची किमान 4.5 मी. व रुंदी किमान 6.0 मी. असून, आपत्कालीन हालचालीसाठी प्रवेशमार्ग सदैव मोकळा ठेवण्यात आला आहे का?</span>
           </td>
           <td>

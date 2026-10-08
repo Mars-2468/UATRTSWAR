@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2023-10-09T18:15:58 -->
+<!-- 2026-10-08T11:39:43 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ZoneCertificate" pageWidth="595" pageHeight="1200" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" isIgnorePagination="true" uuid="604a6bc3-ae55-4fb3-995f-76c562a21e2b">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="net.sf.jasperreports.print.create.bookmarks" value="false"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="EGOV_NMC_UAT"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="EGOVNMC_RTS"/>
 	<parameter name="rtiapplrefid" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select * from egovrti.diksha_bhumi_mandap_permission mp, egovrti.rti_application ra where mp.rti_ref_id = ra.rti_application_id and mp.rti_ref_id=$P{rtiapplrefid}]]>
@@ -47,6 +47,16 @@
 	<field name="trafficremarks" class="java.lang.String"/>
 	<field name="fireremarks" class="java.lang.String"/>
 	<field name="totalfees" class="java.lang.String"/>
+	<field name="noof_devotes" class="java.lang.String"/>
+	<field name="fireproof" class="java.lang.String"/>
+	<field name="vehicle" class="java.lang.String"/>
+	<field name="building" class="java.lang.String"/>
+	<field name="evacuation" class="java.lang.String"/>
+	<field name="firecrackers" class="java.lang.String"/>
+	<field name="extinguisher" class="java.lang.String"/>
+	<field name="trained" class="java.lang.String"/>
+	<field name="electricalwiring" class="java.lang.String"/>
+	<field name="pavilionfighting" class="java.lang.String"/>
 	<field name="rti_application_id" class="java.lang.Long"/>
 	<field name="rti_application_number" class="java.lang.String"/>
 	<field name="inward_number" class="java.lang.String"/>
@@ -70,7 +80,7 @@
 	<field name="phone_number" class="java.lang.String"/>
 	<field name="mobile_number" class="java.lang.String"/>
 	<field name="email" class="java.lang.String"/>
-	<field name="COLUMN_61" class="java.lang.Integer"/>
+	<field name="COLUMN_71" class="java.lang.Integer"/>
 	<field name="bpl" class="java.lang.Integer"/>
 	<field name="bpl_card_number" class="java.lang.String"/>
 	<field name="address_line1" class="java.lang.String"/>
@@ -78,7 +88,7 @@
 	<field name="district" class="java.lang.String"/>
 	<field name="postal_charges" class="java.lang.Double"/>
 	<field name="rti_application_ref_number" class="java.lang.String"/>
-	<field name="COLUMN_69" class="java.lang.Long"/>
+	<field name="COLUMN_79" class="java.lang.Long"/>
 	<field name="is_rti_appeal_application" class="java.lang.Integer"/>
 	<field name="has_assigned_user" class="java.lang.Integer"/>
 	<field name="rti_service_id" class="java.lang.Integer"/>
@@ -99,9 +109,30 @@
 	<field name="template_name" class="java.lang.String"/>
 	<field name="user_mobile_no" class="java.lang.String"/>
 	<field name="mobile_app_user_number" class="java.lang.String"/>
-	<field name="COLUMN_90" class="java.lang.String"/>
-	<field name="COLUMN_91" class="java.lang.String"/>
-	<field name="COLUMN_92" class="java.lang.String"/>
+	<field name="COLUMN_100" class="java.lang.String"/>
+	<field name="COLUMN_101" class="java.lang.String"/>
+	<field name="COLUMN_102" class="java.lang.String"/>
+	<field name="workflow_level_time" class="java.lang.String"/>
+	<field name="workflow_level" class="java.lang.String"/>
+	<field name="zone_map" class="java.lang.String"/>
+	<field name="property_payment_receipt" class="java.lang.String"/>
+	<field name="workflow_comments" class="java.lang.String"/>
+	<field name="rejectionletter" class="java.lang.String"/>
+	<field name="demandletter" class="java.lang.String"/>
+	<field name="noc" class="java.lang.String"/>
+	<field name="citizennoc" class="java.lang.String"/>
+	<field name="first_payment_fees" class="java.lang.String"/>
+	<field name="plantationletter" class="java.lang.String"/>
+	<field name="property_tax_certificate" class="java.lang.String"/>
+	<field name="tax_other_citizen_document_upload" class="java.lang.String"/>
+	<field name="aaplesarkar_user_mobile_no" class="java.lang.String"/>
+	<field name="aaple_user_track_id" class="java.lang.String"/>
+	<field name="aaple_user_id" class="java.lang.String"/>
+	<field name="aaple_service_id" class="java.lang.String"/>
+	<field name="aaple_application_id" class="java.lang.String"/>
+	<field name="service_id" class="java.lang.Integer"/>
+	<field name="application_status" class="java.lang.String"/>
+	<field name="isaplesarkarapp" class="java.lang.Integer"/>
 	<background>
 		<band/>
 	</background>
@@ -115,21 +146,6 @@
 						<font fontName="Arial Unicode MS" size="14"/>
 					</textElement>
 					<text><![CDATA[विषय :-]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="89" y="10" width="340" height="19" uuid="04571639-39b3-4761-b54a-53dcc33fcc86"/>
-					<textElement textAlignment="Center">
-						<font fontName="Arial Unicode MS" size="14"/>
-					</textElement>
-					<text><![CDATA[दीक्षा भूमी २०२३ संबंधाने ना हरकत प्रमाणपत्र ददले बाबत.
-]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="442" y="10" width="106" height="19" uuid="e0122a8f-3c4a-4736-99f9-c9c26006f4bc"/>
-					<textElement textAlignment="Right">
-						<font fontName="Arial Unicode MS" size="14"/>
-					</textElement>
-					<text><![CDATA[-२०२३-२४ करीता]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="20" y="30" width="90" height="20" uuid="e44eb9f7-58f7-4bb2-aa0d-82d6fcf41717"/>
@@ -217,6 +233,25 @@
 						<font fontName="Arial Unicode MS" size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{registration_date}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="69" y="9" width="483" height="20" uuid="c1d64673-104e-49f6-aba4-53d14f955a69">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Arial Unicode MS" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA["दीक्षा भूमी मंडपास नाहरकत प्रमाण पत्र देण्या बाबत " +
+Integer.toString(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR))
+    .replace('0','०').replace('1','१').replace('2','२').replace('3','३')
+    .replace('4','४').replace('5','५').replace('6','६').replace('7','७')
+    .replace('8','८').replace('9','९')
++ "-" +
+String.format("%02d", (java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)+1)%100)
+    .replace('0','०').replace('1','१').replace('2','२').replace('3','३')
+    .replace('4','४').replace('5','५').replace('6','६').replace('7','७')
+    .replace('8','८').replace('9','९')
++"  करीता."]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
