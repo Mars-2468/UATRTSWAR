@@ -652,7 +652,7 @@ $(document).ready(function() {
 </script>
 
 
-				<div class="col-md-6">
+				<!--<div class="col-md-6">
 					<div class="mb-2 mt-3">
 						<label for="" class="form-label ">Fees Details (फी तपशील)<span
 							class="text-danger" style="color: red;"">*</span></label>
@@ -682,7 +682,7 @@ $(document).ready(function() {
 							</div>
 						</div>
 					</div>
-				</div>
+				</div>-->
 
 
 <div class="col-md-11">
@@ -718,7 +718,7 @@ $(document).ready(function() {
 									</div>
 								</div>
 							</div>
-					<!--	<div class="col-md-3" style="margin-right: 25px;">
+						<div class="col-md-3" style="margin-right: 25px;">
 								<div class="mb-3 mt-2">
 									<label for="" class="form-label">Total Size (एकूण आकार)<span
 										class="text-danger" style="color: red;">*</span>
@@ -730,7 +730,7 @@ $(document).ready(function() {
 								</div>
 							</div>
 							
-							<div class="col-md-3" style="margin-left: -29px;">
+							<!--<div class="col-md-3" style="margin-left: -29px;">
 								<div class="mb-3 mt-2">
 									<label for="" class="form-label">Entry gate fees (प्रवेश द्वाराचे शुल्क)<span
 										class="text-danger" style="color: red;">*</span>
