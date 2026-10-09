@@ -803,7 +803,16 @@ h3 { font-weight: 500; }
 
 					
                     <div class="row" style="display: flex; width: 100%; margin-bottom: 0.1rem; height: 80px;">
-
+<input type="hidden" name="_token" value="xyz">
+			<input type="hidden" name="str" value="<c:out value='${str}'/>">
+			<input type="hidden" name="serviceId" value="<c:out value='${serviceId}'/>">
+			<input type="hidden" name="fields" value="<c:out value='${fields_aps}'/>">
+			<input type="hidden" name="distric" value="<c:out value='${distric}'/>">
+			<input type="hidden" name="trackid" value="<c:out value='${trackid}'/>">
+			<input type="hidden" name="user" value="<c:out value='${user}'/>">
+			<input type="hidden" name="mobile" value="<c:out value='${mobile}'/>">
+			<input type="hidden" name="name" value="<c:out value='${name}'/>">
+			
                         <div style="width: 33%;">
 								<label for="" class="form-label lbleng">Title&nbsp(शीर्षक)<span
 									class="text-danger" style="color: red;">*</span>
@@ -975,7 +984,9 @@ h3 { font-weight: 500; }
 									आयडी) <span class="text-danger" style="color: red;">*</span>
 								</label> <input type="email" class="form-control"
 									style="background-image: none;" id="appEmail" placeholder=""
-									name="appEmail" value="" required>
+									name="appEmail" value=""
+									               pattern="^[A-Za-z0-9]+([._%+\-][A-Za-z0-9]+)*@[A-Za-z0-9]+([.\-][A-Za-z0-9]+)*\.[A-Za-z]{2,}$"
+									 required>
 								<div class="invalid-feedback">Please Enter Valid Email Id.
 								</div>
 							</div>

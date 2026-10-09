@@ -325,6 +325,8 @@ $(window).on('load', function(){
 						<label for="email" class="form-label lbleng"> Email Id
 							(ईमेल आयडी ) <span class="text-danger">*</span>
 						</label> <input type="email" class="form-control "
+						               pattern="^[A-Za-z0-9]+([._%+\-][A-Za-z0-9]+)*@[A-Za-z0-9]+([.\-][A-Za-z0-9]+)*\.[A-Za-z]{2,}$"
+						
 							style="background-image: none;" name="email" value="" required>
 						<div class="invalid-feedback">Please Enter Valid Email Id.</div>
 					</div>

@@ -105,8 +105,16 @@ h3 {
             <h6 style="background-color:#dce2e8; padding:10px;" class="  rounded-2"><strong> Applicant Details (अर्जदाराचे तपशील) </strong>
             </h6>
             <div class="row">
-            <input type="hidden" name="_token" value="xyz">
-                       <div class="col-md-3">
+<input type="hidden" name="_token" value="xyz">
+			<input type="hidden" name="str" value="<c:out value='${str}'/>">
+			<input type="hidden" name="serviceId" value="<c:out value='${serviceId}'/>">
+			<input type="hidden" name="fields" value="<c:out value='${fields_aps}'/>">
+			<input type="hidden" name="distric" value="<c:out value='${distric}'/>">
+			<input type="hidden" name="trackid" value="<c:out value='${trackid}'/>">
+			<input type="hidden" name="user" value="<c:out value='${user}'/>">
+			<input type="hidden" name="mobile" value="<c:out value='${mobile}'/>">
+			<input type="hidden" name="name" value="<c:out value='${name}'/>">
+			                       <div class="col-md-3">
                            <div class="mb-3 mt-3">
                                <label for="" class="form-label">Title (शीर्षक) <span class="text-danger" style="color: red;">*</span>
                                </label>
@@ -283,7 +291,9 @@ h3 {
                                 
                             <label for="email"  class="form-label "> Email Id (ईमेल आयडी )<span class="text-danger" >*</span> </label>
                             
-                            <input type="email" class="form-control " style="background-image: none;" name="email" value="" required>
+                            <input type="email" class="form-control " style="background-image: none;" name="email" value=""
+                                           pattern="^[A-Za-z0-9]+([._%+\-][A-Za-z0-9]+)*@[A-Za-z0-9]+([.\-][A-Za-z0-9]+)*\.[A-Za-z]{2,}$"
+                             required>
                             <div class="invalid-feedback">
                                 Please Enter Valid Email Id.
                             </div>
