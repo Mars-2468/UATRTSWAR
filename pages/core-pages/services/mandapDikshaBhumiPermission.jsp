@@ -636,13 +636,13 @@ input[type="text"], textarea {
 						
 						</tr>
 						
-						<!--<tr>
+						<tr>
 						<td>
 							<span class="ClsLabel" style="font-size: 12px !important;"><fmt:message key="2 Units of 5 kg capacity A B C type fire extinguishers and 200 liter capacity water drum will be kept in the pavilion for fire fighting?" /> </span>
 							<span class="ClsLabel" style="font-size: 12px !important;">अग्निशमन  करीत २ नग ५ किलो  क्षमतेचे  A B C type  फायर एक्स्टिंगशूर तसेच २०० लिटर क्षमतेचे पाण्याचे ड्रम मंडपात ठेवण्यात येणार आहे काय ?</span></td>
 						<td>${mandapPermission.pavilionfighting}</td>
 						
-						</tr>-->
+						</tr>
 						
 					
 						<tr>
@@ -682,7 +682,35 @@ input[type="text"], textarea {
 			</tr>
 		</c:if>
 		
+		<c:if test="${requestScope.forLogin eq 'L3' ||  requestScope.forLogin eq 'L2' || requestScope.rtiApplication.workFlowStatus==2 || requestScope.rtiApplication.workFlowStatus==1 || requestScope.rtiApplication.workFlowStatus==5}">
 		
+		<tr>
+  <td><span class="ClsLabel" style="font-size: 14px">Fees Applicable (शुल्क लागू) <span style="color:red">*</span>:</span></td>
+  <td>
+    <c:set var="feeLocked" value="${not empty mandapPermission.feesApplicable}" />
+    <label><input type="radio" name="feesApplicable" value="Y" onclick="toggleFees()"
+        ${mandapPermission.feesApplicable eq 'Y' ? 'checked' : ''} ${feeLocked ? 'disabled' : ''}/> Yes</label>
+    &nbsp;&nbsp;
+    <label><input type="radio" name="feesApplicable" value="N" onclick="toggleFees()"
+        ${mandapPermission.feesApplicable eq 'N' ? 'checked' : ''} ${feeLocked ? 'disabled' : ''}/> No</label>
+  </td>
+</tr>
+<tr id="feeRow" style="display:none">
+  <td><span class="ClsLabel" style="font-size: 14px">Fee Amount (₹) <span style="color:red">*</span>:</span></td>
+  <td>
+    <input type="text" class="form-control" style="width:180px" id="feeAmount" name="feeAmount" maxlength="10"
+        value="<c:out value='${mandapPermission.feeAmount}'/>" ${feeLocked ? 'disabled' : ''}/>
+  </td>
+  <td><span class="ClsLabel" style="font-size: 14px">Payment (Cash) <span style="color:red">*</span>:</span></td>
+  <td>
+    <select class="form-control" style="width:180px" id="paymentStatus" name="paymentStatus" ${feeLocked ? 'disabled' : ''}>
+      <option value="">-- Select --</option>
+      <option value="PENDING" ${mandapPermission.paymentStatus eq 'PENDING' ? 'selected' : ''}>Pending</option>
+      <option value="PAID"    ${mandapPermission.paymentStatus eq 'PAID'    ? 'selected' : ''}>Paid (Cash received)</option>
+    </select>
+  </td>
+</tr>
+	</c:if>	
 		
 		
 <c:if test="${requestScope.forLogin eq 'L3' ||  requestScope.forLogin eq 'L2' || requestScope.rtiApplication.workFlowStatus==2 || requestScope.rtiApplication.workFlowStatus==1 || requestScope.rtiApplication.workFlowStatus==5}">
@@ -772,7 +800,7 @@ input[type="text"], textarea {
 							
 		<input type="hidden" name="UID" value="${mandapPermission.rti_ref_id}" />
 		
-	  <c:if test="${requestScope.rtiApplication.workFlowStatus!=1}">	
+	  <c:if test="${mandapPermission.fireremarks} is null or empty and ${requestScope.rtiApplication.workFlowStatus!=1}">	
 <tr>
 
 <td colspan="4" align="center"><input type="button"
@@ -868,53 +896,46 @@ function cleanFireInput(value) {
 }
 function saveFees(){
     var forLogin = "${requestScope.forLogin}";
-    var fireRemarks = $('#fireremarks').val();
+    var fireRemarks = cleanFireInput($('#fireremarks').val() || '');
     var flag = false;
-
-var fireremarks = $('#fireremarks').val();
-
-
-if(fireRemarks !== null && fireRemarks !== undefined){
-	var fireRemarks=cleanFireInput(fireremarks);
-
-}
-
-
-
-    function hasFiles(inputSelector) {
-        var input = $(inputSelector).get(0);
-        return input && input.files.length > 0;
-    }
-  
-    
- 
     var fireUpload = '${mandapPermission.fireNoc}';
-    
+
     if (forLogin === 'L3') {
-        if (fireRemarks !== '') {
-            if (fireUpload==='') {
-                if (confirm("Are you sure you want to save without uploading Fire NOC?")) {
-                    flag = true;
-                } else {
-                    return false;
-                }
-            } else {
-                if (confirm("Are you sure you want to save?")) {
-                    flag = true;
-                } else {
-                    return false;
-                }
+        // ---- Fees Applicable (mandatory) ----
+        var feesApplicable = $('input[name="feesApplicable"]:checked').val();
+        if (!feesApplicable) {
+            alert("Please select whether fees are applicable (Yes/No).");
+            return false;
+        }
+        if (feesApplicable === 'Y') {
+            var amt = $.trim($('#feeAmount').val());
+            if (!/^\d+(\.\d{1,2})?$/.test(amt) || parseFloat(amt) <= 0) {
+                alert("Please enter a valid fee amount.");
+                return false;
             }
-        } else {
+            if ($('#paymentStatus').val() === '') {
+                alert("Please select the payment status (Pending / Paid).");
+                return false;
+            }
+        }
+
+        if (fireRemarks === '') {
             alert("Please enter Remarks!");
             return false;
         }
+        var msg = (fireUpload === '')
+            ? "Are you sure you want to save without uploading Fire NOC?"
+            : "Are you sure you want to save?";
+        if (confirm(msg)) { flag = true; } else { return false; }
     }
-    
+
     if (flag) {
+        // disabled inputs are not submitted; enable before submit
+        $('#feeAmount, #paymentStatus, input[name="feesApplicable"]').prop('disabled', false);
         onPageSubmit('<c:out value="${contextRoot}"/>/rtsapplication/saveDikshaBhumiMandap.do');
     }
 }
+
 </script>
 	
 		<script type="text/javascript">
@@ -1251,6 +1272,13 @@ if(fireRemarks !== null && fireRemarks !== undefined){
     function complete() {
         var remarks = $('#remarks').val().trim();
    	 var value = '${requestScope.rtiApplication.pdfFilesSavedPath}';
+   	 var feesApplicable = '${mandapPermission.feesApplicable}';
+var paymentStatus  = '${mandapPermission.paymentStatus}';
+if (feesApplicable === 'Y' && paymentStatus !== 'PAID') {
+    alert("Fees are applicable and payment is not marked as Paid. Cannot close the application.");
+    return false;
+}
+   	 
         if (remarks !== "") {
             if (confirm("Do you really want to close the application?")) {
      		    if (value === '') {
@@ -1280,6 +1308,13 @@ if(fireRemarks !== null && fireRemarks !== undefined){
             return false;
         }
     }
+    
+    function toggleFees() {
+    var v = $('input[name="feesApplicable"]:checked').val();
+    $('#feeRow').toggle(v === 'Y');
+}
+$(document).ready(function () { toggleFees(); });
+    
 </script>
 
 	
