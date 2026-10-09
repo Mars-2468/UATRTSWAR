@@ -800,7 +800,7 @@ input[type="text"], textarea {
 							
 		<input type="hidden" name="UID" value="${mandapPermission.rti_ref_id}" />
 		
-	  <c:if test="${mandapPermission.fireremarks} is null or empty and ${requestScope.rtiApplication.workFlowStatus!=1}">	
+<c:if test="${empty mandapPermission.fireremarks and requestScope.rtiApplication.workFlowStatus != 1}">
 <tr>
 
 <td colspan="4" align="center"><input type="button"
