@@ -478,12 +478,12 @@ input[type="text"], textarea {
 				name="noOfCertificateCopies"
 				value="<c:out value="${mandapPermission.gateBreadth} ft"/>" disabled/>
 			</td>
-			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+			<!--<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
 						key="Total Size (एकूण आकार)" />:</span></td>
 			<td><input type="text" class="form-control" id=""
 				maxlength="10" name=""
 				value="<c:out value="${mandapPermission.gatetotalSize}"/>" disabled/></td>
-				
+				-->
 				
 		</tr>
 	
@@ -680,37 +680,7 @@ input[type="text"], textarea {
    <span class="download" style="align-items: center;color:white;">Download</span>
 </a></td>
 			</tr>
-		</c:if>
 		
-		<c:if test="${requestScope.forLogin eq 'L3' ||  requestScope.forLogin eq 'L2' || requestScope.rtiApplication.workFlowStatus==2 || requestScope.rtiApplication.workFlowStatus==1 || requestScope.rtiApplication.workFlowStatus==5}">
-		
-		<tr>
-  <td><span class="ClsLabel" style="font-size: 14px">Fees Applicable (शुल्क लागू) <span style="color:red">*</span>:</span></td>
-  <td>
-    <c:set var="feeLocked" value="${not empty mandapPermission.feesApplicable}" />
-    <label><input type="radio" name="feesApplicable" value="Y" onclick="toggleFees()"
-        ${mandapPermission.feesApplicable eq 'Y' ? 'checked' : ''} ${feeLocked ? 'disabled' : ''}/> Yes</label>
-    &nbsp;&nbsp;
-    <label><input type="radio" name="feesApplicable" value="N" onclick="toggleFees()"
-        ${mandapPermission.feesApplicable eq 'N' ? 'checked' : ''} ${feeLocked ? 'disabled' : ''}/> No</label>
-  </td>
-</tr>
-<tr id="feeRow" style="display:none">
-  <td><span class="ClsLabel" style="font-size: 14px">Fee Amount (₹) <span style="color:red">*</span>:</span></td>
-  <td>
-    <input type="text" class="form-control" style="width:180px" id="feeAmount" name="feeAmount" maxlength="10"
-        value="<c:out value='${mandapPermission.feeAmount}'/>" ${feeLocked ? 'disabled' : ''}/>
-  </td>
-  <td><span class="ClsLabel" style="font-size: 14px">Payment (Cash) <span style="color:red">*</span>:</span></td>
-  <td>
-    <select class="form-control" style="width:180px" id="paymentStatus" name="paymentStatus" ${feeLocked ? 'disabled' : ''}>
-      <option value="">-- Select --</option>
-      <option value="PENDING" ${mandapPermission.paymentStatus eq 'PENDING' ? 'selected' : ''}>Pending</option>
-      <option value="PAID"    ${mandapPermission.paymentStatus eq 'PAID'    ? 'selected' : ''}>Paid (Cash received)</option>
-    </select>
-  </td>
-</tr>
-	</c:if>	
 		
 		
 <c:if test="${requestScope.forLogin eq 'L3' ||  requestScope.forLogin eq 'L2' || requestScope.rtiApplication.workFlowStatus==2 || requestScope.rtiApplication.workFlowStatus==1 || requestScope.rtiApplication.workFlowStatus==5}">
@@ -722,14 +692,15 @@ input[type="text"], textarea {
 अग्निशमन विभागाकडून एनओसी)" />:</span> 
 				<td style="text-align: center" colspan="3.5">
 				 <c:choose>
-        <c:when test="${empty mandapPermission.fireNoc}">
+        <c:when test="${empty mandapPermission.fireremarks and empty mandapPermission.fireNoc}">
 				<input type="file" name="doc2" id="doc2" class="imagefile" style="width: 168px" />
 				<hr>
 <button style="margin-right: 15px; margin-top: 2px;" onclick="firedownload(${mandapPermission.rti_ref_id},'dikshaBhumifireNocCertificateReport.do')">Download Fire NOC</button>
 			<td>
    
     <a class="bg-button btn btn-primary bd-highlight" style="color:white" id="upload2"  type="button" target="_blank" onclick="javascript:uploadFireNoc(this);"><span
-							class="download" style="align-items: center">Upload</span></a>        </c:when>
+							class="download" style="align-items: center">Upload</span></a>       
+							 </c:when>
         <c:when test="${not empty mandapPermission.fireNoc}">
           <a class="bg-button btn btn-success bd-highlight action"
    type="button"
@@ -746,6 +717,53 @@ input[type="text"], textarea {
 		
 			
 			</c:if>
+			</c:if>
+		
+	<c:if test="${requestScope.forLogin eq 'L3' || requestScope.forLogin eq 'L2' || requestScope.forLogin eq 'L4' || requestScope.rtiApplication.workFlowStatus==2 || requestScope.rtiApplication.workFlowStatus==1 || requestScope.rtiApplication.workFlowStatus==5}">
+
+<c:set var="feeLocked" value="${not empty mandapPermission.feesApplicable}" />
+<c:set var="payPaid"   value="${mandapPermission.paymentStatus eq 'PAID'}" />
+<%-- payment status is the ONLY editable field after the first save: L3/L4, until PAID, while not closed/rejected --%>
+<c:set var="payEditable"
+       value="${feeLocked and mandapPermission.feesApplicable eq 'Y' and not payPaid
+                and (requestScope.forLogin eq 'L3' or requestScope.forLogin eq 'L4')
+                and requestScope.rtiApplication.workFlowStatus ne 1
+                and requestScope.rtiApplication.workFlowStatus ne 5}" />
+
+<tr>
+  <td><span class="ClsLabel" style="font-size: 14px">Fees Applicable (शुल्क लागू) <span style="color:red">*</span>:</span></td>
+  <td>
+    <label><input type="radio" name="feesApplicable" value="Y" onclick="toggleFees()"
+        ${mandapPermission.feesApplicable eq 'Y' ? 'checked' : ''} ${feeLocked ? 'disabled' : ''}/> Yes</label>
+    &nbsp;&nbsp;
+    <label><input type="radio" name="feesApplicable" value="N" onclick="toggleFees()"
+        ${mandapPermission.feesApplicable eq 'N' ? 'checked' : ''} ${feeLocked ? 'disabled' : ''}/> No</label>
+  </td>
+</tr>
+<tr id="feeRow" style="display:none">
+  <td><span class="ClsLabel" style="font-size: 14px">Fee Amount (₹) <span style="color:red">*</span>:</span></td>
+  <td>
+    <input type="text" class="form-control" style="width:180px" id="feeAmount" name="feeAmount" maxlength="10"
+        value="<c:out value='${mandapPermission.feeAmount}'/>" ${feeLocked ? 'disabled' : ''}/>
+  </td>
+  <td><span class="ClsLabel" style="font-size: 14px">Payment (Cash) <span style="color:red">*</span>:</span></td>
+  <td>
+    <select class="form-control" style="width:180px" id="paymentStatus" name="paymentStatus"
+            ${(feeLocked and not payEditable) ? 'disabled' : ''}>
+      <option value="">-- Select --</option>
+      <option value="PENDING" ${mandapPermission.paymentStatus eq 'PENDING' ? 'selected' : ''}>Pending</option>
+      <option value="PAID"    ${mandapPermission.paymentStatus eq 'PAID'    ? 'selected' : ''}>Paid (Cash received)</option>
+    </select>
+  </td>
+  <td>
+    <c:if test="${payEditable}">
+      <input type="button" class="btn btn-primary" style="color:white;border:none;min-height:30px"
+             id="updatePayment" value="Update Payment" onclick="savePayment()"/>
+    </c:if>
+  </td>
+</tr>
+</c:if>
+
 			
 	<table width="100%" border="0" cellpadding="1" cellspacing="1">
 		
@@ -797,10 +815,13 @@ input[type="text"], textarea {
                        onclick="javascript:saveBirthRegistrationCertificate(this.form);" tabindex="31">
                        <input type="button" class="ClsButton" id="clear" name="clear" value="<fmt:message key="common.button.clear"/>"
 							onclick="javascript:clearFields('SearchTable');searchRTIApplication()" /> --%>
+			<input type="hidden" id="paymentUpdate" name="paymentUpdate" value=""/>
 							
 		<input type="hidden" name="UID" value="${mandapPermission.rti_ref_id}" />
+	<c:if test="${requestScope.forLogin eq 'L3' and empty mandapPermission.feesApplicable
+              and requestScope.rtiApplication.workFlowStatus ne 1
+              and requestScope.rtiApplication.workFlowStatus ne 5}">
 		
-<c:if test="${empty mandapPermission.fireremarks and requestScope.rtiApplication.workFlowStatus != 1}">
 <tr>
 
 <td colspan="4" align="center"><input type="button"
@@ -930,11 +951,29 @@ function saveFees(){
     }
 
     if (flag) {
+    $('#paymentUpdate').val('');
         // disabled inputs are not submitted; enable before submit
         $('#feeAmount, #paymentStatus, input[name="feesApplicable"]').prop('disabled', false);
         onPageSubmit('<c:out value="${contextRoot}"/>/rtsapplication/saveDikshaBhumiMandap.do');
     }
 }
+
+function savePayment() {
+    var st = $('#paymentStatus').val();
+    if (st === '') {
+        alert("Please select the payment status.");
+        return false;
+    }
+    var msg = (st === 'PAID')
+        ? "Confirm that the cash payment has been received? This cannot be changed afterwards."
+        : "Save payment status as Pending?";
+    if (!confirm(msg)) { return false; }
+
+    $('#paymentUpdate').val('Y');
+    $('#paymentStatus').prop('disabled', false);   // disabled fields are not posted
+    onPageSubmit('<c:out value="${contextRoot}"/>/rtsapplication/saveDikshaBhumiMandap.do');
+}
+
 
 </script>
 	
