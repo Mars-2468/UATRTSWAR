@@ -636,13 +636,13 @@ input[type="text"], textarea {
 						
 						</tr>
 						
-						<tr>
+						<!--<tr>
 						<td>
 							<span class="ClsLabel" style="font-size: 12px !important;"><fmt:message key="2 Units of 5 kg capacity A B C type fire extinguishers and 200 liter capacity water drum will be kept in the pavilion for fire fighting?" /> </span>
 							<span class="ClsLabel" style="font-size: 12px !important;">अग्निशमन  करीत २ नग ५ किलो  क्षमतेचे  A B C type  फायर एक्स्टिंगशूर तसेच २०० लिटर क्षमतेचे पाण्याचे ड्रम मंडपात ठेवण्यात येणार आहे काय ?</span></td>
 						<td>${mandapPermission.pavilionfighting}</td>
 						
-						</tr>
+						</tr>-->
 						
 					
 						<tr>
