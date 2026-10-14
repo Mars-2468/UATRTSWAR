@@ -453,7 +453,7 @@ input[type="text"], textarea {
 						key="Total Size (एकूण आकार)" />:</span></td>
 			<td><input type="text" class="form-control" id=""
 				maxlength="10" name=""
-				value="<c:out value="${mandapPermission.totalSize}"/>" disabled/></td>
+				value="<c:out value="${mandapPermission.gatetotalSize}"/>" disabled/></td>
 				
 				
 		</tr>
@@ -525,7 +525,7 @@ input[type="text"], textarea {
 	
 	
 	
-	  <c:if test="${requestScope.rtiApplication.workFlowStatus==2}">
+	  <c:if test="${requestScope.rtiApplication.workFlowStatus==2 and requestScope.forLogin eq 'L4'}">
 
 <tr>
 	       <td colspan="6" align="center">
