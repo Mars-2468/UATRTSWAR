@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2026-10-08T11:39:43 -->
+<!-- 2026-10-14T12:24:51 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ZoneCertificate" pageWidth="595" pageHeight="1200" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" isIgnorePagination="true" uuid="604a6bc3-ae55-4fb3-995f-76c562a21e2b">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -57,6 +57,10 @@
 	<field name="trained" class="java.lang.String"/>
 	<field name="electricalwiring" class="java.lang.String"/>
 	<field name="pavilionfighting" class="java.lang.String"/>
+	<field name="fees_applicable" class="java.lang.String"/>
+	<field name="fee_amount" class="java.lang.String"/>
+	<field name="payment_status" class="java.lang.String"/>
+	<field name="payment_date" class="java.lang.String"/>
 	<field name="rti_application_id" class="java.lang.Long"/>
 	<field name="rti_application_number" class="java.lang.String"/>
 	<field name="inward_number" class="java.lang.String"/>
@@ -80,7 +84,7 @@
 	<field name="phone_number" class="java.lang.String"/>
 	<field name="mobile_number" class="java.lang.String"/>
 	<field name="email" class="java.lang.String"/>
-	<field name="COLUMN_71" class="java.lang.Integer"/>
+	<field name="COLUMN_75" class="java.lang.Integer"/>
 	<field name="bpl" class="java.lang.Integer"/>
 	<field name="bpl_card_number" class="java.lang.String"/>
 	<field name="address_line1" class="java.lang.String"/>
@@ -88,7 +92,7 @@
 	<field name="district" class="java.lang.String"/>
 	<field name="postal_charges" class="java.lang.Double"/>
 	<field name="rti_application_ref_number" class="java.lang.String"/>
-	<field name="COLUMN_79" class="java.lang.Long"/>
+	<field name="COLUMN_83" class="java.lang.Long"/>
 	<field name="is_rti_appeal_application" class="java.lang.Integer"/>
 	<field name="has_assigned_user" class="java.lang.Integer"/>
 	<field name="rti_service_id" class="java.lang.Integer"/>
@@ -109,9 +113,9 @@
 	<field name="template_name" class="java.lang.String"/>
 	<field name="user_mobile_no" class="java.lang.String"/>
 	<field name="mobile_app_user_number" class="java.lang.String"/>
-	<field name="COLUMN_100" class="java.lang.String"/>
-	<field name="COLUMN_101" class="java.lang.String"/>
-	<field name="COLUMN_102" class="java.lang.String"/>
+	<field name="COLUMN_104" class="java.lang.String"/>
+	<field name="COLUMN_105" class="java.lang.String"/>
+	<field name="COLUMN_106" class="java.lang.String"/>
 	<field name="workflow_level_time" class="java.lang.String"/>
 	<field name="workflow_level" class="java.lang.String"/>
 	<field name="zone_map" class="java.lang.String"/>
