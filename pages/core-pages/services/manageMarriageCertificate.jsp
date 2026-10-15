@@ -1527,7 +1527,6 @@ document.getElementById("dob").setAttribute("max", currentDate);
 				</td>
 		</tr>
 
-<c:if test="${requestScope.rtiApplication.workFlowStatus==0}">
             <tr style="height: 60px;">
                 <td colspan="7" style="background-color: #e0e0e0; text-align: center;">
                     <button type="submit" id="saveButton" class="btn btn-primary"
@@ -1537,7 +1536,6 @@ document.getElementById("dob").setAttribute("max", currentDate);
                     </button>
                 </td>
             </tr>
-        </c:if>
 </form>
 <table>
 
