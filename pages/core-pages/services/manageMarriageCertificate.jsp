@@ -1691,7 +1691,7 @@ document.getElementById("dob").setAttribute("max", currentDate);
 					</c:if>
 				</span></td>
 				<td>
-														<c:if test="${requestScope.rtiApplication.workFlowStatus==2 || requestScope.rtiApplication.workFlowStatus==1 || requestScope.rtiApplication.workFlowStatus==5}">
+														<c:if test="${(requestScope.rtiApplication.workFlowStatus==2 || requestScope.rtiApplication.workFlowStatus==1 || requestScope.rtiApplication.workFlowStatus==5) and isL2User}">
 				
 				<span class="ClsLabel" style="font-size: 14px">Certificate
 						Upload: </span></td>
