@@ -1539,8 +1539,9 @@ document.getElementById("dob").setAttribute("max", currentDate);
             </tr>
         </c:if>-->
         
-        <c:if test="${requestScope.rtiApplication.workFlowStatus != 5}">
-  <tr style="height:60px;">
+<c:if test="${requestScope.rtiApplication.workFlowStatus != 5
+              and not (requestScope.rtiApplication.workFlowStatus == 1 and postClosureEditUsed)}">
+                <tr style="height:60px;">
     <td colspan="7" style="background-color:#e0e0e0; text-align:center;">
       <input type="hidden" id="editReason" name="editReason" value="">
       <input type="hidden" id="editProofFile" name="editProofFile" value="">
@@ -1927,34 +1928,7 @@ document.getElementById("dob").setAttribute("max", currentDate);
 						</c:if>
 			</tr>
 
-<c:if test="${not empty editHistory}">
-<tr><td colspan="6" style="background:#c5ddfe;"><span class="ClsLabel" style="font-size:17px;">Edit History</span></td></tr>
-<tr><td colspan="6">
- <table class="table table-bordered table-sm" style="font-size:12px;">
-  <tr class="ClsTRHeaderList"><th>Edit #</th><th>Employee ID</th>
-  <th>Date/Time</th>
-      <th>Field</th><th>Previous</th><th>Updated</th><th>Reason</th><th>Proof</th></tr>
-  <c:forEach var="h" items="${editHistory}">
-   <tr><td>${h.edit_no}</td><td><c:out value="${h.edited_by_id}"/></td>
-       <td><fmt:formatDate value="${h.edited_on}" pattern="dd-MM-yyyy HH:mm:ss"/></td>
-       <td><c:out value="${h.field_name}"/></td><td><c:out value="${h.old_value}"/></td><td><c:out value="${h.new_value}"/></td>
-       <td><c:out value="${h.edit_reason}"/></td>
-       <td><c:if test="${not empty h.proof_file}"><a href="#" onclick="docDownload('${fn:replace(h.proof_file,'\\\\','/')}');return false;">View</a></c:if></td></tr>
-  </c:forEach>
- </table>
-</td></tr>
-</c:if>
-<c:if test="${not empty certVersions}">
-<tr><td colspan="6"><b>Certificate versions</b>
- <table class="table table-bordered table-sm" style="font-size:12px;">
-  <tr class="ClsTRHeaderList"><th>Version</th><th>After edit #</th><th>Uploaded by</th><th>Uploaded on</th><th>Current</th><th>File</th></tr>
-  <c:forEach var="v" items="${certVersions}">
-   <tr><td>${v.version_no}</td><td>${v.edit_no}</td><td><c:out value="${v.uploaded_by}"/></td>
-       <td><fmt:formatDate value="${v.uploaded_on}" pattern="dd-MM-yyyy HH:mm"/></td><td>${v.is_current}</td>
-       <td><a href="#" onclick="docDownload('${fn:replace(v.file_path,'\\\\','/')}');return false;">View</a></td></tr>
-  </c:forEach>
- </table></td></tr>
-</c:if>
+
 
 			<!--		<tr>
 			<td colspan="6" align="center"><input type="button"
@@ -2049,6 +2023,34 @@ document.getElementById("dob").setAttribute("max", currentDate);
 
 			</c:if>
 							</tr>
+							<c:if test="${not empty editHistory}">
+<tr><td colspan="6" style="background:#c5ddfe;"><span class="ClsLabel" style="font-size:17px;">Edit History</span></td></tr>
+<tr><td colspan="6">
+ <table class="table table-bordered table-sm" style="font-size:12px;">
+  <tr class="ClsTRHeaderList"><th>Edit #</th><th>Employee ID</th>
+  <th>Date/Time</th>
+      <th>Field</th><th>Previous</th><th>Updated</th><th>Reason</th><th>Proof</th></tr>
+  <c:forEach var="h" items="${editHistory}">
+   <tr><td>${h.edit_no}</td><td><c:out value="${h.edited_by_id}"/></td>
+       <td><fmt:formatDate value="${h.edited_on}" pattern="dd-MM-yyyy HH:mm:ss"/></td>
+       <td><c:out value="${h.field_name}"/></td><td><c:out value="${h.old_value}"/></td><td><c:out value="${h.new_value}"/></td>
+       <td><c:out value="${h.edit_reason}"/></td>
+       <td><c:if test="${not empty h.proof_file}"><a href="#" onclick="docDownload('${fn:replace(h.proof_file,'\\\\','/')}');return false;">View</a></c:if></td></tr>
+  </c:forEach>
+ </table>
+</td></tr>
+</c:if>
+<c:if test="${not empty certVersions}">
+<tr><td colspan="6"><b>Certificate versions</b>
+ <table class="table table-bordered table-sm" style="font-size:12px;">
+  <tr class="ClsTRHeaderList"><th>Version</th><th>After edit #</th><th>Uploaded by</th><th>Uploaded on</th><th>Current</th><th>File</th></tr>
+  <c:forEach var="v" items="${certVersions}">
+   <tr><td>${v.version_no}</td><td>${v.edit_no}</td><td><c:out value="${v.uploaded_by}"/></td>
+       <td><fmt:formatDate value="${v.uploaded_on}" pattern="dd-MM-yyyy HH:mm"/></td><td>${v.is_current}</td>
+       <td><a href="#" onclick="docDownload('${fn:replace(v.file_path,'\\\\','/')}');return false;">View</a></td></tr>
+  </c:forEach>
+ </table></td></tr>
+</c:if>
 			
 		</table>
 		<br>
@@ -2363,7 +2365,9 @@ document.getElementById("dob").setAttribute("max", currentDate);
 	                location.reload();
 	            });
 	        },
-	        error: function (xhr) { alert('Upload failed (' + xhr.status + '). Please try again.'); }
+	    }, 'json').fail(function (xhr) {
+	        alert('File uploaded, but version history failed (HTTP ' + xhr.status + '). Please inform the administrator.');
+	        location.reload();
 	    });
 	}
 </script>
