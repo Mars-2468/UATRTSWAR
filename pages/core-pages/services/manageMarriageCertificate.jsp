@@ -1538,10 +1538,10 @@ document.getElementById("dob").setAttribute("max", currentDate);
                 </td>
             </tr>
         </c:if>-->
-        
-<c:if test="${requestScope.rtiApplication.workFlowStatus != 5
-              and not (requestScope.rtiApplication.workFlowStatus == 1 and postClosureEditUsed)}">
-                <tr style="height:60px;">
+        <c:if test="${requestScope.rtiApplication.workFlowStatus != 5
+              and (requestScope.rtiApplication.workFlowStatus != 1
+                   or (isL2User and not postClosureEditUsed))}">
+ <tr style="height:60px;">
     <td colspan="7" style="background-color:#e0e0e0; text-align:center;">
       <input type="hidden" id="editReason" name="editReason" value="">
       <input type="hidden" id="editProofFile" name="editProofFile" value="">
@@ -1656,8 +1656,7 @@ document.getElementById("dob").setAttribute("max", currentDate);
 </script>
 
 		
-
-<c:if test="${requestScope.rtiApplication.workFlowStatus==2 or (requestScope.rtiApplication.workFlowStatus==1 and regenerationPending)}">
+<c:if test="${requestScope.rtiApplication.workFlowStatus==2 or (requestScope.rtiApplication.workFlowStatus==1 and regenerationPending and isL2User)}">
 				<tr>
 					<td colspan="6" align="center"><a
 						class="bg-button btn btn-success bd-highlight generateaction"
@@ -1701,14 +1700,15 @@ document.getElementById("dob").setAttribute("max", currentDate);
 				
 				</c:if>
 			</tr>
-			<c:if test="${requestScope.rtiApplication.workFlowStatus==1 and regenerationPending and not empty requestScope.rtiApplication.pdfFilesSavedPath}">
+			
+			<c:if test="${requestScope.rtiApplication.workFlowStatus==1 and regenerationPending and isL2User and not empty requestScope.rtiApplication.pdfFilesSavedPath}">
 <tr>
   <td colspan="6" align="center" style="background:#fff3cd; padding:8px;">
     <span class="ClsLabel" style="font-size:14px; color:#856404;">
       Certificate was edited after closure. Generate the new certificate, choose the PDF in the upload box above, then click Re-upload.
     </span>
     <a class="bg-button btn btn-warning bd-highlight generateaction" id="reuploadBtn"
-       style="color:#000;" onclick="reuploadCertificate();">Re-upload Certificate</a>
+       style="color:#000;" onclick="reuploadCertificate();">Re-upload</a>
   </td>
 </tr>
 </c:if>
@@ -2338,17 +2338,17 @@ document.getElementById("dob").setAttribute("max", currentDate);
 	    });
 	}
 	function reuploadCertificate() {
-	    var input = document.getElementById('idProof');            // file box rendered by fileUpload.jsp
+	    var input = document.getElementById('idProof');
 	    var file = input && input.files ? input.files[0] : null;
 	    if (!file) { alert('Please choose the regenerated certificate PDF first.'); return; }
 	    if (!/\.pdf$/i.test(file.name)) { alert('Please attach a PDF only.'); return; }
 	    if (!confirm('This will replace the current certificate with the selected file. Continue?')) return;
 
 	    var ctx = '<c:out value="${contextRoot}"/>';
-	    var uid = $('#rtiApplicationRefIds').val();                // same UID readURL() uses
+	    var uid = $('#rtiApplicationRefIds').val();
 
 	    var data = new FormData();
-	    data.append('idProof', file);                              // file only: that endpoint breaks on non-file fields
+	    data.append('idProof', file);
 
 	    $.ajax({
 	        url: ctx + '/rtiapplication/uploadCFCLicenseDocs.do?appType=1&UID=' + encodeURIComponent(uid),
@@ -2360,14 +2360,12 @@ document.getElementById("dob").setAttribute("max", currentDate);
 	                alert(x.ok ? 'Certificate re-uploaded successfully.'
 	                           : 'File uploaded, but version history was not recorded: ' + x.msg);
 	                location.reload();
-	            }, 'json').fail(function () {
-	                alert('File uploaded, but the version history call failed.');
+	            }, 'json').fail(function (xhr) {
+	                alert('File uploaded, but version history failed (HTTP ' + xhr.status + ').');
 	                location.reload();
 	            });
 	        },
-	    }, 'json').fail(function (xhr) {
-	        alert('File uploaded, but version history failed (HTTP ' + xhr.status + '). Please inform the administrator.');
-	        location.reload();
+	        error: function (xhr) { alert('Upload failed (' + xhr.status + '). Please try again.'); }
 	    });
 	}
 </script>
