@@ -1527,7 +1527,7 @@ document.getElementById("dob").setAttribute("max", currentDate);
 				</td>
 		</tr>
 
-<c:if test="${requestScope.rtiApplication.workFlowStatus!=1 or requestScope.rtiApplication.workFlowStatus!=5 }">
+<!--<c:if test="${requestScope.rtiApplication.workFlowStatus!=1 or requestScope.rtiApplication.workFlowStatus!=5 }">
             <tr style="height: 60px;">
                 <td colspan="7" style="background-color: #e0e0e0; text-align: center;">
                     <button type="submit" id="saveButton" class="btn btn-primary"
@@ -1537,7 +1537,20 @@ document.getElementById("dob").setAttribute("max", currentDate);
                     </button>
                 </td>
             </tr>
-        </c:if>
+        </c:if>-->
+        
+        <c:if test="${requestScope.rtiApplication.workFlowStatus != 5}">
+  <tr style="height:60px;">
+    <td colspan="7" style="background-color:#e0e0e0; text-align:center;">
+      <input type="hidden" id="editReason" name="editReason" value="">
+      <input type="hidden" id="editProofFile" name="editProofFile" value="">
+      <button type="button" id="editBtn" class="btn btn-warning"
+              onclick="startEdit(${requestScope.rtiApplication.workFlowStatus == 1});">Edit</button>
+      <button type="button" id="saveButton" class="btn btn-primary" style="display:none;" onclick="edit(event);">Save</button>
+      <button type="button" id="cancelEditBtn" class="btn btn-secondary" style="display:none;" onclick="location.reload();">Cancel</button>
+    </td>
+  </tr>
+</c:if>
 </form>
 <table>
 
@@ -1643,8 +1656,7 @@ document.getElementById("dob").setAttribute("max", currentDate);
 
 		
 
-			<c:if test="${requestScope.rtiApplication.workFlowStatus==2}">
-
+<c:if test="${requestScope.rtiApplication.workFlowStatus==2 or (requestScope.rtiApplication.workFlowStatus==1 and regenerationPending)}">
 				<tr>
 					<td colspan="6" align="center"><a
 						class="bg-button btn btn-success bd-highlight generateaction"
@@ -1688,6 +1700,17 @@ document.getElementById("dob").setAttribute("max", currentDate);
 				
 				</c:if>
 			</tr>
+			<c:if test="${requestScope.rtiApplication.workFlowStatus==1 and regenerationPending and not empty requestScope.rtiApplication.pdfFilesSavedPath}">
+<tr>
+  <td colspan="6" align="center" style="background:#fff3cd; padding:8px;">
+    <span class="ClsLabel" style="font-size:14px; color:#856404;">
+      The certificate was edited after closure. Generate the new certificate, choose the PDF in the upload box above, then click Re-upload.
+    </span>
+    <a class="bg-button btn btn-warning bd-highlight generateaction" id="reuploadBtn"
+       style="color:#000;" onclick="reuploadCertificate();">Re-upload Certificate</a>
+  </td>
+</tr>
+</c:if>
 
 			<tr>
 				<!-- <td colspan="6" style="padding-top: 5px"><img
@@ -1904,7 +1927,33 @@ document.getElementById("dob").setAttribute("max", currentDate);
 						</c:if>
 			</tr>
 
-
+<c:if test="${not empty editHistory}">
+<tr><td colspan="6" style="background:#c5ddfe;"><span class="ClsLabel" style="font-size:17px;">Edit History</span></td></tr>
+<tr><td colspan="6">
+ <table class="table table-bordered table-sm" style="font-size:12px;">
+  <tr class="ClsTRHeaderList"><th>Edit #</th><th>Employee ID</th><th>Name</th><th>Date/Time</th>
+      <th>Field</th><th>Previous</th><th>Updated</th><th>Reason</th><th>Proof</th></tr>
+  <c:forEach var="h" items="${editHistory}">
+   <tr><td>${h.edit_no}</td><td><c:out value="${h.edited_by_id}"/></td><td><c:out value="${h.edited_by_name}"/></td>
+       <td><fmt:formatDate value="${h.edited_on}" pattern="dd-MM-yyyy HH:mm:ss"/></td>
+       <td><c:out value="${h.field_name}"/></td><td><c:out value="${h.old_value}"/></td><td><c:out value="${h.new_value}"/></td>
+       <td><c:out value="${h.edit_reason}"/></td>
+       <td><c:if test="${not empty h.proof_file}"><a href="#" onclick="docDownload('${fn:replace(h.proof_file,'\\\\','/')}');return false;">View</a></c:if></td></tr>
+  </c:forEach>
+ </table>
+</td></tr>
+</c:if>
+<c:if test="${not empty certVersions}">
+<tr><td colspan="6"><b>Certificate versions</b>
+ <table class="table table-bordered table-sm" style="font-size:12px;">
+  <tr class="ClsTRHeaderList"><th>Version</th><th>After edit #</th><th>Uploaded by</th><th>Uploaded on</th><th>Current</th><th>File</th></tr>
+  <c:forEach var="v" items="${certVersions}">
+   <tr><td>${v.version_no}</td><td>${v.edit_no}</td><td><c:out value="${v.uploaded_by}"/></td>
+       <td><fmt:formatDate value="${v.uploaded_on}" pattern="dd-MM-yyyy HH:mm"/></td><td>${v.is_current}</td>
+       <td><a href="#" onclick="docDownload('${fn:replace(v.file_path,'\\\\','/')}');return false;">View</a></td></tr>
+  </c:forEach>
+ </table></td></tr>
+</c:if>
 
 			<!--		<tr>
 			<td colspan="6" align="center"><input type="button"
@@ -2013,6 +2062,21 @@ document.getElementById("dob").setAttribute("max", currentDate);
 <input type="hidden" id="responseData" name="responseData"
 								value="" />
 			<%@include file="/pages/workflow/taskInclude.jsp"%>
+			<div class="modal fade" id="editReasonModal" tabindex="-1">
+  <div class="modal-dialog"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title">Edit closed application</h5></div>
+    <div class="modal-body">
+      <label>Reason for edit *</label>
+      <textarea id="reasonInput" class="form-control" style="width:100%;height:80px;" maxlength="1000"></textarea>
+      <label class="mt-2">Proof document * (PDF/JPG/PNG, max 5 MB)</label>
+      <input type="file" id="proofInput" class="form-control" style="width:100%;" accept=".pdf,.jpg,.jpeg,.png">
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+      <button type="button" class="btn btn-primary" onclick="uploadProofAndEdit();">Proceed to edit</button>
+    </div>
+  </div></div>
+</div>
 
 	<script type="text/javascript">
     function saveEntity() {
@@ -2210,4 +2274,69 @@ document.getElementById("dob").setAttribute("max", currentDate);
 
  	    window.open('<c:out value="${contextRoot}"/>/rtsApplication/getPdf.do?fp=' + encodedFilesPath, '_blank');
  	}
+
+	$(function () { $('#data .form-control').prop('disabled', true); });   // read-only by default
+
+	function enableEdit() {
+	    // readonly fields (zone, tenant, days, fees, ages, full name) stay locked
+	    $('#data .form-control').not('[readonly]').prop('disabled', false);
+	    $('#editBtn').hide();
+	    $('#saveButton, #cancelEditBtn').show();
+	}
+
+	function startEdit(closed) {
+	    if (closed) {
+	        var el = document.getElementById('editReasonModal');
+	        if (!el) { alert('Edit dialog not found on page.'); return; }
+	        bootstrap.Modal.getOrCreateInstance(el).show();
+	    } else { enableEdit(); }
+	}
+
+	function uploadProofAndEdit() {
+	    var reason = $.trim($('#reasonInput').val());
+	    var f = $('#proofInput')[0].files[0];
+	    if (reason.length < 10) { alert('Please enter the reason (at least 10 characters).'); return; }
+	    if (!f) { alert('Please attach the proof document.'); return; }
+	    if (!/\.(pdf|jpe?g|png)$/i.test(f.name) || f.size > 5 * 1024 * 1024) { alert('PDF/JPG/PNG up to 5 MB only.'); return; }
+	    var fd = new FormData();
+	    fd.append('proof', f);
+	    fd.append('rtiApplicationId', '${requestScope.rtiApplication.rtiApplicationId}');
+	    $.ajax({ url: '<c:out value="${contextRoot}"/>/rtiapplication/uploadMarriageEditProof.do',
+	             type: 'POST', data: fd, processData: false, contentType: false, dataType: 'json',
+	        success: function (r) {
+	            if (!r.ok) { alert(r.msg); return; }
+	            $('#editReason').val(reason); $('#editProofFile').val(r.file);
+	            bootstrap.Modal.getInstance(document.getElementById('editReasonModal')).hide();
+	            enableEdit();
+	        },
+	        error: function () { alert('Proof upload failed. Please try again.'); } });
+	}
+
+	function reuploadCertificate() {
+	    var input = document.getElementById('idProof');          // the file box from fileUpload.jsp
+	    if (!input || input.type !== 'file') { alert('Upload box not found.'); return; }
+	    var f = input.files && input.files[0];
+	    if (!f) { alert('Please choose the regenerated certificate PDF first.'); return; }
+	    if (!/\.pdf$/i.test(f.name)) { alert('Please attach a PDF only.'); return; }
+	    if (!confirm('This will replace the current certificate with the selected file. Continue?')) return;
+
+	    var ctx = '<c:out value="${contextRoot}"/>';
+	    var rtiId = $('#rtiApplicationRefIds').val();            // same value readURL() uses as UID
+	    var fd = new FormData();
+	    fd.append('idProof', f);                                  // file only: the endpoint breaks on non-file fields
+
+	    $.ajax({ url: ctx + '/rtiapplication/uploadCFCLicenseDocs.do?appType=1&UID=' + rtiId,
+	        type: 'POST', data: fd, cache: false, dataType: 'json', processData: false, contentType: false,
+	        success: function (r) {
+	            if (r.status !== true) { alert('Upload failed!'); return; }
+	            $.post(ctx + '/rtiapplication/registerMarriageCertReupload.do', { rtiApplicationId: rtiId },
+	                function (x) {
+	                    alert(x.ok ? 'Certificate re-uploaded successfully.'
+	                               : 'File uploaded, but version history was not recorded: ' + x.msg);
+	                    location.reload();
+	                }, 'json')
+	             .fail(function () { alert('File uploaded, but version history call failed.'); location.reload(); });
+	        },
+	        error: function () { alert('Upload failed. Please try again.'); } });
+	}
 </script>
