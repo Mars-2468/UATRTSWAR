@@ -1691,7 +1691,7 @@ document.getElementById("dob").setAttribute("max", currentDate);
 					</c:if>
 				</span></td>
 				<td>
-														<c:if test="${requestScope.rtiApplication.workFlowStatus==3 || requestScope.rtiApplication.workFlowStatus==2 || requestScope.rtiApplication.workFlowStatus==1 || requestScope.rtiApplication.workFlowStatus==12 || requestScope.rtiApplication.workFlowStatus==5}">
+														<c:if test="${requestScope.rtiApplication.workFlowStatus==2 || requestScope.rtiApplication.workFlowStatus==1 || requestScope.rtiApplication.workFlowStatus==5}">
 				
 				<span class="ClsLabel" style="font-size: 14px">Certificate
 						Upload: </span></td>
@@ -1704,7 +1704,7 @@ document.getElementById("dob").setAttribute("max", currentDate);
 <tr>
   <td colspan="6" align="center" style="background:#fff3cd; padding:8px;">
     <span class="ClsLabel" style="font-size:14px; color:#856404;">
-      The certificate was edited after closure. Generate the new certificate, choose the PDF in the upload box above, then click Re-upload.
+      Certificate was edited after closure. Generate the new certificate, choose the PDF in the upload box above, then click Re-upload.
     </span>
     <a class="bg-button btn btn-warning bd-highlight generateaction" id="reuploadBtn"
        style="color:#000;" onclick="reuploadCertificate();">Re-upload Certificate</a>
@@ -1931,10 +1931,11 @@ document.getElementById("dob").setAttribute("max", currentDate);
 <tr><td colspan="6" style="background:#c5ddfe;"><span class="ClsLabel" style="font-size:17px;">Edit History</span></td></tr>
 <tr><td colspan="6">
  <table class="table table-bordered table-sm" style="font-size:12px;">
-  <tr class="ClsTRHeaderList"><th>Edit #</th><th>Employee ID</th><th>Name</th><th>Date/Time</th>
+  <tr class="ClsTRHeaderList"><th>Edit #</th><th>Employee ID</th>
+  <th>Date/Time</th>
       <th>Field</th><th>Previous</th><th>Updated</th><th>Reason</th><th>Proof</th></tr>
   <c:forEach var="h" items="${editHistory}">
-   <tr><td>${h.edit_no}</td><td><c:out value="${h.edited_by_id}"/></td><td><c:out value="${h.edited_by_name}"/></td>
+   <tr><td>${h.edit_no}</td><td><c:out value="${h.edited_by_id}"/></td>
        <td><fmt:formatDate value="${h.edited_on}" pattern="dd-MM-yyyy HH:mm:ss"/></td>
        <td><c:out value="${h.field_name}"/></td><td><c:out value="${h.old_value}"/></td><td><c:out value="${h.new_value}"/></td>
        <td><c:out value="${h.edit_reason}"/></td>
@@ -2294,49 +2295,75 @@ document.getElementById("dob").setAttribute("max", currentDate);
 
 	function uploadProofAndEdit() {
 	    var reason = $.trim($('#reasonInput').val());
-	    var f = $('#proofInput')[0].files[0];
-	    if (reason.length < 10) { alert('Please enter the reason (at least 10 characters).'); return; }
-	    if (!f) { alert('Please attach the proof document.'); return; }
-	    if (!/\.(pdf|jpe?g|png)$/i.test(f.name) || f.size > 5 * 1024 * 1024) { alert('PDF/JPG/PNG up to 5 MB only.'); return; }
-	    var fd = new FormData();
-	    fd.append('proof', f);
-	    fd.append('rtiApplicationId', '${requestScope.rtiApplication.rtiApplicationId}');
-	    $.ajax({ url: '<c:out value="${contextRoot}"/>/rtiapplication/uploadMarriageEditProof.do',
-	             type: 'POST', data: fd, processData: false, contentType: false, dataType: 'json',
-	        success: function (r) {
-	            if (!r.ok) { alert(r.msg); return; }
-	            $('#editReason').val(reason); $('#editProofFile').val(r.file);
-	            bootstrap.Modal.getInstance(document.getElementById('editReasonModal')).hide();
-	            enableEdit();
-	        },
-	        error: function () { alert('Proof upload failed. Please try again.'); } });
-	}
+	    var file = document.getElementById('proofInput').files[0];
 
+	    if (reason.length < 10) { alert('Please enter the reason (at least 10 characters).'); return; }
+	    if (!file) { alert('Please attach the proof document.'); return; }
+
+	    var fileName = file.name.toLowerCase();
+	    if (!/\.(pdf|jpe?g|png)$/.test(fileName)) { alert('Only PDF, JPG or PNG files are allowed'); return; }
+	    if (fileName.substring(0, fileName.lastIndexOf('.')).indexOf('.') !== -1) {
+	        alert('Invalid file name (double extension not allowed)'); return;
+	    }
+	    if (file.size > 5 * 1024 * 1024) { alert('File size must be less than 5MB'); return; }
+
+	    var uid = '${requestScope.rtiApplication.rtiApplicationId}';
+	    if (!uid) { alert('Invalid ID'); return; }
+
+	    var data = new FormData();
+	    data.append('file', file);
+
+	    $.ajax({
+	        url: '<c:out value="${contextRoot}"/>/rtiapplication/uploadMarriageEditProof.do?UID=' + encodeURIComponent(uid),
+	        type: 'POST',
+	        data: data,
+	        processData: false,
+	        contentType: false,
+	        dataType: 'json',
+	        success: function (res) {
+	            if (res.status === true || res.status === 'true') {
+	                $('#editReason').val(reason);
+	                $('#editProofFile').val(res.file);
+	                bootstrap.Modal.getOrCreateInstance(document.getElementById('editReasonModal')).hide();
+	                enableEdit();
+	            } else {
+	                alert(res.message || 'Upload failed');
+	            }
+	        },
+	        error: function (xhr) {
+	            alert('Server error occurred (' + xhr.status + ')');
+	        }
+	    });
+	}
 	function reuploadCertificate() {
-	    var input = document.getElementById('idProof');          // the file box from fileUpload.jsp
-	    if (!input || input.type !== 'file') { alert('Upload box not found.'); return; }
-	    var f = input.files && input.files[0];
-	    if (!f) { alert('Please choose the regenerated certificate PDF first.'); return; }
-	    if (!/\.pdf$/i.test(f.name)) { alert('Please attach a PDF only.'); return; }
+	    var input = document.getElementById('idProof');            // file box rendered by fileUpload.jsp
+	    var file = input && input.files ? input.files[0] : null;
+	    if (!file) { alert('Please choose the regenerated certificate PDF first.'); return; }
+	    if (!/\.pdf$/i.test(file.name)) { alert('Please attach a PDF only.'); return; }
 	    if (!confirm('This will replace the current certificate with the selected file. Continue?')) return;
 
 	    var ctx = '<c:out value="${contextRoot}"/>';
-	    var rtiId = $('#rtiApplicationRefIds').val();            // same value readURL() uses as UID
-	    var fd = new FormData();
-	    fd.append('idProof', f);                                  // file only: the endpoint breaks on non-file fields
+	    var uid = $('#rtiApplicationRefIds').val();                // same UID readURL() uses
 
-	    $.ajax({ url: ctx + '/rtiapplication/uploadCFCLicenseDocs.do?appType=1&UID=' + rtiId,
-	        type: 'POST', data: fd, cache: false, dataType: 'json', processData: false, contentType: false,
+	    var data = new FormData();
+	    data.append('idProof', file);                              // file only: that endpoint breaks on non-file fields
+
+	    $.ajax({
+	        url: ctx + '/rtiapplication/uploadCFCLicenseDocs.do?appType=1&UID=' + encodeURIComponent(uid),
+	        type: 'POST', data: data, cache: false, dataType: 'json',
+	        processData: false, contentType: false,
 	        success: function (r) {
 	            if (r.status !== true) { alert('Upload failed!'); return; }
-	            $.post(ctx + '/rtiapplication/registerMarriageCertReupload.do', { rtiApplicationId: rtiId },
-	                function (x) {
-	                    alert(x.ok ? 'Certificate re-uploaded successfully.'
-	                               : 'File uploaded, but version history was not recorded: ' + x.msg);
-	                    location.reload();
-	                }, 'json')
-	             .fail(function () { alert('File uploaded, but version history call failed.'); location.reload(); });
+	            $.post(ctx + '/rtiapplication/registerMarriageCertReupload.do', { rtiApplicationId: uid }, function (x) {
+	                alert(x.ok ? 'Certificate re-uploaded successfully.'
+	                           : 'File uploaded, but version history was not recorded: ' + x.msg);
+	                location.reload();
+	            }, 'json').fail(function () {
+	                alert('File uploaded, but the version history call failed.');
+	                location.reload();
+	            });
 	        },
-	        error: function () { alert('Upload failed. Please try again.'); } });
+	        error: function (xhr) { alert('Upload failed (' + xhr.status + '). Please try again.'); }
+	    });
 	}
 </script>
