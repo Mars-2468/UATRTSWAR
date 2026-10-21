@@ -2572,4 +2572,276 @@
 </put-list-attribute>
 </definition>
 
+<definition name="newRTIFoodBusinessNoc" extends="egov.popup">
+<put-attribute name="content" value="/pages/core-pages/services/newRTIFoodBusinessNoc.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="rtiapplication" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTS Application"/>
+<item link="/rtsapplication/saveFoodBusinessNoc.do" value="Application for NOC for State Licence for Food Business"/>
+</put-list-attribute>
+</definition>
+<definition name="newRTIFoodBusinessNocSucess" extends="egov.popup">
+<put-attribute name="content" value="/pages/core-pages/services/newRTIFoodBusinessNocSucess.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="rtiapplication" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTS Application"/>
+<item link="/rtsapplication/saveFoodBusinessNoc.do" value="Application for NOC for State Licence for Food Business"/>
+</put-list-attribute>
+</definition>
+<definition name="manageFoodBusinessNoc" extends="egov.mainLogin">
+<put-attribute name="content" value="/pages/core-pages/services/manageFoodBusinessNoc.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="appeal" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTI Application"/>
+<item link="/rtiapplication/editFoodBusinessNoc.do" value="Application for NOC for State Licence for Food Business"/>
+</put-list-attribute>
+</definition>
+<definition name="newRTIFoodRegistrationNoc" extends="egov.popup">
+<put-attribute name="content" value="/pages/core-pages/services/newRTIFoodRegistrationNoc.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="rtiapplication" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTS Application"/>
+<item link="/rtsapplication/saveFoodRegistrationNoc.do" value="Application for Health NOC for Food Registration Certificate"/>
+</put-list-attribute>
+</definition>
+<definition name="newRTIFoodRegistrationNocSucess" extends="egov.popup">
+<put-attribute name="content" value="/pages/core-pages/services/newRTIFoodRegistrationNocSucess.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="rtiapplication" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTS Application"/>
+<item link="/rtsapplication/saveFoodRegistrationNoc.do" value="Application for Health NOC for Food Registration Certificate"/>
+</put-list-attribute>
+</definition>
+<definition name="manageFoodRegistrationNoc" extends="egov.mainLogin">
+<put-attribute name="content" value="/pages/core-pages/services/manageFoodRegistrationNoc.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="appeal" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTI Application"/>
+<item link="/rtiapplication/editFoodRegistrationNoc.do" value="Application for Health NOC for Food Registration Certificate"/>
+</put-list-attribute>
+</definition>
+<definition name="newRTIDrainageConnection" extends="egov.popup">
+<put-attribute name="content" value="/pages/core-pages/services/newRTIDrainageConnection.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="rtiapplication" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTS Application"/>
+<item link="/rtsapplication/saveDrainageConnection.do" value="Application for Grant of Drainage / Sewerage Connection"/>
+</put-list-attribute>
+</definition>
+<definition name="newRTIDrainageConnectionSucess" extends="egov.popup">
+<put-attribute name="content" value="/pages/core-pages/services/newRTIDrainageConnectionSucess.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="rtiapplication" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTS Application"/>
+<item link="/rtsapplication/saveDrainageConnection.do" value="Application for Grant of Drainage / Sewerage Connection"/>
+</put-list-attribute>
+</definition>
+<definition name="manageDrainageConnection" extends="egov.mainLogin">
+<put-attribute name="content" value="/pages/core-pages/services/manageDrainageConnection.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="appeal" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTI Application"/>
+<item link="/rtiapplication/editDrainageConnection.do" value="Application for Grant of Drainage / Sewerage Connection"/>
+</put-list-attribute>
+</definition>
+<definition name="newRTILodgingLicence" extends="egov.popup">
+<put-attribute name="content" value="/pages/core-pages/services/newRTILodgingLicence.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="rtiapplication" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTS Application"/>
+<item link="/rtsapplication/saveLodgingLicence.do" value="Application for Issue of Lodging Licence"/>
+</put-list-attribute>
+</definition>
+<definition name="newRTILodgingLicenceSucess" extends="egov.popup">
+<put-attribute name="content" value="/pages/core-pages/services/newRTILodgingLicenceSucess.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="rtiapplication" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTS Application"/>
+<item link="/rtsapplication/saveLodgingLicence.do" value="Application for Issue of Lodging Licence"/>
+</put-list-attribute>
+</definition>
+<definition name="manageLodgingLicence" extends="egov.mainLogin">
+<put-attribute name="content" value="/pages/core-pages/services/manageLodgingLicence.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="appeal" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTI Application"/>
+<item link="/rtiapplication/editLodgingLicence.do" value="Application for Issue of Lodging Licence"/>
+</put-list-attribute>
+</definition>
+<definition name="newRTILodgingLicenceRenewal" extends="egov.popup">
+<put-attribute name="content" value="/pages/core-pages/services/newRTILodgingLicenceRenewal.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="rtiapplication" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTS Application"/>
+<item link="/rtsapplication/saveLodgingLicenceRenewal.do" value="Application for Renewal of Lodging Licence"/>
+</put-list-attribute>
+</definition>
+<definition name="newRTILodgingLicenceRenewalSucess" extends="egov.popup">
+<put-attribute name="content" value="/pages/core-pages/services/newRTILodgingLicenceRenewalSucess.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="rtiapplication" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTS Application"/>
+<item link="/rtsapplication/saveLodgingLicenceRenewal.do" value="Application for Renewal of Lodging Licence"/>
+</put-list-attribute>
+</definition>
+<definition name="manageLodgingLicenceRenewal" extends="egov.mainLogin">
+<put-attribute name="content" value="/pages/core-pages/services/manageLodgingLicenceRenewal.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="appeal" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTI Application"/>
+<item link="/rtiapplication/editLodgingLicenceRenewal.do" value="Application for Renewal of Lodging Licence"/>
+</put-list-attribute>
+</definition>
+<definition name="newRTIHallLicence" extends="egov.popup">
+<put-attribute name="content" value="/pages/core-pages/services/newRTIHallLicence.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="rtiapplication" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTS Application"/>
+<item link="/rtsapplication/saveHallLicence.do" value="Application for Issue of Licence for Hall"/>
+</put-list-attribute>
+</definition>
+<definition name="newRTIHallLicenceSucess" extends="egov.popup">
+<put-attribute name="content" value="/pages/core-pages/services/newRTIHallLicenceSucess.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="rtiapplication" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTS Application"/>
+<item link="/rtsapplication/saveHallLicence.do" value="Application for Issue of Licence for Hall"/>
+</put-list-attribute>
+</definition>
+<definition name="manageHallLicence" extends="egov.mainLogin">
+<put-attribute name="content" value="/pages/core-pages/services/manageHallLicence.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="appeal" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTI Application"/>
+<item link="/rtiapplication/editHallLicence.do" value="Application for Issue of Licence for Hall"/>
+</put-list-attribute>
+</definition>
+<definition name="newRTIHallLicenceRenewal" extends="egov.popup">
+<put-attribute name="content" value="/pages/core-pages/services/newRTIHallLicenceRenewal.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="rtiapplication" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTS Application"/>
+<item link="/rtsapplication/saveHallLicenceRenewal.do" value="Application for Renewal of Licence for Hall"/>
+</put-list-attribute>
+</definition>
+<definition name="newRTIHallLicenceRenewalSucess" extends="egov.popup">
+<put-attribute name="content" value="/pages/core-pages/services/newRTIHallLicenceRenewalSucess.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="rtiapplication" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTS Application"/>
+<item link="/rtsapplication/saveHallLicenceRenewal.do" value="Application for Renewal of Licence for Hall"/>
+</put-list-attribute>
+</definition>
+<definition name="manageHallLicenceRenewal" extends="egov.mainLogin">
+<put-attribute name="content" value="/pages/core-pages/services/manageHallLicenceRenewal.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="appeal" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTI Application"/>
+<item link="/rtiapplication/editHallLicenceRenewal.do" value="Application for Renewal of Licence for Hall"/>
+</put-list-attribute>
+</definition>
+<definition name="newRTIHawkerRegistration" extends="egov.popup">
+<put-attribute name="content" value="/pages/core-pages/services/newRTIHawkerRegistration.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="rtiapplication" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTS Application"/>
+<item link="/rtsapplication/saveHawkerRegistration.do" value="Application for Issuance of Hawker Registration Certificate"/>
+</put-list-attribute>
+</definition>
+<definition name="newRTIHawkerRegistrationSucess" extends="egov.popup">
+<put-attribute name="content" value="/pages/core-pages/services/newRTIHawkerRegistrationSucess.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="rtiapplication" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTS Application"/>
+<item link="/rtsapplication/saveHawkerRegistration.do" value="Application for Issuance of Hawker Registration Certificate"/>
+</put-list-attribute>
+</definition>
+<definition name="manageHawkerRegistration" extends="egov.mainLogin">
+<put-attribute name="content" value="/pages/core-pages/services/manageHawkerRegistration.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="appeal" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTI Application"/>
+<item link="/rtiapplication/editHawkerRegistration.do" value="Application for Issuance of Hawker Registration Certificate"/>
+</put-list-attribute>
+</definition>
+<definition name="newRTISignageLicence" extends="egov.popup">
+<put-attribute name="content" value="/pages/core-pages/services/newRTISignageLicence.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="rtiapplication" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTS Application"/>
+<item link="/rtsapplication/saveSignageLicence.do" value="Application for Issuance / Renewal of Signage Licence"/>
+</put-list-attribute>
+</definition>
+<definition name="newRTISignageLicenceSucess" extends="egov.popup">
+<put-attribute name="content" value="/pages/core-pages/services/newRTISignageLicenceSucess.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="rtiapplication" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTS Application"/>
+<item link="/rtsapplication/saveSignageLicence.do" value="Application for Issuance / Renewal of Signage Licence"/>
+</put-list-attribute>
+</definition>
+<definition name="manageSignageLicence" extends="egov.mainLogin">
+<put-attribute name="content" value="/pages/core-pages/services/manageSignageLicence.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="appeal" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTI Application"/>
+<item link="/rtiapplication/editSignageLicence.do" value="Application for Issuance / Renewal of Signage Licence"/>
+</put-list-attribute>
+</definition>
+<definition name="newRTIRoadCuttingPermission" extends="egov.popup">
+<put-attribute name="content" value="/pages/core-pages/services/newRTIRoadCuttingPermission.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="rtiapplication" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTS Application"/>
+<item link="/rtsapplication/saveRoadCuttingPermission.do" value="Application for Grant of Road Cutting Permission"/>
+</put-list-attribute>
+</definition>
+<definition name="newRTIRoadCuttingPermissionSucess" extends="egov.popup">
+<put-attribute name="content" value="/pages/core-pages/services/newRTIRoadCuttingPermissionSucess.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="rtiapplication" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTS Application"/>
+<item link="/rtsapplication/saveRoadCuttingPermission.do" value="Application for Grant of Road Cutting Permission"/>
+</put-list-attribute>
+</definition>
+<definition name="manageRoadCuttingPermission" extends="egov.mainLogin">
+<put-attribute name="content" value="/pages/core-pages/services/manageRoadCuttingPermission.jsp"/>
+<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+<put-attribute name="selectedMenu" value="appeal" type="string"/>
+<put-list-attribute name="breadcrumbsList">
+<item link="#" value="RTI Application"/>
+<item link="/rtiapplication/editRoadCuttingPermission.do" value="Application for Grant of Road Cutting Permission"/>
+</put-list-attribute>
+</definition>
+
+
 </tiles-definitions>

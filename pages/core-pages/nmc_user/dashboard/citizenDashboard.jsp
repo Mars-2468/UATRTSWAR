@@ -440,7 +440,7 @@ String name=(String)session.getAttribute("name");
 </div>
 
 <div class="page-heading-wrapper">
-  <h2 class="page-heading">ONLINE CITIZEN SERVICES (66)</h2>
+  <h2 class="page-heading">ONLINE CITIZEN SERVICES (76)</h2>
 </div>
 
 <div class="cards-outer-wrapper">
@@ -811,7 +811,7 @@ String name=(String)session.getAttribute("name");
 				<div class="card shadow text-bg-secondary1 mb-3  bbxx1">
 					<div
 						class="card-header pointer d-flex justify-content-between align-items-center">
-						<a class="lbleng zoom-text" href="#"> Hot mixed planned & other Department<span class="service-count">(3)</span></a>
+						<a class="lbleng zoom-text" href="#"> Hot mixed planned & other Department<span class="service-count">(13)</span></a>
 						<div class="wtt_">
 							<img src="<%=url%>img/estate.png" alt="Estate">
 						</div>
@@ -821,6 +821,27 @@ String name=(String)session.getAttribute("name");
 							<li><a class="lbleng zoom-text" href="https://www.nmcnagpur.gov.in/grievance/complaint_form.php"  target='_blank'>filling potholes on the road (रस्त्यावरील खड्डे बुजवणे)(HMP)</a></li>
 							<li><a class="lbleng zoom-text" href="https://www.nmcnagpur.gov.in/grievance/complaint_form.php"  target='_blank'>Keeping the manhole cover open(गटारावरील झाकण सुस्थितीत ठेवणे)(PHE)</a></li>
 							<li><a class="lbleng zoom-text" href="https://www.nmcnagpur.gov.in/grievance/complaint_form.php"  target='_blank'>Maintaining cleanliness in the city (शहरात स्वच्छता ठेवणे)(SWM)</a></li>
+							
+							<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTIFoodBusinessNoc.do'>Issue of NOC from Municipality/Local Body for State License for Food Business
+</a></li>
+							<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTIFoodRegistrationNoc.do'>Issue of Health NOC from Municipality/Panchayat for Food Registration Certificate
+</a></li>
+							<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTIDrainageConnection.do'>Application Form for Grant of Drainage/Sewerage Connection
+</a></li>
+							<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTILodgingLicence.do'>Application Form for Issue of Loading License
+</a></li>
+							<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTILodgingLicenceRenewal.do'>Application Form for Renewal of Loading License
+</a></li>
+							<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTIHallLicence.do'>Application Form for Issue of License for Hall
+</a></li>
+									
+							<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTIHallLicenceRenewal.do'>Application Form for Renewal of License for Hall
+</a></li>
+							<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTIHawkerRegistration.do'>Application Form for Issuance of Hawker Registration Certificate
+</a></li>
+							<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTISignageLicence.do'>Application Form for Issuance/Renewal of Signage License
+</a></li>
+							<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTIRoadCuttingPermission.do'>Application Form for Grant of Road Cutting Permission</a></li>
 						</ol>
 					</div>
 				</div>
