@@ -24,11 +24,7 @@ body {
 	</h2>
 	<div>
 		<h3 style="color: #524f4c; margin-left: 90px; font-weight: lighter; font-size: 18px; margin-top: 20px;">
-			Your application number : <strong>
-			<c:if test="${foodRegistrationNoc.rtiapplrefno != null}">
-				<c:out value="${foodRegistrationNoc.rtiapplrefno}"></c:out>
-			</c:if>
-			</strong>
+			Your application number : <strong><c:out value="${appNo}"/></strong>
 		</h3>
 	</div>
 	<h5 class="text-center" style="color: #524f4c; margin-top: 29px; font-size: 20px;">
