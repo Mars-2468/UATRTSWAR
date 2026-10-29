@@ -2843,5 +2843,8 @@
 </put-list-attribute>
 </definition>
 
-
+<definition name="pushAapleSarkarData" extends="egov.popup">
+<put-attribute name="content" value="/pages/core-pages/services/pushAapleSarkarData.jsp"/>
+<put-attribute name="parentMenu" value="RTI Services" type="string"/>
+</definition>
 </tiles-definitions>
