@@ -103,8 +103,23 @@ $('input,select,textarea').on('focusout', function() {
 	.fld-label .req { color: #d32f2f; margin-left: 2px; }
 	.fld-label .mr { color: #6b7b7c; font-weight: 400; }
 	.hint { font-size: 12px; color: #7a8a8b; margin-top: 3px; }
-	.rts-form .form-control, .rts-form .form-select { background-image: none; font-size: 14px;
-		border-color: #cdd9db; }
+	.rts-form .form-control, .rts-form .form-select { font-size: 14px; border-color: #cdd9db; }
+	/* No tick or warning glyph inside any field, in any validation state. Bootstrap
+	   paints those as a background image, so they are turned off here as well as by the
+	   inline style on each control. */
+	.rts-form .form-control, .rts-form .form-select, .rts-form textarea.form-control,
+	.rts-form .form-control:valid, .rts-form .form-control:invalid,
+	.rts-form .form-select:valid, .rts-form .form-select:invalid,
+	.was-validated .rts-form .form-control:valid, .was-validated .rts-form .form-control:invalid,
+	.was-validated .rts-form .form-select:valid, .was-validated .rts-form .form-select:invalid {
+		background-image: none; padding-right: .75rem; }
+	/* a dropdown still needs its caret, so put that one back */
+	.rts-form select.form-select,
+	.was-validated .rts-form select.form-select:valid,
+	.was-validated .rts-form select.form-select:invalid {
+		background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2315393a' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
+		background-repeat: no-repeat; background-position: right .75rem center;
+		background-size: 16px 12px; padding-right: 2.25rem; }
 	.rts-form .form-control:focus, .rts-form .form-select:focus {
 		border-color: #0f6c70; box-shadow: 0 0 0 .18rem rgba(15,108,112,.15); }
 	.rts-form textarea.form-control { min-height: 62px; }
@@ -124,10 +139,25 @@ $('input,select,textarea').on('focusout', function() {
 	.rts-print-head { display: none; }
 	@media print {
 		@page { size: A4 portrait; margin: 12mm 10mm; }
-		body { background: #fff !important; }
-		header, .header, nav, .navbar, footer, .footer, .breadcrumb,
-		#myModal, .modal, .modal-backdrop, .rts-actions, .hint,
-		.invalid-feedback, .alert { display: none !important; }
+		/* Print the application and nothing else. Hiding the site chrome by class is
+		   fragile - the body itself carries bg-grey, so hiding that blanked the whole
+		   page. Instead everything is made invisible and only the form is brought back,
+		   which needs no knowledge of what the surrounding page is built from.
+		   visibility is used rather than display so the form keeps its own layout. */
+		html, body { background: #fff !important; height: auto !important; }
+		body * { visibility: hidden !important; }
+		.rts-form, .rts-form * { visibility: visible !important; }
+		.rts-form { position: absolute !important; left: 0 !important; top: 0 !important;
+			width: 100% !important; max-width: none !important; padding: 0 !important;
+			margin: 0 !important; }
+		/* these sit inside the form but have no place on paper */
+		.rts-actions, .hint, .invalid-feedback, .alert,
+		#myModal, .modal, .modal-backdrop { display: none !important; }
+		/* Print width sits below the lg breakpoint, so the responsive classes collapse
+		   to one field per line. Pin the grid back to three across on paper. */
+		.rts-form .row > .col-lg-4, .rts-form .row > .col-md-3 {
+			flex: 0 0 33.3333% !important; max-width: 33.3333% !important; }
+		.rts-form .row { display: flex !important; flex-wrap: wrap !important; }
 		.rts-print-head { display: block; text-align: center; margin-bottom: 10px; }
 		.rts-print-head .nmc { font-size: 15px; font-weight: 700; color: #000; }
 		.rts-print-head .dept { font-size: 12px; color: #000; }
@@ -228,7 +258,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="applicationDate" class="form-label fld-label">Date of Application <span class="req">*</span></label>
-						<input type="date" class="form-control" id="applicationDate" name="applicationDate" value=""
+						<input type="date" class="form-control" style="background-image: none;" id="applicationDate" name="applicationDate" value=""
 							 max="<c:out value='${today}'/>" required>
 						<div class="invalid-feedback">Enter a valid date. A future date is not accepted here.</div>
 					</div>
@@ -246,7 +276,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="applicantName" class="form-label fld-label">Full Name of Applicant <span class="req">*</span></label>
-						<input type="text" class="form-control" id="applicantName" name="applicantName" value=""
+						<input type="text" class="form-control" style="background-image: none;" id="applicantName" name="applicantName" value=""
 							placeholder="Enter full name of applicant" pattern="^[A-Za-z\u0900-\u097F][A-Za-z\u0900-\u097F .'\-]{1,99}$" maxlength="100" required>
 						<div class="invalid-feedback">Enter a valid name using letters only, at least 2 characters.</div>
 					</div>
@@ -255,7 +285,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="fatherHusbandName" class="form-label fld-label">Father's / Husband's Name</label>
-						<input type="text" class="form-control" id="fatherHusbandName" name="fatherHusbandName" value=""
+						<input type="text" class="form-control" style="background-image: none;" id="fatherHusbandName" name="fatherHusbandName" value=""
 							placeholder="Enter father's / husband's name" pattern="^[A-Za-z\u0900-\u097F][A-Za-z\u0900-\u097F .'\-]{1,99}$" maxlength="100">
 						<div class="invalid-feedback">Enter a valid name using letters only, at least 2 characters.</div>
 					</div>
@@ -264,7 +294,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="dateOfBirth" class="form-label fld-label">Date of Birth</label>
-						<input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" value=""
+						<input type="date" class="form-control" style="background-image: none;" id="dateOfBirth" name="dateOfBirth" value=""
 							 max="<c:out value='${today}'/>">
 						<div class="invalid-feedback">Enter a valid date. A future date is not accepted here.</div>
 					</div>
@@ -273,7 +303,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="gender" class="form-label fld-label">Gender</label>
-						<select class="form-select" id="gender" name="gender">
+						<select class="form-select" style="background-image: none;" id="gender" name="gender">
 							<option value="" selected="">Select</option>
 							<option value="Male">Male</option>
 							<option value="Female">Female</option>
@@ -286,7 +316,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="mobileNo" class="form-label fld-label">Mobile Number <span class="req">*</span></label>
-						<input type="text" class="form-control" id="mobileNo" name="mobileNo" value=""
+						<input type="text" class="form-control" style="background-image: none;" id="mobileNo" name="mobileNo" value=""
 							placeholder="Enter mobile number" pattern="^[6-9][0-9]{9}$" maxlength="10" inputmode="numeric" required>
 						<div class="invalid-feedback">Enter a 10 digit mobile number starting with 6, 7, 8 or 9.</div>
 					</div>
@@ -295,7 +325,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="alternateContactNo" class="form-label fld-label">Alternate Contact Number</label>
-						<input type="text" class="form-control" id="alternateContactNo" name="alternateContactNo" value=""
+						<input type="text" class="form-control" style="background-image: none;" id="alternateContactNo" name="alternateContactNo" value=""
 							placeholder="Enter alternate contact number" pattern="^[6-9][0-9]{9}$" maxlength="10" inputmode="numeric">
 						<div class="invalid-feedback">Enter a 10 digit contact number starting with 6, 7, 8 or 9.</div>
 					</div>
@@ -304,7 +334,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="email" class="form-label fld-label">Email ID (if applicable)</label>
-						<input type="email" class="form-control" id="email" name="email" value=""
+						<input type="email" class="form-control" style="background-image: none;" id="email" name="email" value=""
 							placeholder="Enter email id (if applicable)" pattern="^(?=.*[A-Za-z0-9\u0900-\u097F]).{2,150}$" maxlength="150">
 						<div class="invalid-feedback">Enter at least 2 characters.</div>
 					</div>
@@ -322,7 +352,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="houseFlatNo" class="form-label fld-label">House / Flat No.</label>
-						<input type="text" class="form-control" id="houseFlatNo" name="houseFlatNo" value=""
+						<input type="text" class="form-control" style="background-image: none;" id="houseFlatNo" name="houseFlatNo" value=""
 							placeholder="Enter house / flat no." pattern="^[A-Za-z0-9][A-Za-z0-9/\-]{0,49}$" maxlength="50">
 						<div class="invalid-feedback">Use letters, digits, / and - only.</div>
 					</div>
@@ -331,7 +361,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="streetArea" class="form-label fld-label">Street / Area</label>
-						<input type="text" class="form-control" id="streetArea" name="streetArea" value=""
+						<input type="text" class="form-control" style="background-image: none;" id="streetArea" name="streetArea" value=""
 							placeholder="Enter street / area" pattern="^(?=.*[A-Za-z0-9\u0900-\u097F]).{2,150}$" maxlength="150">
 						<div class="invalid-feedback">Enter at least 2 characters.</div>
 					</div>
@@ -340,7 +370,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="iFunction" class="form-label fld-label">Zone No. <span class="mr">(&#2333;&#2379;&#2344; &#2325;&#2381;&#2352;.)</span> <span class="req">*</span></label>
-						<select class="form-select" id="iFunction" name="zoneNo" onchange="changeddl(this)" required>
+						<select class="form-select" style="background-image: none;" id="iFunction" name="zoneNo" onchange="changeddl(this)" required>
 							<option value="" selected="">Select Zone</option>
 							<option value="1">Zone No.1 - Laxmi Nagar (&#2354;&#2325;&#2381;&#2359;&#2381;&#2350;&#2368; &#2344;&#2327;&#2352;)</option>
 							<option value="2">Zone No.2 - Dharmpeth (&#2343;&#2352;&#2350;&#2346;&#2375;&#2336;)</option>
@@ -360,7 +390,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="iOperation" class="form-label fld-label">Ward No. <span class="mr">(&#2346;&#2381;&#2352;&#2349;&#2366;&#2327; &#2325;&#2381;&#2352;.)</span> <span class="req">*</span></label>
-						<select class="form-select" id="iOperation" name="wardNo" disabled required>
+						<select class="form-select" style="background-image: none;" id="iOperation" name="wardNo" disabled required>
 							<option value="" selected="">Select Ward</option>
 							<option value="16">Ward No. 16</option>
 							<option value="36">Ward No. 36</option>
@@ -409,7 +439,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="city" class="form-label fld-label">City</label>
-						<input type="text" class="form-control bg-light" id="city" name="city"
+						<input type="text" class="form-control bg-light" style="background-image: none;" id="city" name="city"
 							value="Nagpur" readonly>
 					</div>
 				</div>
@@ -417,7 +447,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="pinCode" class="form-label fld-label">PIN Code</label>
-						<input type="text" class="form-control" id="pinCode" name="pinCode" value=""
+						<input type="text" class="form-control" style="background-image: none;" id="pinCode" name="pinCode" value=""
 							placeholder="Enter pin code" pattern="^[1-9][0-9]{5}$" maxlength="6" inputmode="numeric">
 						<div class="invalid-feedback">Enter a 6 digit PIN code.</div>
 					</div>
@@ -435,7 +465,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="hawkingBusinessType" class="form-label fld-label">Type of Hawking Business <span class="req">*</span></label>
-						<input type="text" class="form-control" id="hawkingBusinessType" name="hawkingBusinessType" value=""
+						<input type="text" class="form-control" style="background-image: none;" id="hawkingBusinessType" name="hawkingBusinessType" value=""
 							placeholder="Enter type of hawking business" pattern="^(?=.*[A-Za-z0-9\u0900-\u097F]).{2,150}$" maxlength="150" required>
 						<div class="invalid-feedback">Enter at least 2 characters.</div>
 					</div>
@@ -444,7 +474,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="businessName" class="form-label fld-label">Name of Business (if applicable)</label>
-						<input type="text" class="form-control" id="businessName" name="businessName" value=""
+						<input type="text" class="form-control" style="background-image: none;" id="businessName" name="businessName" value=""
 							placeholder="Enter name of business (if applicable)" pattern="^(?=.*[A-Za-z0-9\u0900-\u097F]).{2,150}$" maxlength="150">
 						<div class="invalid-feedback">Enter at least 2 characters.</div>
 					</div>
@@ -453,7 +483,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="goodsCategory" class="form-label fld-label">Category of Goods Sold / Services Provided</label>
-						<input type="text" class="form-control" id="goodsCategory" name="goodsCategory" value=""
+						<input type="text" class="form-control" style="background-image: none;" id="goodsCategory" name="goodsCategory" value=""
 							placeholder="Enter category of goods sold / services provided" pattern="^(?=.*[A-Za-z0-9\u0900-\u097F]).{2,150}$" maxlength="150">
 						<div class="invalid-feedback">Enter at least 2 characters.</div>
 					</div>
@@ -462,7 +492,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="hawkingActivityType" class="form-label fld-label">Type of Hawking Activity <span class="req">*</span></label>
-						<select class="form-select" id="hawkingActivityType" name="hawkingActivityType" required>
+						<select class="form-select" style="background-image: none;" id="hawkingActivityType" name="hawkingActivityType" required>
 							<option value="" selected="">Select</option>
 							<option value="Stationary Hawker">Stationary Hawker</option>
 							<option value="Mobile Hawker">Mobile Hawker</option>
@@ -475,7 +505,7 @@ $(window).on('load', function () {
 				<div class="col-12">
 					<div class="fld">
 						<label for="hawkingLocation" class="form-label fld-label">Proposed Hawking Location / Address <span class="req">*</span></label>
-						<textarea class="form-control" id="hawkingLocation" name="hawkingLocation" rows="2"
+						<textarea class="form-control" style="background-image: none;" id="hawkingLocation" name="hawkingLocation" rows="2"
 							maxlength="500" minlength="5" placeholder="Enter proposed hawking location / address" required></textarea>
 						<div class="invalid-feedback">Please enter proposed hawking location / address, at least 5 characters.</div>
 					</div>
@@ -484,7 +514,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="hawkingZoneWard" class="form-label fld-label">Hawking Ward / Zone No.</label>
-						<input type="text" class="form-control" id="hawkingZoneWard" name="hawkingZoneWard" value=""
+						<input type="text" class="form-control" style="background-image: none;" id="hawkingZoneWard" name="hawkingZoneWard" value=""
 							placeholder="Enter hawking ward / zone no." pattern="^(?=.*[A-Za-z0-9\u0900-\u097F]).{2,150}$" maxlength="150">
 						<div class="invalid-feedback">Enter at least 2 characters.</div>
 					</div>
@@ -493,7 +523,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="natureOfBusiness" class="form-label fld-label">Nature of Business</label>
-						<input type="text" class="form-control" id="natureOfBusiness" name="natureOfBusiness" value=""
+						<input type="text" class="form-control" style="background-image: none;" id="natureOfBusiness" name="natureOfBusiness" value=""
 							placeholder="Enter nature of business" pattern="^(?=.*[A-Za-z0-9\u0900-\u097F]).{2,150}$" maxlength="150">
 						<div class="invalid-feedback">Enter at least 2 characters.</div>
 					</div>
@@ -502,7 +532,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="workingDaysTimings" class="form-label fld-label">Working Days and Timings</label>
-						<input type="text" class="form-control" id="workingDaysTimings" name="workingDaysTimings" value=""
+						<input type="text" class="form-control" style="background-image: none;" id="workingDaysTimings" name="workingDaysTimings" value=""
 							placeholder="Enter working days and timings" pattern="^(?=.*[A-Za-z0-9\u0900-\u097F]).{2,150}$" maxlength="150">
 						<div class="invalid-feedback">Enter at least 2 characters.</div>
 					</div>
@@ -511,7 +541,7 @@ $(window).on('load', function () {
 				<div class="col-12">
 					<div class="fld">
 						<label for="cartStallVehicleDetails" class="form-label fld-label">Cart / Stall / Vehicle Details (if applicable)</label>
-						<textarea class="form-control" id="cartStallVehicleDetails" name="cartStallVehicleDetails" rows="2"
+						<textarea class="form-control" style="background-image: none;" id="cartStallVehicleDetails" name="cartStallVehicleDetails" rows="2"
 							maxlength="500" placeholder="Enter cart / stall / vehicle details (if applicable)"></textarea>
 						<div class="invalid-feedback">Please enter cart / stall / vehicle details (if applicable).</div>
 					</div>
@@ -539,8 +569,11 @@ $(window).on('load', function () {
 				<span>Signature of Applicant: ____________________</span>
 			</div>
 
-				<strong> Supporting Documents </strong>
-			</h6>
+			<div class="rts-card">
+				<div class="rts-card-head">
+					<span class="rts-step">5</span>
+					<h6>Supporting Documents</h6>
+				</div>
 			<div class="alert alert-info mb-0 p-2 mb-4 ms-2">
 				<small class="form-label"><strong class="form-label">Note(&#2344;&#2379;&#2306;&#2342;): </strong>Upload below files in .pdf (Max upto 2 MB) (&#2326;&#2366;&#2354;&#2368;&#2354; &#2347;&#2366;&#2311;&#2354; .pdf &#2350;&#2343;&#2381;&#2351;&#2375; &#2309;&#2346;&#2354;&#2379;&#2337; &#2325;&#2352;&#2366; (&#2325;&#2350;&#2366;&#2354; &#2408; MB &#2346;&#2352;&#2381;&#2351;&#2306;&#2340;))</small>
 			</div>
@@ -608,6 +641,8 @@ $(window).on('load', function () {
 				</div>
 
 			</div>
+			</div>
+
 			<div class="rts-actions">
 				<button class="btn btn-primary" type="submit" id="submit">Submit Application</button>
 				<button class="btn btn-outline-secondary" type="button" id="printForm" onclick="window.print();">View and Print</button>
@@ -643,7 +678,7 @@ $(window).on('load', function () {
 				filesPath += "null,";
 			} else {
 				var splitName = a.split(".pdf")[0].replace(/[^a-zA-Z0-9]/g, "");
-				var stored = basePath + "hawkerregistration/" + id + splitName + ".pdf";
+				var stored = basePath + "hawkerregistration/" + id + "_" + inputs[i].id + "_" + splitName + ".pdf";
 				paths.push(stored);
 				filesPath += stored + ",";
 				anySelected = true;

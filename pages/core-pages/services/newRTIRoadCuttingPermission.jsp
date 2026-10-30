@@ -103,8 +103,23 @@ $('input,select,textarea').on('focusout', function() {
 	.fld-label .req { color: #d32f2f; margin-left: 2px; }
 	.fld-label .mr { color: #6b7b7c; font-weight: 400; }
 	.hint { font-size: 12px; color: #7a8a8b; margin-top: 3px; }
-	.rts-form .form-control, .rts-form .form-select { background-image: none; font-size: 14px;
-		border-color: #cdd9db; }
+	.rts-form .form-control, .rts-form .form-select { font-size: 14px; border-color: #cdd9db; }
+	/* No tick or warning glyph inside any field, in any validation state. Bootstrap
+	   paints those as a background image, so they are turned off here as well as by the
+	   inline style on each control. */
+	.rts-form .form-control, .rts-form .form-select, .rts-form textarea.form-control,
+	.rts-form .form-control:valid, .rts-form .form-control:invalid,
+	.rts-form .form-select:valid, .rts-form .form-select:invalid,
+	.was-validated .rts-form .form-control:valid, .was-validated .rts-form .form-control:invalid,
+	.was-validated .rts-form .form-select:valid, .was-validated .rts-form .form-select:invalid {
+		background-image: none; padding-right: .75rem; }
+	/* a dropdown still needs its caret, so put that one back */
+	.rts-form select.form-select,
+	.was-validated .rts-form select.form-select:valid,
+	.was-validated .rts-form select.form-select:invalid {
+		background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2315393a' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
+		background-repeat: no-repeat; background-position: right .75rem center;
+		background-size: 16px 12px; padding-right: 2.25rem; }
 	.rts-form .form-control:focus, .rts-form .form-select:focus {
 		border-color: #0f6c70; box-shadow: 0 0 0 .18rem rgba(15,108,112,.15); }
 	.rts-form textarea.form-control { min-height: 62px; }
@@ -124,10 +139,25 @@ $('input,select,textarea').on('focusout', function() {
 	.rts-print-head { display: none; }
 	@media print {
 		@page { size: A4 portrait; margin: 12mm 10mm; }
-		body { background: #fff !important; }
-		header, .header, nav, .navbar, footer, .footer, .breadcrumb,
-		#myModal, .modal, .modal-backdrop, .rts-actions, .hint,
-		.invalid-feedback, .alert { display: none !important; }
+		/* Print the application and nothing else. Hiding the site chrome by class is
+		   fragile - the body itself carries bg-grey, so hiding that blanked the whole
+		   page. Instead everything is made invisible and only the form is brought back,
+		   which needs no knowledge of what the surrounding page is built from.
+		   visibility is used rather than display so the form keeps its own layout. */
+		html, body { background: #fff !important; height: auto !important; }
+		body * { visibility: hidden !important; }
+		.rts-form, .rts-form * { visibility: visible !important; }
+		.rts-form { position: absolute !important; left: 0 !important; top: 0 !important;
+			width: 100% !important; max-width: none !important; padding: 0 !important;
+			margin: 0 !important; }
+		/* these sit inside the form but have no place on paper */
+		.rts-actions, .hint, .invalid-feedback, .alert,
+		#myModal, .modal, .modal-backdrop { display: none !important; }
+		/* Print width sits below the lg breakpoint, so the responsive classes collapse
+		   to one field per line. Pin the grid back to three across on paper. */
+		.rts-form .row > .col-lg-4, .rts-form .row > .col-md-3 {
+			flex: 0 0 33.3333% !important; max-width: 33.3333% !important; }
+		.rts-form .row { display: flex !important; flex-wrap: wrap !important; }
 		.rts-print-head { display: block; text-align: center; margin-bottom: 10px; }
 		.rts-print-head .nmc { font-size: 15px; font-weight: 700; color: #000; }
 		.rts-print-head .dept { font-size: 12px; color: #000; }
@@ -234,7 +264,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="applicationType" class="form-label fld-label">Application Type <span class="req">*</span></label>
-						<select class="form-select" id="applicationType" name="applicationType" required>
+						<select class="form-select" style="background-image: none;" id="applicationType" name="applicationType" required>
 							<option value="" selected="">Select</option>
 							<option value="New Permission">New Permission</option>
 							<option value="Renewal of Permission">Renewal of Permission</option>
@@ -246,7 +276,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="applicationDate" class="form-label fld-label">Date of Application <span class="req">*</span></label>
-						<input type="date" class="form-control" id="applicationDate" name="applicationDate" value=""
+						<input type="date" class="form-control" style="background-image: none;" id="applicationDate" name="applicationDate" value=""
 							 max="<c:out value='${today}'/>" required>
 						<div class="invalid-feedback">Enter a valid date. A future date is not accepted here.</div>
 					</div>
@@ -255,7 +285,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="previousPermissionNo" class="form-label fld-label">Previous Permission / License Number (for renewal)</label>
-						<input type="text" class="form-control" id="previousPermissionNo" name="previousPermissionNo" value=""
+						<input type="text" class="form-control" style="background-image: none;" id="previousPermissionNo" name="previousPermissionNo" value=""
 							placeholder="Enter previous permission / license number (for renewal)" pattern="^[A-Za-z0-9][A-Za-z0-9/\-]{0,49}$" maxlength="50">
 						<div class="invalid-feedback">Use letters, digits, / and - only.</div>
 					</div>
@@ -264,7 +294,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="previousPermissionValidUpto" class="form-label fld-label">Previous Permission Valid Up To</label>
-						<input type="date" class="form-control" id="previousPermissionValidUpto" name="previousPermissionValidUpto" value=""
+						<input type="date" class="form-control" style="background-image: none;" id="previousPermissionValidUpto" name="previousPermissionValidUpto" value=""
 							>
 						<div class="invalid-feedback">Enter a valid date.</div>
 					</div>
@@ -282,7 +312,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="applicantName" class="form-label fld-label">Full Name of Applicant / Authorized Person <span class="req">*</span></label>
-						<input type="text" class="form-control" id="applicantName" name="applicantName" value=""
+						<input type="text" class="form-control" style="background-image: none;" id="applicantName" name="applicantName" value=""
 							placeholder="Enter full name of applicant / authorized person" pattern="^[A-Za-z\u0900-\u097F][A-Za-z\u0900-\u097F .'\-]{1,99}$" maxlength="100" required>
 						<div class="invalid-feedback">Enter a valid name using letters only, at least 2 characters.</div>
 					</div>
@@ -291,7 +321,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="agencyName" class="form-label fld-label">Name of Department / Agency / Company</label>
-						<input type="text" class="form-control" id="agencyName" name="agencyName" value=""
+						<input type="text" class="form-control" style="background-image: none;" id="agencyName" name="agencyName" value=""
 							placeholder="Enter name of department / agency / company" pattern="^(?=.*[A-Za-z0-9\u0900-\u097F]).{2,150}$" maxlength="150">
 						<div class="invalid-feedback">Enter at least 2 characters.</div>
 					</div>
@@ -300,7 +330,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="applicantCategory" class="form-label fld-label">Applicant Category <span class="req">*</span></label>
-						<select class="form-select" id="applicantCategory" name="applicantCategory" required>
+						<select class="form-select" style="background-image: none;" id="applicantCategory" name="applicantCategory" required>
 							<option value="" selected="">Select</option>
 							<option value="Government Department">Government Department</option>
 							<option value="Utility Agency">Utility Agency</option>
@@ -315,7 +345,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="mobileNo" class="form-label fld-label">Mobile Number <span class="req">*</span></label>
-						<input type="text" class="form-control" id="mobileNo" name="mobileNo" value=""
+						<input type="text" class="form-control" style="background-image: none;" id="mobileNo" name="mobileNo" value=""
 							placeholder="Enter mobile number" pattern="^[6-9][0-9]{9}$" maxlength="10" inputmode="numeric" required>
 						<div class="invalid-feedback">Enter a 10 digit mobile number starting with 6, 7, 8 or 9.</div>
 					</div>
@@ -324,7 +354,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="email" class="form-label fld-label">Email ID</label>
-						<input type="email" class="form-control" id="email" name="email" value=""
+						<input type="email" class="form-control" style="background-image: none;" id="email" name="email" value=""
 							placeholder="Enter email id" pattern="^(?=.*[A-Za-z0-9\u0900-\u097F]).{2,150}$" maxlength="150">
 						<div class="invalid-feedback">Enter at least 2 characters.</div>
 					</div>
@@ -333,7 +363,7 @@ $(window).on('load', function () {
 				<div class="col-12">
 					<div class="fld">
 						<label for="correspondenceAddress" class="form-label fld-label">Correspondence Address</label>
-						<textarea class="form-control" id="correspondenceAddress" name="correspondenceAddress" rows="2"
+						<textarea class="form-control" style="background-image: none;" id="correspondenceAddress" name="correspondenceAddress" rows="2"
 							maxlength="500" placeholder="Enter correspondence address"></textarea>
 						<div class="invalid-feedback">Please enter correspondence address.</div>
 					</div>
@@ -342,7 +372,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="panGstNumber" class="form-label fld-label">PAN / GST Number (if applicable)</label>
-						<input type="text" class="form-control" id="panGstNumber" name="panGstNumber" value=""
+						<input type="text" class="form-control" style="background-image: none;" id="panGstNumber" name="panGstNumber" value=""
 							placeholder="Enter pan / gst number (if applicable)" pattern="^([A-Za-z]{5}[0-9]{4}[A-Za-z]|[0-9]{2}[A-Za-z]{5}[0-9]{4}[A-Za-z][0-9A-Za-z][Zz][0-9A-Za-z])$" maxlength="15">
 						<div class="invalid-feedback">Enter a valid PAN (ABCDE1234F) or GSTIN (15 characters).</div>
 					</div>
@@ -360,7 +390,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="roadName" class="form-label fld-label">Name of Road / Street <span class="req">*</span></label>
-						<input type="text" class="form-control" id="roadName" name="roadName" value=""
+						<input type="text" class="form-control" style="background-image: none;" id="roadName" name="roadName" value=""
 							placeholder="Enter name of road / street" pattern="^(?=.*[A-Za-z0-9\u0900-\u097F]).{2,150}$" maxlength="150" required>
 						<div class="invalid-feedback">Enter at least 2 characters.</div>
 					</div>
@@ -369,7 +399,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="exactLocation" class="form-label fld-label">Exact Location / Landmark <span class="req">*</span></label>
-						<input type="text" class="form-control" id="exactLocation" name="exactLocation" value=""
+						<input type="text" class="form-control" style="background-image: none;" id="exactLocation" name="exactLocation" value=""
 							placeholder="Enter exact location / landmark" pattern="^(?=.*[A-Za-z0-9\u0900-\u097F]).{5,200}$" maxlength="200" required>
 						<div class="invalid-feedback">Enter at least 5 characters.</div>
 					</div>
@@ -378,7 +408,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="iFunction" class="form-label fld-label">Zone Number <span class="mr">(&#2333;&#2379;&#2344; &#2325;&#2381;&#2352;.)</span> <span class="req">*</span></label>
-						<select class="form-select" id="iFunction" name="zoneNo" onchange="changeddl(this)" required>
+						<select class="form-select" style="background-image: none;" id="iFunction" name="zoneNo" onchange="changeddl(this)" required>
 							<option value="" selected="">Select Zone</option>
 							<option value="1">Zone No.1 - Laxmi Nagar (&#2354;&#2325;&#2381;&#2359;&#2381;&#2350;&#2368; &#2344;&#2327;&#2352;)</option>
 							<option value="2">Zone No.2 - Dharmpeth (&#2343;&#2352;&#2350;&#2346;&#2375;&#2336;)</option>
@@ -398,7 +428,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="iOperation" class="form-label fld-label">Ward Number <span class="mr">(&#2346;&#2381;&#2352;&#2349;&#2366;&#2327; &#2325;&#2381;&#2352;.)</span> <span class="req">*</span></label>
-						<select class="form-select" id="iOperation" name="wardNo" disabled required>
+						<select class="form-select" style="background-image: none;" id="iOperation" name="wardNo" disabled required>
 							<option value="" selected="">Select Ward</option>
 							<option value="16">Ward No. 16</option>
 							<option value="36">Ward No. 36</option>
@@ -447,7 +477,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="roadCategory" class="form-label fld-label">Road Category <span class="req">*</span></label>
-						<select class="form-select" id="roadCategory" name="roadCategory" required>
+						<select class="form-select" style="background-image: none;" id="roadCategory" name="roadCategory" required>
 							<option value="" selected="">Select</option>
 							<option value="Cement Concrete Road">Cement Concrete Road</option>
 							<option value="Bituminous Road">Bituminous Road</option>
@@ -461,7 +491,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="roadOwningDepartment" class="form-label fld-label">Road Ownership / Maintaining Department</label>
-						<input type="text" class="form-control" id="roadOwningDepartment" name="roadOwningDepartment" value=""
+						<input type="text" class="form-control" style="background-image: none;" id="roadOwningDepartment" name="roadOwningDepartment" value=""
 							placeholder="Enter road ownership / maintaining department" pattern="^(?=.*[A-Za-z0-9\u0900-\u097F]).{2,150}$" maxlength="150">
 						<div class="invalid-feedback">Enter at least 2 characters.</div>
 					</div>
@@ -470,7 +500,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="fromLocation" class="form-label fld-label">From Location</label>
-						<input type="text" class="form-control" id="fromLocation" name="fromLocation" value=""
+						<input type="text" class="form-control" style="background-image: none;" id="fromLocation" name="fromLocation" value=""
 							placeholder="Enter from location" pattern="^(?=.*[A-Za-z0-9\u0900-\u097F]).{5,200}$" maxlength="200">
 						<div class="invalid-feedback">Enter at least 5 characters.</div>
 					</div>
@@ -479,7 +509,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="toLocation" class="form-label fld-label">To Location</label>
-						<input type="text" class="form-control" id="toLocation" name="toLocation" value=""
+						<input type="text" class="form-control" style="background-image: none;" id="toLocation" name="toLocation" value=""
 							placeholder="Enter to location" pattern="^(?=.*[A-Za-z0-9\u0900-\u097F]).{5,200}$" maxlength="200">
 						<div class="invalid-feedback">Enter at least 5 characters.</div>
 					</div>
@@ -488,7 +518,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="gpsCoordinates" class="form-label fld-label">GPS Coordinates (if available)</label>
-						<input type="text" class="form-control" id="gpsCoordinates" name="gpsCoordinates" value=""
+						<input type="text" class="form-control" style="background-image: none;" id="gpsCoordinates" name="gpsCoordinates" value=""
 							placeholder="Enter gps coordinates (if available)" pattern="^(?=.*[A-Za-z0-9\u0900-\u097F]).{2,150}$" maxlength="150">
 						<div class="invalid-feedback">Enter at least 2 characters.</div>
 					</div>
@@ -506,7 +536,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="cuttingPurpose" class="form-label fld-label">Purpose of Road Cutting <span class="req">*</span></label>
-						<select class="form-select" id="cuttingPurpose" name="cuttingPurpose" required>
+						<select class="form-select" style="background-image: none;" id="cuttingPurpose" name="cuttingPurpose" required>
 							<option value="" selected="">Select</option>
 							<option value="Water Supply Pipeline">Water Supply Pipeline</option>
 							<option value="Sewerage / Drainage Pipeline">Sewerage / Drainage Pipeline</option>
@@ -522,7 +552,7 @@ $(window).on('load', function () {
 				<div class="col-12">
 					<div class="fld">
 						<label for="workDescription" class="form-label fld-label">Detailed Description of Work</label>
-						<textarea class="form-control" id="workDescription" name="workDescription" rows="2"
+						<textarea class="form-control" style="background-image: none;" id="workDescription" name="workDescription" rows="2"
 							maxlength="500" placeholder="Enter detailed description of work"></textarea>
 						<div class="invalid-feedback">Please enter detailed description of work.</div>
 					</div>
@@ -531,7 +561,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="cuttingLength" class="form-label fld-label">Total Length of Road Cutting (metres)</label>
-						<input type="number" class="form-control" id="cuttingLength" name="cuttingLength" value=""
+						<input type="number" class="form-control" style="background-image: none;" id="cuttingLength" name="cuttingLength" value=""
 							placeholder="0" min="0" max="999999" step="0.01" inputmode="decimal">
 						<div class="invalid-feedback">Enter a number between 0 and 999999.</div>
 					</div>
@@ -540,7 +570,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="cuttingWidth" class="form-label fld-label">Width of Road Cutting (metres)</label>
-						<input type="number" class="form-control" id="cuttingWidth" name="cuttingWidth" value=""
+						<input type="number" class="form-control" style="background-image: none;" id="cuttingWidth" name="cuttingWidth" value=""
 							placeholder="0" min="0" max="9999" step="0.01" inputmode="decimal">
 						<div class="invalid-feedback">Enter a number between 0 and 9999.</div>
 					</div>
@@ -549,7 +579,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="cuttingTotalArea" class="form-label fld-label">Total Area Proposed for Cutting (sq. metres)</label>
-						<input type="number" class="form-control" id="cuttingTotalArea" name="cuttingTotalArea" value=""
+						<input type="number" class="form-control" style="background-image: none;" id="cuttingTotalArea" name="cuttingTotalArea" value=""
 							placeholder="0" min="0" max="9999999" step="0.01" inputmode="decimal">
 						<div class="invalid-feedback">Enter a number between 0 and 9999999.</div>
 					</div>
@@ -558,7 +588,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="workStartDate" class="form-label fld-label">Proposed Work Start Date</label>
-						<input type="date" class="form-control" id="workStartDate" name="workStartDate" value=""
+						<input type="date" class="form-control" style="background-image: none;" id="workStartDate" name="workStartDate" value=""
 							>
 						<div class="invalid-feedback">Enter a valid date.</div>
 					</div>
@@ -567,7 +597,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="workCompletionDate" class="form-label fld-label">Proposed Work Completion Date</label>
-						<input type="date" class="form-control" id="workCompletionDate" name="workCompletionDate" value=""
+						<input type="date" class="form-control" style="background-image: none;" id="workCompletionDate" name="workCompletionDate" value=""
 							>
 						<div class="invalid-feedback">Enter a valid date.</div>
 					</div>
@@ -576,7 +606,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="restorationResponsibility" class="form-label fld-label">Road Restoration Responsibility <span class="req">*</span></label>
-						<select class="form-select" id="restorationResponsibility" name="restorationResponsibility" required>
+						<select class="form-select" style="background-image: none;" id="restorationResponsibility" name="restorationResponsibility" required>
 							<option value="" selected="">Select</option>
 							<option value="Applicant / Agency">Applicant / Agency</option>
 							<option value="As Directed by NMC">As Directed by NMC</option>
@@ -588,7 +618,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="executingContractor" class="form-label fld-label">Executing Contractor / Agency Name</label>
-						<input type="text" class="form-control" id="executingContractor" name="executingContractor" value=""
+						<input type="text" class="form-control" style="background-image: none;" id="executingContractor" name="executingContractor" value=""
 							placeholder="Enter executing contractor / agency name" pattern="^(?=.*[A-Za-z0-9\u0900-\u097F]).{2,150}$" maxlength="150">
 						<div class="invalid-feedback">Enter at least 2 characters.</div>
 					</div>
@@ -597,7 +627,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="trafficDiversionRequired" class="form-label fld-label">Traffic Diversion Required <span class="req">*</span></label>
-						<select class="form-select" id="trafficDiversionRequired" name="trafficDiversionRequired" required>
+						<select class="form-select" style="background-image: none;" id="trafficDiversionRequired" name="trafficDiversionRequired" required>
 							<option value="" selected="">Select</option>
 							<option value="Yes">Yes</option>
 							<option value="No">No</option>
@@ -618,7 +648,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="applicationFee" class="form-label fld-label">Application Fee (Rs.)</label>
-						<input type="number" class="form-control" id="applicationFee" name="applicationFee" value=""
+						<input type="number" class="form-control" style="background-image: none;" id="applicationFee" name="applicationFee" value=""
 							placeholder="0" min="0" max="99999999" step="0.01" inputmode="decimal">
 						<div class="invalid-feedback">Enter a number between 0 and 99999999.</div>
 					</div>
@@ -627,7 +657,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="roadCuttingCharges" class="form-label fld-label">Road Cutting Charges (Rs.)</label>
-						<input type="number" class="form-control" id="roadCuttingCharges" name="roadCuttingCharges" value=""
+						<input type="number" class="form-control" style="background-image: none;" id="roadCuttingCharges" name="roadCuttingCharges" value=""
 							placeholder="0" min="0" max="99999999" step="0.01" inputmode="decimal">
 						<div class="invalid-feedback">Enter a number between 0 and 99999999.</div>
 					</div>
@@ -636,7 +666,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="restorationCharges" class="form-label fld-label">Restoration Charges (Rs.)</label>
-						<input type="number" class="form-control" id="restorationCharges" name="restorationCharges" value=""
+						<input type="number" class="form-control" style="background-image: none;" id="restorationCharges" name="restorationCharges" value=""
 							placeholder="0" min="0" max="99999999" step="0.01" inputmode="decimal">
 						<div class="invalid-feedback">Enter a number between 0 and 99999999.</div>
 					</div>
@@ -645,7 +675,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="securityDeposit" class="form-label fld-label">Security Deposit (Rs.)</label>
-						<input type="number" class="form-control" id="securityDeposit" name="securityDeposit" value=""
+						<input type="number" class="form-control" style="background-image: none;" id="securityDeposit" name="securityDeposit" value=""
 							placeholder="0" min="0" max="99999999" step="0.01" inputmode="decimal">
 						<div class="invalid-feedback">Enter a number between 0 and 99999999.</div>
 					</div>
@@ -654,7 +684,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="otherCharges" class="form-label fld-label">Other Charges (Rs.)</label>
-						<input type="number" class="form-control" id="otherCharges" name="otherCharges" value=""
+						<input type="number" class="form-control" style="background-image: none;" id="otherCharges" name="otherCharges" value=""
 							placeholder="0" min="0" max="99999999" step="0.01" inputmode="decimal">
 						<div class="invalid-feedback">Enter a number between 0 and 99999999.</div>
 					</div>
@@ -663,7 +693,7 @@ $(window).on('load', function () {
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="fld">
 						<label for="totalAmountPayable" class="form-label fld-label">Total Amount Payable (Rs.)</label>
-						<input type="number" class="form-control" id="totalAmountPayable" name="totalAmountPayable" value=""
+						<input type="number" class="form-control" style="background-image: none;" id="totalAmountPayable" name="totalAmountPayable" value=""
 							placeholder="0" min="0" max="99999999" step="0.01" inputmode="decimal">
 						<div class="invalid-feedback">Enter a number between 0 and 99999999.</div>
 					</div>
@@ -691,8 +721,11 @@ $(window).on('load', function () {
 				<span>Signature of Applicant: ____________________</span>
 			</div>
 
-				<strong> Supporting Documents </strong>
-			</h6>
+			<div class="rts-card">
+				<div class="rts-card-head">
+					<span class="rts-step">6</span>
+					<h6>Supporting Documents</h6>
+				</div>
 			<div class="alert alert-info mb-0 p-2 mb-4 ms-2">
 				<small class="form-label"><strong class="form-label">Note(&#2344;&#2379;&#2306;&#2342;): </strong>Upload below files in .pdf (Max upto 2 MB) (&#2326;&#2366;&#2354;&#2368;&#2354; &#2347;&#2366;&#2311;&#2354; .pdf &#2350;&#2343;&#2381;&#2351;&#2375; &#2309;&#2346;&#2354;&#2379;&#2337; &#2325;&#2352;&#2366; (&#2325;&#2350;&#2366;&#2354; &#2408; MB &#2346;&#2352;&#2381;&#2351;&#2306;&#2340;))</small>
 			</div>
@@ -820,6 +853,8 @@ $(window).on('load', function () {
 				</div>
 
 			</div>
+			</div>
+
 			<div class="rts-actions">
 				<button class="btn btn-primary" type="submit" id="submit">Submit Application</button>
 				<button class="btn btn-outline-secondary" type="button" id="printForm" onclick="window.print();">View and Print</button>
@@ -861,7 +896,7 @@ $(window).on('load', function () {
 				filesPath += "null,";
 			} else {
 				var splitName = a.split(".pdf")[0].replace(/[^a-zA-Z0-9]/g, "");
-				var stored = basePath + "roadcuttingpermission/" + id + splitName + ".pdf";
+				var stored = basePath + "roadcuttingpermission/" + id + "_" + inputs[i].id + "_" + splitName + ".pdf";
 				paths.push(stored);
 				filesPath += stored + ",";
 				anySelected = true;

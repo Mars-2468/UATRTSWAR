@@ -73,8 +73,22 @@
 					     <i class="icon-home"></i>
 					     <span class="menu-text">Dashboard(Reports)</span>
 						
-					   </a>								 
+					   </a>	
+					   					 
 					 </li>
+					 
+					  #if ($rolesPermissions.containsKey("/listRTSFireNOCApplication"))											
+													 
+					  <li class="   ">
+					   <a href="$contextRoot/rtsapplication/listRTSFireServiceBifurgation.do">
+					     <i class="icon-home"></i>
+					     <span class="menu-text">Fire Applications DashBoard</span>
+						
+					   </a>	
+					   					 
+					 </li>
+					  #end
+				
 					#if ($rolesPermissions.containsKey("/workflowtemplate/") || 
 						$rolesPermissions.containsKey("/workflowtemplateusermapping/") )
 					<li class="sidebar-dropdown">
@@ -270,8 +284,10 @@
 					    <ul>
 							
 							<li id="user"><a href="$contextRoot/rtsapplication/listApplicationTransfer.do">$messageSource.getMessage("Zone Change")</a></li>
+												    					 
 							
 						</ul>
+							
 					  </div>	
 					</li>
 					
@@ -456,7 +472,7 @@
 							<li id="user"><a href="$contextRoot/rtsapplication/listRTSLayoutOfBuildingApplication.do">$messageSource.getMessage("Menu.rti.Layout")</a></li>
 							#end-->
 							 #if ($rolesPermissions.containsKey("/listRTSFireNOCApplication"))
-							<li id="user"><a href="$contextRoot/rtsapplication/listRTSFireNOCApplication.do">$messageSource.getMessage("Menu.rti.FireRecommendationLatter")</a></li>
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSfireApplication.do">$messageSource.getMessage("Menu.rti.FireRecommendationLatter")</a></li>
 							#end
 							#if ($rolesPermissions.containsKey("/listRTSFireComplianceCertificate"))
 							<li id="user"><a href="$contextRoot/rtsapplication/listRTSFireComplianceCertificate.do">$messageSource.getMessage("Menu.rti.FireComplianceCertificate")</a></li>
@@ -465,7 +481,7 @@
 							<li id="user"><a href="$contextRoot/workflow/listTasks.do">$messageSource.getMessage("Menu.rti.inbox")</a></li>
 							#end
 							#if ($rolesPermissions.containsKey("/listRTSTreeCuting"))
-							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTreeCuting.do">$messageSource.getMessage("Menu.rti.Tree")</a></li>
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTreeCuttingApplication.do">$messageSource.getMessage("Menu.rti.Tree")</a></li>
 							#end
 							#if ($rolesPermissions.containsKey("/listRTSTreeTrimming"))
 							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTreeTrimming.do">$messageSource.getMessage("Menu.rti.TreeTrimming")</a></li>
@@ -483,8 +499,21 @@
 						   <li id="user"><a href="$contextRoot/rtsapplication/listRTSFireCrackersShopLicense.do">$messageSource.getMessage("
 Temporary Fireworks License NOC")</a></li>
 							#end
-							 <li id="user"><a href="$contextRoot/rtsapplication/miscForm.do">$messageSource.getMessage("Miscellaneous Form")</a></li>
 							
+														<li id="user"><a href="$contextRoot/rtsapplication/listRTSSkySignLicence.do">$messageSource.getMessage("Sky Sign License")</a></li>
+														<li id="user"><a href="$contextRoot/rtsapplication/listRTSFoodBusinessNoc.do">$messageSource.getMessage("License for Food Business")</a></li>
+														<li id="user"><a href="$contextRoot/rtsapplication/listRTSFoodRegistrationNoc.do">$messageSource.getMessage("Food Registration Certificate")</a></li>
+														<li id="user"><a href="$contextRoot/rtsapplication/listRTSDrainageConnection.do">$messageSource.getMessage("Grant of Drainage/Sewerage Connection")</a></li>
+														<li id="user"><a href="$contextRoot/rtsapplication/listRTSLodgingLicence.do">$messageSource.getMessage("Issue of Loading License")</a></li>
+														<li id="user"><a href="$contextRoot/rtsapplication/listRTSLodgingLicenceRenewal.do">$messageSource.getMessage("Renewal of Loading License")</a></li>
+														<li id="user"><a href="$contextRoot/rtsapplication/listRTSHallLicence.do">$messageSource.getMessage("Issue of License for Hall")</a></li>
+														<li id="user"><a href="$contextRoot/rtsapplication/listRTSHallLicenceRenewal.do">$messageSource.getMessage("Renewal of License for Hall")</a></li>
+														<li id="user"><a href="$contextRoot/rtsapplication/listRTSHawkerRegistration.do">$messageSource.getMessage("Issuance of Hawker Registration Certificate")</a></li>
+														<li id="user"><a href="$contextRoot/rtsapplication/listRTSSignageLicence.do">$messageSource.getMessage(" Issuance/Renewal of Signage License")</a></li>
+														<li id="user"><a href="$contextRoot/rtsapplication/listRTSRoadCuttingPermission.do">$messageSource.getMessage("Grant of Road Cutting Permission")</a></li>
+							
+														 <li id="user"><a href="$contextRoot/rtsapplication/miscForm.do">$messageSource.getMessage("Miscellaneous Form")</a></li>
+
 						</ul>
 					  </div>	
 					</li>
@@ -501,6 +530,24 @@ Temporary Fireworks License NOC")</a></li>
 							
 							
 							<li id="user"><a href="$contextRoot/rtsapplication/failedCollectionEdit.do">$messageSource.getMessage("Menu.rti.failedtransactions")</a></li>
+								
+						</ul>
+					  </div>	
+					</li>
+					#end
+					
+					#if ($rolesPermissions.containsKey("/workflowtemplate/") || 
+						$rolesPermissions.containsKey("/workflowtemplateusermapping/") )
+					<li class="sidebar-dropdown">
+					   <a href="#">
+						 <i class="icon-settings"></i>
+						 <span class="menu-text">$messageSource.getMessage("Offline Collection")</span>
+					   </a>
+                      <div class="sidebar-submenu"> 
+					    <ul>
+							
+							
+							<li id="user"><a href="$contextRoot/rtsapplication/searchApplicaationId.do">$messageSource.getMessage("Collection")</a></li>	
 								
 						</ul>
 					  </div>	
@@ -560,7 +607,8 @@ Temporary Fireworks License NOC")</a></li>
 					#end
 					*#	
 					
-					
+					#if ($rolesPermissions.containsKey("/workflowtemplate/") || 
+						$rolesPermissions.containsKey("/workflowtemplateusermapping/") )
 					
 					<li class="sidebar-dropdown">
 					   <a href="#">
@@ -572,39 +620,18 @@ Temporary Fireworks License NOC")</a></li>
 							
 							<li id="user"><a href="$contextRoot/rtsapplication/ganeshReport.do">$messageSource.getMessage("Ganesh Report")</a></li>
 														<li id="user"><a href="$contextRoot/rtsapplication/durgaUtsavReport.do">$messageSource.getMessage("Durga Utsav Report")</a></li>
-													<li id="user"><a href="$contextRoot/rtsapplication/listAuditReports.do">Reports</a></li>
+														
+							<li id="report4"><a href="$contextRoot/rtiapplication/listStatueCleaning.do">$messageSource.getMessage("Statue Cleaning Report")</a></li>
+							<li id="user"><a href="$contextRoot/rtsapplication/listAuditReports.do">Other Reports</a></li>
+						
+					  </div>	
 
 						</ul>
 					  </div>	
 					</li>
+										#end
 					
-					<li class="sidebar-dropdown">
-					   <a href="#">
-						 <i class="icon-settings"></i>
-						 <span class="menu-text">$messageSource.getMessage("Offline Collection")</span>
-					   </a>
-                      <div class="sidebar-submenu">
-					    <ul>
 							
-							<li id="user"><a href="$contextRoot/rtsapplication/searchApplicaationId.do">$messageSource.getMessage("Collection")</a></li>	
-							
-						</ul>
-					  </div>	
-					</li>
-											<li class="sidebar-dropdown">
-					   <a href="#">
-						 <i class="icon-settings"></i>
-						 <span class="menu-text">$messageSource.getMessage("QR Code Generator")</span>
-					   </a>
-                      <div class="sidebar-submenu">
-					    <ul>
-							
-							<li id="user"><a href="$contextRoot/rtsapplication/searchApplicaationIdQR.do">$messageSource.getMessage("Apply QR to certificates")</a></li>	
-							
-						</ul>
-					  </div>	
-					</li>
-	
 				</ul>
 				
       		</div>
