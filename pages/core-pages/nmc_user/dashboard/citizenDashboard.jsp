@@ -440,7 +440,7 @@ String name=(String)session.getAttribute("name");
 </div>
 
 <div class="page-heading-wrapper">
-  <h2 class="page-heading">ONLINE CITIZEN SERVICES (76)</h2>
+  <h2 class="page-heading">ONLINE CITIZEN SERVICES (77)</h2>
 </div>
 
 <div class="cards-outer-wrapper">
@@ -811,7 +811,7 @@ String name=(String)session.getAttribute("name");
 				<div class="card shadow text-bg-secondary1 mb-3  bbxx1">
 					<div
 						class="card-header pointer d-flex justify-content-between align-items-center">
-						<a class="lbleng zoom-text" href="#"> Hot mixed planned & other Department<span class="service-count">(13)</span></a>
+						<a class="lbleng zoom-text" href="#"> Hot mixed planned & other Department<span class="service-count">(14)</span></a>
 						<div class="wtt_">
 							<img src="<%=url%>img/estate.png" alt="Estate">
 						</div>
@@ -842,6 +842,8 @@ String name=(String)session.getAttribute("name");
 							<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTISignageLicence.do'>Application Form for Issuance/Renewal of Signage License
 </a></li>
 							<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTIRoadCuttingPermission.do'>Application Form for Grant of Road Cutting Permission</a></li>
+							<li><a class="lbleng zoom-text"  href='<c:out value="${contextRoot}"/>/ws/rtiapplication/newRTISkySignLicence.do'>Application for Sky Sign License</a></li>
+						
 						</ol>
 					</div>
 				</div>
