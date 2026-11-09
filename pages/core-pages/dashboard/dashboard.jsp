@@ -921,6 +921,8 @@ String registrationToDate = request.getParameter("registrationToDate");
         </div>
       </c:otherwise>
 </c:choose>
+<%-- RTS First / Second Appeal card (counts not included in Applications Received) --%>
+<jsp:directive.include file="/pages/core-pages/rtsappeal/rtsAppealDashboardCard.jspf" />
      
 
 

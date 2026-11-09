@@ -9,7 +9,7 @@
 
  <head>
   <meta charset="UTF-8">
-  <meta name="Generator" content="EditPlus®">
+  <meta name="Generator" content="EditPlusï¿½">
   <meta name="Author" content="">
   <meta name="Keywords" content="">
   <meta name="Description" content="">
@@ -154,55 +154,7 @@ input[type=text] {
 <div class="form-group" style="margin-top:-40px;" align="center" >
 	<br> <br>
 	<h2 style="font-weight: bold">Application Details</h2>
-	<br> 
-<div class="container-fluid mt-2" style="width: 180vh">
-
-	
-
-	<table class="table table-bordered table-striped" align="center" width="70%" height="100%"
-		style="font-size: 13px;">
-		<tr style="background-color:#9d9d9f;e4;color:white">
-			<th class="ClsLabel">Sr No.</th>
-			<th class="ClsLabel">Application Number</th>
-			<th class="ClsLabel">Application Name</th>
-			<th class="ClsLabel">Date Of Application</th>
-			
-			<th class="ClsLabel">Status</th>
-			
-		</tr>
-		
-		<c:forEach var="rtiApplication"  items="${rtiApplicationList}" varStatus="rowNumber">
-			
-			<tr> 
-				<td class="value" >${rowNumber.index + 1}</td>    
-				<td class="value">${rtiApplication.rtiApplnNumber}</td>
-				<td class="value">${rtiApplication.subject}</td>
-				<td class="value">${rtiApplication.registrationDate}</td>
-				
-
-					<td style="width: 230px; height: 30px"><span class="ClsLabel"
-				style="font-size: 14px"> <c:if
-						test="${rtiApplication.workFlowStatus==0}">
-						Form Submitted 
-					</c:if> <c:if test="${rtiApplication.workFlowStatus==3}">
-						Payment Pending 
-					</c:if> <c:if test="${rtiApplication.workFlowStatus==2}">
-						Payment Completed
-					</c:if> <c:if test="${rtiApplication.workFlowStatus==1}">
-						Completed
-					</c:if> <c:if test="${rtiApplication.workFlowStatus==5}">
-						Rejected
-					</c:if></span></td>
-									
-					
-					
-
-			</tr>
-			
-		</c:forEach>
-		
-	</table>
-	
-	
-</div>
+	<br>
+	<%-- RTS: application status with SLA, payment receipt, appeal, rejection status and certificate --%>
+	<jsp:directive.include file="/pages/core-pages/rtsappeal/myApplicationsTable.jspf" />
 </div>

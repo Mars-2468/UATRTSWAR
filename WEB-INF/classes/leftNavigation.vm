@@ -76,6 +76,21 @@
 					   </a>	
 					   					 
 					 </li>
+					 <!-- RTS First / Second Appeal: the page lists only the appeals of the logged-in officer -->
+					 <li class="   ">
+					   <a href="$contextRoot/rtsappeal/listAppeals.do">
+					     <i class="icon-file-text"></i>
+					     <span class="menu-text">Appeal Applications</span>
+					   </a>
+					 </li>
+					 #if ($rolesPermissions.containsKey("/workflowtemplateusermapping/"))
+					 <li class="   ">
+					   <a href="$contextRoot/rtsappeal/appellateOfficers.do">
+					     <i class="icon-users"></i>
+					     <span class="menu-text">Appellate Officer Mapping</span>
+					   </a>
+					 </li>
+					 #end
 					 
 					  #if ($rolesPermissions.containsKey("/listRTSFireNOCApplication"))											
 													 
@@ -500,7 +515,9 @@
 Temporary Fireworks License NOC")</a></li>
 							#end
 							
-														<li id="user"><a href="$contextRoot/rtsapplication/listRTSSkySignLicence.do">$messageSource.getMessage("Sky Sign License")</a></li>
+								#if ($rolesPermissions.containsKey("/workflowtemplate/") || 
+						$rolesPermissions.containsKey("/workflowtemplateusermapping/") )
+												<li id="user"><a href="$contextRoot/rtsapplication/listRTSSkySignLicence.do">$messageSource.getMessage("Sky Sign License")</a></li>
 														<li id="user"><a href="$contextRoot/rtsapplication/listRTSFoodBusinessNoc.do">$messageSource.getMessage("License for Food Business")</a></li>
 														<li id="user"><a href="$contextRoot/rtsapplication/listRTSFoodRegistrationNoc.do">$messageSource.getMessage("Food Registration Certificate")</a></li>
 														<li id="user"><a href="$contextRoot/rtsapplication/listRTSDrainageConnection.do">$messageSource.getMessage("Grant of Drainage/Sewerage Connection")</a></li>
@@ -511,6 +528,7 @@ Temporary Fireworks License NOC")</a></li>
 														<li id="user"><a href="$contextRoot/rtsapplication/listRTSHawkerRegistration.do">$messageSource.getMessage("Issuance of Hawker Registration Certificate")</a></li>
 														<li id="user"><a href="$contextRoot/rtsapplication/listRTSSignageLicence.do">$messageSource.getMessage(" Issuance/Renewal of Signage License")</a></li>
 														<li id="user"><a href="$contextRoot/rtsapplication/listRTSRoadCuttingPermission.do">$messageSource.getMessage("Grant of Road Cutting Permission")</a></li>
+														#end
 							
 														 <li id="user"><a href="$contextRoot/rtsapplication/miscForm.do">$messageSource.getMessage("Miscellaneous Form")</a></li>
 

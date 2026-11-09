@@ -443,6 +443,8 @@ String name=(String)session.getAttribute("name");
                         </td>
                     </tr>
                             					</c:if>
+<%-- RTS First / Second Appeal: SLA and appeal for this application --%>
+<jsp:directive.include file="/pages/core-pages/rtsappeal/appealStatusRow.jspf" />
     <tr>
     <td><span class="ClsLabel" style="font-size:14px">Download PDF</span></td>
     

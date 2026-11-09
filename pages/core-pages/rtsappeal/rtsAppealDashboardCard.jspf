@@ -1,0 +1,37 @@
+<%-- "Appeal Applications" card for the existing department dashboard (dashboard.jsp includes this file).
+     Counts come from /rtsappeal/dashboardSummary.do; appeals are not part of "Applications Received".
+     Click = department-wise bifurcation (/rtsappeal/dashboard.do). --%>
+<div style="display: flex; justify-content: center; margin: 14px 0">
+	<a href="<c:out value='${contextRoot}'/>/rtsappeal/dashboard.do" title="Appeal Applications - Department wise"
+		style="display: block; width: 260px; text-decoration: none; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,.15); background: #fff">
+		<div style="background: #0f5fa8; color: #fff; text-align: center; padding: 12px 8px; font-weight: 600; font-size: 15px">Appeal Applications</div>
+		<div style="display: flex; text-align: center; color: #1f2937">
+			<div style="flex: 1; padding: 10px 4px; border-right: 1px solid #e5ebf1">
+				<div id="apCardTotal" style="font-size: 22px; font-weight: 700">-</div><div style="font-size: 12px">Total</div></div>
+			<div style="flex: 1; padding: 10px 4px; border-right: 1px solid #e5ebf1">
+				<div id="apCardPending" style="font-size: 22px; font-weight: 700; color: #b45309">-</div><div style="font-size: 12px">Pending</div></div>
+			<div style="flex: 1; padding: 10px 4px">
+				<div id="apCardClosed" style="font-size: 22px; font-weight: 700; color: #166534">-</div><div style="font-size: 12px">Closed</div></div>
+		</div>
+	</a>
+</div>
+<script type="text/javascript">
+	(function () {
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', '<c:out value="${contextRoot}"/>/rtsappeal/dashboardSummary.do', true);
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState !== 4 || xhr.status !== 200) {
+				return;
+			}
+			try {
+				var data = JSON.parse(xhr.responseText);
+				document.getElementById('apCardTotal').innerHTML = data.total;
+				document.getElementById('apCardPending').innerHTML = data.pending;
+				document.getElementById('apCardClosed').innerHTML = data.closed;
+			} catch (e) {
+				// leave "-" when the counts are not available
+			}
+		};
+		xhr.send();
+	})();
+</script>

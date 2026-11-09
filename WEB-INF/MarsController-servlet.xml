@@ -18,6 +18,8 @@
 				<value>/WEB-INF/Common-TilesConfiguration.xml</value>
 				<value>/WEB-INF/Core-TilesConfiguration.xml</value>
 				<value>/WEB-INF/Workflow-TilesConfiguration.xml</value>
+				<!-- RTS First / Second Appeal -->
+				<value>/WEB-INF/RtsAppeal-TilesConfiguration.xml</value>
 			</list>
 		</property>
 	</bean>

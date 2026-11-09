@@ -1,0 +1,101 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%-- Styles for the RTS Appeal pages (citizen and department). All classes start with "ap-" so they do not clash with existing pages. --%>
+<style type="text/css">
+	.ap-page { max-width: 1280px; margin: 18px auto; padding: 0 14px; font-family: "Source Sans Pro", Arial, sans-serif; color: #1f2937; font-size: 14px; }
+	.ap-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+	.ap-head h2, .ap-head h3 { margin: 0; font-size: 22px; font-weight: 600; color: #0f3d6e; }
+	.ap-sub { color: #4b5563; margin: 2px 0 0; font-size: 13px; }
+	.ap-card { background: #fff; border: 1px solid #dbe3ec; border-radius: 8px; box-shadow: 0 1px 3px rgba(15, 61, 110, .08); margin-bottom: 16px; }
+	.ap-card-head { padding: 10px 14px; border-bottom: 1px solid #e5ebf1; background: #f4f8fc; border-radius: 8px 8px 0 0; font-weight: 600; color: #0f3d6e; }
+	.ap-card-body { padding: 14px; }
+	.ap-table-wrap { overflow-x: auto; }
+	.ap-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+	.ap-table th { background: #0f3d6e; color: #fff; font-weight: 600; text-align: left; padding: 9px 8px; vertical-align: bottom; }
+	.ap-table td { border-bottom: 1px solid #e5ebf1; padding: 8px; vertical-align: top; }
+	.ap-table tbody tr:nth-child(even) td { background: #f9fbfd; }
+	.ap-table tbody tr:hover td { background: #eef5fc; }
+	.ap-empty { text-align: center; color: #6b7280; padding: 24px !important; }
+	.ap-center { text-align: center; }
+	.ap-nowrap { white-space: nowrap; }
+	.ap-small { font-size: 12px; line-height: 1.45; }
+	.ap-muted { color: #9ca3af; }
+	.ap-err-text { color: #b42318; }
+	.ap-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+	.ap-badge-ok { background: #dcfce7; color: #166534; }
+	.ap-badge-err { background: #fee2e2; color: #991b1b; }
+	.ap-badge-info { background: #e0edfb; color: #0f3d6e; }
+	.ap-badge-warn { background: #fef3c7; color: #92400e; }
+	.ap-btn { display: inline-block; border: 0; border-radius: 5px; padding: 7px 14px; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none !important; line-height: 1.3; }
+	.ap-btn-sm { padding: 4px 10px; font-size: 12px; }
+	.ap-btn-green { background: #4a9a3c; color: #fff !important; }
+	.ap-btn-green:hover { background: #3c7f31; }
+	.ap-btn-blue { background: #0f5fa8; color: #fff !important; }
+	.ap-btn-blue:hover { background: #0c4d89; }
+	.ap-btn-red { background: #b42318; color: #fff !important; }
+	.ap-btn-red:hover { background: #912018; }
+	.ap-btn-light { background: #eef2f6; color: #1f2937 !important; border: 1px solid #d6dee7; }
+	.ap-btn-disabled { background: #e5e7eb; color: #9ca3af !important; cursor: not-allowed; }
+	.ap-link { color: #0f5fa8; font-size: 12px; }
+	.ap-appeal-box { border-left: 3px solid #0f5fa8; padding: 2px 0 4px 7px; margin-bottom: 6px; }
+	.ap-alert { padding: 10px 14px; border-radius: 6px; margin-bottom: 12px; }
+	.ap-alert-error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+	.ap-alert-ok { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+	.ap-alert-info { background: #e0edfb; color: #0f3d6e; border: 1px solid #c5dbf3; }
+	.ap-notes { color: #b42318; font-size: 13px; font-weight: 600; }
+	.ap-notes ol { padding-left: 18px; margin: 6px 0; }
+	.ap-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px 18px; }
+	.ap-field label { display: block; font-size: 12px; color: #6b7280; margin-bottom: 2px; }
+	.ap-field div { font-weight: 600; word-break: break-word; }
+	.ap-form-row { margin-bottom: 12px; }
+	.ap-form-row label { display: block; font-weight: 600; margin-bottom: 4px; }
+	.ap-form-row select, .ap-form-row textarea, .ap-form-row input[type=file] { width: 100%; max-width: 640px; padding: 7px 8px; border: 1px solid #c8d2dd; border-radius: 5px; font-size: 14px; box-sizing: border-box; }
+	.ap-form-row textarea { min-height: 90px; }
+	.ap-req { color: #b42318; }
+	.ap-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+	.ap-timeline { list-style: none; padding: 0; margin: 0; }
+	.ap-timeline li { border-left: 2px solid #c5dbf3; padding: 0 0 12px 14px; position: relative; }
+	.ap-timeline li:before { content: ""; position: absolute; left: -6px; top: 3px; width: 10px; height: 10px; border-radius: 50%; background: #0f5fa8; }
+	.ap-timeline .ap-when { font-size: 12px; color: #6b7280; }
+	.ap-tabs { display: flex; gap: 6px; margin-bottom: -1px; flex-wrap: wrap; }
+	.ap-tab { padding: 8px 14px; border: 1px solid #dbe3ec; border-bottom: 0; border-radius: 6px 6px 0 0; background: #eef2f6; cursor: pointer; font-weight: 600; color: #374151; }
+	.ap-tab.ap-active { background: #fff; color: #0f3d6e; }
+	.ap-count { display: inline-block; min-width: 20px; padding: 0 6px; border-radius: 10px; background: #0f5fa8; color: #fff; font-size: 11px; text-align: center; margin-left: 4px; }
+	/* application list on "My Application" */
+	.ap-list { max-width: 1400px; margin: 8px auto 20px; padding: 0 10px; font-family: "Source Sans Pro", Arial, sans-serif; text-align: left; }
+	.ap-apps { table-layout: fixed; min-width: 1580px; }
+	.ap-apps th { font-size: 12px; line-height: 1.3; padding: 10px 8px; vertical-align: middle; background: #0f3d6e; }
+	.ap-apps td { font-size: 13px; padding: 10px 8px; vertical-align: middle; word-wrap: break-word; }
+	.ap-apps tbody tr:nth-child(even) td { background: #f6f9fc; }
+	.ap-appno { font-weight: 600; color: #0f3d6e; white-space: nowrap; }
+	.ap-muted-strong { color: #6b7280; font-weight: 600; }
+	.ap-btn-xs { padding: 3px 10px; font-size: 12px; border-radius: 4px; }
+	.ap-apps .ap-appeal-box { text-align: left; }
+	.ap-section-title { font-weight: 600; color: #0f3d6e; margin: 0 0 10px; font-size: 15px; }
+	.ap-doc { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 8px 0; border-bottom: 1px dashed #e5ebf1; }
+	.ap-doc:last-child { border-bottom: 0; }
+	.ap-doc .ap-doc-name { min-width: 200px; font-weight: 600; }
+	.ap-form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px 18px; }
+	.ap-form-grid .ap-form-row { margin: 0; }
+	.ap-form-grid .ap-form-row label { font-size: 12px; color: #4b5563; font-weight: 600; }
+	.ap-form-grid input[type=text], .ap-form-grid input[type=date], .ap-form-grid input[type=number], .ap-form-grid textarea {
+		width: 100%; padding: 7px 8px; border: 1px solid #c8d2dd; border-radius: 5px; font-size: 14px; box-sizing: border-box; }
+	.ap-form-grid textarea { min-height: 62px; }
+	.ap-form-grid input[type=email], .ap-form-grid select { width: 100%; padding: 7px 8px; border: 1px solid #c8d2dd; border-radius: 5px; font-size: 14px; box-sizing: border-box; background: #fff; }
+	.ap-form-grid .ap-readonly { background: #f1f4f7 !important; color: #4b5563; cursor: not-allowed; }
+	.ap-radios { display: flex; gap: 16px; flex-wrap: wrap; padding: 6px 0; }
+	.ap-form-grid .ap-form-row label.ap-radio { display: inline-flex; align-items: center; gap: 5px; font-size: 14px; color: #1f2937; font-weight: 400; margin: 0; cursor: pointer; }
+	.ap-invalid { border-color: #b42318 !important; box-shadow: 0 0 0 2px rgba(180, 35, 24, .15); }
+	.ap-field-err { color: #b42318; font-size: 12px; margin-top: 3px; }
+	.ap-field-err:empty { display: none; }
+	.ap-span-2 { grid-column: span 2; }
+	.ap-changed { background: #fff7e6 !important; }
+	.ap-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; margin-bottom: 14px; }
+	.ap-step { background: #f4f8fc; border: 1px solid #dbe3ec; border-radius: 8px; padding: 10px 12px; font-size: 13px; color: #374151; }
+	.ap-step b { display: block; color: #0f3d6e; margin-bottom: 2px; }
+	.ap-step-no { float: left; width: 22px; height: 22px; border-radius: 50%; background: #0f5fa8; color: #fff; text-align: center; line-height: 22px; font-size: 12px; margin: 0 8px 6px 0; }
+	@media print {
+		.ap-noprint, header, .header, nav { display: none !important; }
+		.ap-page { margin: 0; max-width: none; }
+		.ap-card { box-shadow: none; }
+	}
+</style>

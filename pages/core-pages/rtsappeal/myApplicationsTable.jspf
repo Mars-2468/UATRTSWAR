@@ -1,0 +1,183 @@
+<%--
+  RTS Appeal: citizen application table (Sr. No ... Download certificate) for the existing
+  "My Application" page (MyApplication.jsp). The rows come from the rtsAppealService bean.
+--%>
+<%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
+<%@ page import="com.mars.rti.service.RtsAppealService" %>
+<jsp:directive.include file="/pages/core-pages/rtsappeal/rtsAppealStyles.jspf" />
+<%
+	if (request.getAttribute("rtsAppealRows") == null) {
+		java.util.List<?> rtsAppealRows = java.util.Collections.emptyList();
+		Object rtsAppealMobile = session.getAttribute("mobileNo");
+		if (rtsAppealMobile != null) {
+			try {
+				RtsAppealService rtsAppealSvc = (RtsAppealService) WebApplicationContextUtils
+						.getRequiredWebApplicationContext(application).getBean("rtsAppealService");
+				try {
+					rtsAppealSvc.syncAppeals();
+				} catch (RuntimeException ignore) {
+					// the list is still shown
+				}
+				rtsAppealRows = rtsAppealSvc.getCitizenApplicationRows(rtsAppealMobile.toString());
+			} catch (RuntimeException e) {
+				request.setAttribute("rtsAppealError", "Application details could not be loaded. Please try again later.");
+			}
+		}
+		request.setAttribute("rtsAppealRows", rtsAppealRows);
+		for (String rtsAppealKey : new String[] { "rtsAppealError", "rtsAppealMessage" }) {
+			if (session.getAttribute(rtsAppealKey) != null) {
+				request.setAttribute(rtsAppealKey, session.getAttribute(rtsAppealKey));
+				session.removeAttribute(rtsAppealKey);
+			}
+		}
+	}
+%>
+
+<div class="ap-list">
+	<c:if test="${not empty rtsAppealError}">
+		<div class="ap-alert ap-alert-error"><c:out value="${rtsAppealError}"/></div>
+	</c:if>
+	<c:if test="${not empty rtsAppealMessage}">
+		<div class="ap-alert ap-alert-ok"><c:out value="${rtsAppealMessage}"/></div>
+	</c:if>
+
+	<div class="ap-card">
+		<div class="ap-table-wrap">
+			<table class="ap-table ap-apps">
+				<colgroup>
+					<col style="width: 48px"/><col style="width: 150px"/><col style="width: 150px"/><col style="width: 110px"/><col style="width: 150px"/><col style="width: 104px"/>
+					<col style="width: 128px"/><col style="width: 96px"/><col style="width: 86px"/><col style="width: 110px"/>
+					<col style="width: 170px"/><col style="width: 170px"/><col style="width: 104px"/>
+				</colgroup>
+				<thead>
+					<tr>
+						<th class="ap-center">Sr. No</th>
+						<th>Application Id</th>
+						<th>Applicant Name</th>
+						<th>Mobile Number</th>
+						<th>Service Name</th>
+						<th>Application Date</th>
+						<th>Current Status</th>
+						<th class="ap-center">Payment receipt</th>
+						<th class="ap-center">Maximum days for issuing certificate</th>
+						<th>Expected service Delivery date</th>
+						<th class="ap-center">Appeal</th>
+						<th>Rejection status</th>
+						<th class="ap-center">Download certificate</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:if test="${empty rtsAppealRows}">
+						<tr><td colspan="13" class="ap-empty">No applications found.</td></tr>
+					</c:if>
+					<c:forEach items="${rtsAppealRows}" var="row" varStatus="st">
+						<c:set var="app" value="${row.application}"/>
+						<c:set var="appStatus" value="${app.workFlowStatus}"/>
+						<tr>
+							<td class="ap-center ap-muted-strong"><c:out value="${st.count}"/></td>
+							<td><span class="ap-appno"><c:out value="${app.rtiApplnNumber}"/></span></td>
+							<td><c:out value="${empty app.applicantName ? '-' : app.applicantName}"/></td>
+							<td class="ap-nowrap"><c:out value="${empty app.mobileNumber ? '-' : app.mobileNumber}"/></td>
+							<td><c:out value="${row.serviceName}"/></td>
+							<td>
+								<c:set var="dateParts" value="${fn:split(app.createdDate, ' ')}"/>
+								<div><c:out value="${dateParts[0]}"/></div>
+								<c:if test="${fn:length(dateParts) > 1}"><div class="ap-small ap-muted"><c:out value="${dateParts[1]}"/></div></c:if>
+							</td>
+							<td>
+								<span class="ap-badge ${appStatus == 1 ? 'ap-badge-ok' : (row.rejected ? 'ap-badge-err' : (appStatus == 20 ? 'ap-badge-warn' : 'ap-badge-info'))}">
+									<c:out value="${row.statusLabel}"/></span>
+								<c:if test="${appStatus == 3}">
+									<c:url var="payUrl" value="/ws/pay.do"><c:param name="rtsNo" value="${app.rtiApplnNumber}"/></c:url>
+									<div style="margin-top: 5px"><a class="ap-btn ap-btn-blue ap-btn-xs" href="${payUrl}">Pay Now</a></div>
+								</c:if>
+							</td>
+							<td class="ap-center">
+								<c:choose>
+									<c:when test="${row.paymentReceiptAvailable}">
+										<c:url var="receiptUrl" value="/ws/rtsapplication/printRecieptDownload.do">
+											<c:param name="rtiApplnNumber" value="${app.rtiApplnNumber}"/>
+										</c:url>
+										<a class="ap-btn ap-btn-green ap-btn-xs" href="${receiptUrl}" target="_blank">Download</a>
+									</c:when>
+									<c:otherwise><span class="ap-muted">-</span></c:otherwise>
+								</c:choose>
+							</td>
+							<td class="ap-center"><b><c:out value="${empty row.maxDays ? '-' : row.maxDays}"/></b></td>
+							<td>
+								<c:out value="${empty row.expectedDeliveryDate ? '-' : row.expectedDeliveryDate}"/>
+								<c:if test="${row.slaOver && appStatus != 1}">
+									<div class="ap-small ap-err-text">SLA period over</div>
+								</c:if>
+							</td>
+							<td class="ap-center">
+								<c:if test="${not empty row.firstAppeal}"><c:set var="ap1" value="${row.firstAppeal}"/>
+									<div class="ap-appeal-box">
+										<div class="ap-small"><b>1st Appeal</b> &middot; <c:out value="${ap1.statusLabel}"/></div>
+										<a class="ap-link" target="_blank" href="<c:out value='${contextRoot}'/>/ws/rtsappeal/appealAcknowledgement.do?id=${ap1.rtsAppealId}">Download Appeal</a>
+										<c:if test="${not empty ap1.appellateOrderPath}"> | <a class="ap-link" target="_blank"
+											href="<c:out value='${contextRoot}'/>/ws/rtsappeal/downloadOrder.do?id=${ap1.rtsAppealId}">Order</a></c:if>
+									</div>
+								</c:if>
+								<c:if test="${not empty row.secondAppeal}"><c:set var="ap2" value="${row.secondAppeal}"/>
+									<div class="ap-appeal-box">
+										<div class="ap-small"><b>2nd Appeal</b> &middot; <c:out value="${ap2.statusLabel}"/></div>
+										<a class="ap-link" target="_blank" href="<c:out value='${contextRoot}'/>/ws/rtsappeal/appealAcknowledgement.do?id=${ap2.rtsAppealId}">Download Appeal</a>
+										<c:if test="${not empty ap2.appellateOrderPath}"> | <a class="ap-link" target="_blank"
+											href="<c:out value='${contextRoot}'/>/ws/rtsappeal/downloadOrder.do?id=${ap2.rtsAppealId}">Order</a></c:if>
+									</div>
+								</c:if>
+								<c:choose>
+									<c:when test="${not empty row.appealLevelAllowed}">
+										<c:url var="appealUrl" value="/ws/rtsappeal/appealForm.do">
+											<c:param name="rtiApplnNumber" value="${app.rtiApplnNumber}"/>
+										</c:url>
+										<a class="ap-btn ap-btn-green ap-btn-xs" href="${appealUrl}"><c:out value="${row.appealLevelAllowed == 2 ? 'Second Appeal' : 'Appeal'}"/></a>
+									</c:when>
+									<c:when test="${empty row.firstAppeal}">
+										<span class="ap-btn ap-btn-disabled ap-btn-xs"
+											title="${row.appealConfigured ? 'Enabled after the SLA period if no action is taken, or if the application is rejected' : 'Appeal is not available for this service'}">Appeal</span>
+									</c:when>
+								</c:choose>
+							</td>
+							<td>
+								<c:choose>
+									<c:when test="${row.rejected}">
+										<span class="ap-badge ap-badge-err">Rejected</span>
+										<div class="ap-small" style="margin-top: 4px"><span class="ap-muted">Rejection reason:</span>
+											<c:out value="${empty row.rejectionReason ? '-' : row.rejectionReason}"/></div>
+									</c:when>
+									<c:otherwise><span class="ap-muted">-</span></c:otherwise>
+								</c:choose>
+							</td>
+							<td class="ap-center">
+								<c:choose>
+									<c:when test="${not empty row.certificatePath}">
+										<a class="ap-btn ap-btn-green ap-btn-xs" href="#" data-path="<c:out value='${row.certificatePath}'/>"
+											onclick="apDocDownload(this.getAttribute('data-path')); return false;">Download</a>
+									</c:when>
+									<c:otherwise><span class="ap-muted">-</span></c:otherwise>
+								</c:choose>
+							</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div class="ap-notes">
+		<ol>
+			<li>If no action is taken on the application within the SLA period (maximum days), or if you do not agree with the
+				rejection reason, the <b>Appeal</b> button is enabled.</li>
+			<li>The SLA period starts 24 hours after the application is submitted.</li>
+			<li>If you are not satisfied after the first appeal is closed, you can file a <b>Second Appeal</b>.</li>
+		</ol>
+	</div>
+</div>
+
+<script type="text/javascript">
+	function apDocDownload(filesPath) {
+		window.open('<c:out value="${contextRoot}"/>/rtsApplication/getPdf.do?fp=' + btoa(encodeURIComponent(filesPath)), '_blank');
+	}
+</script>

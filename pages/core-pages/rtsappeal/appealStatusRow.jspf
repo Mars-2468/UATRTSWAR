@@ -1,0 +1,54 @@
+<%--
+  RTS Appeal: extra rows for the existing "RTS Application Status" page (certificates.jsp):
+  SLA / expected delivery date and the appeal (button, or the appeal already filed).
+  Uses ${rtiApplication} of that page and the citizen session (mobileNo).
+--%>
+<%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
+<%@ page import="com.mars.rti.service.RtsAppealService" %>
+<%
+	Object rtsStatusApp = request.getAttribute("rtiApplication");
+	Object rtsStatusMobile = session.getAttribute("mobileNo");
+	if (rtsStatusApp instanceof com.mars.rti.model.RTIApplication && rtsStatusMobile != null) {
+		try {
+			RtsAppealService rtsStatusSvc = (RtsAppealService) WebApplicationContextUtils
+					.getRequiredWebApplicationContext(application).getBean("rtsAppealService");
+			request.setAttribute("rtsAppealStatusRow", rtsStatusSvc.getCitizenApplicationRow(
+					((com.mars.rti.model.RTIApplication) rtsStatusApp).getRtiApplnNumber(), rtsStatusMobile.toString()));
+		} catch (RuntimeException e) {
+			request.setAttribute("rtsAppealStatusRow", null);
+		}
+	}
+%>
+<c:if test="${not empty rtsAppealStatusRow and rtsAppealStatusRow.appealConfigured}">
+	<c:set var="asRow" value="${rtsAppealStatusRow}"/>
+	<tr>
+		<td><span class="ClsLabel" style="font-size:14px">Maximum days / Expected service Delivery date</span></td>
+		<td><c:out value="${asRow.maxDays}"/> days &middot; <c:out value="${asRow.expectedDeliveryDate}"/>
+			<c:if test="${asRow.slaOver and asRow.application.workFlowStatus != 1}"><span style="color:#b42318"> (SLA period over)</span></c:if></td>
+	</tr>
+	<tr>
+		<td><span class="ClsLabel" style="font-size:14px">Appeal</span></td>
+		<td>
+			<c:if test="${not empty asRow.firstAppeal}">
+				<div>First Appeal <b><c:out value="${asRow.firstAppeal.appealNumber}"/></b> - <c:out value="${asRow.firstAppeal.statusLabel}"/>
+					&nbsp;<a target="_blank" href="<c:out value='${contextRoot}'/>/ws/rtsappeal/appealAcknowledgement.do?id=${asRow.firstAppeal.rtsAppealId}">Download Appeal</a></div>
+			</c:if>
+			<c:if test="${not empty asRow.secondAppeal}">
+				<div>Second Appeal <b><c:out value="${asRow.secondAppeal.appealNumber}"/></b> - <c:out value="${asRow.secondAppeal.statusLabel}"/>
+					&nbsp;<a target="_blank" href="<c:out value='${contextRoot}'/>/ws/rtsappeal/appealAcknowledgement.do?id=${asRow.secondAppeal.rtsAppealId}">Download Appeal</a></div>
+			</c:if>
+			<c:choose>
+				<c:when test="${not empty asRow.appealLevelAllowed}">
+					<c:url var="asAppealUrl" value="/ws/rtsappeal/appealForm.do">
+						<c:param name="rtiApplnNumber" value="${asRow.application.rtiApplnNumber}"/>
+					</c:url>
+					<a class="btn btn-success" href="${asAppealUrl}" style="margin-top:4px">
+						<c:out value="${asRow.appealLevelAllowed == 2 ? 'File Second Appeal' : 'File Appeal'}"/></a>
+				</c:when>
+				<c:when test="${empty asRow.firstAppeal}">
+					<span style="color:#6b7280">Appeal is enabled if no action is taken within the SLA period or if the application is rejected.</span>
+				</c:when>
+			</c:choose>
+		</td>
+	</tr>
+</c:if>

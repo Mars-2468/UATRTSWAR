@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<!-- RTS First / Second Appeal (registered in MarsController-servlet.xml) -->
+<tiles-definitions>
+
+	<!-- Citizen (same popup layout as the other citizen pages) -->
+	<definition name="rtsAppealCitizenForm" extends="egov.popup">
+		<put-attribute name="content" value="/pages/core-pages/rtsappeal/citizenAppealForm.jsp"/>
+		<put-attribute name="parentMenu" value="RTIReports" type="string"/>
+	</definition>
+	<definition name="rtsAppealCitizenSuccess" extends="egov.popup">
+		<put-attribute name="content" value="/pages/core-pages/rtsappeal/citizenAppealSuccess.jsp"/>
+		<put-attribute name="parentMenu" value="RTIReports" type="string"/>
+	</definition>
+	<definition name="rtsAppealCitizenAcknowledgement" extends="egov.popup">
+		<put-attribute name="content" value="/pages/core-pages/rtsappeal/citizenAppealAcknowledgement.jsp"/>
+		<put-attribute name="parentMenu" value="RTIReports" type="string"/>
+	</definition>
+
+	<!-- Department -->
+	<definition name="rtsAppealOriginalApplication" extends="egov.popup">
+		<put-attribute name="content" value="/pages/core-pages/rtsappeal/deptAppealOriginal.jsp"/>
+		<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+	</definition>
+	<definition name="rtsAppealOfficerMapping" extends="egov.mainLogin">
+		<put-attribute name="content" value="/pages/core-pages/rtsappeal/deptAppealOfficerMapping.jsp"/>
+		<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+		<put-attribute name="selectedMenu" value="rtsAppeal" type="string"/>
+		<put-list-attribute name="breadcrumbsList">
+			<item link="#" value="RTS Appeal"/>
+			<item link="/rtsappeal/listAppeals.do" value="Appeal Applications"/>
+			<item link="#" value="Appellate Officer Mapping"/>
+		</put-list-attribute>
+	</definition>
+	<definition name="rtsAppealDeptList" extends="egov.mainLogin">
+		<put-attribute name="content" value="/pages/core-pages/rtsappeal/deptAppealList.jsp"/>
+		<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+		<put-attribute name="selectedMenu" value="rtsAppeal" type="string"/>
+		<put-list-attribute name="breadcrumbsList">
+			<item link="#" value="RTS Appeal"/>
+			<item link="/rtsappeal/listAppeals.do" value="Appeal Applications"/>
+		</put-list-attribute>
+	</definition>
+	<definition name="rtsAppealDeptView" extends="egov.mainLogin">
+		<put-attribute name="content" value="/pages/core-pages/rtsappeal/deptAppealView.jsp"/>
+		<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+		<put-attribute name="selectedMenu" value="rtsAppeal" type="string"/>
+		<put-list-attribute name="breadcrumbsList">
+			<item link="#" value="RTS Appeal"/>
+			<item link="/rtsappeal/listAppeals.do" value="Appeal Applications"/>
+			<item link="#" value="Appeal Details"/>
+		</put-list-attribute>
+	</definition>
+	<definition name="rtsAppealDashboard" extends="egov.mainLogin">
+		<put-attribute name="content" value="/pages/core-pages/rtsappeal/deptAppealDashboard.jsp"/>
+		<put-attribute name="parentMenu" value="dashboard" type="string"/>
+		<put-attribute name="selectedMenu" value="rtsAppeal" type="string"/>
+		<put-list-attribute name="breadcrumbsList">
+			<item link="/dashBoard/openDashBoard.do" value="Dashboard"/>
+			<item link="#" value="Appeal Applications - Department wise"/>
+		</put-list-attribute>
+	</definition>
+
+</tiles-definitions>
