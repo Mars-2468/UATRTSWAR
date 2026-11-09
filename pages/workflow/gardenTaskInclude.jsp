@@ -526,6 +526,7 @@ if(rejected==5){
 </script>
 
 <c:if test="${workflowRequired eq 'true'}">
+<%@ include file="/pages/core-pages/rtsappeal/workflowAppealNotice.jspf" %>
 	<div class="workflowBox" id="workflowDiv">
 
 		<!--

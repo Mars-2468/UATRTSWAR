@@ -39,6 +39,7 @@
 %>
 <%int day=0;int flag=0;  long diffHours=0;%>
 <c:if test="${workflowRequired eq 'true'}">
+<%@ include file="/pages/core-pages/rtsappeal/workflowAppealNotice.jspf" %>
 	<div class="workflowBox" id="workflowDiv">		
 		<table width="98%" border="0" cellpadding="2" cellspacing="2" class="dataForm">
 			<tr>

@@ -80,6 +80,7 @@
 				<div class="ap-field"><label>Zone</label><div><c:out value="${empty application.zone ? '-' : application.zone}"/></div></div>
 				<div class="ap-field"><label>Application Date</label><div><c:out value="${application.createdDate}"/></div></div>
 				<div class="ap-field"><label>Current Status</label><div><c:out value="${appStatusLabel}"/></div></div>
+				<div class="ap-field"><label>Current workflow task</label><div><c:out value="${empty workflowPosition ? '-' : workflowPosition}"/></div></div>
 				<div class="ap-field"><label>Remark on application</label><div><c:out value="${empty application.workflowComments ? '-' : application.workflowComments}"/></div></div>
 			</div>
 		</div>

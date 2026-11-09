@@ -1,0 +1,49 @@
+<%--
+  No taglib directives here on purpose: the host pages already declare c / fmt (/pages/common/include.jsp),
+  and a second declaration of the same prefix with another URI would stop the page from compiling.
+  RTS Appeal notice on the workflow pages of every service (included in the workflow task includes).
+  Shows the appeals of the application (WORKFLOW_ENTITYID = rti_application_id) with the Appellate Officer's
+  remark, so the workflow user of any level sees why the application came back. Nothing is shown when
+  the application has no appeal.
+--%>
+<%
+{
+	java.util.List rtsAppealNoticeList = null;
+	Object rtsAppealNoticeEntity = request.getAttribute("WORKFLOW_ENTITYID");
+	if (rtsAppealNoticeEntity != null && String.valueOf(rtsAppealNoticeEntity).trim().matches("\\d+")) {
+		try {
+			org.springframework.web.context.WebApplicationContext rtsAppealNoticeCtx =
+					org.springframework.web.context.support.WebApplicationContextUtils.getWebApplicationContext(pageContext.getServletContext());
+			com.mars.rti.service.RtsAppealService rtsAppealNoticeService =
+					(com.mars.rti.service.RtsAppealService) rtsAppealNoticeCtx.getBean("rtsAppealService");
+			rtsAppealNoticeList = rtsAppealNoticeService.getAppealsOfApplication(Long.parseLong(String.valueOf(rtsAppealNoticeEntity).trim()));
+		} catch (Exception rtsAppealNoticeError) {
+			rtsAppealNoticeList = null;
+		}
+	}
+	pageContext.setAttribute("rtsAppealNoticeList", rtsAppealNoticeList);
+}
+%>
+<c:if test="${not empty rtsAppealNoticeList}">
+	<div style="border:1px solid #f0c36d; background:#fff8e6; border-radius:6px; padding:10px 14px; margin:8px 0 12px; font-size:13px; color:#1f2937;">
+		<div style="font-weight:600; color:#92400e; margin-bottom:6px;">This application has an RTS appeal</div>
+		<c:forEach var="ntAppeal" items="${rtsAppealNoticeList}">
+			<div style="border-top:1px dashed #f0c36d; padding:6px 0;">
+				<b><c:out value="${ntAppeal.levelLabel}"/> <c:out value="${ntAppeal.appealNumber}"/></b>
+				- <c:out value="${ntAppeal.statusLabel}"/>
+				(<fmt:formatDate value="${ntAppeal.createdDate}" pattern="dd/MM/yyyy"/>)
+				<a style="margin-left:8px;" href="<c:out value='${pageContext.request.contextPath}'/>/rtsappeal/viewAppeal.do?id=${ntAppeal.rtsAppealId}">View appeal</a>
+				<div>Reason: <c:out value="${ntAppeal.appealReason}"/><c:if test="${not empty ntAppeal.citizenRemarks}"> - <c:out value="${ntAppeal.citizenRemarks}"/></c:if></div>
+				<c:if test="${not empty ntAppeal.appellateRemark}">
+					<div style="color:#b42318; font-weight:600;">Appellate Officer remark
+						(<c:out value="${ntAppeal.appellateRemarkBy}"/>, <fmt:formatDate value="${ntAppeal.appellateRemarkDate}" pattern="dd/MM/yyyy HH:mm"/>):
+						<span style="white-space:pre-wrap;"><c:out value="${ntAppeal.appellateRemark}"/></span>
+						<c:if test="${not empty ntAppeal.appellateOrderPath}">
+							<a href="<c:out value='${pageContext.request.contextPath}'/>/rtsappeal/downloadOrder.do?id=${ntAppeal.rtsAppealId}">View order</a>
+						</c:if>
+					</div>
+				</c:if>
+			</div>
+		</c:forEach>
+	</div>
+</c:if>

@@ -99,6 +99,7 @@ a {
 </style>
 
 <c:if test="${workflowRequired eq 'true'}">
+<%@ include file="/pages/core-pages/rtsappeal/workflowAppealNotice.jspf" %>
 	<div class="workflowBox" id="workflowDiv">
 		<div
 			style="background-color: #e6e6e6; height: 40px; padding: 5px 10px 8px;">
