@@ -130,10 +130,12 @@
 				<div class="ap-doc">
 					<span class="ap-doc-name"><c:out value="${d.label}"/></span>
 					<c:choose>
-						<c:when test="${not empty d.value}">
-							<a class="ap-btn ap-btn-light ap-btn-xs" href="#" data-path="<c:out value='${d.value}'/>"
-								onclick="apDocDownload(this.getAttribute('data-path')); return false;">View</a>
-							<span class="ap-small ap-muted"><c:out value="${d.fileName}"/></span>
+						<c:when test="${not empty d.files}">
+							<%-- by field name and file number: the server path is never put in the page --%>
+							<c:forEach items="${d.files}" varStatus="fs">
+								<a class="ap-btn ap-btn-light ap-btn-xs" href="#" data-doc="<c:out value='${d.name}'/>" data-i="${fs.index}"
+									onclick="apDocView(this); return false;">View<c:if test="${fn:length(d.files) > 1}"> ${fs.count}</c:if></a>
+							</c:forEach>
 						</c:when>
 						<c:otherwise><span class="ap-small ap-muted">Not uploaded</span></c:otherwise>
 					</c:choose>
@@ -181,8 +183,11 @@
 </div>
 
 <script type="text/javascript">
-	function apDocDownload(filesPath) {
-		window.open('<c:out value="${contextRoot}"/>/rtsApplication/getPdf.do?fp=' + btoa(encodeURIComponent(filesPath)), '_blank');
+	function apDocView(link) {
+		window.open('<c:out value="${contextRoot}"/>/ws/rtsappeal/viewDocument.do?rtiApplnNumber='
+				+ encodeURIComponent(document.querySelector('input[name="rtiApplnNumber"]').value)
+				+ '&doc=' + encodeURIComponent(link.getAttribute('data-doc'))
+				+ '&i=' + encodeURIComponent(link.getAttribute('data-i')), '_blank');
 	}
 
 	<%-- the validations of the citizen application form; only values the citizen changed are checked
