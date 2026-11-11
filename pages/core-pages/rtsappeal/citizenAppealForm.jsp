@@ -90,6 +90,9 @@
 												<option value="<c:out value='${o[0]}'/>" ${o[0] == fv ? 'selected="selected"' : ''}><c:out value="${o[1]}"/></option>
 											</c:forEach>
 										</select>
+										<c:if test="${f.unlisted and f.required and empty posted[f.name]}">
+											<div class="ap-small" style="color:#b42318">Please select the correct value from the list.</div>
+										</c:if>
 									</c:when>
 									<c:when test="${f.type == 'RADIO'}">
 										<div class="ap-radios">
@@ -98,6 +101,9 @@
 													value="<c:out value='${o[0]}'/>" ${o[0] == fv ? 'checked="checked"' : ''} ${rules}/> <c:out value="${o[1]}"/></label>
 											</c:forEach>
 										</div>
+										<c:if test="${f.unlisted and f.required and empty posted[f.name]}">
+											<div class="ap-small" style="color:#b42318">Please select the correct value.</div>
+										</c:if>
 									</c:when>
 									<c:when test="${f.type == 'TEXTAREA'}">
 										<textarea id="${f.name}" name="${f.name}" maxlength="${f.maxLength > 0 ? f.maxLength : 2000}" ${rules}><c:out value="${fv}"/></textarea>
