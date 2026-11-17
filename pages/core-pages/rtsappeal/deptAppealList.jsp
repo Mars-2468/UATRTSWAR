@@ -30,7 +30,7 @@
 	</div>
 
 	<div class="ap-tabs">
-		<c:set var="apL3Title" value="${appellateView == 'all' ? 'all appeals received' : (appellateView == 'sentback' ? 'sent back to department' : (appellateView == 'closed' ? 'closed' : 'pending'))}"/>
+		<c:set var="apL3Title" value="${appellateView == 'all' ? 'all appeals received' : (appellateView == 'sentback' ? 'sent back to department' : (appellateView == 'closed' ? 'closed' : (appellateView == 'rejected' ? 'rejected' : 'pending')))}"/>
 		<div class="ap-tab ap-active" id="apTabL3" onclick="apShowTab('L3')">As Appellate Officer (<c:out value="${apL3Title}"/>)
 			<span class="ap-count"><c:out value="${fn:length(appellateAppeals)}"/></span></div>
 		<div class="ap-tab" id="apTabDept" onclick="apShowTab('Dept')">My work after appeal (L1 / L2)
@@ -77,7 +77,7 @@
 								<td class="ap-small"><c:out value="${a.appealReason}"/></td>
 								<td class="ap-nowrap"><fmt:formatDate value="${a.createdDate}" pattern="dd/MM/yyyy HH:mm"/></td>
 								<td>
-									<span class="ap-badge ${a.status == 0 ? 'ap-badge-warn' : (a.status == 1 ? 'ap-badge-info' : 'ap-badge-ok')}">
+									<span class="ap-badge ${a.status == 0 ? 'ap-badge-warn' : (a.status == 1 ? 'ap-badge-info' : (a.status == 4 ? 'ap-badge-err' : 'ap-badge-ok'))}">
 										<c:out value="${a.statusLabel}"/></span>
 								</td>
 								<td class="ap-small">

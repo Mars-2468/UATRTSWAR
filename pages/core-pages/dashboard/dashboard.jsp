@@ -713,8 +713,6 @@ String registrationToDate = request.getParameter("registrationToDate");
 
 
 			
-<%-- RTS Appeal: the logged-in Appellate Officer's / L1-L2's own appeal tiles (hidden for other users) --%>
-<jsp:directive.include file="/pages/core-pages/rtsappeal/rtsAppealMyTiles.jspf" />
 <c:choose>
 <c:when test="${(services ne 23 and not empty services and not empty departments and departments eq 'ESTATE-DEPARTMENT') or isEstateDeptUser}">    
     
