@@ -1,0 +1,21 @@
+<%--
+  Document links of the department appeal pages (no taglib directives: the host page declares c / fn).
+  In: appeal (the appeal), docRef (query part: src=current&f=<field> or src=snap&sid=<row>&v=old|new),
+      docValue (the stored value, a comma separated list of files), docText (link text, default "View").
+  One link per file, numbered when there are several. The server path is never written into the page:
+  /rtsappeal/document.do looks it up again from the appeal.
+--%>
+<c:set var="docCount" value="0"/>
+<c:forEach items="${fn:split(empty docValue ? '' : docValue, ',')}" var="docPart">
+	<c:if test="${not empty fn:trim(docPart) and fn:toLowerCase(fn:trim(docPart)) ne 'null'}"><c:set var="docCount" value="${docCount + 1}"/></c:if>
+</c:forEach>
+<c:set var="docIndex" value="0"/>
+<c:forEach items="${fn:split(empty docValue ? '' : docValue, ',')}" var="docPart">
+	<c:if test="${not empty fn:trim(docPart) and fn:toLowerCase(fn:trim(docPart)) ne 'null'}">
+		<a class="ap-btn ap-btn-light ap-btn-xs ap-noprint" target="_blank"
+			href="<c:out value='${contextRoot}/rtsappeal/document.do?id=${appeal.rtsAppealId}&${docRef}&i=${docIndex}'/>"><c:out
+				value="${empty docText ? 'View' : docText}"/><c:if test="${docCount > 1}"> ${docIndex + 1}</c:if></a>
+		<c:set var="docIndex" value="${docIndex + 1}"/>
+	</c:if>
+</c:forEach>
+<c:if test="${docCount == 0}"><span class="ap-muted">-</span></c:if>

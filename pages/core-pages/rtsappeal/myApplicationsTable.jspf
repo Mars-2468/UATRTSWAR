@@ -153,8 +153,10 @@
 							<td class="ap-center">
 								<c:choose>
 									<c:when test="${not empty row.certificatePath}">
-										<a class="ap-btn ap-btn-green ap-btn-xs" href="#" data-path="<c:out value='${row.certificatePath}'/>"
-											onclick="apDocDownload(this.getAttribute('data-path')); return false;">Download</a>
+										<%-- by application number: the server path is not put in the page --%>
+										<c:url var="certificateUrl" value="/ws/rtsappeal/certificate.do"><c:param name="rtiApplnNumber"
+											value="${row.application.rtiApplnNumber}"/></c:url>
+										<a class="ap-btn ap-btn-green ap-btn-xs" target="_blank" href="<c:out value='${certificateUrl}'/>">Download</a>
 									</c:when>
 									<c:otherwise><span class="ap-muted">-</span></c:otherwise>
 								</c:choose>
@@ -175,9 +177,3 @@
 		</ol>
 	</div>
 </div>
-
-<script type="text/javascript">
-	function apDocDownload(filesPath) {
-		window.open('<c:out value="${contextRoot}"/>/rtsApplication/getPdf.do?fp=' + btoa(encodeURIComponent(filesPath)), '_blank');
-	}
-</script>

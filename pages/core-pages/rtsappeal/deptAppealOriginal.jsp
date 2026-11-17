@@ -1,8 +1,10 @@
 <jsp:directive.include file="/pages/common/include.jsp" />
 <jsp:directive.include file="/pages/core-pages/rtsappeal/rtsAppealStyles.jspf" />
-<%-- Department: printable copy of the application as it was just before the appeal (+ the citizen's corrections) --%>
+<%-- Department: printable copy of the application as it was just before the appeal, laid out like the service's
+     citizen application form (its labels, sections and dropdown texts); the citizen's corrections are marked.
+     Documents open through /rtsappeal/document.do - no server path is shown. --%>
 
-<div class="ap-page" style="max-width: 980px">
+<div class="ap-page" style="max-width: 1000px">
 	<div class="ap-actions ap-noprint" style="justify-content: flex-end; margin-bottom: 10px">
 		<button type="button" class="ap-btn ap-btn-green" onclick="window.print()">Print / Save as PDF</button>
 	</div>
@@ -17,54 +19,34 @@
 				</div>
 			</div>
 
-			<c:set var="lastSection" value=""/>
-			<table class="ap-table">
+			<%-- application details saved with the copy (status code shown as its name) --%>
+			<table class="ap-table" style="margin-bottom: 14px">
 				<tbody>
+					<tr><td colspan="4" style="background: #e0edfb; font-weight: 700; color: #0f3d6e">Application</td></tr>
+					<c:set var="cellCount" value="0"/>
+					<tr>
 					<c:forEach items="${original}" var="o">
-						<c:if test="${o.sectionName != lastSection}">
-							<tr><td colspan="2" style="background: #e0edfb; font-weight: 700; color: #0f3d6e"><c:out value="${o.sectionName}"/></td></tr>
-							<c:set var="lastSection" value="${o.sectionName}"/>
-						</c:if>
-						<tr>
-							<td style="width: 38%"><c:out value="${o.label}"/></td>
-							<td>
+						<c:if test="${o.sectionName == 'Application'}">
+							<c:if test="${cellCount > 0 and cellCount % 2 == 0}"></tr><tr></c:if>
+							<td style="width: 20%" class="ap-muted"><c:out value="${o.label}"/></td>
+							<td style="width: 30%">
 								<c:choose>
-									<c:when test="${o.isDocument == 1 and not empty o.oldValue}">
-										<a href="#" class="ap-noprint" data-path="<c:out value='${o.oldValue}'/>" onclick="apDocDownload(this.getAttribute('data-path')); return false;">View</a>
-										<span class="ap-small"><c:out value="${o.oldValue}"/></span>
+									<c:when test="${o.label == 'Status at appeal'}">
+										<c:set var="st" value="${o.oldValue}"/>
+										<c:out value="${st == '0' ? 'Form Submitted' : (st == '2' ? 'Payment Completed' : (st == '3' ? 'Payment Pending' : (st == '5' ? 'Rejected' : (st == '1' ? 'Completed' : 'In Process'))))}"/>
 									</c:when>
 									<c:otherwise><c:out value="${empty o.oldValue ? '-' : o.oldValue}"/></c:otherwise>
 								</c:choose>
 							</td>
-						</tr>
+							<c:set var="cellCount" value="${cellCount + 1}"/>
+						</c:if>
 					</c:forEach>
-					<c:if test="${empty original}">
-						<tr><td colspan="2" class="ap-empty">No copy was saved for this appeal.</td></tr>
-					</c:if>
+					</tr>
 				</tbody>
 			</table>
 
-			<c:if test="${not empty changes}">
-				<h4 style="color: #0f3d6e; margin: 18px 0 8px">Corrected by the citizen in the appeal</h4>
-				<table class="ap-table">
-					<thead><tr><th>Field / Document</th><th>Before</th><th>After</th></tr></thead>
-					<tbody>
-						<c:forEach items="${changes}" var="c">
-							<tr>
-								<td><c:out value="${c.label}"/></td>
-								<td><c:out value="${empty c.oldValue ? '-' : c.oldValue}"/></td>
-								<td><c:out value="${empty c.newValue ? '-' : c.newValue}"/></td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</c:if>
+			<c:set var="formMode" value="original"/>
+			<%@ include file="/pages/core-pages/rtsappeal/appealFormReadOnly.jspf" %>
 		</div>
 	</div>
 </div>
-
-<script type="text/javascript">
-	function apDocDownload(filesPath) {
-		window.open('<c:out value="${contextRoot}"/>/rtsApplication/getPdf.do?fp=' + btoa(encodeURIComponent(filesPath)), '_blank');
-	}
-</script>

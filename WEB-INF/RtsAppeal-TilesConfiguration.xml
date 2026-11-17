@@ -54,6 +54,16 @@
 			<item link="#" value="Appeal Details"/>
 		</put-list-attribute>
 	</definition>
+	<definition name="rtsAppealApplicationForm" extends="egov.mainLogin">
+		<put-attribute name="content" value="/pages/core-pages/rtsappeal/deptAppealForm.jsp"/>
+		<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+		<put-attribute name="selectedMenu" value="rtsAppeal" type="string"/>
+		<put-list-attribute name="breadcrumbsList">
+			<item link="#" value="RTS Appeal"/>
+			<item link="/rtsappeal/listAppeals.do" value="Appeal Applications"/>
+			<item link="#" value="Application (view only)"/>
+		</put-list-attribute>
+	</definition>
 	<definition name="rtsAppealDashboard" extends="egov.mainLogin">
 		<put-attribute name="content" value="/pages/core-pages/rtsappeal/deptAppealDashboard.jsp"/>
 		<put-attribute name="parentMenu" value="dashboard" type="string"/>

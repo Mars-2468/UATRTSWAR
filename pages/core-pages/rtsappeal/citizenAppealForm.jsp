@@ -80,8 +80,9 @@
 								<label for="${f.name}"><c:out value="${f.label}"/><c:if test="${f.required}"> <span class="ap-req">*</span></c:if></label>
 								<c:choose>
 									<c:when test="${not f.editable}">
+										<%-- not editable in an appeal (e.g. fee related); the server ignores a posted value --%>
 										<input type="text" id="${f.name}" name="${f.name}" class="ap-readonly" readonly="readonly"
-											value="<c:out value='${f.value}'/>"<c:if test="${not empty f.joinOf}"> data-join="<c:out value='${f.joinOf}'/>"</c:if>/>
+											value="<c:out value='${not empty f.joinOf ? f.value : f.displayValue}'/>"<c:if test="${not empty f.joinOf}"> data-join="<c:out value='${f.joinOf}'/>"</c:if>/>
 									</c:when>
 									<c:when test="${f.type == 'SELECT'}">
 										<select id="${f.name}" name="${f.name}" ${rules}>

@@ -1,0 +1,67 @@
+<%--
+  The service's application form, read only (no taglib directives: the host page declares c / fmt / fn).
+  In: sections (section name -> RtsAppealFormField list, "Documents" last), appeal,
+      formMode = "original" (values before the appeal, the citizen's corrections marked) or "current".
+  Nothing here can be edited or saved; documents open through /rtsappeal/document.do (no server path in the page).
+--%>
+<style type="text/css">
+	.ap-ro-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px 18px; }
+	.ap-ro-grid .ap-ro-label { font-size: 12px; color: #4b5563; font-weight: 600; margin-bottom: 3px; }
+	.ap-ro-grid .ap-ro-value { border: 1px solid #dfe5ec; background: #f6f8fa; border-radius: 5px; padding: 7px 9px; min-height: 18px;
+		font-size: 14px; white-space: pre-wrap; word-break: break-word; }
+	.ap-ro-changed .ap-ro-value { border-color: #f0c36d; }
+	.ap-ro-new { margin-top: 4px; font-size: 13px; color: #92400e; white-space: pre-wrap; word-break: break-word; }
+	.ap-ro-docs td { vertical-align: middle; }
+</style>
+<c:if test="${formMode == 'original'}">
+	<p class="ap-small ap-muted" style="margin: 0 0 10px">Values as they were when the appeal was filed. Fields corrected by the citizen in the
+		appeal are marked <span style="color: #92400e; font-weight: 600">"In the appeal: ..."</span>.</p>
+</c:if>
+<c:forEach items="${sections}" var="section">
+	<c:if test="${section.key != 'Documents' and not empty section.value}">
+		<div class="ap-card">
+			<div class="ap-card-head"><c:out value="${section.key}"/></div>
+			<div class="ap-card-body">
+				<div class="ap-ro-grid">
+					<c:forEach items="${section.value}" var="f">
+						<div class="${f.changed ? 'ap-ro-changed' : ''}">
+							<div class="ap-ro-label"><c:out value="${f.label}"/></div>
+							<div class="ap-ro-value"><c:out value="${empty f.displayValue ? '-' : f.displayValue}"/></div>
+							<c:if test="${f.changed}">
+								<div class="ap-ro-new">In the appeal: <c:out value="${empty f.changedDisplayValue ? '(cleared)' : f.changedDisplayValue}"/></div>
+							</c:if>
+						</div>
+					</c:forEach>
+				</div>
+			</div>
+		</div>
+	</c:if>
+</c:forEach>
+<div class="ap-card">
+	<div class="ap-card-head">Documents</div>
+	<div class="ap-card-body">
+		<table class="ap-table ap-ro-docs">
+			<thead><tr><th>Document</th><th><c:out value="${formMode == 'original' ? 'Before appeal' : 'Uploaded'}"/></th>
+				<c:if test="${formMode == 'original'}"><th>In the appeal</th></c:if></tr></thead>
+			<tbody>
+				<c:forEach items="${sections['Documents']}" var="d">
+					<tr>
+						<td><c:out value="${d.label}"/></td>
+						<td><c:set var="docRef" value="${d.docRef}"/><c:set var="docValue" value="${empty d.docRef ? '' : d.value}"/><c:set var="docText" value="View"/>
+							<%@ include file="/pages/core-pages/rtsappeal/appealDocLinks.jspf" %></td>
+						<c:if test="${formMode == 'original'}">
+							<td><c:choose>
+								<c:when test="${d.changed}"><c:set var="docRef" value="${d.changedDocRef}"/><c:set var="docValue" value="${d.changedValue}"/><c:set var="docText" value="View"/>
+									<%@ include file="/pages/core-pages/rtsappeal/appealDocLinks.jspf" %></c:when>
+								<c:otherwise><span class="ap-muted">Not changed</span></c:otherwise>
+							</c:choose></td>
+						</c:if>
+					</tr>
+				</c:forEach>
+				<c:if test="${empty sections['Documents']}">
+					<tr><td colspan="3" class="ap-empty">No documents.</td></tr>
+				</c:if>
+			</tbody>
+		</table>
+	</div>
+</div>

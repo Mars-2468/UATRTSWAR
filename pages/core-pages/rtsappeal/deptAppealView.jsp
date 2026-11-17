@@ -37,13 +37,14 @@
 			The appeal closes automatically when the certificate is issued.</div>
 	</c:if>
 	<c:if test="${isAppellateOfficer and appeal.status == 0}">
-		<div class="ap-alert ap-alert-info">When you send the application back it continues from <b><c:out value="${beforeLabel}"/></b>:
+		<div class="ap-alert ap-alert-info">You can view the application and give your remark / order. When you send it back, the
+			service's workflow continues at the stage where the application stopped
 			<c:choose>
-				<c:when test="${beforeSt == 5}">if the citizen has paid it goes to L2 for the certificate, otherwise to L1 to check it again.</c:when>
-				<c:when test="${beforeSt == 3}">the citizen is asked to pay again.</c:when>
-				<c:when test="${beforeSt == 2}">L2 issues the certificate.</c:when>
-				<c:otherwise>L1 takes action on the application.</c:otherwise>
-			</c:choose></div>
+				<c:when test="${beforeSt == 5}">(the stage that rejected it)</c:when>
+				<c:when test="${not empty workflowPosition}">(now: <b><c:out value="${workflowPosition}"/></b>)</c:when>
+			</c:choose>
+			- it is not started again from the first level. Processing the application (edit, visits, fees, approval) stays with the
+			department's workflow users.</div>
 	</c:if>
 
 	<div class="ap-card">
@@ -70,8 +71,16 @@
 	<div class="ap-card">
 		<div class="ap-card-head" style="display: flex; justify-content: space-between; align-items: center">
 			<span>Application <c:out value="${application.rtiApplnNumber}"/></span>
-			<button type="button" class="ap-btn ap-btn-blue ap-btn-sm"
-				onclick="apOpenApplication('<c:out value="${application.rtiApplicationRefId}"/>', '<c:out value="${application.rtiApplicationId}"/>')">Open Application</button>
+			<c:choose>
+				<%-- the Appellate Officer only sees the form; editing and workflow actions are the department's work --%>
+				<c:when test="${isAppellateOfficer}">
+					<a class="ap-btn ap-btn-blue ap-btn-sm" href="<c:out value='${contextRoot}'/>/rtsappeal/applicationForm.do?id=${appeal.rtsAppealId}">Open Application</a>
+				</c:when>
+				<c:otherwise>
+					<button type="button" class="ap-btn ap-btn-blue ap-btn-sm"
+						onclick="apOpenApplication('<c:out value="${application.rtiApplicationRefId}"/>', '<c:out value="${application.rtiApplicationId}"/>')">Open Application</button>
+				</c:otherwise>
+			</c:choose>
 		</div>
 		<div class="ap-card-body">
 			<div class="ap-grid">
@@ -100,9 +109,11 @@
 									<td><b><c:out value="${c.label}"/></b> <span class="ap-small ap-muted"><c:out value="${c.sectionName}"/></span></td>
 									<c:choose>
 										<c:when test="${c.isDocument == 1}">
-											<td><c:if test="${not empty c.oldValue}"><a href="#" data-path="<c:out value='${c.oldValue}'/>" onclick="apDocDownload(this.getAttribute('data-path')); return false;">Old document</a></c:if>
-												<c:if test="${empty c.oldValue}"><span class="ap-muted">-</span></c:if></td>
-											<td><a href="#" data-path="<c:out value='${c.newValue}'/>" onclick="apDocDownload(this.getAttribute('data-path')); return false;">New document</a></td>
+											<%-- links by appeal / snapshot row / file number: no server path in the page --%>
+											<td><c:set var="docRef" value="src=snap&sid=${c.rtsAppealSnapshotId}&v=old"/><c:set var="docValue" value="${c.oldValue}"/><c:set var="docText" value="Old document"/>
+												<%@ include file="/pages/core-pages/rtsappeal/appealDocLinks.jspf" %></td>
+											<td><c:set var="docRef" value="src=snap&sid=${c.rtsAppealSnapshotId}&v=new"/><c:set var="docValue" value="${c.newValue}"/><c:set var="docText" value="New document"/>
+												<%@ include file="/pages/core-pages/rtsappeal/appealDocLinks.jspf" %></td>
 										</c:when>
 										<c:otherwise>
 											<td><c:out value="${empty c.oldValue ? '-' : c.oldValue}"/></td>
@@ -184,10 +195,6 @@
 </div>
 
 <script type="text/javascript">
-	function apDocDownload(filesPath) {
-		window.open('<c:out value="${contextRoot}"/>/rtsApplication/getPdf.do?fp=' + btoa(encodeURIComponent(filesPath)), '_blank');
-	}
-
 	function apAppealAction(action) {
 		var remark = document.getElementById('apRemark');
 		if (!remark.value.replace(/\s/g, '')) {

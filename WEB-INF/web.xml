@@ -110,6 +110,16 @@
 	</filter-mapping>	
 	
 
+	<!-- RTS Appeal: the Appellate Officer may only view the application (no edit / workflow action) -->
+	<filter>
+		<filter-name>RtsAppealGuardFilter</filter-name>
+		<filter-class>com.mars.rti.controller.RtsAppealGuardFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>RtsAppealGuardFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+
 	<filter>
 		<filter-name>WorkflowServletFilter</filter-name>
 		<filter-class>
