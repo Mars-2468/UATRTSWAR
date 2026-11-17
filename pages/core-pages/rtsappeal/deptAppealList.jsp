@@ -9,7 +9,10 @@
 			<p class="ap-sub">First and Second Appeals. The Appellate Officer sends the application back; L1 / L2 then complete it from the usual task screens.</p>
 		</div>
 		<c:if test="${isAdmin}">
-			<a class="ap-btn ap-btn-blue" href="<c:out value='${contextRoot}'/>/rtsappeal/appellateOfficers.do">Appellate Officer Mapping</a>
+			<div class="ap-actions">
+				<a class="ap-btn ap-btn-light" href="<c:out value='${contextRoot}'/>/rtsappeal/slaMaster.do">RTS Services SLA Master</a>
+				<a class="ap-btn ap-btn-blue" href="<c:out value='${contextRoot}'/>/rtsappeal/appellateOfficers.do">Appellate Officer Mapping</a>
+			</div>
 		</c:if>
 	</div>
 
@@ -22,19 +25,22 @@
 
 	<div class="ap-steps">
 		<div class="ap-step"><span class="ap-step-no">1</span><b>With Appellate Officer</b>The citizen has appealed; the application is on hold. The officer gives remark / order.</div>
-		<div class="ap-step"><span class="ap-step-no">2</span><b>Sent back to department</b>The application is back in the L1 / L2 task list from where it stopped. Complete it as usual.</div>
+		<div class="ap-step"><span class="ap-step-no">2</span><b>Sent back to department</b>It continues in its own workflow from where it stopped and is listed for the L1 / L2 user whose turn it is.</div>
 		<div class="ap-step"><span class="ap-step-no">3</span><b>Closed</b>Automatically when the certificate is issued, or when the officer closes the appeal. The citizen may then file a Second Appeal.</div>
 	</div>
 
 	<div class="ap-tabs">
-		<div class="ap-tab ap-active" id="apTabL3" onclick="apShowTab('L3')">As Appellate Officer
+		<c:set var="apL3Title" value="${appellateView == 'all' ? 'all appeals received' : (appellateView == 'sentback' ? 'sent back to department' : (appellateView == 'closed' ? 'closed' : 'pending'))}"/>
+		<div class="ap-tab ap-active" id="apTabL3" onclick="apShowTab('L3')">As Appellate Officer (<c:out value="${apL3Title}"/>)
 			<span class="ap-count"><c:out value="${fn:length(appellateAppeals)}"/></span></div>
-		<div class="ap-tab" id="apTabDept" onclick="apShowTab('Dept')">On my applications (L1 / L2)
+		<div class="ap-tab" id="apTabDept" onclick="apShowTab('Dept')">My work after appeal (L1 / L2)
 			<span class="ap-count"><c:out value="${fn:length(departmentAppeals)}"/></span></div>
+		<div class="ap-tab" id="apTabHist" onclick="apShowTab('Hist')">Completed (reference)
+			<span class="ap-count"><c:out value="${fn:length(historyAppeals)}"/></span></div>
 	</div>
 
-	<c:forTokens items="L3,Dept" delims="," var="tab">
-		<c:set var="list" value="${tab == 'L3' ? appellateAppeals : departmentAppeals}"/>
+	<c:forTokens items="L3,Dept,Hist" delims="," var="tab">
+		<c:set var="list" value="${tab == 'L3' ? appellateAppeals : (tab == 'Dept' ? departmentAppeals : historyAppeals)}"/>
 		<div class="ap-card" id="apPanel${tab}" style="${tab == 'L3' ? '' : 'display: none'}">
 			<div class="ap-table-wrap">
 				<table class="ap-table">
@@ -62,7 +68,10 @@
 								<td><c:out value="${st.count}"/></td>
 								<td class="ap-nowrap"><b><c:out value="${a.appealNumber}"/></b></td>
 								<td><c:out value="${a.levelLabel}"/></td>
-								<td class="ap-nowrap"><c:out value="${a.rtiApplicationNumber}"/></td>
+								<td class="ap-nowrap">
+									<%-- opens the application as the role allows: read-only form, or the department's screen when it is the user's turn --%>
+									<a href="<c:out value='${contextRoot}'/>/rtsappeal/openApplication.do?id=${a.rtsAppealId}"
+										title="Open the application"><c:out value="${a.rtiApplicationNumber}"/></a></td>
 								<td><c:out value="${a.serviceName}"/></td>
 								<td><c:out value="${a.applicantName}"/></td>
 								<td class="ap-small"><c:out value="${a.appealReason}"/></td>
@@ -95,12 +104,15 @@
 
 <script type="text/javascript">
 	function apShowTab(tab) {
-		var tabs = ['L3', 'Dept'];
+		var tabs = ['L3', 'Dept', 'Hist'];
 		for (var i = 0; i < tabs.length; i++) {
 			document.getElementById('apPanel' + tabs[i]).style.display = tabs[i] === tab ? '' : 'none';
 			document.getElementById('apTab' + tabs[i]).className = 'ap-tab' + (tabs[i] === tab ? ' ap-active' : '');
 		}
 	}
 	<%-- open the department tab when the officer has no appellate appeals --%>
-	<c:if test="${empty appellateAppeals and not empty departmentAppeals}">apShowTab('Dept');</c:if>
+	<c:choose>
+		<c:when test="${not empty openTab}">apShowTab('<c:out value="${openTab}"/>');</c:when>
+		<c:when test="${empty appellateAppeals and not empty departmentAppeals}">apShowTab('Dept');</c:when>
+	</c:choose>
 </script>

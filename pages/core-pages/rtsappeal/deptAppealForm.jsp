@@ -17,8 +17,9 @@
 	</div>
 
 	<c:if test="${not empty rtsAppealError}"><div class="ap-alert ap-alert-error"><c:out value="${rtsAppealError}"/></div></c:if>
-	<div class="ap-alert ap-alert-info">View only. As Appellate Officer you give the remark / order on the appeal page and send the
-		application back; processing it (edit, visits, fees, approval) is done by the department's workflow users.</div>
+	<div class="ap-alert ap-alert-info">View only. While an application is with the Appellate Officer it is not processed; the
+		officer gives the remark / order on the appeal page and sends it back. After that the department's workflow users
+		(L1 / L2) process it from their usual screens, exactly as before the appeal.</div>
 
 	<div class="ap-card">
 		<div class="ap-card-head">Application</div>

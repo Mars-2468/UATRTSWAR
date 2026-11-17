@@ -64,6 +64,15 @@
 			<item link="#" value="Application (view only)"/>
 		</put-list-attribute>
 	</definition>
+	<definition name="rtsAppealSlaMaster" extends="egov.mainLogin">
+		<put-attribute name="content" value="/pages/core-pages/rtsappeal/deptSlaMaster.jsp"/>
+		<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+		<put-attribute name="selectedMenu" value="rtsAppeal" type="string"/>
+		<put-list-attribute name="breadcrumbsList">
+			<item link="#" value="RTS Appeal"/>
+			<item link="#" value="RTS Services SLA Master"/>
+		</put-list-attribute>
+	</definition>
 	<definition name="rtsAppealDashboard" extends="egov.mainLogin">
 		<put-attribute name="content" value="/pages/core-pages/rtsappeal/deptAppealDashboard.jsp"/>
 		<put-attribute name="parentMenu" value="dashboard" type="string"/>

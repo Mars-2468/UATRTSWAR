@@ -1,0 +1,70 @@
+<%-- "My Appeal Applications" tiles for the department dashboard (dashboard.jsp includes this file above the RTS tiles).
+     Shown only to Appellate Officers (mapped, or with appeals) and to L1 / L2 users with appeal work; the counts are the
+     logged-in user's own (/rtsappeal/myAppealSummary.do). Click a tile = the list; click an application number in
+     the list = the application as the user's role allows. --%>
+<style type="text/css">
+	#apMyTiles { display: none; margin: 10px 0 18px; }
+	#apMyTiles h2 { text-align: center; margin: 0 0 12px; }
+	#apMyTiles .ap-tiles { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+	#apMyTiles .ap-tile { width: 190px; cursor: pointer; text-decoration: none; border-radius: 4px; overflow: hidden;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, .15); background: #eeeeee; }
+	#apMyTiles .ap-tile:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, .3); }
+	#apMyTiles .ap-tile-head { color: #fff; text-align: center; padding: 18px 8px; font-size: 20px; line-height: 1.25; min-height: 50px;
+		display: flex; align-items: center; justify-content: center; }
+	#apMyTiles .ap-tile-count { text-align: center; padding: 22px 8px; font-size: 26px; color: #222; }
+</style>
+<div id="apMyTiles">
+	<h2>Appeal Applications</h2>
+	<div class="ap-tiles">
+		<a class="ap-tile apAppellate" href="<c:out value='${contextRoot}'/>/rtsappeal/listAppeals.do?view=all">
+			<div class="ap-tile-head" style="background: #0f5fa8">Appeals Received</div>
+			<div class="ap-tile-count" id="apMyReceived">0</div></a>
+		<a class="ap-tile apAppellate" href="<c:out value='${contextRoot}'/>/rtsappeal/listAppeals.do?view=pending">
+			<div class="ap-tile-head" style="background: #d97706">Pending with me</div>
+			<div class="ap-tile-count" id="apMyPending">0</div></a>
+		<a class="ap-tile apAppellate" href="<c:out value='${contextRoot}'/>/rtsappeal/listAppeals.do?view=sentback">
+			<div class="ap-tile-head" style="background: #6d28d9">Sent back to Department</div>
+			<div class="ap-tile-count" id="apMySentBack">0</div></a>
+		<a class="ap-tile apAppellate" href="<c:out value='${contextRoot}'/>/rtsappeal/listAppeals.do?view=closed">
+			<div class="ap-tile-head" style="background: #15803d">Closed</div>
+			<div class="ap-tile-count" id="apMyClosed">0</div></a>
+		<a class="ap-tile" id="apMyWorkTile" style="display: none" href="<c:out value='${contextRoot}'/>/rtsappeal/listAppeals.do?view=work">
+			<div class="ap-tile-head" style="background: #b91c1c">Appeal work for me (L1 / L2)</div>
+			<div class="ap-tile-count" id="apMyWork">0</div></a>
+	</div>
+</div>
+<script type="text/javascript">
+	(function () {
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', '<c:out value="${contextRoot}"/>/rtsappeal/myAppealSummary.do?t=' + new Date().getTime(), true);
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState !== 4 || xhr.status !== 200) {
+				return;
+			}
+			var data;
+			try {
+				data = JSON.parse(xhr.responseText);
+			} catch (e) {
+				return; // not available: the tiles stay hidden
+			}
+			if (!data.appellate && !(data.work > 0)) {
+				return;
+			}
+			var set = function (id, value) {
+				document.getElementById(id).innerHTML = value || 0;
+			};
+			set('apMyReceived', data.received);
+			set('apMyPending', data.pending);
+			set('apMySentBack', data.sentBack);
+			set('apMyClosed', data.closed);
+			set('apMyWork', data.work);
+			var appellateTiles = document.querySelectorAll('#apMyTiles .apAppellate');
+			for (var i = 0; i < appellateTiles.length; i++) {
+				appellateTiles[i].style.display = data.appellate ? '' : 'none';
+			}
+			document.getElementById('apMyWorkTile').style.display = data.work > 0 ? '' : 'none';
+			document.getElementById('apMyTiles').style.display = 'block';
+		};
+		xhr.send();
+	})();
+</script>

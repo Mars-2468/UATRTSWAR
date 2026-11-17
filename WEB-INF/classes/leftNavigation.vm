@@ -90,6 +90,13 @@
 					     <span class="menu-text">Appellate Officer Mapping</span>
 					   </a>
 					 </li>
+					 <!-- RTS Appeal: RTS Services SLA Master (rts_service_sla) -->
+					 <li class="   ">
+					   <a href="$contextRoot/rtsappeal/slaMaster.do">
+					     <i class="icon-cogs"></i>
+					     <span class="menu-text">RTS Services SLA Master</span>
+					   </a>
+					 </li>
 					 #end
 					 
 					  #if ($rolesPermissions.containsKey("/listRTSFireNOCApplication"))											
