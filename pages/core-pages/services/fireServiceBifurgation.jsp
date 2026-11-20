@@ -665,6 +665,10 @@ html, body {
     color: #ffce85;
 }
 
+
+
+
+
 /* =========================================================================
    Fire Transaction Report section  -  matches your #SetFormHeight design
    (navy / blue / gold, same cards, same shadows, same fonts).
@@ -972,7 +976,6 @@ html, body {
     }
 }
 </style>
-</style>
 
 <script type="text/javascript">
 function globalSearchApplications(query) {
@@ -1018,8 +1021,10 @@ function editRTIApplication(refId, id) {
 
 function searchRTIApplication() {
     onPageSubmit('<c:out value="${contextRoot}"/>/rtsapplication/listRTSFireRecommendation.do');
+    
 }
-
+/* I added Here THis Transaction Function*/
+   
 /* Collapse every panel back to its closed state */
 function closeAllSections() {
     var buttons = document.getElementsByClassName("section-toggle");
@@ -2138,6 +2143,14 @@ window.addEventListener("DOMContentLoaded", function () {
                         </button>
                     </div>
                 </div>
+                
+                
+              <!-- Fire Transaction  Section -->
+              
+              
+                  </div>  <%-- completedSection closing --%>
+
+
                 <div class="table-wrapper">
                     <table cellpadding="0" cellspacing="1" class="dataGrid" id="completedTable">
                         <thead>
@@ -2286,7 +2299,8 @@ window.addEventListener("DOMContentLoaded", function () {
             </div>
         </div>
     </div>
-  <!-- NEW REPORT SECTION START -->
+       
+    <!-- NEW REPORT SECTION START -->
 
   
 <!-- Reports Section -->
@@ -2416,6 +2430,8 @@ function generateFireTransactionReport() {
 
 
     <!-- NEW REPORT SECTION END -->
+
+       
     <input type="hidden" id="rtiApplicationRefId" name="rtiApplicationRefId" value="" />
     <input type="hidden" id="rtiApplicationId" name="rtiApplicationId" value="" />
     <input type="hidden" id="SortBy" name="SortBy" value="<c:out value="${requestScope.SortBy}"/>" />
