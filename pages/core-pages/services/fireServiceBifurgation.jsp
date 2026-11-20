@@ -664,6 +664,314 @@ html, body {
     font-size: 11.5px;
     color: #ffce85;
 }
+
+/* =========================================================================
+   Fire Transaction Report section  -  matches your #SetFormHeight design
+   (navy / blue / gold, same cards, same shadows, same fonts).
+   It reads YOUR existing colour variables (--navy-900, --blue-600 ...).
+   Every rule starts with #reportSection, so nothing else on the page changes.
+   ========================================================================= */
+
+#reportSection {
+    /* link to your existing variables (the second value is only a backup) */
+    --rs-navy-900: var(--navy-900, #0b2540);
+    --rs-navy-800: var(--navy-800, #123a5e);
+    --rs-navy-700: var(--navy-700, #1c4d76);
+    --rs-blue-600: var(--blue-600, #1f6fb2);
+    --rs-blue-100: var(--blue-100, #eaf3fb);
+    --rs-gold-600: var(--gold-600, #b8801f);
+    --rs-green-600: var(--green-600, #2f7d5a);
+    --rs-slate-900: var(--slate-900, #1f2d3d);
+    --rs-slate-600: var(--slate-600, #5b6b7c);
+    --rs-slate-400: var(--slate-400, #8695a6);
+    --rs-slate-200: var(--slate-200, #e3e9ef);
+    --rs-bg: var(--bg, #f2f5f9);
+
+    width: 100%;
+    max-width: 100%;
+    margin: 0 0 18px;
+    background: #ffffff !important;
+    border: 1px solid var(--rs-slate-200) !important;
+    border-left: 4px solid var(--rs-blue-600) !important;
+    border-radius: 10px !important;
+    box-shadow: 0 2px 8px rgba(15, 35, 60, 0.05) !important;
+    overflow: hidden;
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    color: var(--rs-slate-900);
+    box-sizing: border-box;
+}
+
+#reportSection *,
+#reportSection *::before,
+#reportSection *::after {
+    box-sizing: border-box;
+}
+
+/* ---------- Header bar ---------- */
+#reportSection .section-toggle {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    padding: 16px 20px !important;
+    background: #ffffff !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    color: var(--rs-navy-900) !important;
+    text-align: left;
+    transition: background 0.15s ease;
+}
+
+#reportSection .section-toggle:hover {
+    background: var(--rs-blue-100) !important;
+}
+
+#reportSection .section-toggle:focus-visible {
+    outline: 2px solid var(--rs-blue-600);
+    outline-offset: -2px;
+}
+
+#reportSection .section-title-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* icon badge - same size and shape as your summary-card icon badges */
+#reportSection .section-title-wrap::before {
+    content: "";
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: var(--rs-blue-100) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231f6fb2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/><polyline points='14 2 14 8 20 8'/><line x1='8' y1='13' x2='16' y2='13'/><line x1='8' y1='17' x2='16' y2='17'/></svg>") center / 18px no-repeat;
+}
+
+#reportSection .section-toggle:hover .section-title-wrap::before {
+    background-color: #ffffff;
+}
+
+/*#reportSection .arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 28px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--rs-blue-100);
+    color: var(--rs-blue-600);
+    font-size: 11px;
+    transition: transform 0.2s ease;
+}
+
+/* arrow turns when the panel is open (covers the usual class names) */
+/*#reportSection.open .arrow,
+#reportSection.active .arrow,
+#reportSection.is-open .arrow,
+#reportSection.expanded .arrow,
+#reportSection .section-toggle.open .arrow,
+#reportSection .section-toggle.active .arrow {
+    transform: rotate(180deg);
+}*/
+
+/* ---------- Body ---------- */
+#reportSection .section-content {
+    border-top: 1px solid var(--rs-slate-200);
+    background: #fbfcfe;
+}
+
+#reportSection .section-inner {
+    padding: 20px 22px 22px;
+}
+
+#reportSection .section-inner h3 {
+    position: relative;
+    margin: 0 0 20px;
+    padding: 0 0 12px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    color: var(--rs-navy-800);
+}
+
+/* gold line - same gold fade as the bottom edge of your blue header */
+#reportSection .section-inner h3::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 90px;
+    height: 4px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--rs-gold-600), transparent 100%);
+}
+
+/* ---------- Rows ---------- */
+#reportSection .section-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 16px;
+    margin-bottom: 16px;
+}
+
+#reportSection .section-toolbar > label {
+    margin: 0;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    color: var(--rs-slate-600);
+}
+
+/* ---------- Date boxes ---------- */
+#reportSection .search-input {
+    height: 40px;
+    min-width: 170px;
+    padding: 0 12px;
+    background: #ffffff;
+    border: 1px solid var(--rs-slate-200);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--rs-slate-900);
+    color-scheme: light;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+#reportSection .search-input:hover {
+    border-color: var(--rs-slate-400);
+}
+
+#reportSection .search-input:focus {
+    border-color: var(--rs-blue-600);
+    box-shadow: 0 0 0 3px rgba(31, 111, 178, 0.15);
+}
+
+/* ---------- PDF / Excel switch ---------- */
+#reportSection .report-format-options {
+    display: inline-flex;
+    gap: 6px;
+    padding: 4px;
+    background: var(--rs-bg);
+    border: 1px solid var(--rs-slate-200);
+    border-radius: 10px;
+}
+
+#reportSection .report-format-box {
+    position: relative;
+    margin: 0;
+    cursor: pointer;
+}
+
+#reportSection .report-format-box input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#reportSection .report-format-box span {
+    display: inline-block;
+    min-width: 84px;
+    padding: 8px 18px;
+    border-radius: 7px;
+    text-align: center;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--rs-slate-600);
+    transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+#reportSection .report-format-box:hover span {
+    background: #ffffff;
+    color: var(--rs-navy-800);
+}
+
+#reportSection .report-format-box input:checked + span {
+    background: var(--rs-navy-800);
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(11, 37, 64, 0.25);
+}
+
+/* Excel turns green when selected */
+#reportSection .report-format-box input[value="EXCEL"]:checked + span {
+    background: var(--rs-green-600);
+}
+
+#reportSection .report-format-box input:focus-visible + span {
+    outline: 2px solid var(--rs-blue-600);
+    outline-offset: 2px;
+}
+
+/* ---------- Generate button (same navy gradient + gold edge as your header) ---------- */
+#reportSection .toolbar-btn.export-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 24px;
+    border: 0 !important;
+    border-radius: 8px !important;
+    background: linear-gradient(120deg, var(--rs-navy-900) 0%, var(--rs-navy-700) 100%) !important;
+    color: #ffffff !important;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    box-shadow: inset 0 -3px 0 var(--rs-gold-600), 0 4px 12px rgba(11, 37, 64, 0.22) !important;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+#reportSection .toolbar-btn.export-btn::before {
+    content: "";
+    width: 16px;
+    height: 16px;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/><polyline points='7 10 12 15 17 10'/><line x1='12' y1='15' x2='12' y2='3'/></svg>") center / contain no-repeat;
+}
+
+#reportSection .toolbar-btn.export-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: inset 0 -3px 0 var(--rs-gold-600), 0 10px 22px rgba(11, 37, 64, 0.28) !important;
+}
+
+#reportSection .toolbar-btn.export-btn:active {
+    transform: translateY(0);
+}
+
+#reportSection .toolbar-btn.export-btn:focus-visible {
+    outline: 2px solid var(--rs-blue-600);
+    outline-offset: 2px;
+}
+
+/* ---------- Phones ---------- */
+@media (max-width: 600px) {
+    #reportSection .section-inner {
+        padding: 16px;
+    }
+    #reportSection .search-input,
+    #reportSection .toolbar-btn.export-btn {
+        width: 100%;
+    }
+    #reportSection .toolbar-btn.export-btn {
+        justify-content: center;
+    }
+    #reportSection .report-format-options {
+        width: 100%;
+    }
+    #reportSection .report-format-box {
+        flex: 1;
+    }
+}
+</style>
 </style>
 
 <script type="text/javascript">
@@ -1978,7 +2286,136 @@ window.addEventListener("DOMContentLoaded", function () {
             </div>
         </div>
     </div>
+  <!-- NEW REPORT SECTION START -->
 
+  
+<!-- Reports Section -->
+<!-- NEW REPORT SECTION START -->
+
+<!-- Reports Section -->
+<div class="section-panel" id="reportSection">
+
+    <button type="button" class="section-toggle"
+            onclick="toggleSection(this)">
+
+        <span class="section-title-wrap">
+            <span>Reports</span>
+        </span>
+
+       <!--  <span class="arrow">&#9660;</span>-->
+
+    </button>
+
+    <div class="section-content">
+
+        <div class="section-inner">
+
+            <h3>Fire Transaction Report</h3>
+
+            <div class="section-toolbar">
+
+                <label>From Date</label>
+                <input type="date"
+                       id="fromDate"
+                       class="search-input" />
+
+                <label>To Date</label>
+                <input type="date"
+                       id="toDate"
+                       class="search-input" />
+
+                <!-- NEW: Status filter -->
+                <label>Status</label>
+                <select id="transactionStatus" class="search-input">
+                      <option value="ALL">All</option>
+                      <option value="SUCCESS">Success</option>
+                      <option value="FAILURE">Failure</option>
+                     <!-- <option value="USER CANCELLED">User Cancelled</option> --> 
+                </select>
+
+            </div>
+
+            <div class="section-toolbar">
+
+                <label>Report Format:</label>
+
+                <div class="report-format-options">
+
+                    <label class="report-format-box">
+                        <input type="radio"
+                               name="reportFormat"
+                               value="PDF"
+                               checked />
+                        <span>PDF</span>
+                    </label>
+
+                    <label class="report-format-box">
+                        <input type="radio"
+                               name="reportFormat"
+                               value="EXCEL" />
+                        <span>Excel</span>
+                    </label>
+
+                </div>
+
+                <button type="button"
+                        class="toolbar-btn export-btn"
+                        onclick="generateFireTransactionReport()">
+                    Generate Report
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+function generateFireTransactionReport() {
+
+    var fromDate = document.getElementById("fromDate").value;
+    var toDate = document.getElementById("toDate").value;
+    var status = document.getElementById("transactionStatus").value;
+    
+
+    var format = document.querySelector(
+        'input[name="reportFormat"]:checked'
+    );
+
+    if (!fromDate || !toDate) {
+        alert("Please select From Date and To Date");
+        return;
+    }
+
+    if (fromDate > toDate) {
+        alert("From Date cannot be greater than To Date");
+        return;
+    }
+
+    if (!status) {
+        alert("Please select Transaction Status");
+        return;
+    }
+
+    if (!format) {
+        alert("Please select report format");
+        return;
+    }
+
+    var url = "${pageContext.request.contextPath}/rtiApplicationReport/fireTransactionReport.do"
+            + "?fromDate=" + encodeURIComponent(fromDate)
+            + "&toDate=" + encodeURIComponent(toDate)
+            + "&transactionStatus=" + encodeURIComponent(status)
+            + "&reportFormat=" + encodeURIComponent(format.value);
+
+    window.open(url, "_blank");
+}
+</script>
+
+
+    <!-- NEW REPORT SECTION END -->
     <input type="hidden" id="rtiApplicationRefId" name="rtiApplicationRefId" value="" />
     <input type="hidden" id="rtiApplicationId" name="rtiApplicationId" value="" />
     <input type="hidden" id="SortBy" name="SortBy" value="<c:out value="${requestScope.SortBy}"/>" />

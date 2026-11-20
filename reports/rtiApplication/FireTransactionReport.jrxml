@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2026-11-20T13:06:27 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FireTransactionReport" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e4494181-4f61-4761-8869-50b9407f10a5">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NMC_RTS_DB"/>
+	<parameter name="fromDate" class="java.util.Date"/>
+	<parameter name="toDate" class="java.util.Date"/>
+	<parameter name="showTitle" class="java.lang.Boolean"/>
+	<parameter name="status" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT x.*
+FROM (
+    SELECT DISTINCT ON (COALESCE(NULLIF(TRIM(t.easepayid), ''), CAST(t.easebuzzwebhookid AS varchar)))
+        CAST(a.rti_application_number AS varchar)             AS rti_application_number,
+        t.easepayid                                           AS easebuzz_id,
+        CAST(NULLIF(TRIM(t.amount), '') AS numeric(14,2))     AS amount,
+        t.status                                              AS transaction_status,
+        t.txnid                                               AS transaction_ref_number,
+        t.bank_ref_num                                        AS bank_ref_number,
+        t.firstname                                           AS customer_name,
+        t.phone                                               AS customer_phone,
+        CAST(NULLIF(TRIM(t.addedon), '') AS timestamp)        AS transaction_date,
+        t.txnid                                               AS merchant_transaction_id,
+        t.payment_source                                      AS submerchant_name,
+        t.upi_va                                              AS customer_upi_ifsc_code,
+        t.cardnum                                             AS customer_upi_account_number,
+        t.easepayid                                           AS customer_upi_ref_id,
+        CAST(NULLIF(TRIM(t.addedon), '') AS timestamp)        AS sort_time
+    FROM egovrti.easebuzzwebhook t
+    JOIN egovrti.collection_buffer cb
+          ON TRIM(CAST(cb.uniq_pg_id AS varchar)) = TRIM(t.txnid)
+    JOIN egovrti.rti_application a
+          ON a.rti_application_id = cb.rti_application_id
+    WHERE a.rti_service_id = 69
+      AND CAST(NULLIF(TRIM(t.addedon), '') AS timestamp) >= CAST($P{fromDate} AS timestamp)
+      AND CAST(NULLIF(TRIM(t.addedon), '') AS timestamp) <  CAST($P{toDate} AS timestamp) + INTERVAL '1 day'
+    ORDER BY COALESCE(NULLIF(TRIM(t.easepayid), ''), CAST(t.easebuzzwebhookid AS varchar)),
+             t.easebuzzwebhookid DESC
+) x
+WHERE ( UPPER(COALESCE(NULLIF(TRIM(CAST($P{status} AS varchar)), ''), 'ALL')) = 'ALL'
+     OR ( UPPER(TRIM(CAST($P{status} AS varchar))) = 'SUCCESS'
+          AND LOWER(TRIM(x.transaction_status)) = 'success' )
+     OR ( UPPER(TRIM(CAST($P{status} AS varchar))) = 'FAILURE'
+          AND LOWER(TRIM(x.transaction_status)) IN ('failure', 'failed', 'usercancelled', 'dropped', 'bounced') )
+)
+ORDER BY x.sort_time ASC]]>
+	</queryString>
+	<field name="rti_application_number" class="java.lang.String"/>
+	<field name="easebuzz_id" class="java.lang.String"/>
+	<field name="transaction_date" class="java.sql.Timestamp"/>
+	<field name="customer_name" class="java.lang.String"/>
+	<field name="customer_phone" class="java.lang.String"/>
+	<field name="amount" class="java.math.BigDecimal"/>
+	<field name="transaction_status" class="java.lang.String"/>
+	<field name="transaction_ref_number" class="java.lang.String"/>
+	<field name="bank_ref_number" class="java.lang.String"/>
+	<field name="merchant_transaction_id" class="java.lang.String"/>
+	<field name="submerchant_name" class="java.lang.String"/>
+	<field name="customer_upi_ifsc_code" class="java.lang.String"/>
+	<field name="customer_upi_account_number" class="java.lang.String"/>
+	<field name="customer_upi_ref_id" class="java.lang.String"/>
+	<variable name="totalAmount" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{amount}]]></variableExpression>
+	</variable>
+	<title>
+		<band height="58">
+			<printWhenExpression><![CDATA[$P{showTitle}]]></printWhenExpression>
+			<staticText>
+				<reportElement x="0" y="0" width="802" height="24" uuid="7ce64dc2-b508-4467-91e2-d225e050a947"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nagpur Municipal Corporation, Nagpur - Fire Department]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="24" width="802" height="18" uuid="f84f7980-08ef-4125-9c03-88e558e7b2f9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[Monthly Online Payment Transaction Report]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="42" width="802" height="14" uuid="0b6a2f10-3c11-4d7e-9a51-6f0f4d1a7c01"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["From: " + ($P{fromDate} == null ? "-" : new java.text.SimpleDateFormat("dd-MM-yyyy").format($P{fromDate}))
++ "   To: " + ($P{toDate} == null ? "-" : new java.text.SimpleDateFormat("dd-MM-yyyy").format($P{toDate}))
++ "   Status: " + ($P{status} == null || $P{status}.trim().isEmpty() ? "ALL" : $P{status}.toUpperCase())]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="30">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="94" height="30" backcolor="#D9D9D9" uuid="3333d315-9565-471e-aa59-51e15c1509bf"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RTS Application Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="94" y="0" width="62" height="30" backcolor="#D9D9D9" uuid="6342d9c7-5e7e-438b-987d-beffb601f61e"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Easebuzz ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="156" y="0" width="62" height="30" backcolor="#D9D9D9" uuid="926239dd-1b7e-409e-b9c9-b8710ee955a4"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date of Transaction]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="218" y="0" width="70" height="30" backcolor="#D9D9D9" uuid="1aa52b82-405a-453e-a93f-aee065460ce6"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Customer Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="288" y="0" width="52" height="30" backcolor="#D9D9D9" uuid="cafb43fa-0a1a-46de-b1cf-e3d2d349e85a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Customer Phone]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="340" y="0" width="50" height="30" backcolor="#D9D9D9" uuid="2071c215-7f83-4c57-864a-199c86911b1c"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount (INR)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="390" y="0" width="36" height="30" backcolor="#D9D9D9" uuid="fdd4a900-48c1-4a5c-b2a2-59939a66f745"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="426" y="0" width="60" height="30" backcolor="#D9D9D9" uuid="3edf2413-408b-4dbd-986d-b4551de3ea53"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Transaction Ref No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="486" y="0" width="60" height="30" backcolor="#D9D9D9" uuid="a5a22aff-619c-4bdf-a8d3-9194edc21870"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bank Ref No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="546" y="0" width="55" height="30" backcolor="#D9D9D9" uuid="543d7819-fde7-44b9-a975-7f4cab562d91"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Merchant Txn ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="601" y="0" width="60" height="30" backcolor="#D9D9D9" uuid="28394113-0026-434d-9693-788179d83790"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Submerchant Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="661" y="0" width="36" height="30" backcolor="#D9D9D9" uuid="5ffd51ba-c886-46d1-ac3b-73395f9a6c45"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UPI IFSC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="697" y="0" width="45" height="30" backcolor="#D9D9D9" uuid="10073615-a9ad-40c9-aa8e-5f34e33a0a42"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UPI Account No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="742" y="0" width="60" height="30" backcolor="#D9D9D9" uuid="2a18c31b-177f-40da-bd5c-274d94690e2c"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UPI Ref ID]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="28">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="94" height="28" uuid="cfebe21a-146e-415a-a3aa-28c1d757260a"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rti_application_number}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="94" y="0" width="62" height="28" uuid="d96e533e-7fd2-4f90-91d1-e841888c6383"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{easebuzz_id}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd-MM-yyyy hh:mm a" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="156" y="0" width="62" height="28" uuid="f2b5959b-0c3f-4edc-9069-9ba9ba9342c2"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{transaction_date}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="218" y="0" width="70" height="28" uuid="ab5f3d64-b3ef-4001-b48f-0d450d68f367"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customer_name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="288" y="0" width="52" height="28" uuid="d5cd746d-bd15-49ae-8fc9-75169032d65a"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customer_phone}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="340" y="0" width="50" height="28" uuid="fa0b4101-1635-4b95-a687-3f0d1dd6faba"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="390" y="0" width="36" height="28" uuid="52d013b8-8977-4b1f-8bc3-ab77f21fafea"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{transaction_status}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="426" y="0" width="60" height="28" uuid="d9123fb3-a52e-48b4-93e0-645418673aff"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{transaction_ref_number}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="486" y="0" width="60" height="28" uuid="b21e4ce7-a6ba-4568-bd12-69daa882fd29"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bank_ref_number}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="546" y="0" width="55" height="28" uuid="a4c1098a-7a65-47ca-9ea2-d9bcad3335ce"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{merchant_transaction_id}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="601" y="0" width="60" height="28" uuid="90ee1941-e734-4c99-9dba-191d3fc4ac39"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{submerchant_name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="661" y="0" width="36" height="28" uuid="2af4f445-05b9-4433-9a71-f83ed2081947"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customer_upi_ifsc_code}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="697" y="0" width="45" height="28" uuid="68f5e0c6-e336-47f6-9974-2b43d2f5cfad"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customer_upi_account_number}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="742" y="0" width="60" height="28" uuid="51eeba09-3644-4ac8-903c-a1aa02f47090"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customer_upi_ref_id}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="24"/>
+	</summary>
+</jasperReport>
