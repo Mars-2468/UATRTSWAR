@@ -19,6 +19,10 @@
 		<put-attribute name="content" value="/pages/core-pages/rtsappeal/citizenAppealAcknowledgement.jsp"/>
 		<put-attribute name="parentMenu" value="RTIReports" type="string"/>
 	</definition>
+	<definition name="rtsAppealCitizenApplicationPrint" extends="egov.popup">
+		<put-attribute name="content" value="/pages/core-pages/rtsappeal/citizenApplicationPrint.jsp"/>
+		<put-attribute name="parentMenu" value="RTIReports" type="string"/>
+	</definition>
 
 	<!-- Department -->
 	<definition name="rtsAppealOriginalApplication" extends="egov.popup">
@@ -87,6 +91,42 @@
 		<put-list-attribute name="breadcrumbsList">
 			<item link="/dashBoard/openDashBoard.do" value="Dashboard"/>
 			<item link="#" value="Appeal Applications - Department wise"/>
+		</put-list-attribute>
+	</definition>
+
+
+	<!-- Send back to citizen (all services) -->
+	<definition name="rtsSendBackCitizenForm" extends="egov.popup">
+		<put-attribute name="content" value="/pages/core-pages/rtssendback/citizenSendBackForm.jsp"/>
+		<put-attribute name="parentMenu" value="RTIReports" type="string"/>
+	</definition>
+	<definition name="rtsSendBackDeptForm" extends="egov.mainLogin">
+		<put-attribute name="content" value="/pages/core-pages/rtssendback/deptSendBackForm.jsp"/>
+		<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+		<put-attribute name="selectedMenu" value="rtsSendBack" type="string"/>
+		<put-list-attribute name="breadcrumbsList">
+			<item link="#" value="RTS Application"/>
+			<item link="/rtssendback/list.do" value="Sent Back to Citizen"/>
+			<item link="#" value="Send Back"/>
+		</put-list-attribute>
+	</definition>
+	<definition name="rtsSendBackDeptList" extends="egov.mainLogin">
+		<put-attribute name="content" value="/pages/core-pages/rtssendback/deptSendBackList.jsp"/>
+		<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+		<put-attribute name="selectedMenu" value="rtsSendBack" type="string"/>
+		<put-list-attribute name="breadcrumbsList">
+			<item link="#" value="RTS Application"/>
+			<item link="/rtssendback/list.do" value="Sent Back to Citizen"/>
+		</put-list-attribute>
+	</definition>
+	<definition name="rtsSendBackDeptView" extends="egov.mainLogin">
+		<put-attribute name="content" value="/pages/core-pages/rtssendback/deptSendBackView.jsp"/>
+		<put-attribute name="parentMenu" value="RTI_Applications" type="string"/>
+		<put-attribute name="selectedMenu" value="rtsSendBack" type="string"/>
+		<put-list-attribute name="breadcrumbsList">
+			<item link="#" value="RTS Application"/>
+			<item link="/rtssendback/list.do" value="Sent Back to Citizen"/>
+			<item link="#" value="Details"/>
 		</put-list-attribute>
 	</definition>
 

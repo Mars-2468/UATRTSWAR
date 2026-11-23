@@ -1,0 +1,38 @@
+<%--
+  Dashboard "All-Records" list (dashboard.jsp): payment state of an application that is held by the appeal (20)
+  or sent back to the citizen (21). The status saved when it was held tells whether the fee was paid.
+  Expects page attributes rtsHeldId (rti_application_id) and rtsHeldStatus; sets rtsHeldPayment.
+--%><%
+{
+    String rtsHeldPayment = "Pending.";
+    try {
+        long rtsHeldAppId = Long.parseLong(String.valueOf(pageContext.getAttribute("rtsHeldId")));
+        int rtsHeldCode = Integer.parseInt(String.valueOf(pageContext.getAttribute("rtsHeldStatus")));
+        org.springframework.web.context.WebApplicationContext rtsHeldContext =
+                org.springframework.web.context.support.WebApplicationContextUtils.getWebApplicationContext(application);
+        Integer rtsHeldBefore = null;
+        if (rtsHeldCode == 21) {
+            com.mars.rti.model.RtsCitizenSendBack rtsHeldSendBack =
+                    rtsHeldContext.getBean(com.mars.rti.service.RtsSendBackService.class).getByApplication(rtsHeldAppId);
+            rtsHeldBefore = rtsHeldSendBack != null ? rtsHeldSendBack.getStatusBefore() : null;
+        } else {
+            com.mars.rti.model.RtsAppeal rtsHeldLatest = null;
+            for (com.mars.rti.model.RtsAppeal rtsHeldAppeal
+                    : rtsHeldContext.getBean(com.mars.rti.service.RtsAppealService.class).getAppealsOfApplication(rtsHeldAppId)) {
+                if (rtsHeldAppeal.getApplicationStatusAtAppeal() != null
+                        && (rtsHeldLatest == null || rtsHeldAppeal.getRtsAppealId() > rtsHeldLatest.getRtsAppealId())) {
+                    rtsHeldLatest = rtsHeldAppeal;
+                }
+            }
+            rtsHeldBefore = rtsHeldLatest != null ? rtsHeldLatest.getApplicationStatusAtAppeal() : null;
+        }
+        // as the dashboard shows it: 1 / 2 = paid ("Completed."), every other status = "Pending."
+        if (rtsHeldBefore != null && (rtsHeldBefore.intValue() == 1 || rtsHeldBefore.intValue() == 2)) {
+            rtsHeldPayment = "Completed.";
+        }
+    } catch (RuntimeException e) {
+        // the list is still shown; the payment state stays "Pending."
+    }
+    pageContext.setAttribute("rtsHeldPayment", rtsHeldPayment);
+}
+%>

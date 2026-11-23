@@ -39,6 +39,8 @@
 							<input type="number" name="slaDays" min="1" max="365" required="required" value="<c:out value='${edit.slaDays}'/>"/></div>
 						<div class="ap-form-row"><label>SLA counted from (hours after submission) *</label>
 							<input type="number" name="slaStartHours" min="0" max="240" required="required" value="<c:out value='${edit.slaStartHours}'/>"/></div>
+						<div class="ap-form-row"><label>Days for citizen to correct (send back) <span class="ap-muted">(empty = SLA days)</span></label>
+							<input type="number" name="citizenCorrectionDays" min="1" max="90" value="<c:out value='${edit.citizenCorrectionDays}'/>"/></div>
 						<div class="ap-form-row"><label>First Appellate Officer (designation)</label>
 							<input type="text" name="firstAppellateOfficer" maxlength="200" value="<c:out value='${edit.firstAppellateOfficer}'/>"/></div>
 						<div class="ap-form-row"><label>Second Appellate Officer (designation)</label>

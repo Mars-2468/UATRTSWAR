@@ -1111,6 +1111,12 @@ String registrationToDate = request.getParameter("registrationToDate");
        <c:if test="${rtiApplnList.workFlowStatus == 5}">
         Pending.
     </c:if>
+    <%-- RTS appeal (20) / sent back to the citizen (21): paid or not, from the status saved when it was held --%>
+    <c:if test="${rtiApplnList.workFlowStatus == 20 or rtiApplnList.workFlowStatus == 21}">
+        <c:set var="rtsHeldId" value="${rtiApplnList.rtiApplicationId}"/><c:set var="rtsHeldStatus" value="${rtiApplnList.workFlowStatus}"/>
+        <jsp:directive.include file="/pages/core-pages/rtsappeal/dashboardHeldStatus.jspf" />
+        <c:out value="${rtsHeldPayment}"/>
+    </c:if>
     
  </td>
  <td>
@@ -1141,6 +1147,12 @@ String registrationToDate = request.getParameter("registrationToDate");
     </c:if>
      <c:if test="${rtiApplnList.workFlowStatus == 11}">
         MTP Inspection completed.
+    </c:if>
+    <c:if test="${rtiApplnList.workFlowStatus == 20}">
+        Under Appeal
+    </c:if>
+    <c:if test="${rtiApplnList.workFlowStatus == 21}">
+        Sent back to citizen for correction
     </c:if>
 </td>
 

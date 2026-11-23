@@ -47,3 +47,5 @@
 		</c:forEach>
 	</div>
 </c:if>
+<%-- Send back to citizen (button / state) on the same workflow pages --%>
+<%@ include file="/pages/core-pages/rtssendback/sendBackToCitizen.jspf" %>

@@ -18,7 +18,24 @@
 				} catch (RuntimeException ignore) {
 					// the list is still shown
 				}
+				// send back to citizen: overdue ones go back to the department first, then the open ones get "Correct & Resubmit"
+				com.mars.rti.service.RtsSendBackService rtsSendBackSvc = (com.mars.rti.service.RtsSendBackService) WebApplicationContextUtils
+						.getRequiredWebApplicationContext(application).getBean("rtsSendBackService");
+				try {
+					rtsSendBackSvc.expireOverdue();
+				} catch (RuntimeException ignore) {
+					// the list is still shown
+				}
 				rtsAppealRows = rtsAppealSvc.getCitizenApplicationRows(rtsAppealMobile.toString());
+				try {
+					java.util.List<Long> rtsSendBackIds = new java.util.ArrayList<Long>();
+					for (Object rtsRow : rtsAppealRows) {
+						rtsSendBackIds.add(Long.valueOf(((com.mars.rti.model.RtsAppealApplicationRow) rtsRow).getApplication().getRtiApplicationId()));
+					}
+					request.setAttribute("rtsSendBacks", rtsSendBackSvc.getForApplications(rtsSendBackIds));
+				} catch (RuntimeException ignore) {
+					// no send back information: the list is still shown
+				}
 			} catch (RuntimeException e) {
 				request.setAttribute("rtsAppealError", "Application details could not be loaded. Please try again later.");
 			}
@@ -64,11 +81,12 @@
 						<th class="ap-center">Appeal</th>
 						<th>Rejection status</th>
 						<th class="ap-center">Download certificate</th>
+						<th class="ap-center">Application Form</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:if test="${empty rtsAppealRows}">
-						<tr><td colspan="13" class="ap-empty">No applications found.</td></tr>
+						<tr><td colspan="14" class="ap-empty">No applications found.</td></tr>
 					</c:if>
 					<c:forEach items="${rtsAppealRows}" var="row" varStatus="st">
 						<c:set var="app" value="${row.application}"/>
@@ -85,8 +103,21 @@
 								<c:if test="${fn:length(dateParts) > 1}"><div class="ap-small ap-muted"><c:out value="${dateParts[1]}"/></div></c:if>
 							</td>
 							<td>
-								<span class="ap-badge ${appStatus == 1 ? 'ap-badge-ok' : (row.rejected ? 'ap-badge-err' : (appStatus == 20 ? 'ap-badge-warn' : 'ap-badge-info'))}">
+								<span class="ap-badge ${appStatus == 1 ? 'ap-badge-ok' : (row.rejected ? 'ap-badge-err' : (appStatus == 20 or appStatus == 21 ? 'ap-badge-warn' : 'ap-badge-info'))}">
 									<c:out value="${row.statusLabel}"/></span>
+								<c:set var="sendBack" value="${rtsSendBacks[app.rtiApplicationId]}"/>
+								<c:if test="${appStatus == 21 and not empty sendBack and sendBack.status == 0}">
+									<div class="ap-small" style="margin-top: 5px; color: #92400e"><b>Department's remark:</b>
+										<c:out value="${fn:length(sendBack.remarks) > 120 ? fn:substring(sendBack.remarks, 0, 120) : sendBack.remarks}"/><c:if
+										test="${fn:length(sendBack.remarks) > 120}">...</c:if></div>
+									<div class="ap-small">Resubmit by <b><fmt:formatDate value="${sendBack.dueDate}" pattern="dd/MM/yyyy HH:mm"/></b></div>
+									<c:url var="correctionUrl" value="/ws/rtssendback/correctionForm.do"><c:param name="rtiApplnNumber" value="${app.rtiApplnNumber}"/></c:url>
+									<div style="margin-top: 5px"><a class="ap-btn ap-btn-green ap-btn-xs" href="${correctionUrl}">Correct &amp; Resubmit</a></div>
+								</c:if>
+								<c:if test="${appStatus != 21 and not empty sendBack and sendBack.status == 1}">
+									<div class="ap-small ap-muted" style="margin-top: 4px">Corrected and resubmitted on
+										<fmt:formatDate value="${sendBack.resubmittedDate}" pattern="dd/MM/yyyy"/></div>
+								</c:if>
 								<c:if test="${appStatus == 3}">
 									<c:url var="payUrl" value="/ws/pay.do"><c:param name="rtsNo" value="${app.rtiApplnNumber}"/></c:url>
 									<div style="margin-top: 5px"><a class="ap-btn ap-btn-blue ap-btn-xs" href="${payUrl}">Pay Now</a></div>
@@ -161,6 +192,12 @@
 									<c:otherwise><span class="ap-muted">-</span></c:otherwise>
 								</c:choose>
 							</td>
+							<td class="ap-center">
+								<%-- the application form as submitted (with any corrections), to view / print --%>
+								<c:url var="formPrintUrl" value="/ws/rtsappeal/applicationPrint.do"><c:param name="rtiApplnNumber"
+									value="${row.application.rtiApplnNumber}"/></c:url>
+								<a class="ap-btn ap-btn-light ap-btn-xs" target="_blank" href="<c:out value='${formPrintUrl}'/>">View / Print</a>
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -174,6 +211,8 @@
 				rejection reason, the <b>Appeal</b> button is enabled.</li>
 			<li>The SLA period starts 24 hours after the application is submitted.</li>
 			<li>If you are not satisfied after the first appeal is closed, you can file a <b>Second Appeal</b>.</li>
+			<li>If the department sends your application back for correction, use <b>Correct &amp; Resubmit</b> before the date shown;
+				the time it is with you is not counted in the SLA.</li>
 		</ol>
 	</div>
 </div>
