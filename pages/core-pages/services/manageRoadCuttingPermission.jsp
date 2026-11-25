@@ -1,4 +1,6 @@
 <jsp:directive.include file="/pages/common/include.jsp" />
+<%-- RTS: Send back to citizen (button / state) --%>
+<jsp:directive.include file="/pages/core-pages/rtssendback/sendBackServicePage.jspf" />
 <jsp:directive.page import="com.mars.common.utils.Constants" />
 <jsp:directive.page import="com.mars.common.utils.CommonUtils" />
 <jsp:directive.page import="com.mars.rti.utils.CoreConstants" />

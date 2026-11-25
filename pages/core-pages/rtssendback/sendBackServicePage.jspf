@@ -1,0 +1,13 @@
+<%--
+  Send back to citizen on the department pages of services that do not use the shared workflow includes
+  (Drainage, Food NOCs, Hall / Lodging Licence, Hawker, Road Cutting, Signage, Sky Sign, Ganesh / Diksha Bhumi Mandap).
+  Included right after /pages/common/include.jsp; uses the request attribute rtiApplication of those pages.
+  No taglib directives: the host page declares c / fmt.
+--%>
+<c:if test="${not empty requestScope.rtiApplication and requestScope.rtiApplication.rtiApplicationId > 0}">
+	<c:set var="sendBackEntityId" value="${requestScope.rtiApplication.rtiApplicationId}" scope="request"/>
+	<div style="max-width: 1200px; margin: 8px auto 0; padding: 0 12px;">
+		<%@ include file="/pages/core-pages/rtssendback/sendBackToCitizen.jspf" %>
+	</div>
+	<c:remove var="sendBackEntityId" scope="request"/>
+</c:if>

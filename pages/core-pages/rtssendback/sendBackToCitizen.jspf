@@ -1,0 +1,83 @@
+<%--
+  Send back to citizen, on the workflow page of every service (included by rtsappeal/workflowAppealNotice.jspf,
+  which the workflow task includes already contain). No taglib directives: the host pages declare c / fmt.
+  - not sent back yet, and it is the logged-in officer's turn (L1 / L2) within the SLA: "Send back to citizen" button
+  - sent back: its state (with the citizen / resubmitted with the corrections / not resubmitted in time)
+  Nothing is shown otherwise, and nothing on the page changes for applications that are never sent back.
+--%>
+<%
+{
+	Object sbEntity = request.getAttribute("WORKFLOW_ENTITYID");
+	Object sbEntityName = request.getAttribute("WORKFLOW_ENTITYNAME");
+	if (request.getAttribute("sendBackEntityId") != null) {
+		// service pages without the shared workflow include (see sendBackServicePage.jspf)
+		sbEntity = request.getAttribute("sendBackEntityId");
+		sbEntityName = null;
+	}
+	Object sbUser = session.getAttribute("SessionUser");
+	com.mars.rti.model.RtsCitizenSendBack sbRow = null;
+	boolean sbCanSend = false;
+	int sbDays = 0;
+	if (sbEntity != null && sbUser instanceof com.mars.common.utils.SessionUser
+			&& String.valueOf(sbEntity).trim().matches("\\d+")) {
+		try {
+			com.mars.rti.service.RtsSendBackService sbService = (com.mars.rti.service.RtsSendBackService)
+					org.springframework.web.context.support.WebApplicationContextUtils
+							.getWebApplicationContext(pageContext.getServletContext()).getBean("rtsSendBackService");
+			long sbId = Long.parseLong(String.valueOf(sbEntity).trim());
+			if (sbService.isApplicationEntity(sbId, sbEntityName == null ? null : String.valueOf(sbEntityName))) {
+				sbService.getBlockReason(sbId, null); // returns an overdue send back to the department first
+				sbRow = sbService.getByApplication(sbId);
+				String sbUserName = ((com.mars.common.utils.SessionUser) sbUser).getUserName();
+				sbCanSend = sbRow == null && sbService.getSendBackRefusal(sbId, sbUserName) == null;
+				if (sbCanSend) {
+					sbDays = sbService.getCorrectionDaysOf(sbId);
+				}
+				pageContext.setAttribute("sbApplicationId", Long.valueOf(sbId));
+			}
+		} catch (Exception sbError) {
+			sbRow = null;
+			sbCanSend = false;
+		}
+	}
+	pageContext.setAttribute("sbRow", sbRow);
+	pageContext.setAttribute("sbCanSend", Boolean.valueOf(sbCanSend));
+	pageContext.setAttribute("sbDays", Integer.valueOf(sbDays));
+}
+%>
+<c:choose>
+	<c:when test="${not empty sbRow}">
+		<div style="border:1px solid ${sbRow.status == 0 ? '#f0c36d' : (sbRow.status == 1 ? '#86efac' : '#cbd5e1')}; background:${sbRow.status == 0 ? '#fff8e6' : (sbRow.status == 1 ? '#f0fdf4' : '#f8fafc')}; border-radius:6px; padding:10px 14px; margin:8px 0 12px; font-size:13px; color:#1f2937;">
+			<div style="font-weight:600; color:${sbRow.status == 0 ? '#92400e' : (sbRow.status == 1 ? '#166534' : '#334155')}; margin-bottom:4px;">
+				Sent back to citizen - <c:out value="${sbRow.statusLabel}"/>
+			</div>
+			<div>Sent back by <b><c:out value="${sbRow.sentBy}"/></b> on <fmt:formatDate value="${sbRow.sentDate}" pattern="dd/MM/yyyy HH:mm"/>:
+				<span style="white-space:pre-wrap;"><c:out value="${sbRow.remarks}"/></span></div>
+			<c:choose>
+				<c:when test="${sbRow.status == 0}">
+					<div>Waiting for the citizen's correction till <b><fmt:formatDate value="${sbRow.dueDate}" pattern="dd/MM/yyyy HH:mm"/></b>.
+						It can be processed after the citizen resubmits it.</div>
+				</c:when>
+				<c:when test="${sbRow.status == 1}">
+					<div>Resubmitted by the citizen on <b><fmt:formatDate value="${sbRow.resubmittedDate}" pattern="dd/MM/yyyy HH:mm"/></b>
+						with <b><c:out value="${sbRow.citizenChanges}"/></b> correction(s) / document(s)<c:if
+						test="${not empty sbRow.citizenRemarks}"> - <c:out value="${sbRow.citizenRemarks}"/></c:if>. Continue the workflow as usual.</div>
+				</c:when>
+				<c:otherwise>
+					<div>Not resubmitted by the citizen by <fmt:formatDate value="${sbRow.dueDate}" pattern="dd/MM/yyyy HH:mm"/>;
+						the application is back with the department as it was.</div>
+				</c:otherwise>
+			</c:choose>
+			<a href="<c:out value='${pageContext.request.contextPath}'/>/rtssendback/view.do?id=${sbRow.rtsCitizenSendBackId}">View details<c:if
+				test="${sbRow.status == 1}"> and corrections</c:if></a>
+		</div>
+	</c:when>
+	<c:when test="${sbCanSend}">
+		<div style="border:1px solid #bfdbfe; background:#eff6ff; border-radius:6px; padding:10px 14px; margin:8px 0 12px; font-size:13px; color:#1f2937; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+			<span>Information or documents missing? Before rejecting, you can send the application back to the citizen
+				<b>once</b> for correction (the citizen gets <c:out value="${sbDays}"/> day(s) to resubmit).</span>
+			<a href="<c:out value='${pageContext.request.contextPath}'/>/rtssendback/sendBackForm.do?rtiApplicationId=${sbApplicationId}"
+				style="display:inline-block; padding:6px 14px; border-radius:4px; background:#c2410c; color:#fff; font-weight:600; text-decoration:none;">Send back to citizen</a>
+		</div>
+	</c:when>
+</c:choose>

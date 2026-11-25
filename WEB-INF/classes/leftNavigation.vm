@@ -83,6 +83,13 @@
 					     <span class="menu-text">Appeal Applications</span>
 					   </a>
 					 </li>
+					 <!-- Send back to citizen: applications the officer sent back for correction -->
+					 <li class="   ">
+					   <a href="$contextRoot/rtssendback/list.do">
+					     <i class="icon-reply"></i>
+					     <span class="menu-text">Sent Back to Citizen</span>
+					   </a>
+					 </li>
 					 #if ($rolesPermissions.containsKey("/workflowtemplateusermapping/"))
 					 <li class="   ">
 					   <a href="$contextRoot/rtsappeal/appellateOfficers.do">

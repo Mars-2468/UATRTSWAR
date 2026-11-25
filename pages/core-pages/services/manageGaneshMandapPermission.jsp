@@ -9,6 +9,8 @@
 <%@ page import="com.mars.common.utils.SessionUser"%>
 <%@ page import="com.mars.common.model.User"%>
 <jsp:directive.include file="/pages/common/include.jsp" />
+<%-- RTS: Send back to citizen (button / state) --%>
+<jsp:directive.include file="/pages/core-pages/rtssendback/sendBackServicePage.jspf" />
 
 <%
 pageContext.setAttribute("DATE_FORMAT", Constants.DATE_FORMAT);

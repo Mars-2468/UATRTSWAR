@@ -120,6 +120,16 @@
 		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
 
+	<!-- Close-Application: sets the status to Completed if the workflow ended but the controller did not save it -->
+	<filter>
+		<filter-name>RtsCloseStatusFilter</filter-name>
+		<filter-class>com.mars.rti.controller.RtsCloseStatusFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>RtsCloseStatusFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+
 	<filter>
 		<filter-name>WorkflowServletFilter</filter-name>
 		<filter-class>
