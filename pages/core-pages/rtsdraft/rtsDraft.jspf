@@ -1,7 +1,7 @@
 <%--
   Auto-save draft (all RTS services). Included once by the common popup layout (WEB-INF/tiles/layouts/common/popup.jsp)
   that every citizen application form uses. It writes nothing unless:
-    - the draft is switched on (no file /usr/local/mars/RTSReports/Drafts/DISABLED, see RtsDraftSwitch),
+    - the draft is switched on (no file /usr/local/mars/RTSDrafts/DISABLED, see RtsDraftSwitch),
     - a citizen is logged in (session "name" and "mobileNo"), and
     - the page is a citizen application form (pages/core-pages/services/new*.jsp)        -> mode "form"
       or the page shown after submitting one (.../services/new*Success.jsp / *Sucess.jsp) -> mode "success"
