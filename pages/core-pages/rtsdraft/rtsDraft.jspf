@@ -1,0 +1,62 @@
+<%--
+  Auto-save draft (all RTS services). Included once by the common popup layout (WEB-INF/tiles/layouts/common/popup.jsp)
+  that every citizen application form uses. It writes nothing unless:
+    - the draft is switched on (no file /usr/local/mars/RTSReports/Drafts/DISABLED, see RtsDraftSwitch),
+    - a citizen is logged in (session "name" and "mobileNo"), and
+    - the page is a citizen application form (pages/core-pages/services/new*.jsp)        -> mode "form"
+      or the page shown after submitting one (.../services/new*Success.jsp / *Sucess.jsp) -> mode "success"
+  Then it loads scripts/rtsDraft.js, which saves the form on the server while it is filled and offers to resume it.
+  No database access here. No taglib directives: the layout declares c / tiles. Any error leaves the page unchanged.
+--%>
+<%
+{
+	String rtsDraftMode = null;
+	String rtsDraftKey = null;
+	String rtsDraftPage = null;
+	try {
+		Object rtsDraftName = session.getAttribute("name");
+		Object rtsDraftMobile = session.getAttribute("mobileNo");
+		if (rtsDraftName != null && rtsDraftMobile != null && rtsDraftMobile.toString().trim().length() > 0
+				&& com.mars.rti.service.impl.RtsDraftSwitch.isEnabled()) {
+			org.apache.tiles.TilesContainer rtsDraftTiles = org.apache.tiles.access.TilesAccess.getContainer(application);
+			org.apache.tiles.Attribute rtsDraftContent = rtsDraftTiles == null ? null
+					: rtsDraftTiles.getAttributeContext(request, response).getAttribute("content");
+			String rtsDraftPath = rtsDraftContent == null || rtsDraftContent.getValue() == null ? ""
+					: String.valueOf(rtsDraftContent.getValue());
+			java.util.regex.Matcher rtsDraftMatch = java.util.regex.Pattern
+					.compile("^/pages/core-pages/services/([Nn]ew[A-Za-z0-9_]{2,95})\\.jsp$").matcher(rtsDraftPath);
+			if (rtsDraftMatch.matches()) {
+				rtsDraftKey = rtsDraftMatch.group(1);
+				rtsDraftMode = rtsDraftKey.matches("(?i).*suc+ess.*") ? "success" : "form";
+				// the address of the form, to resume it from "My Drafts"
+				Object rtsDraftUri = request.getAttribute("javax.servlet.forward.request_uri");
+				Object rtsDraftQuery = request.getAttribute("javax.servlet.forward.query_string");
+				String rtsDraftUrl = rtsDraftUri != null ? rtsDraftUri.toString() : request.getRequestURI();
+				if (rtsDraftUrl.startsWith(request.getContextPath())) {
+					rtsDraftUrl = rtsDraftUrl.substring(request.getContextPath().length());
+				}
+				if (rtsDraftUri != null && rtsDraftQuery != null) {
+					rtsDraftUrl += "?" + rtsDraftQuery;
+				}
+				rtsDraftPage = com.mars.rti.service.impl.RtsDraftServiceImpl.PAGE_URL.matcher(rtsDraftUrl).matches() ? rtsDraftUrl : "";
+			}
+		}
+	} catch (Throwable rtsDraftError) {
+		rtsDraftMode = null;
+	}
+	pageContext.setAttribute("rtsDraftMode", rtsDraftMode);
+	pageContext.setAttribute("rtsDraftKey", rtsDraftKey);
+	pageContext.setAttribute("rtsDraftPage", rtsDraftPage);
+}
+%>
+<c:if test="${not empty rtsDraftMode}">
+	<script type="text/javascript">
+		window.RTS_DRAFT = {
+			ctx: '<c:out value="${pageContext.request.contextPath}"/>',
+			mode: '<c:out value="${rtsDraftMode}"/>',
+			formKey: '<c:out value="${rtsDraftKey}"/>',
+			pageUrl: '<c:out value="${rtsDraftPage}"/>'
+		};
+	</script>
+	<script type="text/javascript" src="<c:out value='${pageContext.request.contextPath}'/>/scripts/rtsDraft.js?v=3"></script>
+</c:if>

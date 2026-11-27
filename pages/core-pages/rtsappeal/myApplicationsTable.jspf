@@ -57,6 +57,25 @@
 	<c:if test="${not empty rtsAppealMessage}">
 		<div class="ap-alert ap-alert-ok"><c:out value="${rtsAppealMessage}"/></div>
 	</c:if>
+	<%
+		// auto-saved drafts (applications started but not submitted); nothing shown when the draft is switched off
+		try {
+			Object rtsDraftMobile = session.getAttribute("mobileNo");
+			if (rtsDraftMobile != null && com.mars.rti.service.impl.RtsDraftSwitch.isEnabled()) {
+				com.mars.rti.service.RtsDraftService rtsDraftSvc = (com.mars.rti.service.RtsDraftService) WebApplicationContextUtils
+						.getRequiredWebApplicationContext(application).getBean("rtsDraftService");
+				pageContext.setAttribute("rtsDraftCount", Integer.valueOf(rtsDraftSvc.getDrafts(rtsDraftMobile.toString().trim()).size()));
+			}
+		} catch (RuntimeException ignore) {
+			// the list is still shown
+		}
+	%>
+	<c:if test="${rtsDraftCount > 0}">
+		<div class="ap-alert" style="background: #eff6ff; border: 1px solid #93c5fd; color: #1e3a8a; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap">
+			<span>You have <b><c:out value="${rtsDraftCount}"/></b> unfinished application(s) saved as draft.</span>
+			<a class="ap-btn ap-btn-blue ap-btn-sm" href="<c:out value='${contextRoot}'/>/ws/rtsdraft/myDrafts.do">My Drafts</a>
+		</div>
+	</c:if>
 
 	<div class="ap-card">
 		<div class="ap-table-wrap">

@@ -37,5 +37,7 @@
 				}
 			</script>
 		</c:if>
+		<%-- RTS auto-save draft of the citizen application forms (writes nothing on all other pages) --%>
+		<jsp:directive.include file="/pages/core-pages/rtsdraft/rtsDraft.jspf" />
 	</body>
 </html>

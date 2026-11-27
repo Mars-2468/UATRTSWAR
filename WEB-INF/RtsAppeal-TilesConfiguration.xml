@@ -130,4 +130,11 @@
 		</put-list-attribute>
 	</definition>
 
+
+	<!-- Auto-save draft of the citizen application forms (all RTS services) -->
+	<definition name="rtsDraftCitizenList" extends="egov.popup">
+		<put-attribute name="content" value="/pages/core-pages/rtsdraft/citizenDraftList.jsp"/>
+		<put-attribute name="parentMenu" value="RTIReports" type="string"/>
+	</definition>
+
 </tiles-definitions>
